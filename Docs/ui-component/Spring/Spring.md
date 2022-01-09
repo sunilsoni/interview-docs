@@ -1,5 +1,8 @@
 ---
+layout: default
 title: Spring
+parent: Tests
 has_children: true
-nav_order: 2
 ---
+
+# Spring
