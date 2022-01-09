@@ -3,9 +3,10 @@ remote_theme: pmarsceill/just-the-docs
 # Color scheme currently only supports "dark", "light"/nil (default), or a custom scheme that you define
 color_scheme: nil
 
+search_enabled: false
 
+theme: jekyll-theme-minimal
 
-theme: just-the-docs
 
 
 # Enable or disable the site search
@@ -32,6 +33,5 @@ search.preview_words_after: 10
 # Enable or disable the search button that appears in the bottom right corner of every page
 # Supports true or false (default)
 search.button: true
-
 
 
