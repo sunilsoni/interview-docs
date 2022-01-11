@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Spring MVC
-parent: Spring
+parent: Spring/Spring
 ---
 
 # Spring MVC

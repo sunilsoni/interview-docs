@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Spring AOP
-parent: Spring
+parent: Spring/Spring
 ---
 
 # Spring AOP

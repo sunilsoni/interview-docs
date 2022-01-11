@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Spring Boot
-parent: Spring
+parent: Spring/Spring
 ---
 
 # Spring Boot

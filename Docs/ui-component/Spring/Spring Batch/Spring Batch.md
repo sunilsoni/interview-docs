@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Spring Batch
-parent: Spring
+parent: Spring/Spring
 ---
 
 # Spring Batch
