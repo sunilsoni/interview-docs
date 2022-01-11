@@ -3,7 +3,7 @@ layout: default
 title: Spring
 has_children: true
 nav_order: 5
-#permalink: Docs/Spring
+permalink: Docs/Spring/Spring
 
 ---
 
@@ -39,11 +39,3 @@ By default, all pages will appear as top level pages in the main nav unless a pa
 
 ## Types of Dependency Injection
 
-```yaml
----
-layout: default
-title: Types of Dependency Injection
-nav_order: 2
-has_children: true
----
-```
