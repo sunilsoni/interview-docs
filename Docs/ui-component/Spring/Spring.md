@@ -2,8 +2,8 @@
 layout: default
 title: Spring
 has_children: true
-nav_order: 4
-#permalink: Docs/ui-component/Spring
+nav_order: 3
+permalink: Docs/ui-component/Spring
 
 ---
 
