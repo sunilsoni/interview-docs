@@ -2,8 +2,8 @@
 layout: default
 title: Spring
 has_children: true
-nav_order: 5
-#permalink: Docs/Spring
+nav_order: 4
+permalink: Docs/Spring
 
 ---
 
@@ -32,8 +32,6 @@ Suppose class A is dependent on class B. In normal coding, you will create an ob
 
 In this example, we can see that we are passing the control of objects to Spring framework, this is called Inversion of Control (IOC) and Dependency injection is one of the principles that enforce IOC.
 
-
-By default, all pages will appear as top level pages in the main nav unless a parent page is defined (see [Pages with Children](#pages-with-children)).
 
 ---
 
