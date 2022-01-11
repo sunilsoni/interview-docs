@@ -1,5 +1,16 @@
 ---
+layout: default
 title: Spring Boot
-has_children: true
-nav_order: 2
+parent: Spring
+---
+
+# Spring Boot
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
 ---
