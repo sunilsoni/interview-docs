@@ -428,9 +428,11 @@ your database change logs every 5 minutes. Combined with automated snapshots, th
 you the ability to restore a failed instance to within 5 minutes before the failure—losing no
 more than 5 minutes of data.
 ---
+
 ## Route 53
 
 Amazon Route 53 is a Domain Name System (DNS), which allows you to route your custom domain names to your actual application on AWS. So, you configure Route 53 to send requests from the browser to your AWS application. The AWS DNS sets up your custom domain name.
+
 ---
 ## CloudWatch
 
