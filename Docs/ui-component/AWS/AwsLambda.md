@@ -1,3 +1,9 @@
+---
+layout: default
+title: AWS Lambda
+parent: aws
+---
+
 # AWS Lambda
 
 
