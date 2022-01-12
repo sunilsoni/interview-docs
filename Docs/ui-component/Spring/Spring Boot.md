@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Spring Batch
-parent: Spring/Spring
+title: Spring Boot
+parent: Spring
 ---
 
-# Spring Batch
+# Spring Boot
 {: .no_toc }
 
 ## Table of contents
@@ -14,3 +14,4 @@ parent: Spring/Spring
 {:toc}
 
 ---
+##  Introduction to Spring Boot

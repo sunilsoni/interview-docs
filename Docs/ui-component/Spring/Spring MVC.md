@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Spring Boot
-parent: Spring/Spring
+title: Spring MVC
+parent: Spring
 ---
 
-# Spring Boot
+# Spring MVC
 {: .no_toc }
 
 ## Table of contents
@@ -14,3 +14,4 @@ parent: Spring/Spring
 {:toc}
 
 ---
+##  Introduction to Spring MVC

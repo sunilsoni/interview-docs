@@ -2,12 +2,13 @@
 layout: default
 title: Spring
 has_children: true
-nav_order: 3
+nav_order: 1
 permalink: Docs/ui-component/Spring
 ---
 
 # Spring
 
+{: .no_toc }
 
 ## Table of contents
 {: .no_toc .text-delta }

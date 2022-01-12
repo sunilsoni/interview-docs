@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Spring AOP
-parent: Spring/Spring
+parent: Spring
 ---
 
 # Spring AOP
@@ -14,3 +14,5 @@ parent: Spring/Spring
 {:toc}
 
 ---
+
+##  Introducing Spring AOP
