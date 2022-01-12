@@ -274,6 +274,7 @@ The differences are:
 
 Use constructor-based injection, when you want your class to not even be instantiated if the class dependencies are not resolved because Spring container will ensure that all the required dependencies are passed to the constructor.
 
+---
 
 ## BeanFactory and ApplicationContext
 
@@ -288,6 +289,8 @@ The differences are:
 - ApplicationContext provides additional features like MessageSource access (i18n or Internationalization) and Event Publication
 
 Use an ApplicationContext unless you have a really good reason for not doing so.
+
+---
 
 ## Spring Bean life-cycle
 
@@ -331,6 +334,8 @@ package com.demo;
 
 
 ```
+
+---
 
 ## Spring Bean Scopes
 
@@ -450,6 +455,8 @@ Spring uses CGLIB to create the proxy object and the proxy object delegates meth
 
 To avoid CGLIB usage, configure the proxy mode with ScopedProxyMode.INTERFACES and it will use JDK dynamic proxy.
 
+---
+
 ## Stereotype Annotations
 
 
@@ -559,6 +566,8 @@ So, the classes annotated with these annotations gets picked up in Component sca
 - **@Repository:** The classes annotated with this annotation defines data repositories. It is used in DAO layer classes. @Repository has one special feature that it catches platform specific exceptions and re-throw them as one of the Spring’s unified unchecked exception i.e. `DataAccessException` .
 
 
+---
+
 ## @Controller vs @RestController annotation
 
 The differences are:
@@ -566,6 +575,8 @@ The differences are:
 - `@Controller` annotation is used to mark a class as Spring MVC controller where the response is a view name which will display the Model object prepared by controller, whereas @RestController annotation is a specialization of @Controller and it is used in RESTful web services where the response is usually JSON/XML.
 - `@RestController` is made up of 2 annotations, @Controller and @ResponseBody. @ResponseBody annotation is used to attach the generated output directly into the body of http response.
 - `@Controller` can be used with @ResponseBody which will have same effect as @RestController. @ResponseBody annotation can be used at the class level or at the individual methods also. When it is used at the method level, Spring will use HTTP Message Converters to convert the return value to HTTP response body (serialize the object to response body).
+
+---
 
 ## @Qualifier annotation
 
@@ -649,6 +660,8 @@ public class ShapeCOntroller{
 ```
 
 
+---
+
 ## @Transactional annotation
 
 
@@ -673,6 +686,8 @@ Using `@Transactional` annotation, the transaction’s propagation and isolation
 ```
 Also, you can specify a ‘rollbackFor’ attribute and specify which exception types must cause a transaction rollback (a transaction with Runtime exceptions and errors are by default rolled back).
 If your process() method is calling another bean method, then you can also annotate that method with `@Transactional` and set the propagation level to decide whether this method should execute in the same transaction or it requires a new transaction.
+
+---
 
 ## @ControllerAdvice annotation
 
@@ -720,6 +735,8 @@ Here, we have defined a global exception handler using `@ControllerAdvice`. If a
 
 If you don’t want to create a global exception handler, then you can also define some `@ExceptionHandler` methods in a particular controller itself.
 
+---
+
 ## @Bean annotation
 
 `@Bean` annotation is used when you want to explicitly declare and register a bean into application context, so that it will be managed by Spring.
@@ -730,6 +747,8 @@ Some points to remember:
 - Using `@Bean`, you can register the classes from 3rd party libraries into the application context
 - `@Bean` annotation is usually declared in configuration classes.
 
+---
+
 ## @Component vs @Bean annotation
 
 The differences are:
@@ -739,6 +758,8 @@ The differences are:
 - `@Component` has different specializations called stereotype annotations like `@Controller`, `@Service` and @Repository, whereas @Bean has no specializations
 - `@Bean` lets you create and configure beans exactly how you choose it to be, whereas in @Component, Spring has the control
 - `@Bean` lets you configure classes from 3rd party libraries where you are not the owner of the source code, but you can’t use @Component in this case
+
+---
 
 
 ## Spring Boot Security using OAuth2 with JWT
@@ -817,6 +838,8 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbGV4MTIzIiwic2N.v9A80eU1VDo2Mm9UqN2FyEpyT79IUmh
 - The client sends this JWT token in the header for all subsequent requests.
 - The client authenticates the user with this token. So we don't need the client to send the user name and password to the server during each authentication process, but only once the server sends the client a JWT.
 
+---
+
 ## Web server and  application server
 
 | Web Server       | Application Server                         |
@@ -826,6 +849,8 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbGV4MTIzIiwic2N.v9A80eU1VDo2Mm9UqN2FyEpyT79IUmh
 
 
 
+
+---
 
 
 ## Reference Links
