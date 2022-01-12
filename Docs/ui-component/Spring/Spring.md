@@ -28,17 +28,19 @@ A key element of Spring is infrastructural support at the application level: Spr
 
 ## Features
 
-*Core technologies*: dependency injection, events, resources, i18n, validation, data binding, type conversion, SpEL, AOP.
+### Core technologies: Dependency injection, events, resources, i18n, validation, data binding, type conversion, SpEL, AOP.
 
-*Testing*: mock objects, TestContext framework, Spring MVC Test, WebTestClient.
+### Testing: mock objects, TestContext framework, Spring MVC Test, WebTestClient.
 
-*Data Access*: transactions, DAO support, JDBC, ORM, Marshalling XML.
+### Data Access: transactions, DAO support, JDBC, ORM, Marshalling XML.
 
-*Spring MVC and Spring WebFlux web frameworks*.
+### Spring MVC and Spring WebFlux web frameworks.
 
-*Integration*: remoting, JMS, JCA, JMX, email, tasks, scheduling, cache.
+### Integration: remoting, JMS, JCA, JMX, email, tasks, scheduling, cache.
 
-*Languages*: Kotlin, Groovy, dynamic languages.
+### Languages: Kotlin, Groovy, dynamic languages.
+
+---
 
 ## Inversion Of Control (IOC) and Dependency Injection
 
@@ -67,16 +69,20 @@ Thus, IOC makes the code loosely coupled. In such case, there is no need to modi
 
 In Spring framework, IOC container is responsible to inject the dependency. We provide metadata to the IOC container either by XML file or annotation.
 
+---
+
 ## Advantage of Dependency Injection
 - makes the code loosely coupled so easy to maintain
 - makes the code easy to test
+
+---
 
 ## Advantages of Spring Framework
 
 
 There are many advantages of Spring Framework. They are as follows:
 
-| head1        | head two          | 
+| Name        | Details          | 
 |:-------------|:------------------|
 | Predefined Templates           | Spring framework provides templates for JDBC, Hibernate, JPA etc. technologies. So there is no need to write too much code. It hides the basic steps of these technologies. Let's take the example of JdbcTemplate, you don't need to write the code for exception handling, creating connection, creating statement, committing transaction, closing connection etc. You need to write the code of executing query only. Thus, it save a lot of JDBC code.| 
 | Loose Coupling | The Spring applications are loosely coupled because of dependency injection.   | 
@@ -87,6 +93,8 @@ There are many advantages of Spring Framework. They are as follows:
 |  Declarative support           | It provides declarative support for caching, validation, transactions and formatting. | 
 
 
+
+---
 
 ## Dependency Injection
 
