@@ -1,7 +1,7 @@
 ---
 layout: default
 title: AWS Lambda
-parent: aws
+parent: AWS
 ---
 
 # AWS Lambda
