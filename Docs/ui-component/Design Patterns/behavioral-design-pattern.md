@@ -27,7 +27,7 @@ Wikipedia says
 
 ---
 
-## Chain of Responsibility
+## 🔗 Chain of Responsibility
 
 
 Real world example
