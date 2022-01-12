@@ -306,10 +306,7 @@ The bean life-cycle has below steps:
 When you want to execute some custom code that should be executed before the bean is in usable state, you can specify an init() method and if some custom code needs to be executed before the bean is destroyed, then a destroy() method can be specified.
 There are various ways to define these init() and destroy() method for a bean:
 
-By using xml file,
-<bean> tag has 2 attributes that can be used to specify its init  and destroy methods,
-
-You can give any name to your initialization and destroy methods, and here is our Test class
+By using xml file, bean tag has 2 attributes that can be used to specify its init  and destroy methods, You can give any name to your initialization and destroy methods, and here is our Test class
 
 
 ```java
