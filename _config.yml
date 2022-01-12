@@ -19,7 +19,7 @@ search.heading_level: 2
 
 # Sort order for navigation links
 # nav_sort: case_insensitive # default, equivalent to nil
-nav_sort: case_sensitive # Capital letters sorted before lowercase
+nav_sort: case_insensitive # Capital letters sorted before lowercase
 
 # Maximum amount of previews per search result
 # Default: 3
