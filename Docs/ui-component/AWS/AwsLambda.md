@@ -6,6 +6,15 @@ parent: AWS
 
 # AWS Lambda
 
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 #  Introducing AWS Lambda
 
