@@ -1,9 +1,7 @@
-
 ---
 layout: default
 title: Docker
 nav_order: 2
-permalink: Docs/ui-component/Docker
 ---
 
 # Docker
