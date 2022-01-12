@@ -44,21 +44,24 @@ A key element of Spring is infrastructural support at the application level: Spr
 
 These are the design patterns that are used to remove dependency from the programming code. They make the code easier to test and maintain. Let's understand this with the following code:
 
+```java
 class Employee{  
     Address address;  
     Employee(){  
         address=new Address();  
     }  
 }  
+```
 
 In such case, there is dependency between the Employee and Address (tight coupling). In the Inversion of Control scenario, we do this something like this:
-
+```java
 class Employee{  
     Address address;  
     Employee(Address address){  
         this.address=address;  
     }  
 }  
+```
 
 Thus, IOC makes the code loosely coupled. In such case, there is no need to modify the code if our logic is moved to new environment.
 
