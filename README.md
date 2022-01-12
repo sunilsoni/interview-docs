@@ -1,3 +1,11 @@
+---
+layout: default
+title: Home
+nav_order: 1
+description: "Welcome to Interview Pages"
+permalink: /
+---
+
 ## Welcome to Interview Pages
 
 ---
