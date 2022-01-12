@@ -26,5 +26,3 @@ N
 Docs/ui-component/OOPS/oops.md,c/1/c16a2a9c3af001e39bedc7bdb772f05995d31402
 P
  Docs/ui-component/React/React.md,7/3/73653a8bd1782c474060862507f248d2d67d98dd
-X
-(Docs/ui-component/Spring/Spring Batch.md,e/0/e0b0cc20f0c650f1231c377c73ac4edf6a7ab93a
