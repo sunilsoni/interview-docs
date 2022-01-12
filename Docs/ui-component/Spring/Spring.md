@@ -25,20 +25,26 @@ The Spring Framework provides a comprehensive programming and configuration mode
 
 A key element of Spring is infrastructural support at the application level: Spring focuses on the "plumbing" of enterprise applications so that teams can focus on application-level business logic, without unnecessary ties to specific deployment environments.
 
+---
 
 ## Features
 
-### Core technologies: Dependency injection, events, resources, i18n, validation, data binding, type conversion, SpEL, AOP.
+### Core technologies
+Dependency injection, events, resources, i18n, validation, data binding, type conversion, SpEL, AOP.
 
-### Testing: mock objects, TestContext framework, Spring MVC Test, WebTestClient.
+### Testing
+mock objects, TestContext framework, Spring MVC Test, WebTestClient.
 
-### Data Access: transactions, DAO support, JDBC, ORM, Marshalling XML.
+### Data Access
+transactions, DAO support, JDBC, ORM, Marshalling XML.
 
 ### Spring MVC and Spring WebFlux web frameworks.
 
-### Integration: remoting, JMS, JCA, JMX, email, tasks, scheduling, cache.
+### Integration
+remoting, JMS, JCA, JMX, email, tasks, scheduling, cache.
 
-### Languages: Kotlin, Groovy, dynamic languages.
+### Languages
+Kotlin, Groovy, dynamic languages.
 
 ---
 

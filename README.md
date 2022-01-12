@@ -6,9 +6,7 @@
 
 Please feel free to raise issues if you can't get something to work, find a bug, or you have any ideas for improvements.
 
-
 ---
-
 
 <button class="btn js-toggle-dark-mode">Dark color scheme</button>
 
