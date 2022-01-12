@@ -854,8 +854,8 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbGV4MTIzIiwic2N.v9A80eU1VDo2Mm9UqN2FyEpyT79IUmh
 
 ## Reference Links
 
-###  [Spring Framework](https://spring.io/projects/spring-framework#overview)
-###  [Using Spring Boot for OAuth2 and JWT REST Protection](https://www.toptal.com/spring/spring-boot-oauth2-jwt-rest-protection)
-###  [Spring Boot Security + JWT (JSON Web Token) Authentication Example](https://www.techgeeknext.com/spring/spring-boot-security-token-authentication-jwt)
-###  [Spring Boot Security using OAuth2 with JWT](https://www.pixeltrice.com/spring-boot-security-using-oauth2-with-jwt/)
-###  [What is the difference between PUT, POST and PATCH? [closed]](https://stackoverflow.com/questions/31089221/what-is-the-difference-between-put-post-and-patch#:~:text=POST%20is%20always%20for%20creating,always%20for%20update%20a%20resource)
+- [Spring Framework](https://spring.io/projects/spring-framework#overview)
+- [Using Spring Boot for OAuth2 and JWT REST Protection](https://www.toptal.com/spring/spring-boot-oauth2-jwt-rest-protection)
+- [Spring Boot Security + JWT (JSON Web Token) Authentication Example](https://www.techgeeknext.com/spring/spring-boot-security-token-authentication-jwt)
+- [Spring Boot Security using OAuth2 with JWT](https://www.pixeltrice.com/spring-boot-security-using-oauth2-with-jwt/)
+- [What is the difference between PUT, POST and PATCH? [closed]](https://stackoverflow.com/questions/31089221/what-is-the-difference-between-put-post-and-patch#:~:text=POST%20is%20always%20for%20creating,always%20for%20update%20a%20resource)
