@@ -91,6 +91,8 @@ Traditionally, while building web applications, you need to create WAR type modu
 
 Also, during development, you can easily run the Spring Boot JAR type module as a Java application from the IDE or from the command-line using a build tool like Maven or Gradle.
 
+---
+
 ## Spring Boot Annotations
 
 ### @SpringBootApplication 
@@ -206,6 +208,8 @@ Properties additionalProperties() {
         //...
 }
 ```
+
+---
 
 ## Spring Boot Actuator 
 
@@ -343,6 +347,8 @@ Output:
 ```log
 [ "This is message 1", "This is message 2" ]
 ```
+
+---
 
 ## Building an Application with Spring Boot 
 
@@ -635,6 +641,8 @@ Calling the custom method to set the random available port within range [5000-55
 
 **Tip**
 Always use Eureka Registry to fetch the service details e.g. host, port and protocol. Never use hardcoded host, port while communicating with one microservice from another. So you never need to know in advance what port and host a particular service has been deployed.
+
+---
 
 ## Spring Boot CRUD Web Application with Thymeleaf, Spring MVC, Spring Data JPA, Hibernate, MySQL
 
