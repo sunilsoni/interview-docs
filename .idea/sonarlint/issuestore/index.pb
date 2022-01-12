@@ -12,8 +12,6 @@ N
 Docs/ui-component/Java/Java.md,f/1/f160ffd65e163a736dc60866380df73a470ea310
 P
  Docs/ui-component/Kafka/Kafka.md,a/c/ac80bee6d224382f0389785ab72e2f05507320e1
-;
-_config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
 `
 0Docs/ui-component/Microservices/microservices.md,f/e/fe4f6f2de585d24d4474c2ac4ad18c696a648436
 9
