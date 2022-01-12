@@ -17,6 +17,7 @@ search_enabled: true
 # Supports 1 - 6, default: 2
 search.heading_level: 2
 
+nav_sort: case_insensitive
 
 # Maximum amount of previews per search result
 # Default: 3
