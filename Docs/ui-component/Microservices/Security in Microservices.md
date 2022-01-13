@@ -19,9 +19,6 @@ parent: Micro Services
 ---
 
 
-
----
-
 ##  Why Basic Authentication is not suitable in Microservices Context? 
 
 Basic Authentication is natively supported by almost all servers and clients, even Spring security has very good support for it and its configured out of the box. But it is not a good fit for Microservices due to many reasons, including -
