@@ -20,8 +20,9 @@ parent: Micro Services
 
 
 
-Why Basic Authentication is not suitable in Microservices Context?
--------
+---
+
+##  Why Basic Authentication is not suitable in Microservices Context? 
 
 Basic Authentication is natively supported by almost all servers and clients, even Spring security has very good support for it and its configured out of the box. But it is not a good fit for Microservices due to many reasons, including -
 1. We need credentials (username and password) every time we authenticate. This may be fine where all the participants can share the secrets securely, but Users may not be willing to share their credentials with all the applications.
@@ -32,8 +33,9 @@ for more info.
    https://docs.spring.io/springsecurity/site/docs/4.0.4.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html
 5. If we use Basic Auth for a mobile application client, then we might have to store user’s credentials on the device to allow remember me feature. This is quite risky as anyone getting access to device may steal the plain credentials.
 
-Why OAuth2?
--------
+---
+
+##  Why OAuth2? 
 
 1. Simple for Clients (client is often a microservice itself)
 2. AcessTokens can carry information beyond identity (like clientId, roles, issuer, userid, resourceId, expiry, scope, etc.).
@@ -46,8 +48,8 @@ Why OAuth2?
 
 OAuth2.0 is a delegation protocol where the Client (Mobile App or web app) does not need to know about the credentials of Resource Owner (end user).
 
-OAuth2 Roles
--------
+###  OAuth2 Roles
+
  <img src="./images-ms/Four different roles in OAuth 2.0 protocol.png" width="800" border="2" />
 
 Oauth2 defines four roles.
@@ -56,8 +58,8 @@ Oauth2 defines four roles.
 3. **Authorization Server** - the application that verifies the identity of the resource owner(users/clients). This server issues access tokens after obtaining the authorization.
 4. **Client** - the application that makes request to Resource Server on behalf of Resource Owner. It could be a mobile app or a web app (like stackoverflow).
 
-OAuth 2.0 grant types (OAuth flows)
--------
+###  OAuth 2.0 grant types (OAuth flows)
+
 
 An authorization grant is a credential representing the resource owner’s authorization (to access its protected resources) used by the client to obtain an access token.
 
@@ -70,8 +72,8 @@ OAuth2 specification defines four grant types.
 4. **Client Credentials** - mostly used for inter service communication by service clients.
 5. **Refresh Token** - Used for generating a refresh token
 
-When shall I use resource owner credentials?
--------
+###  When shall I use resource owner credentials?
+
 When end user is a human, then resource resource owner credentials grant should be used. Important thing to note here is that resource owner’s credentials will be exposed to the client application. Thus it should only be used where client app is trusted application. For example, if you have your own inhouse oauth 2.0 server, then you can use resource owner credentials in your company’s android app.
 
 But if you are integrating with Google or Facebook, then this type of grant is not feasible, because end user will never trust your android app to enter Google’s credentials. Authorization Code grant is better alternative to such scenarios. Using Curl to get Access Token based on password grant_type..
@@ -93,22 +95,23 @@ Sample Response.
 ```
 
 
-When shall I use Authorization Code grant?
--------
+###  When shall I use Authorization Code grant?
+
 It should be used in applications where clientId and clientSecret can be kept securely i.e. webapps. In this flow the oauth 2.0 client is redirected back to authorization server’s url for authentication purpose.
 
 This grant type is used when you want to integrate with Google/Facebook on your server side webapp.
 
 
-When shall I use client credentials?
--------
+###  When shall I use client credentials?
+
 Client credentials should be used for inter service communication that is not on behalf of users i.e. scheduled batch jobs, reporting jobs etc. Unlike Basic Auth, OAuth 2.0 protocol distinguishes between User (Resource Owner) and Machines (Client) based on Resource Owner Credentials and Client Credentials. Thus if the end consumer of your web services is not a human, then client credentials should be used.
 
 Using Client Credentials to generate Access Token.
 > curl service-account-1:service-account-1-secret@localhost:8080/auth/oauth/token -d grant_type=client_credentials
 
-OAuth2 and Microservices
--------
+---
+
+##  OAuth2 and Microservices 
 
  <img src="./images-ms/OAuth2 Use in Microservices Context.png" width="800" border="2" />
 
@@ -118,8 +121,10 @@ OAuth2 and Microservices
 4. Mobile App and non-browser clients uses - password grant.
 5. Service Clients (intra-system) uses - client credentials or relay user tokens depending upon the requirements.
 
-What is JWT?
--------
+---
+
+##  What is JWT? 
+
 JWT is acronym for JSON Web Token. JWT are an open, industry standard RFC 7519 method for representing claims securely between two parties (even on unsecured networks).
 
 JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and selfcontained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA.
@@ -134,8 +139,8 @@ There are two important points here -
 https://tools.ietf.org/html/rfc7519
 https://jwt.io/introduction/
 
-What are use cases for JWT?
--------
+###  What are use cases for JWT?
+
 There are many useful scenarios for leveraging power of JWT 
 
 **Authentication**
@@ -151,8 +156,8 @@ JWT can be signed, using public/private key pairs, you can be sure that the send
 1. Generating Single Click Action Emails e.g. Activate your account, delete this comment, add this item to favorites, Reset your password, etc. All required information for the action can be put into JWT.
 2. Timed sharing of a file download using a JWT link. Timestamp can be part of claim, so when the server time is past the time coded in JWT, link will automatically expire.
 
-How does JWT looks like?
--------
+###  How does JWT looks like?
+
 There are 3 parts in every JWT claim - Header, Claim and Signature. These 3 parts are separated by a dot. The entire JWT is encoded in Base64 format.
 
 > JWT = {header}.{payload}.{signature}
@@ -200,8 +205,8 @@ Signature Part
 Tip: You can decode and test JWT using https://jwt.io . This is helpful for testing and debugging purpose
 
 
-What is AccessToken and RefreshToken?
--------
+###  What is AccessToken and RefreshToken?
+
 In OAuth2, we receive two kind of tokens against authentication - AccessToken[mandatory] and RefreshToken[optional].
 
 JWT Access token is used to authenticate against protected API resources.
@@ -226,8 +231,8 @@ Sample AccessToken Response
 ```
 
 
-How to use a RefreshToken to request a new AccessToken?
--------
+###  How to use a RefreshToken to request a new AccessToken?
+
 RefreshToken is used to create a new AccessToken once existing AccessToken is expired. The client requesting this operation must present its own clientId and clientSecret to oauth server to perform this operation.
 
 Using curl to generate a new AccessToken using RefreshToken
@@ -278,8 +283,8 @@ public OAuthTokenDto renewToken(final OAuthTokenDto existingToken) {
 
 
 
-How to call the protected resource using AccessToken?
--------
+###  How to call the protected resource using AccessToken?
+
 Protected resources from microservices can be accessed by passing Authorization Bearer token in request headers, using curl the request looks like below - 
 
 > curl -H "Authorization: Bearer <AccessToken>" -v localhost:9090/user/info
@@ -320,8 +325,8 @@ HttpEntity<Object> httpEntity = new HttpEntity<>(ApplicationContext.createHeader
 ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class, uriVariables);
 ```
 
-Can a refreshToken be never expiring? How to make refreshToken life long valid?
--------
+###  Can a refreshToken be never expiring? How to make refreshToken life long valid?
+
 We can set the validity for refreshToken to a negative value, zero or Integer.MAX_VALUE to make it never expiring.
 
 ```java
@@ -341,8 +346,8 @@ It is not a good idea to make refreshToken never expiring due to security concer
 
 AWS Cognito only allows 3650 days as the maximum interval for refresh token expiry. The default expiry is set to 30 days, though. AccessToken expiry is set to a fixed value of 1 hour which can not be changed.
 
-Generate AccessToken for Client Credentials.
--------
+###  Generate AccessToken for Client Credentials.
+
 Client Credentials can be used by clients (client applications or microservices, that are not human) for inter service communication.
 
 Request using Curl.
@@ -369,22 +374,23 @@ Now this token can be used for making protected endpoint call on resource server
 
 Where `$TOKEN` is the Access Token.
 
-Why there is no RefreshToken support in Oauth2 Client Credentials workflow?
--------
+###  Why there is no RefreshToken support in Oauth2 Client Credentials workflow?
+
 
 First of all we need to understand why RefreshToken grant type is provided in oauth2 specs. In Resource Owner Credentials workflow, a client (usually a mobile app) accesses protected resources on behalf of end user (resource owner). Now since client does not have access to user’s credentials, refresh token helps getting a new access token by its own, by presenting client’s credentials along with the refresh token to oauth server. This way an end user can be kept logged in to the mobile app for a much longer duration.
 
 On the other hand, Client Credentials workflow is always meant for machine to machine communication that is not on behalf of resource owner (human). Since client will always have access to its own credentials, so it can always present the credentials to oauth server and obtain a new access token after expiry.
 
 
-Security in inter-service communication
--------
+---
+
+##  Security in inter-service communication 
 
 There could be two usecases for inter service communication -
 1. Calling one service from another on behalf of user request.
 2. Using Service Client for internal service to service communication.
-   
-**Token Relay**
+
+###  Token Relay
 
 In first case, we shall propagate the security context of user from one service to another.
 
@@ -414,7 +420,7 @@ public class RemoteMicroService {
 ```
 
 
-**Client Credentials**
+###  Client Credentials
 
 In second case, we shall use Client Credentials issued by OAuth2 workflow for securing service to service communication. Here user’s security context is not propogated to the downstream server, instead the client’s credentials are used to secure the communication.
 

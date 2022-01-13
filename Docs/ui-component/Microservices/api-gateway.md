@@ -43,8 +43,9 @@ customer-service is the application name of customer microservice, and fetched f
 4. Path Rewriting
 5. Hystrix Circuit Breaker integration for resiliency
 
-How to retry failed requests at some other available instance using Client Side Load Balancer?
-----
+---
+
+## How to retry failed requests at some other available instance using Client Side Load Balancer?
 
 Spring Cloud Netflix provides two main mechanisms for making a HTTP requests using load balanced client (Ribbon) - RestTemplate and Feign. There is always a chance that a network call may fail due to any reason, and we may want to retry that request automatically on the next available server.
 
@@ -73,8 +74,10 @@ zuul:
     <routename>.retryable: false
 ```
 
-Circuit Breaker
--------
+---
+
+## Circuit Breaker
+
 Circuit breaker is used to gracefully degrade the functionality when one of the service/method call fails, without cascading the effect that can bring down the entire system.
 
 **The logic of Circuit Breaker is quite simple -.**
@@ -83,8 +86,9 @@ Wrap a protected (mostly remote) call inside a circuit breaker object, which mon
 **How it helps?.**
 If many of the caller threads are being timeout on a failed resource, we may quickly exhaust all our threads and the caller application will also get impacted due to this. Such failure can cascade and bring down the entire system. Circuit breaker does not allow this to happen by tripping off the circuits that are potentially failing. We achieve this faulttolerance at the expense of degraded functionality.
 
-What is difference between using a Circuit Breaker and a naive approach where we try/catch a remote method call and protect for failures?
--------
+### What is difference between using a Circuit Breaker and a naive approach where we try/catch a remote method call and protect for failures?
+
+
 Lets say we want to handle service to service failure gracefully without using Circuit Breaker pattern. The naive approach would be to wrap the inter service REST call in try catch clause. But Circuit Breaker does lot more that try catch can not accomplish -
 
 1. Circuit Breaker does not even try calls once failure threshold is reached, doing so reduces the number of network calls. Also, number of threads consumed in making faulty calls are freed up.
@@ -95,8 +99,7 @@ So instead of wrapping service to service calls with try/catch clause, we must u
 
 
 
-Circuit Breaker Pattern
--------
+### Circuit Breaker Pattern
 
 Microservices often need to make remote network calls to another microservices running in a different process. Network calls can fail due to many reasons, including-
 1. Brittle nature of network itself
@@ -112,8 +115,7 @@ A typical use of circuit breaker in microservices architecture looks like the fo
 Here a REST client calls the Recommendation Service which further communicates with Books Service using a circuit breaker call wrapper. As soon as the books-service API calls starts to fail, circuit breaker will trip (open) the circuit and will not make any further call to book-service until the circuit is closed again.
 
 
-Open, Closed and Half-Open states of Circuit Breaker
-----------
+### Open, Closed and Half-Open states of Circuit Breaker
 
 Circuit Breaker wraps the original remote calls inside it and if any of these calls fails, the failure is counted. When the service dependency is healthy and no issues are detected, the circuit breaker is in Closed State. All invocations are passed through to the remote service. 
 
@@ -125,22 +127,21 @@ If the failure count exceeds a specified threshold within a specified time perio
 After a predetermined period of time (by default 5 seconds), the circuit transitions into a half-open state. In this state, calls are again attempted to the remote dependency. Thereafter the successful calls transitions the circuit breaker back into the closed state, while the failed calls return the circuit breaker into the open state.
 
 
-Use-cases for Circuit Breaker Pattern
-----------
+### Use-cases for Circuit Breaker Pattern
+
 
 1. Synchronous communication over the network that is likely to fail is potential candidate for circuit breaker.
 2. Circuit breaker is a valuable place for monitoring, any change in the breaker state should be logged so as to enable deep monitoring of microservices. It can easily troubleshoot the root cause of failure.
 3. All places where a degraded functionality can be acceptable to caller if actual server is struggling/down.
 
 
-Benefits of using Circuit Breaker Pattern
-----------
+### Benefits of using Circuit Breaker Pattern
+
 1. Circuit breaker can prevent a single service from failing the entire system by tripping off the circuit to the faulty microservice.
 2. Circuit breaker can help offloading requests from a struggling server by tripping the circuit, thereby giving it a time to recover.
 3. In providing a fallback mechanism where a stale data can be provided if real service is down.
 
-What is Hystrix?
-----------
+### What is Hystrix?
 
 Hystrix is Netflix implementation for circuit breaker pattern, that also employs bulkhead design pattern by operating each circuit breaker within its own thread pool. It also collects many useful metrics about the circuit breaker’s internal state, including -
 1. Traffic volume.
@@ -152,8 +153,9 @@ Hystrix is Netflix implementation for circuit breaker pattern, that also employs
 
 All these metrics can be aggregated using another Netflix OSS project called Turbine. Hystrix dashboard can be used to visualize these aggregated metrics, providing excellent visibility into the overall health of the distributed system.
 
-Features of Hystrix library
-----------
+### Features of Hystrix library
+
+
 Hystrix library makes our distributed system resilient (adaptable & quick to recover) to failures. It provides three main features:
 
 **Latency and fault-tolerance**
@@ -170,8 +172,8 @@ More Details:
 - https://github.com/Netflix/Hystrix/wiki#principles
 - https://github.com/Netflix/Hystrix/wiki/How-it-Works
 
-How to use Hystrix for fallback execution?
-----------
+### How to use Hystrix for fallback execution?
+
 Hystrix can be used to specify the fallback method for execution in case actual method call fails. This can be useful for graceful degradation of functionality incase of failure in remote invocation.
 
 1. Add hystrix library to build.gradle.
@@ -209,14 +211,14 @@ public String reliable() {
 - Using `@HystrixCommand` annotation, we specify the fallback method to execute in case of exception.
 - fallback method should have same signature (return type) as that of original method. This method provides a graceful fallback behavior while circuit is in open or half-open state.
 
-When not to use Hystrix fallback on a particular microservice?
-----------
+### When not to use Hystrix fallback on a particular microservice?
+
 You do not need to wrap each microservice call within hystrix, for example
 1. The api’s that will never be invoked from another microservice shall not be wrapped in hystrix command.
 2. If there is a service to service communication on behalf of a Batch Job (not end user), then probably you can skip hystrix integration depending upon your business needs.
 
-ignore certain exceptions in Hystrix fallback execution
-----------
+### ignore certain exceptions in Hystrix fallback execution
+
 `@HystrixCommand` annotation provides attribute ignoreExceptions that can be used to provide list of ignored exceptions.
 
 Hystrix ignore exceptions.
@@ -252,20 +254,20 @@ In this example, if the actual method call throws IllegalStateException, Missing
 Reference: https://github.com/Netflix/Hystrix/tree/master/hystrix-contrib/hystrix-javanica#errorpropagation
 
 
-Request Collapsing feature in Hystrix
-----
+### Request Collapsing feature in Hystrix
+
 We can front a HystrixCommand with a request collapser (HystrixCollapser is the abstract parent) with which we can collapse multiple requests into a single back-end dependency call. Using request collapser reduces the number of threads and network connections needed to perform concurrent HystrixCommand executions, that too in an automated manner without forcing developers to coordinate the manual batching of requests.
 
 More Information.
 https://github.com/Netflix/Hystrix/wiki/How-it-Works#RequestCollapsing
 
-Circuit Breaker vs Hystrix
-----
+### Circuit Breaker vs Hystrix
+
 Circuit Breaker is a fault tolerance design pattern, while Netflix’s Hystrix library provides an implementation for the circuit breaker pattern. We can easily apply circuit breakers to potentially-failing method calls (in JVM or over the network) using the Netflix Hystrix fault tolerance library.
 
 
-Where exactly should I use Circuit Breaker Pattern?
-----
+### Where exactly should I use Circuit Breaker Pattern?
+
 
 At all places on server side where we are making a service to service call, for example 
 1. API Gateway 
@@ -273,8 +275,8 @@ At all places on server side where we are making a service to service call, for 
 3. Web Front that calls multiple microservices to render a single page
 All those places where remote calls can potentially fail are good candidate for using Circuit Breaker Pattern.
 
-Where it should not be used?
-----
+### Where it should not be used?
+
 Lets say, you are calling a REST endpoint directly from a mobile client, and there is no inter-service calls involved in this case, except at API Gateway. So there is no need for the circuit breaker except at API gateway level. Android client should be designed to gracefully handle service failures in this case.
 
 
