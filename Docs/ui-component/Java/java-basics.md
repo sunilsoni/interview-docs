@@ -18,8 +18,8 @@ parent: Java
 
 ---
 
-Java 8 Features
--------------
+## Java 8 Features
+
 
 - **Lambda Expressions** : They enable you to treat functionality as a method argument, or code as data. Lambda expressions let you express instances of single-method interfaces (referred to as functional interfaces) more compactly.
 - **Method references** : Method references provide easy-to-read lambda expressions for methods that already have a name.
@@ -39,8 +39,10 @@ Java 8 Features
 
 
 
-Why String is Immutable?
------------------------
+---
+
+## Why String is Immutable?
+
 
 String is immutable for below reasons:
 
@@ -51,8 +53,10 @@ String is immutable for below reasons:
 - **Class Loaders** : Strings are used in Java ClassLoaders and since String is made immutable, it provides security that correct class is being loaded.
 
 
-StringBuffer and StringBuilder
------------------------
+---
+
+## StringBuffer and StringBuilder
+
 
 - Both StringBuffer and StringBuilder classes are used for String manipulation. These are mutable objects. But StringBuffer provides thread-safety as all its methods are synchronized, this makes performance of StringBuffer slower as compared to StringBuilder.
 
@@ -62,15 +66,19 @@ StringBuffer and StringBuilder
 
 - You should use String class if you require immutability, use StringBuffer if you require mutability + Thread safety and use StringBuilder if you require mutability and no thread safety.
 
-equals and hashcode contract
--------------
+---
+
+## equals and hashcode contract
+
 
 The equals and hashcode contract says:
 > If two objects are equals according to equals() method, then their hashcode must be same but reverse is not true i.e. if two objects have same hashcode then they may/may not be equals.
 
 
-Comparable and Comparator interfaces
----------------------
+---
+
+## Comparable and Comparator interfaces
+
 
 Both Comparable and Comparator interfaces are used to sort the collection of objects. These interfaces should be implemented by your custom classes, if you want to use Arrays/Collections class sorting methods.
 Comparable interface has compareTo(Obj) method, you can override this method in your class, and you can write your own logic to sort the collection.
@@ -250,8 +258,10 @@ Output:
 
 ```
 
-Comparable and Comparator
--------------------------
+---
+
+## Comparable and Comparator
+
 - `Comparable` interface can be used to provide single way of sorting whereas `Comparator` interface is used to provide multiple ways of sorting
 - `Comparable` interface is present in ‘java.lang’ package whereas `Comparator` interface is present in `java.util` package
 - For using `Comparable`, the class needs to implement `Comparable` interface whereas for using `Comparator`, there is no need to make changes in the class
@@ -260,8 +270,10 @@ Comparable and Comparator
 
 At times, when you are using any third-party classes or the classes where you are not the author of the class, then in that case `Comparator` is the only choice to sort those objects
 
-static keyword
---------------
+---
+
+## static keyword
+
 In Java, a static member is a member of a class that isn’t associated with an instance of a class. Instead, the member belongs to the class itself.
 
 In Java, Static is applicable for the:
@@ -270,16 +282,19 @@ In Java, Static is applicable for the:
 3.  Block
 4.  Nested class
 
-- **Static Variable** : if any variable is declared as static, then it is known as ‘static variable’. Only single copy of the variable gets created and all instances of the class share same static variable. The static variable gets memory only once in the class area at the time of class loading.
+###  Static Variable
+if any variable is declared as static, then it is known as ‘static variable’. Only single copy of the variable gets created and all instances of the class share same static variable. The static variable gets memory only once in the class area at the time of class loading.
 When to use static variable : static variables should be used to declare common property of all objects as only single copy is created and shared among all class objects, for example, the company name of employees etc.
 
-- **Static Method** : When a method is declared with static keyword then it is known as static method. These methods belong to the class rather than the object of the class. As a result, a static method can be directly accessed using class name without the need of creating an object.
+### Static Method
+When a method is declared with static keyword then it is known as static method. These methods belong to the class rather than the object of the class. As a result, a static method can be directly accessed using class name without the need of creating an object.
 One of the basic rules of working with static methods is that you can’t access a non-static method or field from a static method because the static method doesn’t have an instance of the class to use to reference instance methods or fields. Another restriction is, ‘this’ and ‘super’ cannot be used in static context.
 For example: main() method is static, Java Runtime uses this method to start an application without creating an object.
 
-- **Static Block** : Static block gets executed exactly once when the class is first loaded, use static block to initialize the static variables.
+### Static Block
+Static block gets executed exactly once when the class is first loaded, use static block to initialize the static variables.
 
-- **Static nested classes** :
+### Static nested classes
 Static nested classes are a type of inner class in java where the inner class is static. Static nested classes can access only the static members of the outer class. The advantage of using static nested classes is that it makes the code more readable and maintainable.
 In the case of normal inner class, you cannot create inner class object without first creating the outer class object, but in the case of static inner class, there can be a static inner class object without the outer class object.
 
@@ -377,16 +392,19 @@ Outer x : 20
 ```
 
 
-Shallow Copy and Deep Copy
--------------------
+---
 
-- **Shallow Copy** : When we use the default implementation of clone() method, a shallow copy of object is returned, meaning if the object that we are trying to clone contains both primitive variables and non-primitive or reference type variable, then only the object’s reference is copied not the entire object itself.
+## Shallow Copy and Deep Copy
+
+
+### Shallow Copy
+When we use the default implementation of clone() method, a shallow copy of object is returned, meaning if the object that we are trying to clone contains both primitive variables and non-primitive or reference type variable, then only the object’s reference is copied not the entire object itself.
 
 Consider this with the example:
 Employee object is having Company object as a reference, now when we perform cloning on Employee object, then for primitive type variables, cloning will be done i.e. new instances will be created and copied to the cloned object but for non-primitive i.e. Company object, only the object’s reference will be copied to the cloned object. It simply means Company object will be same in both original and cloned object, changing the value in one will change the value in other and vice-versa.
 Now, if you want to clone the Company object also, so that your original and cloned Employee object will be independent of each other, then you have to perform Deep Copy.
 
-- **Deep Copy** :
+### Deep Copy
 In Deep copy, the non-primitive types are also cloned to make the original and cloned object fully independent of each other.
 
 Program 1:
@@ -531,8 +549,10 @@ There are 2 other methods by which you can perform deep copy:
 - By using external library of Apache Commons Lang. Apache Common Lang comes with SerializationUtils.clone() method for performing deep copy on an object. It expects all classes in the hierarchy to implement Serializable interfaces else SerializableException is thrown by the system
 
 
-Serialization and De-serialization
------------------------------------
+---
+
+## Serialization and De-serialization
+
 
 Serialization is a process of reading or writing an object. It is a process of saving an object’s state to a sequence of bytes, as well as a process of rebuilding those bytes back into a live object at some future time. An object is marked serializable by implementing the java.io.Serializable interface, which is only a marker interface -- it simply allows the serialization mechanism to verify that the class can be persisted, typically to a file.
 
@@ -626,8 +646,8 @@ And if you look at the file present in current directory bytestream.txt, you can
 
 See file [bytestream.txt](https://github.com/sunilsoni/interview-notes/blob/main/Java/images/byteStream.txt)
 
-Serialization scenarios with Inheritance
-----------------------------------------
+### Serialization scenarios with Inheritance
+
 
 - **Case 1**: If super class is Serializable then by default, its sub-classes are also Serializable
 
@@ -907,8 +927,10 @@ y : 40
 
 ```
 
-How to make a class Immutable?
------------------------------
+---
+
+## How to make a class Immutable?
+
 As we know, String is an Immutable class in Java, i.e. once initialized its value never change. We can also make our own custom Immutable class, where the class object’s state will not change once it is initialized.
 
 1 <u>**Benefits of Immutable class:**</u>
@@ -1083,15 +1105,20 @@ Why we perform deep copy in constructor:
 Why we don’t return original reference from the getter:
 - When you return the original address object from the getter method then you can use the returned object reference to change the values in employee object
 
-Class loaders in Java
----------------------
+---
+
+## Class loaders in Java
+
 ClassLoader is a java class which is used to load .class files in memory. When we compile a java class, JVM creates a bytecode which is platform independent. The bytecode is present in .class file. When we try to use a class, then classloader loads it into memory.
 
 There are 3 types of built-in class loaders in java:
 
-1. **<u>Bootstrap class loader</u>** : it loads JDK class files from `jre/lib/rt.jar` and other core classes. It is the parent of all class loaders, it is also called Primordial classloader. 
-2. **<u>Extensions class loader</u>**  : it loads classes from `JDK extensions` directory, it delegates class loading request to its parent, Bootstrap and if the loading of class is unsuccessful, it loads classes from `jre/lib/ext` directory or any other directory pointed by `java.ext.dirs` system property.
-3. **<u>System class loader</u>**  : It loads application specific classes from the `CLASSPATH`. We can set classpath while invoking the program using -cp or classpath command line options. It is a child of Extension ClassLoader.
+### Bootstrap class loader
+it loads JDK class files from `jre/lib/rt.jar` and other core classes. It is the parent of all class loaders, it is also called Primordial classloader. 
+### Extensions class loader
+it loads classes from `JDK extensions` directory, it delegates class loading request to its parent, Bootstrap and if the loading of class is unsuccessful, it loads classes from `jre/lib/ext` directory or any other directory pointed by `java.ext.dirs` system property.
+### System class loader
+It loads application specific classes from the `CLASSPATH`. We can set classpath while invoking the program using -cp or classpath command line options. It is a child of Extension ClassLoader.
 
 Java class loader is based on three principles:
 
@@ -1162,8 +1189,10 @@ If you are thinking why null is printed when we tried to know which classloader 
 
 We can also create our own custom class loader by extending the ClassLoader class.
 
-Garbage Collector
----------------
+---
+
+## Garbage Collector
+
 The Garbage Collector has only two things to do:
 
 - Find garbage - unused objects. (An object is considered unused if none of the entities in the code currently executing contains references to it, or the chain of links that could connect the object with some application entity is broken);
@@ -1224,8 +1253,8 @@ The HotSpot VM garbage collectors use a combined Generational Garbage Collection
 most objects created quickly become garbage;
 there are few links between objects that were created in the past and newly created objects.
 
-How does the garbage collector work?
--------------------------------------
+### How does the garbage collector work?
+
 
 Garbage collection is the process of freeing space on the heap so that new objects can be added.
 
@@ -1237,8 +1266,8 @@ Memory is freed by the garbage collector at its own discretion. The program can 
 
 Garbage is collected by the system automatically, without user or programmer intervention, but this does not mean that this process does not require attention at all. The need to create and delete a large number of objects has a significant impact on the performance of applications and, if program performance is an important factor, you should carefully consider decisions related to the creation of objects - this, in turn, will reduce the amount of garbage to be disposed of.
 
-Types of garbage collectors
----------------------
+### Types of garbage collectors
+
 The Java HotSpot VM provides four different garbage collectors to choose from:
 
 -  **Serial** is the easiest option for applications with low data volume and low latency requirements. At the moment, it is used relatively rarely, but on weak computers it can be selected by the virtual machine as the default collector. The use of Serial GC is enabled by option `-XX:+UseSerialGC`.
@@ -1246,8 +1275,8 @@ The Java HotSpot VM provides four different garbage collectors to choose from:
 -  **Concurrent Mark Sweep (CMS)** - aims to reduce maximum latency by performing some of the garbage collection work in parallel with the main threads of the application. Suitable for dealing with relatively large amounts of data in memory. The use of CMS GC is enabled by option `-XX:+UseConcMarkSweepGC`.
 -  **Garbage-First (G1)** - designed to replace CMS, especially in server applications running on multiprocessor servers and handling large amounts of data. G1 is enabled by Java option `-XX:+UseG1GC`.
 
-Garbage Collection and types of Garbage Collectors
---------------------------------------------------
+### Garbage Collection and types of Garbage Collectors
+
 
 Garbage collection in java is the process of looking at heap memory, identifying which objects are in use and which are not and deleting the unused objects. An unused object or unreferenced object, is no longer referenced by any part of your program.
 
@@ -1343,8 +1372,10 @@ G1 is the default garbage collector in JDK 9.
 Also Check: https://java2blog.com/garbage-collection-java/
 
 
-final, finally and finalize()
-----------------
+---
+
+## final, finally and finalize()
+
 
 Modifier `final`:
 
@@ -1414,16 +1445,20 @@ result of a.a() is 2
 ```
 
 
-String, StringBuffer, StringBuilder
-----------------
+---
+
+## String, StringBuffer, StringBuilder
+
 The class `String` is immutable ( the immutable ) - modify an object of this class can not, we can only replace it with a new instance.
 
 The class is `StringBuffer` mutable - StringBuffer should be used when it is necessary to frequently modify the content.
 
 The class `StringBuilder` was added in Java 5 and is identical to the class in every StringBuffer way, except that it is not synchronized and therefore its methods are much faster.
 
-Reflection
-----------------
+---
+
+## Reflection
+
 Reflection is a mechanism for obtaining data about a program at runtime. In Java, Reflection is implemented using the Java Reflection API , which consists of the package classes java.langand java.lang.reflect.
 
 Java Reflection API features:
@@ -1436,8 +1471,10 @@ Java Reflection API features:
 - Creation of a new array.
 
 
-Exceptions
-----------------
+---
+
+## Exceptions
+
 
 Exceptions are divided into several classes, but they all have a common ancestor - a class `Throwable` whose descendants are classes `Exception` and `Error`.
 
@@ -1446,8 +1483,10 @@ Exceptions are divided into several classes, but they all have a common ancestor
 - **Exceptions** are the result of problems in the program that are, in principle, solvable, predictable, and the consequences of which can be eliminated within the program. For example, an integer was dividing by zero.
 
 
-Checked and Unchecked Exception
-----------------
+---
+
+## Checked and Unchecked Exception
+
 In Java, all exceptions are of two types:
 
 - **checked (checked / checked exceptions)** must be handled by the block catch or described in the method header (for example throws IOException). The presence of such a handler / modifier in the method header is checked at compile time;
@@ -1479,8 +1518,10 @@ class CustomException extends Exception {
 
 ```
 
-OutOfMemoryError
-----------------
+---
+
+## OutOfMemoryError
+
 OutOfMemoryError thrown when the Java virtual machine cannot create (allocate) an object due to insufficient memory, and the garbage collector cannot reclaim enough memory.
 
 The memory area occupied by a java process consists of several parts. The type OutOfMemoryErrordepends on which one is running out of space:
@@ -1492,8 +1533,10 @@ The memory area occupied by a java process consists of several parts. The type O
 - `java.lang.OutOfMemoryError`: unable to create new native thread: Thrown out when it is not possible to create new streams.
 
 
-Generics in Java
-----------------
+---
+
+## Generics in Java
+
 Java Generics provides a way to reuse the same code with different inputs. The difference is that the inputs to formal parameters are values, while the inputs to type parameters are types.
 
 Advantages:
@@ -1655,8 +1698,10 @@ public interface Map<K,V> {
 }
 ```
 
-Immutable object
-----------------
+---
+
+## Immutable object
+
 
 Immutable objects whose state (i.e. the object’s data) does not change once it is instantiated (i.e. it becomes a read-only object after instantiation). Immutable classes are ideal for representing numbers (e.g. java.lang.Integer, java.lang.Float, java.lang.BigDecimal etc are immutable objects), enumerated types, colors (e.g. java.awt.Color is an immutable object), short lived objects like events, messages etc.
 
@@ -1772,8 +1817,10 @@ As you can see in the output that the `MyImmutable` object has not been mutated.
 ```
 
 
-Pass by reference and Pass by value
----------------------
+---
+
+## Pass by reference and Pass by value
+
 Other languages use `pass-by-reference` or `pass-by-pointer`. But in Java no matter what type of argument you pass the corresponding parameter (primitive variable or object reference) will get a copy of that data, which is
 exactly how pass-by-value (i.e. copy-by-value) works.
 
@@ -1783,8 +1830,10 @@ If  method call involves inter-process (e.g. between two JVMs) communication, th
 by-value in a serialized form, which can have negative affect performance due to marshaling and unmarshaling cost.
 
 
-Shallow cloning and Deep cloning
----------------------
+---
+
+## Shallow cloning and Deep cloning
+
 The default behavior of an object’s clone() method automatically yields a shallow copy. So to achieve a deep copy the classes must be edited or adjusted.
 
 - **Shallow copy:** If a shallow copy is performed on object-1  then it is copied but its contained objects are not. The contained objects object-1 and object-2 are affected by changes to cloned Object-2. Java supports shallow cloning of objects by default when a class implements the java.lang.Cloneable interface.
@@ -1812,16 +1861,18 @@ public static List deepCopy(List listCars) {
 }
 ```
 
-Instance variable and a Static variable
----------------------
+---
+
+## Instance variable and a Static variable
+
 | Static variables       | Instance variables                         |
 |-----------------|-----------------------------------|
 | Class variables are called static variables. There is only one occurrence of a class variable per JVM per class loader. When a class is loaded the class variables (aka static variables) are initialized.          | Instance variables are non-static and there is one occurrence of an instance variable in each class instance (i.e. each object). Also known as a member variable or a field.                              |
 | A static variable is used in the singleton pattern           |  Instance variables we can not use                   |
 | A static variable is used with a final modifier to define constants.       |  Instance variables we can not use |
 
-Local variables vs Instance and static variables
----------------------
+### Local variables vs Instance and static variables
+
 
 | Local variables       | Instance and static variables                         |  
 |-----------------|-----------------------------------| 
@@ -1829,8 +1880,10 @@ Local variables vs Instance and static variables
 | The lifetime of a local variable is determined by execution path and local variables are also known as stack variables because they live on the stack.            | Instance and static variables are associated with objects and therefore live in the heap.                    |
 | For a local variable, it is illegal for code to fail to assign it a value. It is the best practice to declare local variables only where required as opposed to declaring them upfront and cluttering up your code with some local variables that never get used.       | Both the static and instance variables always have a value. If your code does not assign them a value then the run-time system will implicitly assign a default value (e.g. null/0/0.0/false). |
 
-Access modifiers
----------------------
+---
+
+## Access modifiers
+
 
 | Modifier       | Used with                         | Description                |
 |-----------------|-----------------------------------|---------------------------|
@@ -1839,8 +1892,10 @@ Access modifiers
 | private       | Constructors, inner classes,methods and field variables, | Accessed only within the class in which they are declared |
 | No modifier: (Package by default). | Outer classes, inner classes, interfaces, constructors, methods, and field variables                             | Accessed only from within the package in which they are declared.                      |
 
-Volatile keyword
----------
+---
+
+## Volatile keyword
+
 1. The volatile keyword is only applicable to a variable and using a volatile keyword with class and method is illegal.
 2. volatile keyword in Java guarantees that the value of the volatile variable will always be read from main memory and not from Thread's local cache.
 3. In Java reads and writes are atomic for all variables declared using Java volatile keyword (including long and double variables).
@@ -1852,8 +1907,8 @@ Volatile keyword
 9. Java volatile keyword doesn't mean atomic, its common misconception that after declaring volatile ++ will be atomic, to make the operation atomic you still need to ensure exclusive access using synchronized method or block in Java.
 10. If a variable is not shared between multiple threads, you don't need to use volatile keyword with that variable.
 
-synchronized vs volatile
----------
+###  synchronized vs volatile
+
 1. The volatile keyword in Java is a field modifier while synchronized modifies code blocks and methods.
 2. Synchronized obtains and releases the lock on monitor’s Java volatile keyword doesn't require that.
 3. Threads in Java can be blocked for waiting for any monitor in case of synchronized, that is not the case with the volatile keyword in Java.
@@ -1862,7 +1917,9 @@ synchronized vs volatile
 6. You can not synchronize on the null object but your volatile variable in Java could be null.
 
 
-For more information:
+---
+
+## For more information
 1. [Java 8 Features](https://javapapers.com/java/java-8-features/)
 2. [java-interview](https://github.com/enhorse/java-interview)
 2. [Java Generics Tutorial with Examples](https://www.javaguides.net/2018/08/java-generics-tutorial-with-examples.html)
