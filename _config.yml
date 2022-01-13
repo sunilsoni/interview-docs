@@ -1,7 +1,7 @@
 title: "Interview Docs"
 description: Interview questions and answers notes or docs
-baseurl: "/interview-docs" # the subpath of your site, e.g. /blog
-url: "https://github.com/sunilsoni" # the base hostname & protocol for your site, e.g. http://example.com
+# baseurl: "/interview-docs" # the subpath of your site, e.g. /blog
+# url: "https://github.com/sunilsoni" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
 exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/",".idea/", "README.md", "Rakefile"
