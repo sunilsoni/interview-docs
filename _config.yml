@@ -45,7 +45,7 @@ color_scheme: light
 back_to_top: true
 back_to_top_text: "Back to top"
 
-footer_content: "Copyright &copy; 2022-2023 Interview Docs"
+footer_content: "Copyright &copy; 2022-2023 Interview Docs Email: docs.interview@gmail.com"
 
 # Footer last edited timestamp
 last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
