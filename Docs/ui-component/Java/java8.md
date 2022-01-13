@@ -224,6 +224,103 @@ You can use Stream to filter, collect, print, and convert from one data structur
 
 ---
 
+
+
+## Parallel Streams
+
+The Stream API enables developers to create the parallel streams that can take advantage of multi-core architectures and enhance the performance of Java code. In a parallel stream, the operations are executed in parallel and there are two ways to create a parallel stream.
+
+- Using the parallelStream() method on a collection
+- Using the parallel() method on a stream
+
+Do remember, Parallel Streams must be used only with stateless, non-interfering, and associative operations i.e.
+
+- **A stateless** operation is an operation in which the state of one element does not affect another element
+- **A non-interfering** operation is an operation in which data source is not affected
+- **An associative** operation is an operation in which the result is not affected by the order of operands
+
+
+Let’s take a scenario where you have a list of employee objects and you have to count the employees whose salary is above 15000. Generally, to solve this problem you will iterate over list going through each employee and checking if employee’s salary is above 15000. This takes O(N) time since you go sequentially.
+
+Streams give us the flexibility to iterate over the list in a parallel pattern and can give the total in quick fashion. Stream implementation in Java is by default sequential unless until it is explicitly mentioned in parallel. When a stream executes in parallel, the Java runtime partitions the stream into multiple sub-streams. Aggregate operations iterate over and process these sub-streams in parallel and then combine the results.
+
+The only thing to keep in mind to create parallel stream is to call the parallelStream() method on the collection else by default the sequential stream gets returned by stream() method.
+
+###  Parallel Streams Performance Implications
+
+Parallel Stream has equal performance impacts as like its advantages.
+
+- Since each sub-stream is a single thread running and acting on the data, it has overhead compared to the sequential stream
+- Inter-thread communication is dangerous and takes time for coordination
+
+###  When to use Parallel Streams?
+
+- They should be used when the output of the operation is not needed to be dependent on the order of elements present in source collection (i.e. on which the stream is created)
+- Parallel Streams can be used in case of aggregate functions
+- Parallel Streams quickly iterate over the large-sized collections
+- Parallel Streams can be used if developers have performance implications with the Sequential Streams
+- If the environment is not multi-threaded, then Parallel Stream creates thread and can affect the new requests coming in
+- You have a large dataset to process.
+- As you know that Java uses ForkJoinPool to achieve parallelism, ForkJoinPool forks sources stream and submit for execution, so your source stream should be splittable.  
+   For example:
+  ArrayList is very easy to split, as we can find a middle element by its index and split it but LinkedList is very hard to split and does not perform very well in most of the cases.
+- You are actually suffering from performance issues.
+- You need to make sure that all the shared resources between threads need to be synchronized properly otherwise it might produce unexpected results.
+
+```java
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ParallelStreamDemo {
+
+  public static void main(String[] args) {
+
+    long t1, t2;
+    List<Employee> eList = new ArrayList<Employee>();
+    for(int i=0; i<100; i++) {
+      eList.add(new Employee("A", 20000));
+      eList.add(new Employee("B", 3000));
+      eList.add(new Employee("C", 15002));
+      eList.add(new Employee("D", 7856));
+      eList.add(new Employee("E", 200));
+      eList.add(new Employee("F", 50000));
+    }
+
+    /***** Here We Are Creating A 'Sequential Stream' & Displaying The Result *****/
+    t1 = System.currentTimeMillis();
+    System.out.println("Sequential Stream Count?= " + eList.stream().filter(e -> e.getSalary() > 15000).count());
+
+    t2 = System.currentTimeMillis();
+    System.out.println("Sequential Stream Time Taken?= " + (t2-t1) + "\n");
+
+    /***** Here We Are Creating A 'Parallel Stream' & Displaying The Result *****/
+    t1 = System.currentTimeMillis();
+    System.out.println("Parallel Stream Count?= " + eList.parallelStream().filter(e -> e.getSalary() > 15000).count());
+
+    t2 = System.currentTimeMillis();
+    System.out.println("Parallel Stream Time Taken?= " + (t2-t1));
+  }
+}
+```
+
+The application shows the following logs as output where creating a Sequential Stream and filtering elements took 178 ms, whereas Parallel Stream only took 15 ms.
+
+```log
+# Logs for 'SEQUENTIAL STREAM' #
+=============================
+Sequential Stream Count?= 300
+Sequential Stream Time Taken?= 178
+ 
+# Logs for 'PARALLEL STREAM' #
+===========================
+Parallel Stream Count?= 300
+Parallel Stream Time Taken?= 15 
+```
+
+---
+
+
 ## Intermediate and Terminal operations
 
  <img src="images/intermediate and terminal operations.png" width="1000" />
@@ -661,4 +758,5 @@ Method reference is used to refer method of the functional interface. It is a co
 ## For more information
 
 1. [Java 8 Lambda Expressions](https://www.javaguides.net/2018/07/java-8-lambda-expressions.html)
+2. [Java 8 Parallel Streams Example](https://examples.javacodegeeks.com/core-java/java-8-parallel-streams-example/)
 
