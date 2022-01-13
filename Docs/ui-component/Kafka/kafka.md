@@ -58,12 +58,14 @@ Most important of all, it can support message throughput at the rate of thousand
 
 - There is a sequential ID number given to the messages in the partitions what we call, an offset. So, to identify each message in the partition uniquely, we use these offsets.
 - Offset is nothing but a unique id that is assigned to the partitions. The messages are contained in this partitions. The important aspect or use of offset is that it identifies every message with the id which is available within the partition.
+
 ---
 
 ## Consumer group in Kafka
 
 
 A Consumer group is made up of one or more consumers that together subscribe to the different topics and fetch data from the brokers.
+
 ---
 
 ## ZooKeeper in Kafka
