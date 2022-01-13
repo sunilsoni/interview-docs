@@ -1544,8 +1544,8 @@ Advantages:
 - When using Generics, there is no need of type-casting.
 - By using generics, programmers can implement generic algorithms that work on collections of different types, can be customized and are type safe and easier to read.
 
-Benefits of Generics
-----------------
+### Benefits of Generics
+
 **1. Stronger type checks at compile time**
 
 A Java compiler applies strong type checking to generic code and issues errors if the code violates type safety. Fixing compile-time errors is easier than fixing runtime errors, which can be difficult to find.
@@ -1577,8 +1577,8 @@ String s = list.get(0);   // no cast
 
 ```
 
-Collection Framework examples for Generics
-----------------
+### Collection Framework examples for Generics
+
 
 For Example: `ArrayList` class declaration from java.util package.
 
@@ -1639,8 +1639,8 @@ public interface Comparable<T> {
 }
 ```
 
-Type Parameter Naming Conventions
-----------------
+### Type Parameter Naming Conventions
+
 
 By convention, type parameter names are single, uppercase letters. The type parameters naming conventions are important to learn generics thoroughly.
 
@@ -1653,8 +1653,8 @@ The most commonly used type parameter names are:
 - S, U, V etc. - 2nd, 3rd, 4th types
 
 
-Multiple Type Parameters
-----------------
+### Multiple Type Parameters
+
 A generic class can have multiple type parameters.
 **Example:** The generic OrderedPair class, which implements the generic Pair interface:
 
@@ -1706,14 +1706,14 @@ public interface Map<K,V> {
 Immutable objects whose state (i.e. the object’s data) does not change once it is instantiated (i.e. it becomes a read-only object after instantiation). Immutable classes are ideal for representing numbers (e.g. java.lang.Integer, java.lang.Float, java.lang.BigDecimal etc are immutable objects), enumerated types, colors (e.g. java.awt.Color is an immutable object), short lived objects like events, messages etc.
 
 
-Benefits of immutable objects
-----------------
+### Benefits of immutable objects
+
 - • Immutable classes can greatly simplify programming by freely allowing you to cache and share the references to the immutable objects without having to defensively copy them or without having to worry about their values becoming stale or corrupted.
 - • Immutable classes are inherently thread-safe and you do not have to synchronize access to them to be used in a multi-threaded environment. So there is no chance of negative performance consequences.
 - • Eliminates the possibility of data becoming inaccessible when used as keys in HashMaps or as elements in Sets. These types of errors are hard to debug and fix. 
 
-Immutable Class
-----------------
+### Immutable Class
+
 Writing an immutable class is generally easy but there can be some tricky situations. Follow the following guidelines:
 
 1. A class is declared `final` (i.e. final classes cannot be extended).
@@ -1729,8 +1729,8 @@ Writing an immutable class is generally easy but there can be some tricky situat
    - Declaring the mutable references as private.
    - Not returning or exposing the mutable references to the caller (this can be done by defensive copying)
 
-Wrong way to write an immutable class
----------------
+### Wrong way to write an immutable class
+
   
 -  Wrong way to write a constructor:
 
@@ -1773,8 +1773,8 @@ public  int[] getArray() {
 } 
 ```
 
-Right way to write an immutable class
----------------
+### Right way to write an immutable class
+
 
  Right way is to copy the array before assigning in the constructor:
 ```java
