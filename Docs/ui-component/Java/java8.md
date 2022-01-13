@@ -320,6 +320,45 @@ Parallel Stream Time Taken?= 15
 
 ---
 
+## Fork-Join Framework
+
+Parallel streams make use of the fork-join framework and its common pool of worker threads.
+
+The fork-join framework was added to java.util.concurrent in Java 7 to handle task management between multiple threads.
+
+The fork-join framework is in charge of splitting the source data between worker threads and handling callback on task completion.
+
+Let's take a look at an example of calculating a sum of integers in parallel.
+
+We'll make use of the reduce method and add five to the starting sum, instead of starting from zero:
+
+```java
+List<Integer> listOfNumbers = Arrays.asList(1, 2, 3, 4);
+int sum = listOfNumbers.parallelStream().reduce(5, Integer::sum);
+assertThat(sum).isNotEqualTo(15);
+
+```
+
+In a sequential stream, the result of this operation would be 15.
+
+But since the reduce operation is handled in parallel, the number five actually gets added up in every worker thread:
+
+The actual result might differ depending on the number of threads used in the common fork-join pool.
+
+In order to fix this issue, the number five should be added outside of the parallel stream:
+
+```java
+List<Integer> listOfNumbers = Arrays.asList(1, 2, 3, 4);
+        int sum = listOfNumbers.parallelStream().reduce(0, Integer::sum) + 5;
+        assertThat(sum).isEqualTo(15);
+```
+
+Therefore, we need to be careful about which operations can be run in parallel.
+
+
+
+---
+
 
 ## Intermediate and Terminal operations
 
@@ -759,4 +798,5 @@ Method reference is used to refer method of the functional interface. It is a co
 
 1. [Java 8 Lambda Expressions](https://www.javaguides.net/2018/07/java-8-lambda-expressions.html)
 2. [Java 8 Parallel Streams Example](https://examples.javacodegeeks.com/core-java/java-8-parallel-streams-example/)
+3. [When to Use a Parallel Stream in Java](https://www.baeldung.com/java-when-to-use-parallel-stream)
 
