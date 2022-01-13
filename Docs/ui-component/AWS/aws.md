@@ -98,7 +98,7 @@ listing of storage classes.
 
 **S3 Storage Classes**
 
-<img src="images/S3 Storage Classes.png" width="1000"/>
+<img src="AWS/images/S3 Storage Classes.png" width="1000"/>
 
 With one exception that we’ll cover in the following section, you’ll want the highest
 degree of durability available. Your choice of storage class then hinges upon your desired
@@ -463,7 +463,7 @@ CloudWatch Metrics is a feature that collects numeric performance metrics from b
 
 **Figure:** Using CloudWatch to graph the CPU Utilization metric for an EC2 Instance
 
-<img src="images/CloudWatch-Metrics.png" width="900"/>
+<img src="AWS/images/CloudWatch-Metrics.png" width="900"/>
 
 ### CloudWatch Alarms
 
@@ -494,7 +494,7 @@ CloudWatch dashboards are your one-stop shop for keeping an eye on all of your i
 
 Sample CloudWatch dashboard.
 
-<img src="images/CloudWatch dashboard.png" width="900"/>
+<img src="AWS/images/CloudWatch dashboard.png" width="900"/>
 
 ### CloudWatch Logs
 CloudWatch Logs collects and stores log files from AWS and non-AWS sources and makes it easy to view, search, and extract custom metrics from them.
@@ -626,7 +626,7 @@ You can generate cost and usage reports to give you a graphical view of your dai
 
 **Figure**: Cost and usage report showing monthly costs
 
-<img src="images/Cost and usage.png" width="900"/>
+<img src="AWS/images/Cost and usage.png" width="900"/>
 
 You can go back as far as one year and filter or group by several parameters including but not limited to the following:
 
@@ -644,7 +644,7 @@ This can help you quickly see which services are incurring the greatest costs an
 
 **Figure** :  Cost and usage report showing monthly costs grouped by service
 
-<img src="images/Cost and usage report showing monthly costs grouped by service.png" width="900"/>
+<img src="AWS/images/Cost and usage report showing monthly costs grouped by service.png" width="900"/>
 
 In addition to letting you create your own custom reports, Cost Explorer offers the following five default cost and usage reports:
 
@@ -673,7 +673,7 @@ The Reserved Instances (RI) Utilization report shows you the percentage of your 
 
 **Figure** :  RI Utilization report
 
-<img src="images/RI Utilization report.png" width="900"/>
+<img src="AWS/images/RI Utilization report.png" width="900"/>
 
 ### Reserved Instances Coverage
 
@@ -681,7 +681,7 @@ The Reserved Instances Coverage report tells you how many of your running instan
 
 **Figure**:  RI Coverage report
 
-<img src="images/RI Coverage report.png" width="900"/>
+<img src="AWS/images/RI Coverage report.png" width="900"/>
 
 ### Reserved instance recommendations
 
