@@ -20,7 +20,7 @@ parent: Micro Services
 
 API Gateway is a special class of microservices that meets the need of a single client application (such as android app, web app, angular JS app, iPhone app, etc) and provide it with single entry point to the backend resources (microservices), providing cross cutting concerns to them such as security, monitoring/metrics & resiliency
 
- <img src="./images-ms/API-Gateway.png" width="800" border="2" />
+ <img src="images/API-Gateway.png" width="800" border="2" />
 
 Client Application can access tens or hundreds of microservices concurrently with each request , aggregating the response and transforming them to meet the client application’s needs. Api Gateway can use a client side load balancer library (Ribbon) to distribute load across instances based on round-robin fashion. It can also do protocol translation i.e. HTTP to AMQP if necessary. It can handle security for the protected resources as well.
 
@@ -110,7 +110,7 @@ This can lead to cascading failures in the calling service due to threads being 
 
 A typical use of circuit breaker in microservices architecture looks like the following diagram-
 
- <img src="./images-ms/CircuitBreakerImplementation.png" width="600" border="2" />
+ <img src="images/CircuitBreakerImplementation.png" width="600" border="2" />
 
 Here a REST client calls the Recommendation Service which further communicates with Books Service using a circuit breaker call wrapper. As soon as the books-service API calls starts to fail, circuit breaker will trip (open) the circuit and will not make any further call to book-service until the circuit is closed again.
 

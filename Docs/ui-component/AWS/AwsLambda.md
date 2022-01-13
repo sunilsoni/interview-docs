@@ -5,18 +5,18 @@ parent: AWS
 ---
 
 # AWS Lambda
-
 {: .no_toc }
 
-## Table of contents
-{: .no_toc .text-delta }
-
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
 1. TOC
 {:toc}
+</details>
 
 ---
-
-##  Introducing AWS Lambda
 
 Lambda is a simple compute service that runs your code in response to certain events.
 These events can be anything, from an upload operation of an object to an S3 bucket, a
