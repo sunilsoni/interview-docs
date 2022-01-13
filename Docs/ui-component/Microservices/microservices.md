@@ -36,7 +36,7 @@ What is Micro Service?
 
 > Micro Service is an architecture that allows the developers to develop and deploy services independently. Each service running has its own process and this achieves the lightweight model to support business applications.
 
-<img src="./images-ms/Beehive-Representation-Microservices.png" width="700" border="2" />
+<img src="images-ms/Beehive-Representation-Microservices.png" width="700"/>
 
 ---
 
@@ -189,7 +189,7 @@ A microservice architecture has the components:
 - **Content Delivery Networks** – Distributed network of proxy servers and their data centers.
 - **Remote Service** – Enables the remote access information that resides on a network of IT devices.
 
-<img src="./images-ms/microservice-architecture.png" width="500" border="2" />
+<img src="images-ms/microservice-architecture.png" width="500" border="2" />
 
 ---
 
@@ -322,7 +322,7 @@ Now in our Rest Controller, we can create an instance of this ServiceResponse an
 
 Microservices Architecture can become cumbersome & unmanageable if not done properly. There are best practices that help design a resilient & highly scalable system. The most important ones are -
 
-<img src="./images-ms/Best Practices in Microservices Architecture.png" width="800" border="2" />
+<img src="images-ms/Best Practices in Microservices Architecture.png" width="800" border="2" />
 
 **Partition correctly**
 
@@ -551,7 +551,7 @@ These are unique IDs like GUID that can be passed from one service to another se
 
 Like any typical Java application, a microservice has layered architecture. Most common layers in any microservice are:
 
-<img src="./images-ms/Different Layers in a Single Microservice.png" width="700" border="2" />
+<img src="images-ms/Different Layers in a Single Microservice.png" width="700" border="2" />
 
 Note
 From layering perspective, any microservice is no different than any other 3-tier architecture application.
@@ -758,7 +758,7 @@ build.gradle - Eureka Client (to be included in all microservices).
 
 Eureka server provides a basic dashboard for monitoring various instances and their health in service registry. The ui is written in freemarker and provided out of the box without any extra configuration. Screenshot for Eureka Server looks like the following.
 
-<img src="./images-ms/Eureka Registry Screenshot.png" width="800" border="2" />
+<img src="images-ms/Eureka Registry Screenshot.png" width="800" border="2" />
 
 It contains list all services that are registered with Eureka Server. Each server has information like zone, host, port and protocol.
 
@@ -782,7 +782,7 @@ Eureka also comes with a Java-based client component, the eureka-client, which m
 
 Typical usecase for Eureka
 
-<img src="./images-ms/High Level Eureka Architecture.png" width="800" border="2" />
+<img src="images-ms/High Level Eureka Architecture.png" width="800" border="2" />
 
 There is usually one eureka server cluster per region (us, asia, europe, australia) which knows only about instances in its region. Services register with Eureka and then send heartbeats to renew their leases every 30 seconds. If the service can not renew their lease for few times, it is taken out of server registry in about 90 seconds. The registration information and the renewals are replicated to all the eureka nodes in the cluster. The clients from any zone can look up the registry information (happens every 30 seconds) to locate their services (which could be in any zone) and make remote calls.
 
@@ -796,7 +796,7 @@ More Information about eureka: https://github.com/Netflix/eureka/wiki/Eureka-at-
 
 Spring Cloud Config provides server and client side support for externalized configuration in a distributed system. With a config server we have a central place to manage external properties for applications across all environments. The default implementation of the config-server storage uses git so it easily supports labelled versions of configuration environments.
 
-<img src="./images-ms/Config Server Architecture.png" width="800" border="2" />
+<img src="images-ms/Config Server Architecture.png" width="800" border="2" />
 
 **Key features of Spring Cloud config-server**
 
