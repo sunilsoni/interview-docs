@@ -25,16 +25,20 @@ But we use multithreading than multiprocessing because threads share a common me
 Thread is executed inside the process. There is context-switching between the threads. There can be multiple processes inside the OS and one process can have multiple threads.
 
 
-Advantages of Multithreading:
--------------------
+---
+
+## Advantages of Multithreading:
+
 
 1. It doesn't block the user because threads are independent and you can perform multiple operations at same time.
 2. You can perform many operations simultaneously so it saves time.
 3. Threads are independent so it doesn't affect other threads if exception occur in a single thread.
 
 
-Life Cycle of a Thread
------------------------
+---
+
+## Life Cycle of a Thread
+
 A java thread can be in any of following thread states during it’s life cycle i.e. New, Runnable, Blocked, Waiting, Timed Waiting or Terminated. These are also called life cycle events of a thread in java.
 
 - **New** - The thread is in new state if you create an instance of Thread class but before the invocation of start() method.
@@ -48,7 +52,9 @@ A java thread can be in any of following thread states during it’s life cycle 
 
 
 
-Creating a Thread
+---
+
+## Creating a Thread
 -----------------
 There are two ways to create a thread:
 1. Extends Thread class
@@ -56,7 +62,8 @@ There are two ways to create a thread:
 
 
 
-- **Extends Thread class**
+### Extends Thread class
+
   Create a thread by a new class that extends Thread class and create an instance of that class. The extending class must override run() method which is the entry point of new thread.
 
 ```java
@@ -76,7 +83,8 @@ Output
 ```html
 Thread started running..
 ```
-- **Implementing the Runnable Interface**
+### Implementing the Runnable Interface
+
 
 After implementing runnable interface, the class needs to implement the run() method, which is public void run().
 
@@ -98,8 +106,9 @@ class MyThread implements Runnable {
 }
 ```
 
-Difference between Runnable vs Thread
---------------------------------------------------------
+---
+
+## Difference between Runnable vs Thread
 
 
 - Implementing Runnable is the preferred way to do it. Here, you’re not really specializing or modifying the thread’s behavior. You’re just giving the thread something to run. That means composition is the better way to go.
@@ -119,15 +128,17 @@ A thread can be defined in two ways. First, by extending a **Thread class** that
 |A user must extend thread class only if it wants to override the other methods in Thread class.|If you only want to specialize run method then implementing Runnable is a better option.|
 |Extending Thread class introduces tight coupling as the class contains code of Thread class and also the job assigned to the thread|	Implementing Runnable interface introduces loose coupling as the code of Thread is separate form the job of Threads.|
 
-synchronized keyword
-----------
+---
+
+## synchronized keyword
+
 `synchronized` keyword in java is used to control the access of multiple threads to any shared resource, so that any consistency problem can be avoided.
 We can make the entire method as `synchronized` or just the part where the shared resource is getting used, to do this `synchronized` blocks are used.
 
 Synchronized method/block can only have one thread executing inside it, all the other threads trying to enter into the `synchronized` method/block will get blocked until the thread inside finishes its execution. When the thread exits the `synchronized` method/block then Java guarantees that changes to the state of the object is visible to all the threads. This eliminates the memory inconsistency errors.
 
-static synchronization
-----------
+### static synchronization
+
 When synchronized keyword is used with a static method, then that is called static synchronization. In this, lock will be on the class not the object. This means only one thread can access the class at a time.
 
 The purpose of static synchronization is to make the static data thread-safe.
@@ -297,6 +308,8 @@ class Hello {
 }
 ```
 
+---
+
 ## What does join() method?
 
 `java.lang.Thread` class provides the `join()` method which allows one thread to wait until another thread completes its execution. `join()` method can be used to execute the threads sequentially or in some specific order.
@@ -378,8 +391,10 @@ These join methods are dependent on the underlying Operating system for timing. 
 You can execute threads in a sequence using CountDownLatch also.
 
 
-Deadlock
---------
+---
+
+## Deadlock
+
 Deadlock is a programming situation where two or more threads are blocked forever, this situation arises with at least two threads and two or more resources.
 
 
@@ -440,8 +455,8 @@ HiClass is calling HelloClass second() method
 ```
 
 
-How to avoid deadlock?
----------------
+### How to avoid deadlock?
+
 
 - **1. Avoid Nested Locks:**
 This is the most common reason for deadlocks, avoid locking another resource if you already hold one. It’s almost impossible to get deadlock situation if you are working with only one object lock. For example, here is the another implementation of run() method without nested lock and program runs successfully without deadlock situation.
@@ -471,17 +486,23 @@ public void run() {
 - **3. Avoid waiting indefinitely:**
   You can get deadlock if two threads are waiting for each other to finish indefinitely using thread join. If your thread has to wait for another thread to finish, it’s always best to use join with maximum time you want to wait for thread to finish.
 
-What will happen if I directly call the run() method and not the start() method to execute a thread?
-------
+---
+
+## What will happen if I directly call the run() method and not the start() method to execute a thread?
+
 
 if run() method is called directly, then a new thread will not be created instead the code will run on the current thread which is main thread. Calling run() method directly will make it behave as any other normal method call. Only a call to start() method creates separate thread.
 
-Once a thread has been started can it be started again?
-------
+---
+
+## Once a thread has been started can it be started again?
+
 No. A thread can be started only once in its lifetime. If you try to start a thread which has already been started, an IllegalThreadStateException is thrown, which is a runtime exception. A thread in runnable state or a dead thread cannot be restarted
 
-Why wait, notify and notifyAll methods are defined in the Object class instead of Thread class?
--------
+---
+
+## Why wait, notify and notifyAll methods are defined in the Object class instead of Thread class?
+
 The methods wait, notify and notifyAll are present in the Object class, that means they are available to all class objects, as Object class is the parent of all classes.
 - **wait() method** – it tells the current thread to release the lock and go to sleep until some other thread enters the same monitor and calls notify()
 - **notify() method** – wakes up the single thread that is waiting on the same object’s monitor
@@ -503,16 +524,20 @@ Now, apply this analogy to Java, one user is one thread and the washroom is the 
 
 In this example, the lock can be acquired on the key object or the service desk and none of them is a thread. These are the objects that decide whether the washroom is locked or not.
 
-Why wait(), notify(), notifyAll() methods must be called from synchronized block?
-------------
+---
+
+## Why wait(), notify(), notifyAll() methods must be called from synchronized block?
+
 These methods are used for inter-thread communication. So, a wait() method only makes sense when there is a notify() method also.
 If these methods are not called from a synchronized block then
 
 - IllegalMonitorStateException will be thrown
 - Race condition can occur
 
-wait() vs sleep() methods
------
+---
+
+## wait() vs sleep() methods
+
 
 The differences are:
 - `wait()` method can only be called from a synchronized context while `sleep()` method can be called without synchronized context
@@ -522,8 +547,9 @@ The differences are:
 - `wait()` method is non-static, it gets called on an object on which synchronization block is locked while `sleep()` is a static method, we call this method like Thread.sleep(), that means it always affects the currently executing thread
 - `wait()` is normally called when a condition is fulfilled like if the buffer size of queue is full then producer thread will wait, whereas `sleep()` method can be called without a condition
 
-Executor Framework
--------------
+---
+
+## Executor Framework
 
 With an Executor framework, we only have to implement the Runnable objects and send them to the executor. The executor is responsible for their execution, instantiation, and running with necessary threads. But it goes beyond that and improves performance using a pool of threads. When you send a task to the executor, it tries to use a pooled thread for the execution of this task, to avoid continuous spawning of threads.
 
@@ -543,8 +569,8 @@ Another important advantage of the Executor framework is the Callable interface.
 - A livelock is like a deadlock in the sense that two (or more) threads are blocking each other, but in a livelock, each thread tries to resolve the problem on its own (live) instead of just waiting (dead).
 - A race condition is a situation where two threads compete to access or modify the same resource at the same time in a way that causes unexpected results.
 
-High level concurrency features Executor framework
--------------
+### High level concurrency features Executor framework
+
 - ExecutorService Interface
 - ScheduledExecutorService Interface
 - Future Interface
@@ -553,8 +579,8 @@ High level concurrency features Executor framework
 - Executors newCachedThreadPool Method 
 - Executors newScheduledThreadPool Method 
 
-Executor Interface
--------------
+### Executor Interface
+
 
 An object that executes submitted Runnable tasks. This interface provides a way of decoupling task submission from the mechanics of how each task will be run, including details of thread use, scheduling, etc. An Executor is normally used instead of explicitly creating threads.
 
@@ -567,8 +593,8 @@ Executor executor = anExecutor;
         ...
 ```
 
-ExecutorService Interface
--------------
+### ExecutorService Interface
+
 The `ExecutorService` interface supplements execute with a similar, but more versatile submit method. Like `execute`, `submit` accepts Runnable objects, but also accepts `Callable` objects, which allow the task to return a value. The submit method returns a `Future` object, which is used to retrieve the `Callable` return value and to manage the status of both `Callable` and `Runnable` tasks.
 
 `ExecutorService` also provides methods for submitting large collections of `Callable` objects. 
@@ -610,8 +636,8 @@ public interface ExecutorService extends Executor {
 }
 ```
 
-ExecutorService Interface Examples
--------------
+### ExecutorService Interface Examples
+
 
 By  using Executors.newSingleThreadExecutor() method to create an ExecutorService that uses a single worker thread for executing tasks.
 
@@ -650,15 +676,15 @@ Thread main finished
 [pool-1-thread-1] Message 4
 ```
 
-Different Between execute() and submit() Methods
--------------
+### Different Between execute() and submit() Methods
+
 - The main difference is submit() method returns Future object for tracking the results but execute() method does't return anthing.
 - Both submit() and execute() methods are used to submit a task to Executor framework for asynchronous execution.
 - The submit() can accept both Runnable and Callable task but execute() can only accept the Runnable task.
 - You can access submit() and execute() from the ExecutorService interface because it also extends the Executor interface which declares the execute() method.
 
-ScheduledExecutorService Interface
--------------
+### ScheduledExecutorService Interface
+
 A ScheduledExecutorService can schedule commands to run after a given delay or to execute periodically.
 
 The schedule() methods create tasks with various delays and return a task object that can be used to cancel or check execution. The scheduleAtFixedRate() and scheduleWithFixedDelay() methods create and execute tasks that run periodically until cancelled.
@@ -701,8 +727,9 @@ Thread main finished
 Executing the task1 at: Sat Sep 01 10:56:45 IST 2018
 Executing the task2 at: Sat Sep 01 10:56:45 IST 2018
 ```
-Future Interface
--------------
+
+### Future Interface
+
 
 Future is a generic interface that represents the value that will be returned by a Callable object. Because this value is obtained at some future time, the name Future is appropriate.
 
@@ -782,8 +809,10 @@ Result of Future object:: 15
 Thread main finished
 ```
 
-Executor Framework-2
--------------
+---
+
+## Executor Framework-2
+
 With an Executor framework, we only have to implement the Runnable objects and send them to the executor. The executor is responsible for their execution, instantiation, and running with necessary threads. But it goes beyond that and improves performance using a pool of threads. When you send a task to the executor, it tries to use a pooled thread for the execution of this task, to avoid continuous spawning of threads.
 
 Another important advantage of the Executor framework is the Callable interface. It's similar to the Runnable interface, but offers two improvements, which are as follows:
@@ -917,7 +946,9 @@ BlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue<Runnable>(50);
 ```
 
 
-For more information:
+---
+
+## For more information
 1. [How to join two threads in Java? Thread.join()](https://www.java67.com/2015/07/how-to-join-two-threads-in-java-example.html)
 2. [Multithreading Interview Questions and Answers](https://github.com/learning-zone/java-interview-questions/blob/master/multithreading-questions.md)
 3. [ExecutorService Interface Overview](https://www.javaguides.net/2018/09/executorservice-interface-in-java.html)
