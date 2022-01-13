@@ -17,9 +17,10 @@ parent: Java
 </details>
 
 ---
+ 
 
-New features
-------------
+## New features
+
 
 - **Lambda Expressions** − a new language feature allowing treating actions as objects •Method References − enable
   defining Lambda Expressions by referring to methods directly using their names
@@ -32,13 +33,15 @@ New features
 - **Stream API** − a special iterator class that allows processing collections of objects in a functional manner
 - **Date and Time API** − an improved, immutable JodaTime-inspired Date API
 
-# Lambda Expressions
+---
+
+## Lambda Expressions
 
 A lambda expression is an unnamed block of code (or an unnamed function) with a list of formal parameters and a body.
 Sometimes a lambda expression is simply called a lambda. The body of a lambda expression can be a block statement or an
 expression. An arrow (->) is used to separate the list of parameters and the body.
 
-## Examples of lambda expressions
+###  Examples of lambda expressions
 
 Takes an int parameter and returns the parameter value incremented by 1
 
@@ -141,8 +144,8 @@ name=Kristy, mapped value=6
   arguments, and a cast expression.
 - Default methods of a functional interface cannot be accessed from within lambda expressions.
 
-Why use Lambda Expression
--------------------------
+### Why use Lambda Expression
+
 
 - To provide the implementation of the Java 8 Functional Interface.
 - Less coding.
@@ -150,8 +153,8 @@ Why use Lambda Expression
   expressions if you want a certain action performed on each element of a collection, when a process is completed, or
   when a process encounters an error.
 
-Lambda Expressions Syntax
--------------------------
+### Lambda Expressions Syntax
+
 
 Java Lambda Expression Syntax
 
@@ -178,8 +181,7 @@ lambda expression cannot be generic.
 
 Examples of Lambda Expressions and Equivalent Methods
 
-Java Lambda Expression Syntax :
--------------------------------
+### Java Lambda Expression Syntax 
 
 - Generic Java Lambda Expression Syntax `(argument-list) -> {body} `
 - Java Lambda Expression with No Parameter: `() -> { Systen.out.printIn("Lamda Expression"); };`
@@ -196,15 +198,17 @@ Java Lambda Expression Syntax :
         };
 ```
 
-Stream
-------
+
+---
+
+## Stream  
 
 Java provides a new additional package in Java 8 called `java.util.stream`. This package consists of classes,
 interfaces, and an enum to allows functional-style operations on the elements. You can use stream by importing
 java.util.stream package in your programs.
 
-Stream features
----------------
+###  Stream features
+
 
 - Stream does not store elements. It simply conveys elements from a source such as a data structure, an array, or an I/O
   channel, through a pipeline of computational operations.
@@ -216,6 +220,9 @@ Stream features
   generated to revisit the same elements of the source.
 
 You can use Stream to filter, collect, print, and convert from one data structure to other etc.
+
+
+---
 
 ## Intermediate and Terminal operations
 
@@ -256,8 +263,10 @@ You can use Stream to filter, collect, print, and convert from one data structur
 - findFirst    
 - findAny
 
-Functional Interface
---------------------
+---
+
+## Functional Interface
+
 
 - An Interface that contains exactly one abstract method is known as a functional interface.
 - It can have any number of `default`, `static` methods but can contain only one abstract method. It can also declare
@@ -277,8 +286,8 @@ Functional Interface
 - A functional interface is valid even if the @FunctionalInterface annotation would be omitted.
 - Functional interfaces are the basis of lambda expressions
 
-Custom Functional Interface
----------------------------
+### Custom Functional Interface
+
 
 ```java
 @FunctionalInterface
@@ -300,8 +309,11 @@ public class FunctionalInterfacesExample {
 }
 ```
 
-Predefined Functional Interfaces
---------------------------------
+
+---
+
+### Predefined Functional Interfaces
+
 
 Java 8 provides predefined functional interfaces to deal with functional programming by using lambda and method
 references.
@@ -321,8 +333,8 @@ public class Person {
 }
 ```
 
-Predicate
----------
+#### Predicate
+
 
 We need a function for checking a condition. A Predicate is one such function accepting a single argument to evaluate to
 a boolean result. It has a single method test that returns the boolean value.
@@ -377,8 +389,8 @@ public class PredicateExample {
 }
 ```
 
-Function
---------
+#### Function
+
 
 It represents a function that accepts one argument and returns a result.
 
@@ -455,8 +467,8 @@ class PersonDTO {
 }
 ```
 
-Supplier
---------
+#### Supplier
+
 
 Represents a supplier of results.
 
@@ -495,8 +507,8 @@ public class SuppliersExample {
 }
 ```
 
-Consumer
---------
+#### Consumer
+
 
 It represents an operation that accepts a single argument and returns no result. Internal implementation of the Consumer
 interface. The consumer interface contains exactly one abstract method accept(T arg0). Hence we can apply lambda
@@ -545,8 +557,8 @@ public class ConsumersExample {
 }
 ```
 
-BiFunction
-----------
+#### BiFunction
+
 
 To define lambdas with two arguments, we have to use additional interfaces that contain "Bi" keyword in their names: BiFunction, ToDoubleBiFunction, ToIntBiFunction, and ToLongBiFunction.
 BiFunction implementation that receives a key and an old value to calculate a new value for the salary and return it.
@@ -587,8 +599,8 @@ public class BiFunctionExample {
 }
 ```
 
-BiConsumer
-----------
+#### BiConsumer
+
 
 It represents an operation that accepts two input arguments and returns no result. Internal implementation of BiConsumer
 interface. BiConsumer interface contains exactly one abstract method accept(T arg0, U arg1). Hence we can apply lambda
@@ -630,20 +642,23 @@ public class BiConsumersExample {
 
 You can also define your own custom functional interface. Following is the list of a functional interface that is placed in java.util.function package.
 
-Method References
------------------
+---
+
+## Method References
+
 
 Method reference is used to refer method of the functional interface. It is a compact and easy form of a lambda expression. Each time when you are using a lambda expression to just referring a method, you can replace your lambda expression with method reference.
 
-Method References Types:
-------------------------
+### Method References Types
 
 - Reference to a static method : `ContainingClass::staticMethodName`
 - Reference to an instance method of a particular object : `containingObject::instanceMethodName`
 - Reference to an instance method of an arbitrary object of a particular type : `ContainingType::methodName`
 - Reference to a constructor: `ClassName::new`
 
-For more information:
+---
+
+## For more information
 
 1. [Java 8 Lambda Expressions](https://www.javaguides.net/2018/07/java-8-lambda-expressions.html)
 
