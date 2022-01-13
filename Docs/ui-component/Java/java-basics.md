@@ -1483,9 +1483,7 @@ Exceptions are divided into several classes, but they all have a common ancestor
 - **Exceptions** are the result of problems in the program that are, in principle, solvable, predictable, and the consequences of which can be eliminated within the program. For example, an integer was dividing by zero.
 
 
----
-
-## Checked and Unchecked Exception
+### Checked and Unchecked Exception
 
 In Java, all exceptions are of two types:
 
@@ -1494,9 +1492,9 @@ In Java, all exceptions are of two types:
   
 - **unchecked (unchecked / unchecked exceptions)** , which include errors Error(for example OutOfMemoryError), which are not recommended to be handled, and runtime exceptions presented by the class RuntimeExceptionand its descendants (for example NullPointerException), which may not be handled by the block catchand not described in the method header.
   Class errors `Error` are the most serious problems at the JVM level. For example, exceptions of this kind are thrown if the memory available to the virtual machine runs out. It is not prohibited to handle such errors, but it is not recommended to do so.
-  
-Custom exception:
-----------------
+
+### Custom exception
+
 You must inherit from the base class of the required type of exception (for example, from `Exception` or `RuntimeException`).
 
 ```java
