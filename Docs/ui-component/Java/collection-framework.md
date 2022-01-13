@@ -25,8 +25,11 @@ Some points:
 - Iterable interface is the root interface for all collection classes, it has one abstract method iterator()
 - Collection interface extends the Iterable interface
 
-ArrayList
--------
+
+---
+
+## ArrayList
+
 - An ArrayList is a re-sizable array, also called a dynamic array. It grows its size to accommodate new elements and shrinks the size when the elements are removed.
 - ArrayList internally uses an array to store the elements. Just like arrays, It allows you to retrieve the elements by their index.
 - ArrayList allows duplicate and null values.
@@ -34,23 +37,23 @@ ArrayList
 - You cannot create an ArrayList of primitive types like int, char etc. You need to use boxed types like Integer, Character, Boolean etc.
 - ArrayList is not synchronized. If multiple threads try to modify an ArrayList at the same time, then the final outcome will be non-deterministic. You must explicitly synchronize access to an ArrayList if multiple threads are gonna modify it.
 
-Accessing elements
--------
+###  Accessing elements
+
 - check if an ArrayList is empty using the `isEmpty()` method.
 - find the size of an ArrayList using the `size()` method.
 - access the element at a particular index in an ArrayList using the `get()` method.
 - modify the element at a particular index in an ArrayList using the `set()` method.
 
-Removing elements
------------
+###  Removing elements
+
 - remove the element at a given index in an ArrayList using `remove(int index)`
 - remove an element from an ArrayList using `remove(Object o)`
 - remove all the elements from an ArrayList that exist in a given collection using `removeAll()`
 - remove all the elements matching a given predicate using `removeIf()`
 - clear an ArrayList using `clear()`
 
-Iterating over an ArrayList
------------
+###  Iterating over an ArrayList
+
 - Java 8 forEach and lambda expression.
 - iterator().
 - iterator() and Java 8 forEachRemaining() method.
@@ -58,21 +61,23 @@ Iterating over an ArrayList
 - Simple for-each loop.
 - for loop with index.
 
-Searching for elements in an ArrayList
-----------
+###  Searching for elements in an ArrayList
+
 - Check if an ArrayList contains a given element | contains()
 - Find the index of the first occurrence of an element in an ArrayList | indexOf()
 - Find the index of the last occurrence of an element in an ArrayList | lastIndexOf()
 
-Sorting an ArrayList
-----------
+###  Sorting an ArrayList
+
 - Sort an ArrayList using `Collections.sort()` method.
 - Sort an ArrayList using `ArrayList.sort()` method.
 - Sort an ArrayList of user defined objects with a custom comparator.
 
 
-HashMap
--------
+
+---
+
+## HashMap
 
 HashMap class implements the Map interface and it stores data in key, value pairs. HashMap provides constant time performance for its get() and put() operations, assuming the equals and hashcode method has been implemented properly, so that elements can be distributed correctly among the buckets.
 
@@ -85,8 +90,7 @@ Some points to remember:
 - Hashmap has a default initial capacity of 16, which means it has 16 buckets or bins to store map entries, each bucket is a singly linked list. The default load factor in HashMap is 0.75
 - Load factor is that threshold value which when crossed will double the hashmap’s capacity i.e. when you add 13th element in hashmap, the capacity will increase from 16 to 32
 
-HashMap Internal working
--------
+###  HashMap Internal working
 
 - HashMap works on the principal of hashing.
 - HashMap in Java uses the `hashCode()` method to calculate a hash value. Hash value is calculated using the key object. This hash value is used to find the correct bucket where Entry object will be stored.
@@ -163,24 +167,24 @@ Objects are stored internally in `table` array of the HashMap class.
 
 
 
-How put() method of HashMap works internally
------------------------------------
+###  How put() method of HashMap works internally
+
 There are 3 steps in the internal implementation of HashMap put() method-
 
 - Using `hashCode()` method, hash value will be calculated. In which bucket particular entry will be stored is ascertained using that hash.
 - `equals()` method is used to find if such a key already exists in that bucket, if not found then a new node is created with the map entry and stored within the same bucket. A linked-list is used to store those nodes.
 - If `equals()` method returns true, it means that the key already exists in the bucket. In that case, the new value will overwrite the old value for the matched key.
 
-How  HashMap get() method works internally
------------------------------------
+###  How  HashMap get() method works internally
+
 Using the key (passed in the get() method) hash value will be calculated to determine the bucket where that Entry object is stored, in case there are more than one Entry object with in the same bucket (stored as a linked-list) equals() method will be used to find out the correct key. As soon as the matching key is found get() method will return the value object stored in the Entry object.
 
-When null Key is inserted in a HashMap
------------------------------------
+###  When null Key is inserted in a HashMap
+
 HashMap in Java also allows null as key, though there can only be one null key in HashMap. While storing the Entry object HashMap implementation checks if the key is null, in case key is null, it is always mapped to bucket 0, as hash is not calculated for null keys.
 
-HashMap implementation changes in Java 8
------------------------------------
+###  HashMap implementation changes in Java 8
+
 HashMap implementation in Java provides constant time performance O(1) for get() and put() methods but that is in the ideal case when the Hash function distributes the objects evenly among the buckets.
 
 But the performance may worsen in the case hashCode() used is not proper and there are lots of hash collisions. As we know now that in case of hash collision entry objects are stored as a node in a linked-list and equals() method is used to compare keys. That comparison to find the correct key with in a linked-list is a linear operation so in a worst case scenario the complexity becomes O(n).
@@ -189,8 +193,7 @@ To fix this issue in Java 8 hash elements use balanced trees instead of linked l
 
 
 
-Interal working of put() and get() methods of HashMap :
------------------------------------
+###  Interal working of put() and get() methods of HashMap 
 
 - **put() method internal working**:
 When you call map.put(key,value), the below things happens:
@@ -270,8 +273,8 @@ this .loadFactor = DEFAULT_LOAD_FACTOR ; // all other fields defaulted
 ```
 So, to conclude, Hashmap internally uses an array of Nodes named as table where each Node contains the calculated hash value, the key-value pair and the address to the next node.
 
-HashMap collisions
-------------------
+###  HashMap collisions
+
 It is possible that multiple keys will make the hash function generate the same index, this is called a collision. It happens because of poor hashcode method implementation.
 
 One collision handling technique is called Chaining. Since every element in the array is a linked list, the keys which have the same hash function will be appended to the linked list.
@@ -396,8 +399,8 @@ hashmap capacity: 32
 hashmap size: 13
 ```
 
-equals and hashCode method in HashMap when the key is a custom class
------------------
+###  equals and hashCode method in HashMap when the key is a custom class
+
 
 `equals` and `hashCode` methods are called when we store and retrieve values from hashmap.
 
@@ -675,8 +678,10 @@ How to make a HashMap synchronized?
 
 Collections.synchronizedMap(map);
 
-Concurrent HashMap
-------------------
+
+---
+
+## Concurrent HashMap
 
 `ConcurrentHashMap` class provides concurrent access to the map, this class is very similar to `HashTable`, except that `ConcurrentHashMap` provides better concurrency than `HashTable` or even `synchronizedMap`.
 
@@ -691,8 +696,7 @@ Some points to remember:
 - get() method returns the most recently updated value
 - iterators returned by `ConcurrentHashMap` are fail-safe and never throw `ConcurrentModificationException`
 
-ConcurrentHashMap vs Synchronized HashMap
-------------------
+###  ConcurrentHashMap vs Synchronized HashMap
 
 **Synchronized HashMap**：
 - Each method is synchronized using an object level lock. So the get and put methods on synchMap acquire a lock.
@@ -707,8 +711,11 @@ ConcurrentHashMap vs Synchronized HashMap
 
 
 
-HashSet class
---------------
+
+---
+
+## HashSet class
+
 HashSet is a class in Java that implements the Set Interface and it allows us to have the unique elements only. HashSet class does not maintain the insertion order of elements, if you want to maintain the insertion order, then you can use LinkedHashSet.
 
 - **Internal implementation of HashSet:**
@@ -752,8 +759,11 @@ The passed object is given to map.containsKey() method, as the HashSet’s value
 NOTE: If you are adding a custom class object inside the HashSet, do follow equals and hashCode contract.
 
 
-TreeMap
--------
+
+---
+
+## TreeMap
+
 TreeMap class is one of the implementation of Map interface.
 
 Some points to remember:
@@ -1015,8 +1025,11 @@ public V put(K key , V value ) {
 ```
 
 
-TreeSet
----------
+
+---
+
+## TreeSet
+
 
 TreeSet class is one of the implementation of Set interface
 
@@ -1043,12 +1056,16 @@ public class TreeSet<E> extends AbstractSet<E>
 
 ```
 
-fail-safe and fail-fast iterators
---------
+
+---
+
+## fail-safe and fail-fast iterators
+
 
 Iterators in Java are used to iterate over the Collection objects.
 
-- **Fail-fast iterators** : 
+###  Fail-fast iterators
+
 immediately throw `ConcurrentModificationException`, if the collection is modified while iterating over it. `Iterator` of `ArrayList` and `HashMap` are fail-fast iterators.
 All the collections internally maintain some sort of array to store the elements, Fail-fast iterators fetch the elements from this array. Whenever, we modify the collection, an internal field called modCount is updated. This modCount is used by Fail-safe iterators to know whether the collection is structurally modified or not. Every time when the Iterator’s next() method is called, it checks the modCount. If it finds that modCount has been 
 
@@ -1177,7 +1194,7 @@ final void checkForComodification() {
 
 On the other hand, 
 
-- **Fail-safe iterators**
+###  Fail-safe iterators
 
 does not throw `ConcurrentModificationException` , because they operate on the clone of the collection, not the actual collection. This also means that any modification done on the actual collection goes unnoticed by these iterators. The last statement is not always true though, sometimes it can happen that the iterator may reflect modifications to the collection after the iterator is created. But there is no guarantee of it. CopyOnWriteArrayList, ConcurrentHashMap are the examples of fail-safe iterators.
 
@@ -1254,7 +1271,10 @@ List: [1, 2, 3, 4, 4, 4]
 
 
 
-For more information:
+
+---
+
+## For more information
 
 1. [Java ArrayList Tutorial with Examples](https://www.callicoder.com/java-arraylist/)
 2. [Guide to the Java ArrayList](https://www.baeldung.com/java-arraylist)
