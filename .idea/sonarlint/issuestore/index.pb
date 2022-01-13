@@ -6,8 +6,6 @@ S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 W
 'Docs/ui-component/DevOps/Linux/Linux.md,4/7/476ab8dc741105dee84bb579a25a50d63d48b38f
-W
-'Docs/ui-component/DevOps/Maven/Maven.md,3/a/3a108b00b17d986979042cd99cc5c6ae62b8fa48
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 T
@@ -52,7 +50,5 @@ _
 /Docs/ui-component/Microservices/Transactions.md,0/d/0d0794b4dd5b5a25885ee8bf79788cd1b520c7ef
 ^
 .Docs/ui-component/Microservices/api-gateway.md,5/1/510f74a05c2226c9b63af8d7f2a91f498652e6ce
-N
-Docs/ui-component/Java/Java.md,f/1/f160ffd65e163a736dc60866380df73a470ea310
 `
 0Docs/ui-component/Microservices/microservices.md,f/e/fe4f6f2de585d24d4474c2ac4ad18c696a648436
