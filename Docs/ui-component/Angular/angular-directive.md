@@ -18,9 +18,6 @@ parent: Angular
 
 ---
 
-Angular Directive
-==================
-
 
 Directives are custom HTML attributes which tell angular to change the style or behavior of the Dom elements. When we
 say that components are the building blocks of Angular applications, we are actually saying that directives are the
@@ -42,8 +39,10 @@ and it extends the HTML.
  <img src="images/dom-manipulation.png" width="400" border="2" />
 
 
-Components Directives:
-----------------
+---
+
+##  Components Directives
+
 
 Components are the most common of the directives. It contains the details of how the component should be processed,
 instantiated, and used at runtime. The component comprises meta-data.
@@ -66,8 +65,10 @@ Here, list-item is a component and items is the input option. We will learn how 
 in the later chapters.
 
 
-Structural Directives:
-----------------
+---
+
+##  Structural Directives
+
 Structural Directives are done in the elements section. These directives are used to manipulate and change the structure
 of the DOM elements. Structural directives have a star (*) sign before the directive. Like as,* ngIf, *ngFor, and *
 ngSwitch directive.
@@ -142,8 +143,9 @@ The `NgSwitchDefault` displays its host element when no sibling `NgSwitchCase` m
 
 
 
-Attribute Directives:
-----------------
+---
+
+##  Attribute Directives
 
 It deals with changing the look and behavior of the DOM element. For example: `ngClass`, `ngStyle` etc.
 
@@ -183,8 +185,10 @@ condition.
 In this code snippet, we are adding a blue background if the value of isBlue variable is true. If the value of `isBlue`
 variable is false, then the background of the above element will be red.
 
-How to Create Custom Directives?
-----------------
+---
+
+##  How to Create Custom Directives
+
 
 We can create our custom directives to use in Angular components with the help of the command line. The command which is
 used to develop the Directive using the command line is as follows-
@@ -275,16 +279,19 @@ Element.nativeElement.innerText= "Text is changed by changeText Directive.";
 In the above file, there is a class known as `ChangeTextDirective`, and also a constructor.
 
 
-Structural Directive vs Attribute Directive:
-----------------
+---
+
+##  Structural Directive vs Attribute Directive
+
 
 |  Structural Directive       |  Attribute Directive  |
 | ----------- | ----------- |
 | Structural directives are applied to `<template>` elements and used to add or remove content (stamp and template).      | The component has their view (HTML and styles) because of that, there can be one component on a host element, but multiple directives.       |
 
 
-Component vs Directive:
-----------------
+---
+
+##  Component vs Directive
 
 
 A component is also a type of directive with template, styles and logic part.
@@ -338,7 +345,9 @@ Because of that there can only be one component on a host element, but multiple 
 Structural directives are directives applied to <template> elements and used to add/remove content (stamp the template). The * in directive applications like *ngIf causes a <template> tag to be created implicitly.
 
 
-For more information:
+---
+
+##  For more information
 
 1. [Angular 8 Directives](https://www.tutorialandexample.com/angular-8-directives/)
 2. [Angular 8 - Directives](https://www.tutorialspoint.com/angular8/angular8_directives.htm)
