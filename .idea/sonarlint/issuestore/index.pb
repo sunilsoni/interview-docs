@@ -8,8 +8,6 @@ S
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 r
 BDocs/ui-component/Data Structures and Algorithms/data-structure.md,b/5/b5c5b55eaaf16829eeaa66862cec007c179148c2
-N
-Docs/ui-component/OOPS/oops.md,c/1/c16a2a9c3af001e39bedc7bdb772f05995d31402
 P
  Docs/ui-component/React/React.md,7/3/73653a8bd1782c474060862507f248d2d67d98dd
 W
@@ -28,8 +26,6 @@ n
 >Docs/ui-component/Design Patterns/behavioral-design-pattern.md,1/0/10736d10b2c1763108ca250622312a73a6440552
 c
 3Docs/ui-component/Design Patterns/design-pattern.md,7/f/7fb9bdef26f5e8dc0867ca58f560751da061dd89
-R
-"Docs/ui-component/Docker/Docker.md,f/d/fd906961d5f759ac9813011a8fe192ea82c0d141
 R
 "Docs/ui-component/Spring/Spring.md,6/2/62fefdbda5f58ac84e93892f73ac506ac1721c63
 X
