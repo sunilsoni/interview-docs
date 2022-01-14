@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Object-oriented programming(OOPS)
+title: OOPS
 nav_order: 2
 ---
 
