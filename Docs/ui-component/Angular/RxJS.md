@@ -18,9 +18,7 @@ parent: Angular
 
 ---
 
-
-RxJS
-====
+ 
 
 RxJS is a library for composing asynchronous and callback-based code in a functional, reactive style using Observables. Many APIs such as  HttpClient produce and consume RxJS Observables and also uses operators for processing observables.
 
@@ -32,8 +30,9 @@ import { catchError, retry } from 'rxjs/operators';
 ```
 
 
-Utility functions provided by RxJS
--------------
+---
+
+##  Utility functions provided by RxJS 
 
 The RxJS library also provides below utility functions for creating and working with observables.
 1. Converting existing code for async operations into observables
@@ -43,8 +42,10 @@ The RxJS library also provides below utility functions for creating and working 
 5. Composing multiple streams
 
 
-RxJS Operator
--------------
+---
+
+##  RxJS Operator 
+
 RxJS Operators are pure functions that transform information in the observable stream that create new observables, often based on the current observable.
 
 The operators can be broken down in multiple categories. There are `creation operators` that create a new observable optionally from a source, such as a promise or a value, `Transformation operators` will transform the data in the stream, and `filtration operators` will act as a gate for the observable stream.
@@ -297,8 +298,9 @@ Output
 The above example will take only the first five elements after every 5 seconds with the 1-second interval for five seconds.
 
 
-What is subscribing?
--------------------
+---
+
+##  What is subscribing?
 
 
 An Observable instance begins publishing values only when someone subscribes to it. So you need to subscribe by calling the **subscribe()** method of the instance, passing an observer object to receive the notifications.
@@ -326,8 +328,10 @@ myObservable.subscribe(myObserver);
 
 
 
-Observable
------------- 
+---
+
+##  Observable
+
 
 An Observable is a unique Object similar to a Promise that can help manage async code. Observables are not part of the JavaScript language so we need to rely on a popular Observable library called RxJS.
 The observables are created using new keyword.
@@ -342,8 +346,10 @@ const observable = new Observable(observer => {
 ```
 
 
-Observer
------------- 
+---
+
+##  Observer
+
 
 Observer is an interface for a consumer of push-based notifications delivered by an Observable. It has below structure,
 ```typescript
@@ -361,8 +367,7 @@ myObservable.subscribe(myObserver);
 *Note: If you do not supply a handler for a notification type, the observer ignores notifications of that type.*
 
 
-Error handling in observables
------------- 
+###  Error handling in observables 
 
 We can handle errors by specifying an **error callback** on the observer instead of relying on try/catch which are ineffective in asynchronous environment. For example, you can define error callback as below,
 ```typescript
@@ -373,8 +378,7 @@ myObservable.subscribe({
 ```
 
 
-Observable creation functions
------------- 
+###  Observable creation functions 
 
 RxJS provides creation functions for the process of creating observables from things such as promises, events, timers and Ajax requests. Let us explain each of them with an example,
 
@@ -414,13 +418,13 @@ const subscription = mouseMoves.subscribe((e: MouseEvent) => {
 ```
 
 
-What will happen if you do not supply handler for observer?
------------- 
+###  What will happen if you do not supply handler for observer? 
 
 Normally an observer object can define any combination of next, error and complete notification type handlers. If you do not supply a handler for a notification type, the observer just ignores notifications of that type.
 
-Promise vs Observable
------------- 
+---
+
+##  Promise vs Observable 
 
 **Promises**:
 
@@ -444,8 +448,9 @@ Promise vs Observable
 | Subscribe method is used for error handling which makes centralized and predictable error handling| Push errors to the child promises |
 | Provides chaining and subscription to handle complex applications | Uses only .then() clause |
 
-Async Pipe
------------- 
+---
+
+##  Async Pipe 
 
 The AsyncPipe subscribes to an observable or promise and returns the latest value it has emitted. When a new value is emitted, the pipe marks the component to be checked for changes.
 Lets take a time observable which continuously updates the view for every 2 seconds with the current time.
@@ -463,8 +468,9 @@ export class AsyncObservablePipeComponent {
 }
 ```
 
-HttpClient
------------- 
+---
+
+##  HttpClient 
 
 3 steps need to be followed for the usage of HttpClient.
 
@@ -514,8 +520,7 @@ fetchUserProfile() {
 ```
 Since the above service method returns an Observable which needs to be subscribed in the component.
 
-Error handling
------------- 
+###  Error handling 
 
 If the request fails on the server or failed to reach the server due to network issues then HttpClient will return an error object instead of a successful reponse. In this case, we need to handle in the component by passing error object as a second callback to subscribe() method.
 
@@ -531,10 +536,8 @@ fetchUser() {
 
 It is always a good idea to give the user some meaningful feedback instead of displaying the raw error object returned from HttpClient.
 
+###  Advantages
 
-
-
-**Advantages**
 * Contains testability features
 * Provides typed request and response objects
 * Intercept request and response
