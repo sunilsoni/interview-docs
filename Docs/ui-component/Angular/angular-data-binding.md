@@ -47,7 +47,8 @@ Data binding is a core concept in Angular and allows to define communication bet
 ##  From the DOM to the Component
 
 ###  3. Event binding
-`(event) = "function"`: When a specific DOM event happens (eg.: click, change, keyup), call the specified method in the component
+
+(event) = "function": When a specific DOM event happens (eg.: click, change, keyup), call the specified method in the component
 
 ```html
 <button (click)="logout()"></button>
