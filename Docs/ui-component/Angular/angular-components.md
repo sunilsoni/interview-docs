@@ -50,14 +50,19 @@ component is nothing but a simple typescript class and composed of three things 
     2. Template (HTML Template or Template URL)
     3. Component Metadata (@Component Decorator)
 
-Template:
--------------------
+
+---
+
+##  Template
+
 The template is used to define an interface with which the user can interact. As part of that template, you can define
 HTML Mark-up; you can also define the directives, and bindings, etc. So in simple words, we can say that the template
 renders the view of the application with which the end-user can interact i.e. user interface.
 
-Class:
--------------------
+---
+
+##  Class
+
 The Class is the most important part of a component in which we can write the code which is required for a template to
 render in the browser. You can compare this class with any object-oriented programming language classes such as C++, C#
 or Java. The angular component class can also contain methods, variables, and properties like other programming
@@ -65,8 +70,10 @@ languages. The angular class properties and variables contain the data which wil
 view. Similarly, the method in an angular class is used to implement the business logic like the method does in other
 programming languages.
 
-Component Metadata:
--------------------
+---
+
+##  Component Metadata
+
 Metadata is some extra data for a component used by Angular API to execute the component, such as the location of HTML
 and CSS files of the component, selector, providers, etc.
 
@@ -80,10 +87,12 @@ From the official docs:
 
 > Components are the most basic building block of an UI in an Angular application. An Angular application is a tree of Angular components. 
 Angular components are a subset of directives. Unlike directives, components always have a template and only one component can be instantiated per an element in a template.
- 
 
-Communication Between Components
--------------------------------
+
+---
+
+##  Communication Between Components
+
 
 There are 4 ways to share data between components:
 
@@ -93,7 +102,7 @@ There are 4 ways to share data between components:
 4. Unrelated Components: Sharing Data with a `Service`
 
 
-- **Parent to Child: Sharing Data via Input**
+###   Parent to Child: Sharing Data via Input
 
 It works by using the `@Input()` decorator to allow data to be passed via the template.
 
@@ -136,7 +145,7 @@ export class ChildComponent {
 }
 ```
 
-- **Child to Parent: Sharing Data via ViewChild**
+###   Child to Parent: Sharing Data via ViewChild
 
 `ViewChild` allows a one component to be injected into another, giving the parent access to its attributes and functions. One caveat, however, is that child won’t be available until after the view has been initialized. This means we need to implement the `AfterViewInit` lifecycle hook to receive the data from the child.
 
@@ -190,7 +199,7 @@ export class ChildComponent {
 ```
 
 
-- **Child to Parent: Sharing Data via Output() and EventEmitter**
+###   Child to Parent: Sharing Data via Output() and EventEmitter
   
 Another way to share data is to emit data from the child, which can be listened to by the parent. This approach is ideal when you want to share data changes that occur on things like button clicks, form entires, and other user events.
 
@@ -251,7 +260,7 @@ export class ChildComponent {
 }
 ```
 
-- **Unrelated Components: Sharing Data with a Service**
+###   Unrelated Components: Sharing Data with a Service
 
 When passing data between components that lack a direct connection, such as siblings, grandchildren, etc, you should you a shared service. When you have data that should aways been in sync, I find the RxJS BehaviorSubject very useful in this situation.
 
@@ -357,7 +366,9 @@ export class SiblingComponent implements OnInit, OnDestroy {
 ```
 
 
-For more information:
+---
+
+##  For more information
 
 1. [Angular Components with Examples](https://dotnettutorials.net/lesson/angular-components/)
 2. [Angular Component](https://www.tutorialsteacher.com/angular/angular-component)
