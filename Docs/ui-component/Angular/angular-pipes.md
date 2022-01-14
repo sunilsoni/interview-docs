@@ -36,16 +36,10 @@ So instead of writing separate boilerplate code, we can use the built-in pipe ca
 
 A pipe takes in data as input and transforms it to a desired output. For example, let us take a pipe to transform a component birthday property into a human-friendly date using date pipe.
 
-```typescript
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-birthday',
-  template: `<p>Birthday is {{ birthday | date }}</p>`
-})
-export class BirthdayComponent {
-  birthday = new Date(2002, 6, 18); 
-}
-```
 
 ---
+
+##  Angular Pipes
+
+https://github.com/sunilsoni/interview-notes/blob/main/angular/angular-pipes.md
+
