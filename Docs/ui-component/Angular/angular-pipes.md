@@ -38,18 +38,7 @@ Syntax to use Pipes in Angular Application:
 
 A pipe takes in data as input and transforms it to a desired output. For example, let us take a pipe to transform a component birthday property into a human-friendly date using **date** pipe.
 
-
-```log
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-birthday',
-  template: `<p>Birthday is {{ birthday | date }}</p>`
-})
-export class BirthdayComponent {
-  birthday = new Date(2002, 6, 18); // June 18, 2002
-}
-```
+ 
 
 ## Types of Pipes in Angular: 
 
@@ -79,28 +68,6 @@ Angular provides built-in pipes for typical data transformations, including tran
 [PercentPipe](https://angular.io/api/common/PercentPipe): Transforms a number to a percentage string, formatted according to locale rules.
 
 For example,
-```log
-<table border="1">
-    <thead>
-        <tr>
-            <th>Student ID</th>
-            <th>Name</th>
-            <th>DOB</th>
-            <th>Gender</th>
-            <th>CourseFee</th>            
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor='let student of students'>
-            <td>{{student.ID | uppercase}}</td>
-            <td>{{student.Name | titlecase}}</td>
-            <td>{{student.DOB | date:'dd/MM/yyyy'}}</td>
-            <td>{{student.Gender | lowercase}}</td>
-            <td>{{student.CourseFee | currency:'USD':true}}</td>
-        </tr>
-    </tbody>
-</table>
-```
 
 Output:
 
@@ -112,44 +79,12 @@ To create a custom pipe, create a new ts file and use the code according to the 
 
 
 component.ts file:
-```log
-import {Pipe, PipeTransform} from '@angular/core';  
-@Pipe ({  
-name : 'sqrt'  
-})  
-export class SqrtPipe implements PipeTransform {  
-transform(val : number) : number {  
-return Math.sqrt(val);  
-}  
-}
-```
+
 Now, it's turn to make changes in the app.module.ts. Create a class named as SqrtPipe. This class will implement the PipeTransform. The transform method defined in the class will take argument as the number and will return the number after taking the square root.
 
 As, we have created a new file so, we need to add the same in app.module.ts.
 
 Module.ts file:
-```log
-import { BrowserModule } from '@angular/platform-browser';  
-import { NgModule } from '@angular/core';  
-import { AppComponent } from './app.component';  
-import { NewCmpComponent } from './new-cmp/new-cmp.component';  
-import { ChangeTextDirective } from './change-text.directive';  
-import { SqrtPipe } from './app.sqrt';  
-@NgModule({  
-declarations: [  
-SqrtPipe,  
-AppComponent,  
-NewCmpComponent,  
-ChangeTextDirective  
-],  
-imports: [  
-BrowserModule  
-],  
-providers: [],  
-bootstrap: [AppComponent]  
-})  
-export class AppModule { }
-```
 Now, use sqrt pipe in component.html file.
 
 component.html file:
@@ -173,17 +108,7 @@ Parameterized Pipe
 
 A pipe can accept any number of optional parameters to fine-tune its output. The parameterized pipe can be created by declaring the pipe name with a colon (` : `) and then the parameter value. If the pipe accepts multiple parameters, separate the values with colons. Lets take a birthday example with a particular format(dd/mm/yyyy)
 
-```log
-import { Component } from '@angular/core';
 
-@Component({
-  selector: 'app-birthday',
-  template: `<p>Birthday is {{ birthday | date:'dd/mm/yyyy'}}</p>` // 18/06/2002
-})
-export class BirthdayComponent {
-  birthday = new Date(2002, 6, 18);
-}
-```
 
 *Note: The parameter value can be any valid template expression, such as a string literal or a component property.*
 
@@ -192,38 +117,15 @@ Custom Pipe
 
 A pipe is a class decorated with pipe metadata `@Pipe()` decorator, which you import from the core Angular library
 
-```log
-@Pipe({name: 'myCustomPipe'})
-```
 The pipe class implements the **PipeTransform()** interface transform method that accepts an input value followed by optional parameters and returns the transformed value.
 
-```log
-interface PipeTransform {
-  transform(value: any, ...args: any[]): any
-}
-```
-The `@Pipe()` decorator allows to define the pipe name that you'll use within template expressions. It must be a valid JavaScript identifier.
-```log
-template: `{{someInputValue | myCustomPipe: someOtherValue}}`
-```
-Example:
-```log
-import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'customFileSizePipe'})
-export class FileSizePipe implements PipeTransform {
-  transform(size: number, extension: string = 'MB'): string {
-    return (size / (1024 * 1024)).toFixed(2) + extension;
-  }
-}
-```
+The `@Pipe()` decorator allows to define the pipe name that you'll use within template expressions. It must be a valid JavaScript identifier.
+
+Example:
+
 Now you can use the above pipe in template expression as below,
-```log
-  template: `
-    <h2>Find the size of a file</h2>
-    <p>Size: {{288966 | customFileSizePipe: 'GB'}}</p>
-  `
-```
+
 
 Pure vs Impure Pipe
 ------------------
@@ -233,18 +135,7 @@ A pure pipe is only called when Angular detects a change in the value or the par
 **impure-pipe** works for every change in the component  
 **pure-pipe** works only when the component is loaded.
 
-```log
-@Pipe({
-  name: 'sort',
-  pure: false // true makes it pure and false makes it impure
-})
-export class myPipe implements PipeTransform {
 
-  transform(value: any, args?: any): any {
-     // your logic here and return the result
-  }
-}
-```
 
 ```html
 <div> {{ arrayOfElements | sort }}<div>
