@@ -27,7 +27,7 @@ Data binding is a core concept in Angular and allows to define communication bet
 
 ##  From the Component to the DOM
 ###    1. Interpolation
-`{{ value }}`: Adds the value of a property from the component
+{{ value }}: Adds the value of a property from the component
 
 ```html
 <li>Name: {{ user.name }}</li>
