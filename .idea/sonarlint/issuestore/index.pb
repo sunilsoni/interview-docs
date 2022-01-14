@@ -6,8 +6,6 @@ S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-T
-$Docs/ui-component/Angular/Angular.md,4/b/4bd40d96f8fe8eed740c115e07f2a21d6a93a721
 r
 BDocs/ui-component/Data Structures and Algorithms/data-structure.md,b/5/b5c5b55eaaf16829eeaa66862cec007c179148c2
 N
@@ -32,10 +30,6 @@ c
 3Docs/ui-component/Design Patterns/design-pattern.md,7/f/7fb9bdef26f5e8dc0867ca58f560751da061dd89
 R
 "Docs/ui-component/Docker/Docker.md,f/d/fd906961d5f759ac9813011a8fe192ea82c0d141
-L
-Docs/ui-component/AWS/aws.md,6/c/6c214d7e74fbcd27b9b720414c4f72777c7231fb
-R
-"Docs/ui-component/AWS/AwsLambda.md,d/9/d90204e28eba9c6c60532e09c584bed2d35e22a4
 R
 "Docs/ui-component/Spring/Spring.md,6/2/62fefdbda5f58ac84e93892f73ac506ac1721c63
 X
