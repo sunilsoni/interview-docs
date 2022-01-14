@@ -36,7 +36,8 @@ So instead of writing separate boilerplate code, we can use the built-in pipe ca
 <img src="images/anular-pipes.png" width="472" border="2" />
 
 
-A pipe takes in data as input and transforms it to a desired output. For example, let us take a pipe to transform a component birthday property into a human-friendly date using **date** pipe.
+A pipe takes in data as input and transforms it to a desired output. For example, let us take a pipe to transform a component birthday property into a human-friendly date using date pipe.
+
 ```typescript
 import { Component } from '@angular/core';
 
