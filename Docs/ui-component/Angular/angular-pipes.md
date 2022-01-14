@@ -93,11 +93,11 @@ For example,
     </thead>
     <tbody>
         <tr *ngFor='let student of students'>
-            <td>{{student.ID | uppercase}}</td>
-            <td>{{student.Name | titlecase}}</td>
-            <td>{{student.DOB | date:'dd/MM/yyyy'}}</td>
-            <td>{{student.Gender | lowercase}}</td>
-            <td>{{student.CourseFee | currency:'USD':true}}</td>
+            <td>{{student.ID  uppercase}}</td>
+            <td>{{student.Name  titlecase}}</td>
+            <td>{{student.DOB  date:'dd/MM/yyyy'}}</td>
+            <td>{{student.Gender  lowercase}}</td>
+            <td>{{student.CourseFee  currency:'USD':true}}</td>
         </tr>
     </tbody>
 </table>
