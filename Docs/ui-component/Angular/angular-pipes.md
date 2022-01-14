@@ -41,10 +41,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-birthday',
-  template: `<p>Birthday is {{ birthday | date }}</p>`
+   
 })
 export class BirthdayComponent {
-  birthday = new Date(2002, 6, 18); // June 18, 2002
+  
 }
 ```
 
