@@ -21,32 +21,33 @@ permalink: Docs/ui-component/Angular
 
 
 
+---
 
-Single-page application(SPA) vs. multiple-page application(MPA)
------------
+## Single-page application(SPA) vs. multiple-page application(MPA)
 
-Single-Page Application
------------
+
+### Single-Page Application
+
 A single-page application is an app that works inside a browser and does not require page reloading during use. You are using this type of applications every day. These are, for instance: Gmail, Google Maps, Facebook or GitHub.
 
-Pros of the Single-Page Application
------------
+####  Pros of the Single-Page Application
+
 - SPA is fast, as most resources (HTML+CSS+Scripts) are only loaded once throughout the lifespan of application. Only data is transmitted back and forth.
 - The development is simplified and streamlined. There is no need to write code to render pages on the server. It is much easier to get started because you can usually kick off development from a file file://URI, without using any server at all.
 - SPAs are easy to debug with Chrome, as you can monitor network operations, investigate page elements and data associated with it.
 - It’s easier to make a mobile application because the developer can reuse the same backend code for web application and native mobile application.
 - SPA can cache any local storage effectively. An application sends only one request, store all data, then it can use this data and works even offline.
 
-Cons of the Single-Page Application
------------
+####   Cons of the Single-Page Application
+
 - It is very tricky and not an easy task to make SEO optimization of a Single-Page Application. Its content is loaded by AJAX (Asynchronous JavaScript and XML) — a method of exchanging data and updating in the application without refreshing the page.
 - It is slow to download because heavy client frameworks are required to be loaded to the client.
 - It requires JavaScript to be present and enabled. If any user disables JavaScript in his or her browser, it won’t be possible to present application and its actions in a correct way.
 - Compared to the “traditional” application, SPA is less secure. Due to Cross-Site Scripting (XSS), it enables attackers to inject client-side scripts into web application by other users.
 - Memory leak in JavaScript can even cause powerful system to slow down
 
-Multiple-Page application(MPA)
------------
+### Multiple-Page application(MPA)
+
 
 Multiple-page applications work in a `traditional` way. Every change eg. display the data or submit data back to server requests rendering a new page from the server in the browser. These applications are large, bigger than SPAs because they need to be. Due to the amount of content, these applications have many levels of UI. 
 
@@ -54,19 +55,21 @@ Luckily, it’s not a problem anymore. Thanks to AJAX,
 we don’t have to worry that big and complex applications have to transfer a lot of data between server and browser. That solution improves and it allows to refresh only particular parts of the application. On the other hand, it adds more complexity and it is more difficult to develop than a single-page application.
 
 
-Pros of the Multiple-Page Application
------------
+#### Pros of the Multiple-Page Application
+
 - It’s the perfect approach for users who need a visual map of where to go in the application. Solid, few level menu navigation is an essential part of traditional Multi-Page Application.
 - Very good and easy for proper SEO management. It gives better chances to rank for different keywords since an application can be optimized for one keyword per page.
 
-Cons of the multiple-page application
------------
+#### Cons of the multiple-page application
+
 - There is no option to use the same backend with mobile applications.
 - Frontend and backend development are tightly coupled.
 - The development becomes quite complex. The developer needs to use frameworks for either client and server side. This results in the longer time of application development.
 
-AngularJS vs Angular
------------
+
+---
+
+## AngularJS vs Angular
 
 Angular is a completely revived component-based framework in which an application is a tree of individual
 components.
@@ -83,11 +86,9 @@ components.
 |Run on only client-side                             |Runs on client-side & server-side|
 |ng-app and angular bootstrap function are used to initialize | bootstrapmodule() function is used to initialize|
 
-**a.) AngularJS**
------------
+### AngularJS
 
-
-**Advantages**
+#### Advantages
 
 * It has great MVC data binding that makes app development fast.
 * Using HTML as a declarative language makes it very intuitive.
@@ -97,7 +98,7 @@ components.
 * Directives
 * Dependency injection
 
-**Disadvantages**
+#### Disadvantages
 
 * It is big and complicated due to the multiple ways of doing the same thing.
 * Implementations scale poorly.
@@ -105,11 +106,10 @@ components.
 * There is a lagging UI if there are more than 200 watchers.
 
 
-**b.) Angular**
------------
+### Angular
 
 
-**Advantages**
+#### Advantages
 
 * Component-based architecture that provides a higher quality of code
 * Reusability: Components of similar nature are well encapsulated, in other words, self-sufficient. Developers can reuse them across different parts of an application.
@@ -117,14 +117,13 @@ components.
 * Maintainability: Components that are easily decoupled from each other can be easily replaced with better implementations.
 
 
-**Disadvantages**
+#### Disadvantages
 
 * Angular is verbose and complex
 * Steep learning curve
 * Migrating legacy systems from AngularJS to Angular requires time
 
-Why Angular
------------
+### Why Angular
 
 Angular is a development platform, built on TypeScript. As a platform, Angular includes:
 
@@ -137,8 +136,11 @@ With Angular, you're taking advantage of a platform that can scale from single-d
 applications. Angular is designed to make updating as easy as possible, so you can take advantage of the latest
 developments with a minimum of effort.
 
-Components
------------------
+
+---
+
+## Components
+
 Components are a logical piece of code for Angular application. A Component consists −
 
 - **Template** This is used to render the view for the application. This contains the HTML that needs to be rendered in
@@ -198,8 +200,11 @@ Angular's component model offers strong encapsulation and an intuitive applicati
 application easier to unit test and can improve the overall readability of your code.
 
 
-Templates
------------------
+
+---
+
+## Templates
+
 Every component has an HTML template that declares how that component renders. You define this template either inline or
 by file path.
 
@@ -354,8 +359,11 @@ presentation.  [Templates](https://angular.io/guide/template-syntax) are based o
 build, maintain, and update.
 
 
-Dependency injection
------------------
+
+---
+
+## Dependency injection
+
 
 Dependency Injection (DI) allows a class receive dependencies from another class. Most of the time in Angular, dependency injection is done by injecting a service class into a component or module class.
 
@@ -445,8 +453,10 @@ export class HelloWorldDependencyInjectionComponent {
 
 For more information  [Dependency injection ](https://angular.io/guide/dependency-injection)
 
-What is routing
------------------
+
+---
+
+## What is routing
 
 - A website is made up of a multitude of pages These pages are written with HTML(HyperText Markup Language) language.
 - Hypertext is the technology that will link a page to other pages via hyperlinks.
@@ -465,8 +475,7 @@ or `Dances_with_Wolves` ).
 
 This is called Routing.
 
-Angular Routing and Navigation
------------------
+### Angular Routing and Navigation 
 
 - The `Angular Router enables navigation from one view (component)` to the another/next as users perform tasks, views (
   component)
@@ -489,8 +498,11 @@ Angular Routing and Navigation
 
 
 
-Angular Module
------------------
+
+---
+
+## Angular Module
+
 
 In Angular, a module is a mechanism to group components, directives, pipes and services that are related, in such a way that can be combined with other modules to create an application.
 
@@ -513,8 +525,10 @@ The NgModule decorator has three options
 * The bootstrap option tells Angular which Component to bootstrap in the application
 
 
-What is Interpolation?
-------------------
+
+---
+
+## What is Interpolation?
 
 Interpolation is a special syntax that Angular converts into property binding. It is a convenient alternative to property binding. It is represented by double curly braces(`{{ }}`). The text between the braces is often the name of a component property. Angular replaces that name with the string value of the corresponding component property.
 
@@ -527,8 +541,10 @@ Interpolation is a special syntax that Angular converts into property binding. I
 
 In the example , Angular evaluates the title and url properties and fills in the blanks, first displaying a bold application title and then a URL.
 
-Bootstrapping Module
-------------------
+
+---
+
+## Bootstrapping Module
 
 Every application has at least one Angular module, the root module that you bootstrap to launch the application is called as bootstrapping module. It is commonly known as AppModule. The default structure of AppModule generated by AngularCLI would be as follows,
 
@@ -557,19 +573,24 @@ import { AppComponent } from './app.component';
 export class AppModule { }
 ```
 
-JIT vs AOT compilation
----------------------
+
+---
+
+## JIT vs AOT compilation
+
 
 Angular has 2 types of build dev build or prod build
 
-**JIT**  
+### Just-in-Time (JIT)
+
 Just-in-Time (JIT) is a type of compilation that compiles app in the browser at runtime. JIT compilation is the default when you run the ng build (build only) or ng serve (build and serve locally) CLI commands. i.e, the below commands used for JIT compilation,
 
 ```javascript
 ng build
 ng serve
 ```
-**AOT**  
+
+### Ahead-of-Time (AOT)
 Ahead-of-Time (AOT) is a type of compilation that compiles app at build time. For AOT compilation, include the `--aot` option with the ng build or ng serve command as below,
 
 ```javascript
@@ -597,8 +618,7 @@ ng build --prod              -  this is for production build
 *Note: The ng build command with the --prod meta-flag (`ng build --prod`) compiles with AOT by default.*
 
 
-Advantages of AOT
-----------------
+### Advantages of AOT
 
 1. **Faster rendering** The browser downloads a pre-compiled version of the application. So it can render the application immediately without compiling the app.
 2. **Fewer asynchronous requests** It inlines external HTML templates and CSS style sheets within the application javascript which eliminates separate ajax requests.
@@ -607,17 +627,15 @@ Advantages of AOT
 5. **Better security** It compiles HTML templates and components into JavaScript.  So there wont be any injection attacks.
 
 
-What are the ways to control AOT compilation?
-----------------
-
+### What are the ways to control AOT compilation?
 
 You can control your app compilation in two ways
 1. By providing template compiler options in the `tsconfig.json` file
 2. By configuring Angular metadata with decorators
 
+---
 
-How to optimize loading large data in angular?
----------------
+## How to optimize loading large data in angular?
 
 **Load Time Performance**
 
@@ -680,8 +698,11 @@ export class App {
 
 
 
-How an Angular application gets started or loaded?
-------------
+
+---
+
+## How an Angular application gets started or loaded?
+
 
 The **main.ts** file, that is the first code which gets executed. The job of main.ts is to bootstrap the application. It loads everything and controls the startup of the application.
 
@@ -746,7 +767,10 @@ When angular starts, it bootstrap array in `@NgModule`. It basically there is a 
 </html>
 ```
 
-For more information:
+
+---
+
+## For more information
 
 1. [Angular Routing and Navigation](https://github.com/sunilsoni/interview-notes/blob/main/angular/angular-routing.md#1-angular-routing-and-navigation)
 2. [Routing and navigation with Angular 11](https://www.ganatan.com/tutorials/routing-with-angular)
