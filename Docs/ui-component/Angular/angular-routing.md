@@ -54,35 +54,35 @@ Let's create below Angular Single Page Application (SPA) with Routing and Naviga
 ---------------------
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/1.1-spa-single-page-app-home.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing and Navigation - Home View" title="Image - Output - Angular Single Page Application (SPA) with Routing and Navigation - Home View" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/1.1-spa-single-page-app-home.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing and Navigation - Home View" title="Image - Output - Angular Single Page Application (SPA) with Routing and Navigation - Home View" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Home View</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/1.2-spa-single-page-app-departments.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Departments View" title="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Departments View" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/1.2-spa-single-page-app-departments.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Departments View" title="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Departments View" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Departments View</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/1.3-spa-single-page-app-employees.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Employees View" title="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Employees View" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/1.3-spa-single-page-app-employees.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Employees View" title="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Employees View" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Employees View</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/1.4-spa-single-page-app-products.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Products View" title="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Products View" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/1.4-spa-single-page-app-products.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Products View" title="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Products View" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Products View</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/1.5-spa-single-page-app-folder-structure.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Folder structure" title="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Folder structure" width="500" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/1.5-spa-single-page-app-folder-structure.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Folder structure" title="Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Folder structure" width="500" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Angular Single Page Application (SPA) with Routing Navigation - Folder structure</figcaption>
   </figure>
 </p>
@@ -453,14 +453,14 @@ export const RoutingComponents = [
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/2.1-wildcard-route.png" alt="Image - Output - wildcard-route / Page not found!" title="Image - Output - wildcard-route / Page not found! width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/2.1-wildcard-route.png" alt="Image - Output - wildcard-route / Page not found!" title="Image - Output - wildcard-route / Page not found! width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - wildcard-route / Page not found!</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/2.2-wildcard-route.png" alt="Image - Output - wildcard-route / Page not found!" title="Image - Output - wildcard-route / Page not found! width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/2.2-wildcard-route.png" alt="Image - Output - wildcard-route / Page not found!" title="Image - Output - wildcard-route / Page not found! width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - wildcard-route / Page not found!</figcaption>
   </figure>
 </p>
@@ -622,14 +622,14 @@ export class DepartmentDetailsComponent implements OnInit {
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/3.1-route-parameters-department-list-home.png" alt="Image - Output - Route Parameters Department List" title="Image - Output - Route Parameters Department List" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/3.1-route-parameters-department-list-home.png" alt="Image - Output - Route Parameters Department List" title="Image - Output - Route Parameters Department List" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Route Parameters Department List</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/3.2-route-parameters-department-clicked.png" alt="Image - Output - Route Parameters Department Clicked/Selected" title="Image - Output - Route Parameters Department Clicked/Selected" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/3.2-route-parameters-department-clicked.png" alt="Image - Output - Route Parameters Department Clicked/Selected" title="Image - Output - Route Parameters Department Clicked/Selected" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Route Parameters Department Clicked/Selected</figcaption>
   </figure>
 </p>
@@ -705,21 +705,21 @@ export class DepartmentDetailsComponent implements OnInit {
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/4.1-route-parameters-previous.png" alt="Image - Output - Route Parameters Previous ID" title="Image - Output - Route Parameters Previous ID" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/4.1-route-parameters-previous.png" alt="Image - Output - Route Parameters Previous ID" title="Image - Output - Route Parameters Previous ID" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Route Parameters Previous ID</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/4.2-route-parameters-next.png" alt="Image - Output - Route Parameters Next ID" title="Image - Output - Route Parameters Next ID" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/4.2-route-parameters-next.png" alt="Image - Output - Route Parameters Next ID" title="Image - Output - Route Parameters Next ID" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Route Parameters Next ID</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/4.3-route-parammap-observable-next.png" alt="Image - Output - Route Parameters Observables Next ID" title="Image - Output - Route Parameters Observables Next ID" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/4.3-route-parammap-observable-next.png" alt="Image - Output - Route Parameters Observables Next ID" title="Image - Output - Route Parameters Observables Next ID" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Route Parameters Observables Next ID</figcaption>
   </figure>
 </p>
@@ -802,14 +802,14 @@ isSelectedRouteMatchOptionalParam(curDepartment)
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/5.1-optional-route-parameters-back.png" alt="Image - Output - Optional Route Parameters Back" title="Image - Output - Optional Route Parameters Back" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/5.1-optional-route-parameters-back.png" alt="Image - Output - Optional Route Parameters Back" title="Image - Output - Optional Route Parameters Back" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Optional Route Parameters Back</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/5.2-optional-route-parameters-selected-list.png" alt="Image - Output - Optional Route Parameters Selected List " title="Image - Output - Optional Route Parameters Selected List " width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/5.2-optional-route-parameters-selected-list.png" alt="Image - Output - Optional Route Parameters Selected List " title="Image - Output - Optional Route Parameters Selected List " width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Optional Route Parameters Selected List </figcaption>
   </figure>
 </p>
@@ -1022,28 +1022,28 @@ export class DepartmentDetailsComponent implements OnInit {
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/7.1-department-list.png" alt="Image - Output - Department List" title="Image - Output - Department List" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/7.1-department-list.png" alt="Image - Output - Department List" title="Image - Output - Department List" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Department List</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/7.2-child-route-department-overview.png" alt="Image - Output - Child Route Department Overview" title="Image - Output - Child Route Department Overview" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/7.2-child-route-department-overview.png" alt="Image - Output - Child Route Department Overview" title="Image - Output - Child Route Department Overview" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Child Route Department Overview</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/7.3-child-route-department-contact.png" alt="Image - Output - Child Route Department Contact" title="Image - Output - Child Route Department Contact" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/7.3-child-route-department-contact.png" alt="Image - Output - Child Route Department Contact" title="Image - Output - Child Route Department Contact" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Child Route Department Contact</figcaption>
   </figure>
 </p>
 
 <p>
   <figure>
-    &nbsp;&nbsp;&nbsp; <img src="./images-routing/7.4-optional-route-param-active-highlight.png" alt="Image - Output - Optional Route Parameter Show Selected Department highlighted" title="Image - Output - Optional Route Parameter Show Selected Department highlighted" width="1000" border="2" />
+    &nbsp;&nbsp;&nbsp; <img src="images/7.4-optional-route-param-active-highlight.png" alt="Image - Output - Optional Route Parameter Show Selected Department highlighted" title="Image - Output - Optional Route Parameter Show Selected Department highlighted" width="1000" border="2" />
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Optional Route Parameter Show Selected Department highlighted</figcaption>
   </figure>
 </p>

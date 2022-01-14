@@ -41,7 +41,7 @@ export class AppComponent {
 
 Angular Component = HTML Template + Component Class + Component Metadata
 
- <img src="./images-components/angular-component.png" width="300" border="2" />
+ <img src="images/angular-component.png" width="300" border="2" />
 
 Every Angular application has at least one component that is used to display the data on the view. Technically, a
 component is nothing but a simple typescript class and composed of three things as follows:

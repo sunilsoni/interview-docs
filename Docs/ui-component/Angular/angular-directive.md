@@ -32,14 +32,14 @@ There are three kinds of directives:
 2. Structural Directives — change the DOM layout by adding and removing DOM elements.
 3. Attribute Directives — change the appearance or behavior of an element, component, or another directive.
 
-<img src="./images-directives/types-of-directives.png" width="400" border="2" />
+<img src="images/types-of-directives.png" width="400" border="2" />
 
 Directives are instructions in the DOM (Document Object Model). It specifies how to place our business logic in Angular.
 The directive is markers on a DOM element that tell Angular to attach a specified behavior to that DOM element or even
 transform the DOM element and its children. Mostly directives in Angular starts with ng- where ng stands for Angular,
 and it extends the HTML.
 
- <img src="./images-directives/dom-manipulation.png" width="400" border="2" />
+ <img src="images/dom-manipulation.png" width="400" border="2" />
 
 
 Components Directives:
@@ -151,7 +151,7 @@ It deals with changing the look and behavior of the DOM element. For example: `n
 - NgStyle Directive: The `ngStyle` Directive facilitates you to modify the style of an HTML element using the
   expression. We can also use the `ngStyle` Directive to change the style of our HTML element dynamically
 
- <img src="./images-directives/Attributes-Directives.png" width="600" border="2" />
+ <img src="images/Attributes-Directives.png" width="600" border="2" />
 
 ```html
 
@@ -327,7 +327,7 @@ export class AppComponent  {
 ```
 
 
-<img src="./images-directives/difference-between-directives-components.png" width="300" border="2" />
+<img src="images/difference-between-directives-components.png" width="300" border="2" />
 
 
 Components have their own view (HTML and styles). 

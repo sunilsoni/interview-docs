@@ -33,7 +33,7 @@ So instead of writing separate boilerplate code, we can use the built-in pipe ca
 
 Syntax to use Pipes in Angular Application:
 ---------------
-<img src="./images-pipes/anular-pipes.png" width="472" border="2" />
+<img src="images/anular-pipes.png" width="472" border="2" />
 
 
 A pipe takes in data as input and transforms it to a desired output. For example, let us take a pipe to transform a component birthday property into a human-friendly date using **date** pipe.
@@ -57,7 +57,7 @@ The Angular Framework divided the Pipes into two types i.e.
    
 Further Built-in Pipes are divided into two types i.e. Parameterized and chaining as shown in the below image.
 
-<img src="./images-pipes/Types-of-Pipes.png" width="472" border="2" />
+<img src="images/Types-of-Pipes.png" width="472" border="2" />
 
 ### 1. Built-in Pipes 
 
@@ -102,7 +102,7 @@ For example,
 
 Output:
 
-<img src="./images-pipes/student-table-output.png" width="472" border="2" />
+<img src="images/student-table-output.png" width="472" border="2" />
 
 ### 2.Custom Pipes 
 

@@ -29,7 +29,7 @@ Angular 2 application goes through an entire set of processes or has a lifecycle
 
 The hooks are executed in this order:
 
- <img src="./lifecycle/lifecycle-hooks.webp" width="400" border="2" />
+ <img src="images/lifecycle-hooks.webp" width="400" border="2" />
 
 Description of each lifecycle hook.
 
