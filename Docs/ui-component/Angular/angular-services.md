@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Angular Services
+title: Services
 parent: Angular
 ---
 

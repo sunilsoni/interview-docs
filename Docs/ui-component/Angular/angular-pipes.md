@@ -39,6 +39,17 @@ Syntax to use Pipes in Angular Application:
 A pipe takes in data as input and transforms it to a desired output. For example, let us take a pipe to transform a component birthday property into a human-friendly date using **date** pipe.
 
 
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-birthday',
+  template: `<p>Birthday is {{ birthday | date }}</p>`
+})
+export class BirthdayComponent {
+  birthday = new Date(2002, 6, 18); // June 18, 2002
+}
+```
 
 ## Types of Pipes in Angular: 
 
@@ -68,7 +79,7 @@ Angular provides built-in pipes for typical data transformations, including tran
 [PercentPipe](https://angular.io/api/common/PercentPipe): Transforms a number to a percentage string, formatted according to locale rules.
 
 For example,
-```xml
+```log
 <table border="1">
     <thead>
         <tr>
