@@ -30,8 +30,10 @@ nav_order: 2
 
 Let’s take a look at them:
 
-Abstraction
-------------
+---
+
+## Abstraction
+
 Abstraction is a process of hiding the implementation details and showing only functionality to the user. 
 
 Real world examples:
@@ -42,21 +44,27 @@ In java, Abstraction can be achieved in two ways:
 - Abstract classes
 - Interfaces
 
-Encapsulation
-------------
+---
+
+## Encapsulation
+
 Encapsulation is a process of Binding data and methods within a class . Think of it like showing the essential details of a class by using the access control modifiers (public, private, protected ). So, we can say that Encapsulation leads to the desired level of Abstraction.
 
 Example:
 Java Bean, where all data members are made private and you define certain public methods to the outside world to access them.
 
-Inheritance
-------------
+---
+
+## Inheritance
+
 Using inheritance means defining a parent-child relationship between classes, by doing so, you can reuse the code that is already defined in the parent class. Code reusability is the biggest advantage of Inheritance.
 
 Java does not allow multiple inheritance through classes but it allows it through interfaces.
 
-Polymorphism
-------------
+---
+
+## Polymorphism
+
 Poly means many and Morph means forms. Polymorphism is the process in which an object or function takes different forms. There are 2 types of Polymorphism :
 
 - Compile Time Polymorphism (Method Overloading)
@@ -67,8 +75,10 @@ In Method overloading, two or more methods in one class have the same method nam
 Overriding means when we have two methods with same name and same parameters in parent and child class. Through overriding, child class can provide specific implementation for the method which is already defined in the parent class.
 
 
-Abstract Class
-------------
+---
+
+## Abstract Class
+
 A class that is declared using "abstract" keyword is known as abstract class. It can have abstract methods (methods without body) as well as concrete methods (methods with body).
 
 Some points to remember:
@@ -110,8 +120,8 @@ Output:
 ```
 
 
-Does Abstract class have constructor?
-------------
+###  Does Abstract class have constructor?
+
 
 Yes, abstract classes have constructor. Either you can provide it or the default one will be provided by Java. Now, you must be wondering if you cannot create an object of abstract class then what is the need of a constructor.
 One thing you must know is that the constructors are used when you are creating an object of a class, to initialize the data members of that class and your abstract class can have data members.
@@ -186,8 +196,10 @@ a = 5
 b = 10
 ```
 
-Interface
-------------
+---
+
+## Interface
+
 - An interface in Java is a blueprint of a class. It has static constants and abstract methods.
 - Interface specify what a class must do but not how to do
 - An interface is like defining a contract that is fulfilled by implementing classes
@@ -197,8 +209,9 @@ Interface
 - A class can implement more than one interface, this is how Java allows multiple inheritance.
 - Since Java 8, we can have default and static methods in an interface
 
-Abstract class Vs Interface
-------------
+###  Abstract class Vs Interface
+
+
 The differences are:
 - Abstract class can have both abstract and concrete methods but interface can only have abstract methods (Java 8 onwards, it can have default and static methods as well)
 - Abstract class methods can have access modifiers other than public but interface methods are implicitly public and abstract
@@ -208,16 +221,19 @@ The differences are:
 
 from Java 8 onwards, you can have static and default methods in an Interface so now what is the difference between abstract class and interface and the answer is – We can still extend only one class but can implement multiple interfaces.
 
-What to choose – interface or abstract class
-------------
+###  What to choose – interface or abstract class
+
+
 Consider these points while choosing between the two:
 - When you want to provide default implementation to some of the common methods that can be used directly by the sub-classes then you can use abstract class because it can have concrete methods also, this is not the case with Interface because the child classes that are implementing this interface will have to provide implementation for all the methods that are declared in the interface
 - If your contract keeps on changing then Interface will create problems because then you will have to provide implementation of those new methods in all the implementing classes, whereas with abstract class you can provide one default implementation to the new methods and only change those implementing classes that are actually going to use these new methods
 
 Most of the times, interfaces are a good choice. It is also one of the best practices, when you code in terms of interfaces.
 
-Why Java 8 has introduced default methods?
-------------
+---
+
+## Why Java 8 has introduced default methods?
+ 
 
 To extend the capability of an already existing interface, default methods are introduced in Java 8. Let’s understand this by one example:
 
@@ -267,13 +283,17 @@ Inside Child class hello method
 Hello from Interface1
 ```
 
-Why Java 8 has introduced static methods?
-------------
+---
+
+## Why Java 8 has introduced static methods?
+ 
 
 Consider an example where you want to define a utility class, what you usually do is you define a class which contains static methods and then you call these methods using class name. Now, Java 8 onwards you can do the same thing using an Interface by giving only static methods inside your interface. This way of using Interface for defining utility classes is better as it helps in performance also, because using a class is more expensive operation than using an interface.
 
-Why Java does not allow multiple inheritance?
-------------
+---
+
+## Why Java does not allow multiple inheritance?
+ 
 Multiple inheritance occurs when a class has more than one parent classes.
 Why Java does not allow this : let us consider there are 2 parent classes having a method named hello() with same signature and one child class is extending these 2 classes, if you call this hello() method which is same in both parents, which parent class method will get executed – it results into an ambiguous situation, this is also called Diamond Problem .
 You will get a compile time error if you try to extend more than one class.
@@ -303,16 +323,18 @@ Output:
 Syntax error on token ",". expected.
 ```
 
-Method Overloading and Overriding
--------------------------
+---
+
+## Method Overloading and Overriding
+ 
 There are 2 ways by which we can achieve polymorphic behavior
 
 1. Method Overloading
 2. Method Overriding
 
 
-Method Overloading
--------------------
+###  Method Overloading
+
 1. Method overloading means two or more methods in a class having the same name but different parameters(arguments).
 2. Methods may or may not have a different return type.
 3. Method overloading reduces duplicate code and allows us to use the same method name for different purposes.
@@ -324,8 +346,8 @@ Simply put, we can implement method overloading in _two different ways_:
 2. implementing two or more methods that have the same name but take arguments of different types
 
 
-Rules for Method Overloading
--------------------
+###  Rules for Method Overloading
+
 Two methods can be called overloaded if they follow rules:
 - Both have same method name
 - Both have different arguments
@@ -456,8 +478,8 @@ The ability to associate a specific method call to the method's body is known as
 In the case of method overloading, the binding is performed statically at compile time, hence it's called static binding.
 The compiler can effectively set the binding at compile time by simply checking the methods' signatures.
 
-Method Overriding
--------------------
+###  Method Overriding
+
 1. Method overriding is defining a method in the child class with the same method name and same method signature which is already written in the parent class.
 2. Return type of overridden method can be a subtype of the return type of parent class method.
    E.g. If the parent class method returns Vehicle then Subclass’s overridden method’s return type can be any subclass of Vehicle class, for example, Car can be a return type of overridden method in child class. (Assuming Vehicle as parent class and Car as a child class of Vehicle class).
@@ -467,8 +489,8 @@ Method Overriding
 5. Method overriding is called Dynamic Polymorphism because the method which is going to be called is decided at run time by the JVM.
 6. Static methods can’t be overridden, only instance methods are overridden.
 
-Rules for Method Overriding
--------------------
+###  Rules for Method Overriding
+
 The overriding method of child class must follow below rules:
 - It must have same method name as that of parent class method
 - It must have same arguments as that of parent class method
@@ -598,7 +620,9 @@ As a consequence, the compiler needs to check the type of object to know what me
 
 As this checking happens at runtime, method overriding is a typical example of dynamic binding.
 
-# Association
+---
+
+## Association
 
 Association can be one way or both ways. When you see this kind of UML diagram, it means ClassA knows about ClassB, but
 the reverse is not true.
@@ -613,7 +637,9 @@ Consider an example. In a college, a student can learn from multiple teachers, a
 students. There is no ownership in this kind of relationship. So, when you represent them with classes and objects in
 programming, you can say that both kinds of objects can be created and deleted independently.
 
-# Aggregation
+---
+
+## Aggregation
 
 Aggregation is a stronger type of association. The aggregation between a professor and department can be represented as
 follows.
@@ -630,7 +656,9 @@ Similarly, you can say that a human body has hands, a car has seats, a bike has 
 **Note**
 > In general, you say that a department has a professor. This is why an association relationship is also known as “has-a” relationship. (You can note down the key difference with inheritance here. Inheritance is associated with the “is-a” relationship.
 
-# Composition
+---
+
+## Composition
 
 Composition is a stronger form of aggregation, and this time you have a filled diamond in place.
 
@@ -643,7 +671,9 @@ considering this type of corner case.) In other words, the lifetime of a departm
 This is also known as a `death relationship` because if you destroy the college, all of its departments are destroyed
 automatically. Similarly, you can say the hands (or legs, etc.)of a human being cannot exist without the body.
 
-# Association vs. Aggregation vs. Composition
+---
+
+## Association vs. Aggregation vs. Composition
 
 | Association  |  Aggregation   | Composition |
 | ----------------------- | ----------------- |---------------- |
@@ -658,7 +688,9 @@ automatically. Similarly, you can say the hands (or legs, etc.)of a human being 
 <img src="./images/Association vs. Aggregation vs. Composition.png" width="600" />
 
 
-For more information:
+---
+
+## For more information
 
 1. [Method Overloading and Overriding in Java](https://www.baeldung.com/java-method-overload-override)
 2. [What Is Method Overloading and Method Overriding in Java?](https://medium.com/javarevisited/what-is-method-overloading-and-method-overriding-in-java-b3b094267fce)
