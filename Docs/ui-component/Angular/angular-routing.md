@@ -18,8 +18,11 @@ parent: Angular
 
 ---
 
-Working with Angular Routing and Navigation
-=====================
+ 
+
+##  Working with Angular Routing and Navigation
+
+
 Navigating from one page to another page in a web application is known as Routing. Routing in Angular is called Angular
 Routing.
 
@@ -28,8 +31,11 @@ Routing.
 - To change port from 4200 to other port - type command:  `ng serve --port 5000`
 - To check the application in browser type path/url: `localhost:4200 / 5000`
 
-1 Angular Routing and Navigation
-=====================
+
+---
+
+##  Angular Routing and Navigation
+
 
 - The `Angular Router enables navigation from one view (component)` to the another/next as users perform tasks, views (
   component)
@@ -50,8 +56,10 @@ Routing.
   - The attribute/directive for binding a clickable HTML element to a route which denotes link/view name to load/show
     in `(<router-outlet>)`
 
-Let's create below Angular Single Page Application (SPA) with Routing and Navigation feature:
----------------------
+---
+
+##  Let's create below Angular Single Page Application (SPA) with Routing and Navigation feature:
+
 <p>
   <figure>
     &nbsp;&nbsp;&nbsp; <img src="images/1.1-spa-single-page-app-home.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing and Navigation - Home View" title="Image - Output - Angular Single Page Application (SPA) with Routing and Navigation - Home View" width="1000" border="2" />
@@ -87,16 +95,18 @@ Let's create below Angular Single Page Application (SPA) with Routing and Naviga
   </figure>
 </p>
 
-1.Angular Routing Application setup steps:
----------------------
+
+---
+
+##  1.Angular Routing Application setup steps
 
 1. Generate a new Angular project/app with routing option
 2. Generate departmentList and employeeList, and other required components if any
 3. Configure the Routes
 4. Add buttons and use a directive to navigate
 
-1.1. Generate a new Angular project/app with routing option
----------------------
+###   1.1. Generate a new Angular project/app with routing option
+
 
 - Command to create an Angular app with routing: `ng new routing-demo-app --routing`
 
@@ -107,20 +117,20 @@ Let's create below Angular Single Page Application (SPA) with Routing and Naviga
      required path and components details)
   3. import app-routing.module.ts file in `app.module.ts` file also add in the imports array
 
-1.2. Generate required components if any (departmentList and employeeList, and other)
----------------------
+###   1.2. Generate required components if any (departmentList and employeeList, and other)
+ 
 
 - Angular CLI command to generate component: `ng g c employee-list -it -is` (Inline Template / Inline style)
 - Angular CLI command to generate component: `ng g c department-list -it -is` and other required components if any
 
-1.3. Configure the Routes
----------------------
+###   1.3. Configure the Routes
+ 
 
 - In `app.component.html` add tag/directive: `<router-outlet> </router-outlet>`
 - In the app-routing.module.ts file, enter required paths and component details to navigate
 
-1.4. Add buttons and use directive to navigate
----------------------
+###   1.4. Add buttons and use directive to navigate
+ 
 
 - In `app.component.html` add links/buttons: `<a routerLink="/home" routerLinkActive="active">Home</a>`
 - We can also use `<a routerLink="/home" routerLinkActive="active" routerLinkActiveOptions="{exact:true}">Home</a>` to
@@ -377,8 +387,11 @@ nav a.active {
 }
 ```
 
-2 Wildcard Route and Redirecting Routes (Dealing with unavailable-non-configured route [Page not found])
-=====================
+
+---
+
+##  2 Wildcard Route and Redirecting Routes (Dealing with unavailable-non-configured route [Page not found])
+
 
 - User can type/enter any unavailable-non-configured route/URL and can get many erros in console,
   like `http://localhost:5000/try` **Error:** `(Cannot match any routes, URL segment 'try'...)`
@@ -465,8 +478,11 @@ export const RoutingComponents = [
   </figure>
 </p>
 
-3 Route Parameters
-=====================
+
+---
+
+##  3 Route Parameters
+
 
 - In this section will learn to pass and read route parameters, as given below:
   - http://localhost:4200/departments/production
@@ -634,8 +650,11 @@ export class DepartmentDetailsComponent implements OnInit {
   </figure>
 </p>
 
-4 paramMap Observable
-=====================
+
+---
+
+##  4 paramMap Observable
+
 
 - Using the `activatedRoute.snapshot` got some drawback like: when will navigate back next / previous next from child
   component `(details component to list component)` snapshot approach does not work
@@ -724,8 +743,10 @@ export class DepartmentDetailsComponent implements OnInit {
   </figure>
 </p>
 
-5 Optional Route Parameters
-=====================
+
+---
+
+##  5 Optional Route Parameters 
 
 - By using `Back button in department-details.component.html` we must `navigate back to department-list.component.html`
   and show clicked department in selected state`
@@ -814,8 +835,10 @@ isSelectedRouteMatchOptionalParam(curDepartment)
   </figure>
 </p>
 
-6 Relative Navigation
-=====================
+
+---
+
+##  6 Relative Navigation 
 
 - `Absolute path` starts with `forward slash /` (paths like `/name` are absolute/fixed path)
 - `Absolute/Fixed paths are not flexible` as if file/route name changes we need to make change at all occurrences/places
@@ -855,8 +878,10 @@ goToDepartments()
 }
 ```
 
-7 Child Routes
-=====================
+
+---
+
+##  7 Child Routes 
 
 - In application, some routes/path/links/pages viewed only within other routes - in such scenario we can create and use
   child routes in app-routing.module.ts
