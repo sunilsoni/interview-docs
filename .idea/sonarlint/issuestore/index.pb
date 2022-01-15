@@ -50,8 +50,6 @@ U
 %Docs/ui-component/Java/java-basics.md,c/0/c0251bb418f11b001e500679003e585c6eea4e89
 Y
 )Docs/ui-component/Java/multi-threading.md,c/d/cd00a520a42bf85c75192c061240baa19b55300c
-;
-_config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
 R
 "Docs/ui-component/DevOps/DevOps.md,9/f/9fbc9e3f22802f4cd5d6285776f973c5a5601498
 L
@@ -88,3 +86,9 @@ R
 "Docs/ui-component/Docker/Docker.md,f/d/fd906961d5f759ac9813011a8fe192ea82c0d141
 N
 Docs/ui-component/OOPS/oops.md,c/1/c16a2a9c3af001e39bedc7bdb772f05995d31402
+o
+?Docs/ui-component/Miscellaneous/images/cross-site-scripting.svg,f/3/f3d228f1e003b5a38a188c28e2bbbfd0dac231a5
+N
+Docs/ui-component/Java/Java.md,f/1/f160ffd65e163a736dc60866380df73a470ea310
+k
+;Docs/ui-component/Miscellaneous/Behavioral & Situational.md,0/0/008c67e8113166d6794600ea83e5ddfe7efb85a9
