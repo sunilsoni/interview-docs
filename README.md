@@ -12,7 +12,7 @@ permalink: /
 ---
 
 {% for cat in site.category-list %}
-## {{ cat }}
+#### {{ cat }}
 <ul>
   {% for page in site.pages %}
     {% if page.resource == true %}
