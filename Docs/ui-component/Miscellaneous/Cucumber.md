@@ -2,6 +2,8 @@
 layout: default
 title: Cucumber
 parent: Miscellaneous
+categories: [Cucumber]
+
 ---
 
 # Cucumber

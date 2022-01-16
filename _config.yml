@@ -81,3 +81,5 @@ ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (t
 
 plugins:
   - jekyll-seo-tag
+
+category-list: [Angular, AWS, Data Structures and Algorithms, Database,Design Patterns,DevOps,Docker,Java,Java8,Multithreading,Kafka,Microservices,Miscellaneous,OOPS,React,Spring,Cucumber,GoodPractices,owasp]

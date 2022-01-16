@@ -3,6 +3,7 @@ layout: default
 title: Java
 has_children: true
 nav_order: 2
+categories: [Java,Java8,Multithreading]
 permalink: Docs/ui-component/Java
 ---
 
