@@ -1,7 +1,4 @@
 
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
 S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 r
@@ -70,8 +67,6 @@ _
 -Docs/ui-component/Angular/angular-services.md,a/b/ab7c1c248c7b7878fbf1e4c42f5710c4a6364928
 Q
 !Docs/ui-component/Angular/RxJS.md,a/2/a2bf79e6199deb835b608cf5137093c2eddf7148
-T
-$Docs/ui-component/Angular/Angular.md,4/b/4bd40d96f8fe8eed740c115e07f2a21d6a93a721
 V
 &Docs/ui-component/Database/Database.md,7/d/7dcb1d58ab5fa1070dd903cb631e16c86b7d13f5
 R
