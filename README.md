@@ -4,7 +4,7 @@ title: Home
 nav_order: 1
 resource: true
 description: "Welcome to Interview Pages"
-permalink: /
+permalink: /interview-docs/
 ---
 
 ## Welcome to Interview Pages
