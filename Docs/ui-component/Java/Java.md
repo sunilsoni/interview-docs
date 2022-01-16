@@ -5,7 +5,7 @@ has_children: true
 nav_order: 2
 resource: true
 categories: [Java,Java8,Multithreading]
-permalink: Docs/ui-component/Java
+permalink: interview-docs/Docs/ui-component/Java
 ---
 
 
