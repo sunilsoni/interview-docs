@@ -269,11 +269,73 @@ AWS CLI for calling Lambda functions
 
 > aws lambda invoke.
 
+template.yaml : 
+
+```yaml
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: HelloWorldLambdaJava
+
+Resources:
+
+  HelloWorldLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: java8
+      MemorySize: 512
+      Handler: book.HelloWorld::handler
+      CodeUri: target/lambda.jar
+
+```
+
+Run the `sam deploy` command If you go back to the Lambda console, you’ll see your strangely named Java function has now been renamed to HelloWorldJava
 
 
+Let’s get back to invocation. From the terminal, run the following command:
+
+```cmd
+$ aws lambda invoke \
+--invocation-type RequestResponse \
+--function-name HelloWorldJava \
+--payload \"world\" outputfile.txt
+```
+
+This should return the following:
 
 
+```json
+{
+"StatusCode": 200,
+"ExecutedVersion": "$LATEST"
+}
+```
 
+You can also see what the Lambda function returned by executing the following:
+
+```log
+$ cat outputfile.txt && echo
+"Hello, world"
+```
+
+### Lambda Function Method Signatures
+
+Valid Java Lambda methods must fit one of the following four signatures:
+
+• output-type handler-name(input-type input)
+• output-type handler-name(input-type input, Context context)
+• void handler-name(InputStream is, OutputStream os)
+• void handler-name(InputStream is, OutputStream os, Context context)
+
+**where:**
+• output-type can be void, a Java primitive, or a JSON-serializable type.
+• input-type is a Java primitive, or a JSON-serializable type.
+• Context refers to com.amazonaws.services.lambda.runtime.Context (we describe this more later in the chapter).
+• InputStream and OutputStream refer to the types with those names in the java.io package.
+• handler-name can be any valid Java method name, and we refer to it in our application’s configuration.
+
+Java Lambda methods can be either instance methods or static methods, but must be public.
+
+A class containing a Lambda function cannot be abstract and must have a noargument  constructor—either the default constructor (i.e., no constructor specified) or an explicit no-argument constructor. The main reason to consider using a constructor at all is for caching data between Lambda calls.
 
 
 
