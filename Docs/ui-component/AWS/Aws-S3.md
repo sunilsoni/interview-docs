@@ -293,3 +293,4 @@ S3 contains four types of storage classes:
 ## Links
 
 1. [AWS Storage Classes](https://www.javatpoint.com/aws-storage-classes)
+2. [AWS S3 with Java](https://www.baeldung.com/aws-s3-java)
