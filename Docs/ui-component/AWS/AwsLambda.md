@@ -135,3 +135,97 @@ A few event examples are listed out as follows:
 **Scheduled events**: Run Lambda functions as scheduled events, just like a cron job
 
 **AWS CodeCommit**: Execute Lambda functions whenever new code is pushed to an existing branch, and so on
+
+
+---
+
+
+## The Lambda programming model
+
+So far we have seen that certain applications can be broken down into one or more simple
+nuggets of code called as functions and uploaded to AWS Lambda for execution. Lambda
+then takes care of provisioning the necessary resources to run your function along with
+other management activities such as auto-scaling of your functions, their availability, and so
+on. So what exactly are we supposed to do in all this? A developer basically has three tasks
+to perform when it comes to working with Lambda--writing the code, packaging it for
+deployment, and finally monitoring its execution and fine-tuning.
+
+Currently, AWS officially supports Node.js, Java, Python, and C# as
+the programming languages for writing Lambda functions, with each language following a
+generic programming pattern that comprises of the following concepts.
+
+### AWS SAM CLI Installation
+
+AWS SAM provides you with a command line tool, the AWS SAM CLI, that makes it easy for you to create and manage serverless applications. You need to install and configure a few things in order to use the AWS SAM CLI.
+
+Follow these steps to install and configure the prerequisites for using the AWS SAM command line interface (CLI) on your macOS host:
+
+- Create an AWS account.
+- Configure AWS Identity and Access Management (IAM) permissions and AWS credentials.
+- Install Docker. Note: Docker is a prerequisite only for testing your application locally or using the --use-container option
+- Install Homebrew.
+
+Install the AWS SAM CLI.
+
+https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html
+
+
+### Creating Your First Java Lambda Project
+
+First, go to a terminal and run the following command:
+
+> $ sam init --location gh:symphoniacloud/sam-init-HelloWorldLambdaJava
+
+This will ask you for a project_name value, and for now just hit Enter to use the  default.
+
+The command will then generate a project directory. Change into that directory, and take a look. You’ll see the following files:
+
+**README.md**
+Some instructions on how to build and deploy the project
+
+**pom.xml**
+A Maven project file
+
+**template.yaml**
+A SAM template file—used for deploying the project to AWS
+
+**src/main/java/book/HelloWorld.java**
+    The source code for a Lambda function
+
+If you’re using Jetbrains IntelliJ IDEA, you can do that by running the following:
+
+> $ idea pom.xml
+
+Within the pom.xml file itself, change the <groupId> to be more appropriate for yourself,
+if you’d like.
+
+```java
+package book;
+public class HelloWorld {
+    public String handler(String s) {
+        return "Hello, " + s;
+    }
+}
+```
+
+This class represents an entire Java Lambda function. Small, isn’t it? Don’t worry too
+much about the whats and whys; we’ll get to them before too long. For now, let’s build
+our Lambda deployment artifact.
+
+### Building Hello World
+
+run mvn package
+
+This
+should complete successfully with the following lines near the end:
+
+```log
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+```
+
+It should also create our uberjar. Run jar tf target/lambda.jar to list the contents
+of the JAR file. The output should include book/HelloWorld.class, which is our
+application code, embedded within the artifact.
+

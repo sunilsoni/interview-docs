@@ -67,8 +67,6 @@ Q
 !Docs/ui-component/Angular/RxJS.md,a/2/a2bf79e6199deb835b608cf5137093c2eddf7148
 V
 &Docs/ui-component/Database/Database.md,7/d/7dcb1d58ab5fa1070dd903cb631e16c86b7d13f5
-R
-"Docs/ui-component/AWS/AwsLambda.md,d/9/d90204e28eba9c6c60532e09c584bed2d35e22a4
 V
 &Docs/ui-component/Database/mongo-db.md,f/9/f92106e7939abe597cea1c3fa52b17d06b1cd94a
 W
@@ -83,8 +81,6 @@ k
 ;Docs/ui-component/Miscellaneous/Behavioral & Situational.md,0/0/008c67e8113166d6794600ea83e5ddfe7efb85a9
 X
 (Docs/ui-component/Miscellaneous/owasp.md,b/9/b9a6409dd12c28945cd27f077bc062bca37a4538
-O
-Docs/ui-component/Java/java8.md,2/6/26ce027d0cdc4c20ecdc3f5b296e188896b116cd
 `
 0Docs/ui-component/Miscellaneous/GoodPractices.md,2/d/2d9dfc53500fe054d83539db40042cbe87aafadd
 ;

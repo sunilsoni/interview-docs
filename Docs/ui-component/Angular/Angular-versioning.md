@@ -145,7 +145,7 @@ onChange(ngModel: NgModel){ console.log(ngModel.value); } // Would log updated v
 
 ---
 
-##  Angular 7:
+##  Angular 7
 - Released on October 2018
 - This is a major release and expanding to the entire platform including-
   — Core framework,
@@ -167,7 +167,7 @@ onChange(ngModel: NgModel){ console.log(ngModel.value); } // Would log updated v
 
 ---
 
-##  Angular 8:
+##  Angular 8
 
 - Releasing March/April 2019
 - Being smaller, faster and easier to use and it will be making Angular developers life easier.
