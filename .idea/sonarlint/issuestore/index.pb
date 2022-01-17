@@ -47,8 +47,6 @@ Y
 )Docs/ui-component/Java/multi-threading.md,c/d/cd00a520a42bf85c75192c061240baa19b55300c
 R
 "Docs/ui-component/DevOps/DevOps.md,9/f/9fbc9e3f22802f4cd5d6285776f973c5a5601498
-L
-Docs/ui-component/AWS/aws.md,6/c/6c214d7e74fbcd27b9b720414c4f72777c7231fb
 a
 1Docs/ui-component/Angular/angular-data-binding.md,5/2/521b77bbe2ea1e05d381a169b644634314eecc90
 ^
