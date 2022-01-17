@@ -467,7 +467,15 @@ Here are the steps required to create our lambda:
 
 ### Invoke the Function
 
+Once the AWS lambda function is created, we'll test it by passing in some data:
 
+- Click on your lambda function from lists and then click on “Test” button
+- A popup window will appear which contains dummy value for sending data. Override the data with “Interview Docs”
+- Click on “Save and test” button
+- 
+On the screen, you can see the Execution result section with successfully returned output as:
+
+> "Hello World - Interview Docs"
 
 
 ---
