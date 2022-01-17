@@ -31,35 +31,38 @@ parent: Angular
 
 ---
 
-##  Angular 3:
+##  Angular 3
+
 Why we don’t have Angular 3?
-— Angular is being developed in a MonoRepo it means a single repo for everything. @angular/core, @angular/compiler, @angular/router etc are in the same repo and may have their own versions.
-— The angular router was already in v3 and releasing angular 3 with router 4 will create confusion
-— To avoid this confusion they decided to skip the version 3 and release with version 4.0.0 so that every major dependency in the MonoRepo are on the right track.
+
+- Angular is being developed in a MonoRepo it means a single repo for everything. @angular/core, @angular/compiler, @angular/router etc are in the same repo and may have their own versions.
+- The angular router was already in v3 and releasing angular 3 with router 4 will create confusion
+- To avoid this confusion they decided to skip the version 3 and release with version 4.0.0 so that every major dependency in the MonoRepo are on the right track.
+
 ---
 
 ##  Angular 4
 
-Released in 2017
-Changes in core library
-Angular 4 is simply the next version of angular 2, the underlying concept is the same & is an inheritance from Angular 2
-Lot of performance improvement is made to reduce size of AOT compiler generated code
-Typescript 2.1 & 2.2 compatible — all feature of ts 2.1 & 2.2 are supported in Angular 4 application
-Animation features are separated from @angular/core to @angular/animation
-— don’t import @animation packages into the application to reduce bundle size and it gives the performance improvement.
-Else block in *ngIf introduced:
-— Instead of writing 2 ngIf for else , simply add below code in component template:
-*ngIf=”yourCondition; else myFalsyTemplate”
-“<ng-template #myFalsyTemplate>Else Html</ng-template>”
+- Released in 2017
+- Changes in core library
+- Angular 4 is simply the next version of angular 2, the underlying concept is the same & is an inheritance from Angular 2
+- Lot of performance improvement is made to reduce size of AOT compiler generated code
+- Typescript 2.1 & 2.2 compatible — all feature of ts 2.1 & 2.2 are supported in Angular 4 application
+- Animation features are separated from @angular/core to @angular/animation
+- don’t import @animation packages into the application to reduce bundle size and it gives the performance improvement.
+    Else block in *ngIf introduced:
+- Instead of writing 2 ngIf for else , simply add below code in component template:
+   *ngIf=”yourCondition; else myFalsyTemplate”
+   “<ng-template #myFalsyTemplate>Else Html</ng-template>”
 
 ---
 
 ##  Angular 5
-Released 1st November 2017
-Build optimizer: It helps to removed unnecessary code from your application
-Angular Universal State Transfer API and DOM Support — By using this feature, we can now share the state of the application between the server side and client side very easily.
-Compiler Improvements: This is one of the very nice features of Angular 5, which improved the support of incremental compilation of an application.
-Preserve White space: To remove unnecessary new lines, tabs and white spaces we can add below code(decrease bundle size)
+- Released 1st November 2017
+- Build optimizer: It helps to removed unnecessary code from your application
+- Angular Universal State Transfer API and DOM Support — By using this feature, we can now share the state of the application between the server side and client side very easily.
+- Compiler Improvements: This is one of the very nice features of Angular 5, which improved the support of incremental compilation of an application.
+- Preserve White space: To remove unnecessary new lines, tabs and white spaces we can add below code(decrease bundle size)
 
 // in component decorator you can now add:
 “preserveWhitespaces: false”
@@ -67,31 +70,31 @@ Preserve White space: To remove unnecessary new lines, tabs and white spaces we 
 // or in tsconfig.json:
 “angularCompilerOptions”: { “preserveWhitespaces”: false}`
 
-Increased the standardization across all browsers: For internationalization we were depending on `i18n` , but in ng 5 provides a new date, number, and currency pipes which increases the internationalization across all the browsers and eliminates the need of i18n polyfills.
-exportAs: In Angular 5, multiple names support for both directives and components
-HttpClient: until Angualar 4.3 @angular/HTTP was been used which is now depreciated and in Angular 5 a new module called HttpClientModule is introduced which comes under @angular/common/http package.
-Few new Router Life-cycle Events being added in Angular 5: In Angular 5 few new life cycle events being added to the router and those are:
-ActivationStart, ActivationEnd, ChildActivationStart, ChildActivationEnd, GuardsCheckStart, GuardsCheckEnd, ResolveStart and ResolveEnd.
-Angular 5 supports TypeScript 2.3 version.
-Improved in faster Compiler support:
+- Increased the standardization across all browsers: For internationalization we were depending on `i18n` , but in ng 5 provides a new date, number, and currency pipes which increases the internationalization across all the browsers and eliminates the need of i18n polyfills.
+- exportAs: In Angular 5, multiple names support for both directives and components
+- HttpClient: until Angualar 4.3 @angular/HTTP was been used which is now depreciated and in Angular 5 a new module called HttpClientModule is introduced which comes under @angular/common/http package.
+- Few new Router Life-cycle Events being added in Angular 5: In Angular 5 few new life cycle events being added to the router and those are:
+> ActivationStart, ActivationEnd, ChildActivationStart, ChildActivationEnd, GuardsCheckStart, GuardsCheckEnd, ResolveStart and ResolveEnd.
+- Angular 5 supports TypeScript 2.3 version.
+- Improved in faster Compiler support:
 A huge improvement made in an Angular compiler to make the development build faster. We can now take advantage of by running the below command in our development terminal window to make the build faster.
-ng serve/s — aot
+ > ng serve/s — aot
 
 ---
 
 ##  Angular 6
-Released on April 2018
-This release is focused less on the underlying framework, and more on tool-chain and on making it easier to move quickly with angular in the future
-No major breaking changes
-Dependency on RxJS 6 (this upgrade have breaking changes but CLI command helps in migrating from older version of RxJS)
+- Released on April 2018
+- This release is focused less on the underlying framework, and more on tool-chain and on making it easier to move quickly with angular in the future
+- No major breaking changes
+- Dependency on RxJS 6 (this upgrade have breaking changes but CLI command helps in migrating from older version of RxJS)
 
-Synchronizes major version number of the:
-— Angular framework
-— Angular CLI
-— Angular Material + CDK
+- Synchronizes major version number of the:
+   1. Angular framework
+   2. Angular CLI
+   3. Angular Material + CDK
 All of the above are now version 6.0.0, minor and patch releases though are completely independent and can be changed based on a specific project.
-Remove support for <template> tag and “<ng-template>” should be used.
-Registering provider: To register new service/provider, we import Service into module and then inject in provider array. e.g:
+- Remove support for <template> tag and “<ng-template>” should be used.
+- Registering provider: To register new service/provider, we import Service into module and then inject in provider array. e.g:
 
 // app.module.ts
 import {MyService} from './my-service';
@@ -102,7 +105,8 @@ But after this upgrade you will be able to add providedIn property in injectable
 // MyService.ts
 @Injectable({ providedIn: 'root'})
 export class MyService{}
-The way ngModelChange event works:
+
+- The way ngModelChange event works:
 
 Let’s understand this with output produced by older and this version:
 // Angular 5:
@@ -113,8 +117,9 @@ onChange(value){ console.log(value); } // Would log updated value
 onChange(ngModel: NgModel){ console.log(ngModel.value); } // Would log old value, not updated
 // Angular 6:
 onChange(ngModel: NgModel){ console.log(ngModel.value); } // Would log updated value
-CLI Changes: Two new commands have been introduced
-— ng update <package>
+
+- **CLI Changes**: Two new commands have been introduced
+ 1. ng update <package>
 * Analyse package.json and recommend updates to your application
 * 3rd parties can provide update scripts using schematics
 * automatically update code for breaking changes
@@ -123,7 +128,7 @@ CLI Changes: Two new commands have been introduced
 * add new capablities to your applicaiton
 * e.g ng add @angular/material : behind the scene it add bit of necessary code and changes project where needed to add it the thing we just told it to add.
 * Now adding things like angular material, progressive web app, service workers & angular elements to your existing ng application will be easy.
-  CLI + Material starter templates: Let angular create code snippet for your basic components. e.g:
+  2. CLI + Material starter templates: Let angular create code snippet for your basic components. e.g:
   — Material Sidenav
 * ng generate @angular/material:material-nav — name=my-nav
   Generate a starter template including a toolbar with app name and then the side navigation & it's also responsive
@@ -133,7 +138,8 @@ CLI Changes: Two new commands have been introduced
   — Datatable
 * ng generate @angular/material:material-table — name=my-table
   Generates Data Table with sorting, filtering & pagination
-  It uses angular.json instead of .angular-cli.json
+  
+- It uses angular.json instead of .angular-cli.json
   Support for multiple projects: Now in angular.json we can add multiple projects
   initial release of Angular Elements which gives us ability to use our angular components in other environments like a Vue.js application. Its potential is truly amazing but unfortunately this release only works for angular application, we need to wait for next release to wrap out angular component into custom element and use it with framework like Vue.js
 
