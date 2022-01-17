@@ -43,8 +43,6 @@ P
 .Docs/ui-component/Java/collection-framework.md,0/6/06565483fdcc24132ed833a203135393e56ba7ae
 U
 %Docs/ui-component/Java/java-basics.md,c/0/c0251bb418f11b001e500679003e585c6eea4e89
-Y
-)Docs/ui-component/Java/multi-threading.md,c/d/cd00a520a42bf85c75192c061240baa19b55300c
 R
 "Docs/ui-component/DevOps/DevOps.md,9/f/9fbc9e3f22802f4cd5d6285776f973c5a5601498
 a
