@@ -265,6 +265,11 @@ handler method that we specified during deployment.
 
 ### Invocation Types
 
+At a high level, Lambda functions can be invoked using the following:
+- A push
+- An event
+- A stream-based model
+
 AWS CLI for calling Lambda functions
 
 > aws lambda invoke.
