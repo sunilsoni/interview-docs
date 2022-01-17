@@ -517,6 +517,34 @@ The events can trigger AWS Lambda are as follows −
 - Log entries in AWS Kinesis data stream
 - Log history in CloudTrail
 
+AWS Lambda is a compute service mainly used to run background processes. It can trigger when used with other AWS services. The list of AWS services where we can use AWS Lambda is given below −
+
+### S3 Object and AWS Lambda
+Amazon S3 passes the event details to AWS Lambda when there is any file upload in S3. The details of the file upload or deletion of file or moving of file is passed to the AWS Lambda. The code in AWS Lambda can take the necessary step for when it receives the event details. For Example creating thumbnail of the image inserted into S3.
+
+### DynamoDB and AWS Lambda
+DynamoDB can trigger AWS Lambda when there is data added, updated and deleted in the table. AWS Lambda event has all the details of the AWS DynamoDB table about the insert /update or delete.
+
+### API Gateway and AWS Lambda
+API Gateway can trigger AWS Lambda on GET/POST methods. We can create a form and share details with API Gateway endpoint and use it with AWS Lambda for further processing, for Example, making an entry of the data in DynamoDB table.
+
+### SNS and AWS Lambda
+SNS is used for push notification, sending SMS etc. We can trigger AWS lambda when there is any push notification happening in SNS. We can also send SMS to the phone number from AWS Lambda when it receives the trigger.
+
+### Scheduled Events and AWS Lambda
+Scheduled Events can be used for cron jobs. It can trigger AWS Lambda to carry out the task at regular time pattern.
+
+### CloudTrail and AWS Lambda
+CloudTrail can be helpful in monitoring the logs on the account. We can use AWS Lambda to further process the CloudTrail logs .
+
+### Kinesis and AWS Lambda
+Kinesis is used to capture/store real time tracking data coming from website clicks, logs, social media feeds and a trigger to AWS Lambda can do additional processing on this logs.
+
+### CloudFront and Lambda@Edge
+CloudFront is a content delivery network where you can host your website and Lambda@Edge can be used to process the headers coming from viewer request, origin request, origin response and viewer response. The headers modification includes tasks such as modifying cookie data, URL rewrite, used for AB testing to change the response send to the user back, adding extra headers info for security purpose etc.
+
+
+
 ---
 
 ## More Details: 
