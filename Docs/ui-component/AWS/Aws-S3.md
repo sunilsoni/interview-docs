@@ -274,7 +274,7 @@ S3 contains four types of storage classes:
 
 |                           | S3 Standard | S3 Standard IA | S3 One Zone-IA | S3 Glacier    |
 |---------------------------|-------------|----------- |----------------|---------------|
-| Designed for durability   |   99.99999999%	    99.99999999%	      |    99.99999999%	     | 99.99999999%	  | 99.99999999%	 |
+| Designed for durability   |   99.99999999%	 |    99.99999999%	     | 99.99999999%	  | 99.99999999%	 |
 | Designed for availability |   99.99%	          |   99.99%	      | 99.5%	         | N/A           |
 | Availability SLA          |    99.9%         |   99%        | 99%            | N/A           |
 | Availability zones        |   >=3          |    >=3      | 1              | >=3           |
