@@ -59,8 +59,6 @@ d
 4Docs/ui-component/Angular/angular-lifecycle-hooks.md,e/4/e4498d58cfe3a1fe012c5fe8dc73d771146ea518
 Z
 *Docs/ui-component/Angular/angular-pipes.md,e/2/e23382e1e414ecc77329f6704f660cd56d42c492
-_
-/Docs/ui-component/Angular/angular-components.md,c/e/ce9987fd7a9be80d8d72ea75de7b65b6c5de12c7
 \
 ,Docs/ui-component/Angular/angular-routing.md,6/b/6ba24796ef9978d1c85ae3c4bd08600f5343db69
 ]
@@ -83,3 +81,22 @@ o
 ?Docs/ui-component/Miscellaneous/images/cross-site-scripting.svg,f/3/f3d228f1e003b5a38a188c28e2bbbfd0dac231a5
 k
 ;Docs/ui-component/Miscellaneous/Behavioral & Situational.md,0/0/008c67e8113166d6794600ea83e5ddfe7efb85a9
+X
+(Docs/ui-component/Miscellaneous/owasp.md,b/9/b9a6409dd12c28945cd27f077bc062bca37a4538
+O
+Docs/ui-component/Java/java8.md,2/6/26ce027d0cdc4c20ecdc3f5b296e188896b116cd
+`
+0Docs/ui-component/Miscellaneous/GoodPractices.md,2/d/2d9dfc53500fe054d83539db40042cbe87aafadd
+;
+sitemap.xml,9/9/991b411cc600215e9528c61790563f0521666950
+W
+'Docs/ui-component/Miscellaneous/http.md,8/3/8302f84420a1056f891ab094c11a0a66d6482c61
+[
++Docs/ui-component/Miscellaneous/Cucumber.md,f/6/f602100c2c55ca9d7df33b8cede533dabc7d764f
+;
+_config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
+W
+'Docs/ui-component/Miscellaneous/misc.md,6/7/67748cf76f0967a54e5a269db01223235774ab4d
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
