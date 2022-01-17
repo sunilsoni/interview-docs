@@ -229,3 +229,51 @@ It should also create our uberjar. Run jar tf target/lambda.jar to list the cont
 of the JAR file. The output should include book/HelloWorld.class, which is our
 application code, embedded within the artifact.
 
+---
+
+## Core Concepts: Runtime Model, Invocation
+
+ <img src="images/The Lambda execution environment.png" width="1000" />
+
+### The Lambda Execution Environment
+
+A function is executed, or invoked, whenever the invoke command of the AWS Lambda API is called. This happens at the following times:
+
+- When a function is triggered by an event source
+- When you use the test harness in the web console
+- When you call the Lambda API invoke command yourself, typically via the CLI  or SDK, from your own code or scripts
+
+- Invoking a function for the first time will start the following chain of activity that will
+end in your code being executed.
+
+First, the Lambda service will create a host Linux environment—a lightweight microvirtual
+machine. You typically won’t need to worry about the precise nature of what
+type of environment it is (which kernel, what distribution, etc.), but if you do care,
+Amazon makes that information public. But don’t rely on it staying constant—Amazon
+can and does make frequent changes to the OS of Lambda functions, often for
+your own benefit, including automatic security patches.
+
+Once the host environment has been created, then Lambda will start a language runtime
+within it—in our case a Java virtual machine. At the time of this writing, the
+JVM version will always be Java 8 or Java 11. You must supply Lambda with code
+compatible with the version of Java that you choose. The JVM is started with a set of
+environment flags that we can’t change.
+
+Of course, the Lambda Java Runtime’s primary concern is executing our code. The
+final steps of the invocation chain are (a) to load our Java classes and (b) to call the
+handler method that we specified during deployment.
+
+### Invocation Types
+
+AWS CLI for calling Lambda functions
+
+> aws lambda invoke.
+
+
+
+
+
+
+
+
+
