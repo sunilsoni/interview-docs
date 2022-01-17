@@ -233,5 +233,5 @@ onChange(ngModel: NgModel){ console.log(ngModel.value); } // Would log updated v
 ---
 
 ##  For more information
-[Difference Among Angular 8, 7, 6, 5, 4, 3, 2 — Breakdown, New Features, and Changes](https://medium.com/@lifenshades/difference-among-angular-8-7-6-5-4-3-2-breakdown-new-features-and-changes-811fb5f8e6f0)
-[Comparison Between Angular 11 Vs Angular 12 Vs Angular 13](https://www.angularminds.com/blog/article/comparison-between-angular-11-vs-angular-12.html)
+1. [Difference Among Angular 8, 7, 6, 5, 4, 3, 2 — Breakdown, New Features, and Changes](https://medium.com/@lifenshades/difference-among-angular-8-7-6-5-4-3-2-breakdown-new-features-and-changes-811fb5f8e6f0)
+2. [Comparison Between Angular 11 Vs Angular 12 Vs Angular 13](https://www.angularminds.com/blog/article/comparison-between-angular-11-vs-angular-12.html)
