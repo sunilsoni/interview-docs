@@ -258,7 +258,7 @@ within it—in our case a Java virtual machine. At the time of this writing, the
 JVM version will always be Java 8 or Java 11. You must supply Lambda with code
 compatible with the version of Java that you choose. The JVM is started with a set of
 environment flags that we can’t change.
-
+    
 Of course, the Lambda Java Runtime’s primary concern is executing our code. The
 final steps of the invocation chain are (a) to load our Java classes and (b) to call the
 handler method that we specified during deployment.
@@ -342,5 +342,137 @@ Java Lambda methods can be either instance methods or static methods, but must b
 
 A class containing a Lambda function cannot be abstract and must have a noargument  constructor—either the default constructor (i.e., no constructor specified) or an explicit no-argument constructor. The main reason to consider using a constructor at all is for caching data between Lambda calls.
 
+---
+
+## A Basic AWS Lambda Example With Java
 
 
+### Maven Dependencies
+```xml
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-lambda-java-core</artifactId>
+    <version>1.1.0</version>
+</dependency>
+
+```
+
+We also need the Maven Shade Plugin to build the lambda application:
+
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>2.4.3</version>
+    <configuration>
+        <createDependencyReducedPom>false</createDependencyReducedPom>
+    </configuration>
+    <executions>
+        <execution>
+            <phase>package</phase>
+	    <goals>
+                <goal>shade</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+
+### Create Handler
+Simply put, to invoke a lambda function, we need to specify a handler; there are 3 ways of creating a handler:
+
+1. Creating a custom MethodHandler
+2. Implementing the RequestHandler interface
+3. Implementing the RequestStreamHandler interface
+
+####  Custom MethodHandler
+We'll create a handler method that will be the entry point for incoming requests. We can use JSON format or primitive data types as input values.
+
+Also, the optional Context object will allow us to access useful information available within the Lambda execution environment:
+
+```java
+public class LambdaMethodHandler {
+    public String handleRequest(String input, Context context) {
+        context.getLogger().log("Input: " + input);
+        return "Hello World - " + input;
+    }
+}
+
+```
+####  RequestHandler Interface 
+We can also implement the RequestHandler into our class and override the handleRequest method which will be our entry point for requests:
+```java
+public class LambdaRequestHandler
+  implements RequestHandler<String, String> {
+    public String handleRequest(String input, Context context) {
+        context.getLogger().log("Input: " + input);
+        return "Hello World - " + input;
+    }
+}
+```
+In this case, the input will be the same as in the first example.
+
+
+
+####  RequestStreamHandler Interface
+We can also implement RequestStreamHandler in our class and simply override the handleRequest method.
+
+The difference is that InputStream, ObjectStream and Context objects are being passed as parameters:
+
+```java
+public class LambdaRequestStreamHandler
+  implements RequestStreamHandler {
+    public void handleRequest(InputStream inputStream, 
+      OutputStream outputStream, Context context) {
+        String input = IOUtils.toString(inputStream, "UTF-8");
+        outputStream.write(("Hello World - " + input).getBytes());
+    }
+}
+```
+
+### Build Deployment File
+With everything configured, we can create the deployment file by simply running:
+
+
+```cmd
+mvn clean package shade:shade
+```
+The jar file will be created under the target folder.
+
+
+### Create Lambda Function via Management Console
+
+Sign in to AWS Amazon and then click on Lambda under services. This page will show the lambda functions list, which is already created.
+
+Here are the steps required to create our lambda:
+
+1. `Select blueprint` and then select `Blank Function`
+2. “Configure triggers” (in our case we don't have any triggers or events)
+3. “Configure function”:
+- Name: Provide MethodHandlerLambda,
+- Description: Anything that describes our lambda function
+- Runtime: Select java8
+- Code Entry Type and Function Package: Select “Upload a .ZIP and Jar file” and click on “Upload” button. Select the file which contains lambda code.
+- Under Lambda function handler and role:
+  Handler name: Provide lambda function handler name com.baeldung.MethodHandlerLambda::handleRequest
+  Role name: If any other AWS resources are used in lambda function, then provide access by creating/using existing role and also define the policy template.
+- Under Advanced settings:
+  Memory: Provide memory that will be used by our lambda function.
+  Timeout: Select a time for execution of lambda function for each request.
+4. Once you are done with all inputs, click “Next” which will show you to review the configuration.
+5. Once a review is completed, click on “Create Function”.
+
+
+### Invoke the Function
+
+
+
+
+---
+
+## More Details: 
+1. [How to create a Lambda function](https://www.javatpoint.com/aws-creating-a-lambda)
+2. [AWS Lambda – Overview](https://www.tutorialspoint.com/aws_lambda/aws_lambda_overview.htm)
+3. [A Basic AWS Lambda Example With Java](https://www.baeldung.com/java-aws-lambda)
