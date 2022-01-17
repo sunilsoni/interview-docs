@@ -65,8 +65,6 @@ Q
 !Docs/ui-component/Angular/RxJS.md,a/2/a2bf79e6199deb835b608cf5137093c2eddf7148
 V
 &Docs/ui-component/Database/Database.md,7/d/7dcb1d58ab5fa1070dd903cb631e16c86b7d13f5
-V
-&Docs/ui-component/Database/mongo-db.md,f/9/f92106e7939abe597cea1c3fa52b17d06b1cd94a
 W
 'Docs/ui-component/Database/hibernate.md,f/2/f2efc429cc235b09fc58264b3b3bd9a6e67ddcb0
 R
