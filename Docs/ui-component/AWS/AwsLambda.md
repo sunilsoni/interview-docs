@@ -480,6 +480,45 @@ On the screen, you can see the Execution result section with successfully return
 
 ---
 
+## How AWS Lambda Works?
+
+
+ <img src="images/How AWS Lambda Works.png" width="1000" />
+
+**Step 1** − Upload AWS lambda code in any of languages AWS lambda supports, that is NodeJS, Java, Python, C# and Go.
+
+**Step 2** − These are few AWS services on which AWS lambda can be triggered.
+
+**Step 3** − AWS Lambda which has the upload code and the event details on which the trigger has occurred. For example, event from Amazon S3, Amazon API Gateway, Dynamo dB, Amazon SNS, Amazon Kinesis, CloudFront, Amazon SES, CloudTrail, mobile app etc.
+
+**Step 4** − Executes AWS Lambda Code only when triggered by AWS services under the scenarios such as −
+
+   - User uploads files in S3 bucket
+   - http get/post endpoint URL is hit
+   - data is added/updated/deleted in dynamo dB tables
+   - push notification
+   - data streams collection
+   - hosting of website
+   - email sending
+   - mobile app, etc.
+
+**Step 5** − Remember that AWS charges only when the AWS lambda code executes, and not otherwise.
+
+---
+
+## Events that Trigger AWS Lambda
+The events can trigger AWS Lambda are as follows −
+
+- Entry into a S3 object
+- Insertion, updation and deletion of data in Dynamo DB table
+- Push notifications from SNS
+- GET/POST calls to API Gateway
+- Headers modification at viewer or origin request/response in CloudFront
+- Log entries in AWS Kinesis data stream
+- Log history in CloudTrail
+
+---
+
 ## More Details: 
 1. [How to create a Lambda function](https://www.javatpoint.com/aws-creating-a-lambda)
 2. [AWS Lambda – Overview](https://www.tutorialspoint.com/aws_lambda/aws_lambda_overview.htm)
