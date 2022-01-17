@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Angular-versioning and releases
+title: Versioning and releases
 parent: Angular
 ---
 
-# Angular-versioning and releases
+# Versioning and releases
 {: .no_toc }
 
 <details open markdown="block">
