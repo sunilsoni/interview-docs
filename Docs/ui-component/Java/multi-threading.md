@@ -1377,7 +1377,7 @@ at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.
 2. [Multithreading Interview Questions and Answers](https://github.com/learning-zone/java-interview-questions/blob/master/multithreading-questions.md)
 3. [ExecutorService Interface Overview](https://www.javaguides.net/2018/09/executorservice-interface-in-java.html)
 4. [Guide To CompletableFuture](https://www.baeldung.com/java-completablefuture)
-5. [CompletableFuture in Java With Examples](https://www.netjstech.com/2018/11/completablefuture-in-java-with-examples.html)
+5. [CompletableFuture in Java With Examples-netjstech.com](https://www.netjstech.com/2018/11/completablefuture-in-java-with-examples.html)
 6. [Class CompletableFuture<T>](https://docs.oracle.com/javase/10/docs/api/java/util/concurrent/CompletableFuture.html)
 
     
