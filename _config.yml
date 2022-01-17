@@ -39,7 +39,7 @@ search:
   preview_words_before: 5
   # Maximum amount of words to display after a matched word in the preview
   # Default: 10
-  preview_words_after: 10
+  preview_words_after: 20
   # Set the search token separator
   # Default: /[\s\-/]+/
   # Example: enable support for hyphenated search words
