@@ -277,21 +277,23 @@ The parent, child, and sibling components all receive the same treatment. We inj
 Now if we create a function in any one of these components that changes the value of the message. when this function is executed the new data it’s automatically broadcast to all other components.
 
 data.service.ts
+
 ```typescript
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'docs/angular/RxJS';
 
 @Injectable()
 export class DataService {
 
-  private messageSource = new BehaviorSubject('default message');
-  currentMessage = this.messageSource.asObservable();
+    private messageSource = new BehaviorSubject('default message');
+    currentMessage = this.messageSource.asObservable();
 
-  constructor() { }
+    constructor() {
+    }
 
-  changeMessage(message: string) {
-    this.messageSource.next(message)
-  }
+    changeMessage(message: string) {
+        this.messageSource.next(message)
+    }
 
 }
 ```

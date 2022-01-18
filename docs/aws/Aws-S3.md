@@ -89,7 +89,7 @@ listing of storage classes.
 
 **S3 Storage Classes**
 
-<img src="images/S3 Storage Classes.png" width="1000"/>
+<img src="images/S3%20Storage%20Classes.png" width="1000"/>
 
 With one exception that we’ll cover in the following section, you’ll want the highest
 degree of durability available. Your choice of storage class then hinges upon your desired

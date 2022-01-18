@@ -47,7 +47,7 @@ OAuth2.0 is a delegation protocol where the Client (Mobile App or web app) does 
 
 ###  OAuth2 Roles
 
- <img src="images/Four different roles in OAuth 2.0 protocol.png" width="800" border="2" />
+ <img src="images/Four%20different%20roles%20in%20OAuth%202.0%20protocol.png" width="800" border="2" />
 
 Oauth2 defines four roles.
 1. **Resource Owner** - The person or the application that owns the data to be shared. When resource owner is a person, it is called as an end-user.
@@ -60,7 +60,7 @@ Oauth2 defines four roles.
 
 An authorization grant is a credential representing the resource owner’s authorization (to access its protected resources) used by the client to obtain an access token.
 
- <img src="images/Five Grants in OAuth 2.0 protocol.png" width="800" border="2" />
+ <img src="images/Five%20Grants%20in%20OAuth%202.0%20protocol.png" width="800" border="2" />
 
 OAuth2 specification defines four grant types.
 1. **Authorization Code** - its mostly used by web applications.
@@ -110,7 +110,7 @@ Using Client Credentials to generate Access Token.
 
 ##  OAuth2 and Microservices 
 
- <img src="images/OAuth2 Use in Microservices Context.png" width="800" border="2" />
+ <img src="images/OAuth2%20Use%20in%20Microservices%20Context.png" width="800" border="2" />
 
 1. Resource Servers are often microservices.
 2. Web App Clients uses Authorization Code Grant.
@@ -164,7 +164,7 @@ A typical JWT is shown here for reference.
 **Encoded JSON Web Token**
 Entire JWT is encoded in Base64 format to make it compatibel with HTTP protocol. Encoded JWT looks like the following:
 
- <img src="images/Encoded JWT Claim.png" width="800" border="2" />
+ <img src="images/Encoded%20JWT%20Claim.png" width="800" border="2" />
 
 
 **Decoded JSON Web Token**
@@ -421,7 +421,7 @@ public class RemoteMicroService {
 
 In second case, we shall use Client Credentials issued by OAuth2 workflow for securing service to service communication. Here user’s security context is not propogated to the downstream server, instead the client’s credentials are used to secure the communication.
 
-<img src="images/Client Crendtials Sequence Diagram.png" width="800" border="2" />
+<img src="images/Client%20Crendtials%20Sequence%20Diagram.png" width="800" border="2" />
 
 This approach shall mostly be used for scheduled jobs where we are not making remote service calls on behalf of end user.
 

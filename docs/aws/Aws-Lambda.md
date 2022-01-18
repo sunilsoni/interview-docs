@@ -233,7 +233,7 @@ application code, embedded within the artifact.
 
 ## Core Concepts: Runtime Model, Invocation
 
- <img src="images/The Lambda execution environment.png" width="1000" />
+ <img src="images/The%20Lambda%20execution%20environment.png" width="1000" />
 
 ### The Lambda Execution Environment
 
@@ -483,7 +483,7 @@ On the screen, you can see the Execution result section with successfully return
 ## How AWS Lambda Works?
 
 
- <img src="images/How AWS Lambda Works.png" width="1000" />
+ <img src="images/How%20AWS%20Lambda%20Works.png" width="1000" />
 
 **Step 1** − Upload AWS lambda code in any of languages AWS lambda supports, that is NodeJS, Java, Python, C# and Go.
 

@@ -59,7 +59,7 @@ There are three main types of XSS attacks. These are:
 
 Cross-site scripting works by manipulating a vulnerable web site so that it returns malicious JavaScript to users. When the malicious code executes inside a victim's browser, the attacker can fully compromise their interaction with the application.
 
-<img src="./images/cross-site-scripting.svg" width="781" border="2" />
+<img src="images/cross-site-scripting.svg" width="781" border="2" />
 
 
 

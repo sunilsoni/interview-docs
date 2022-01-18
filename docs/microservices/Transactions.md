@@ -50,7 +50,7 @@ will be called in a sequence.
 
 Here is a customer order example with a monolithic system using a local transaction:
 
-<img src="images/monolithic system using a local transactio.png" width="600"/>
+<img src="images/monolithic%20system%20using%20a%20local%20transactio.png" width="600"/>
 
 
 In the customer order example above, if a user sends a Put Order action to a monolithic system, the system will create a
@@ -61,7 +61,7 @@ When we decompose this system, we created both the `CustomerMicroserviceand` the
 separate databases. Here is a customer order example with microservices:
 
 
-<img src="images/customer order example with microservices.png" width="600" />
+<img src="images/customer%20order%20example%20with%20microservices.png" width="600" />
 
 When a Put Order request comes from the user, both microservices will be called to apply changes into their own
 database. Because the transaction is now across multiple databases, it is now considered a _distributed transaction_.
@@ -104,7 +104,7 @@ need to call the microservices in the prepare and commit phases.
 
 Here is a 2pc implementation for the customer order example:
 
-<img src="images/2pc implementation for the customer order .png" width="600" />
+<img src="images/2pc%20implementation%20for%20the%20customer%20order%20.png" width="600" />
 
 In the example above, when a user sends a put order request, the Coordinator will first create a global transaction with
 all the context information. It will then tell CustomerMicroservice to prepare for updating a customer fund with the
@@ -118,7 +118,7 @@ unlocked.
 If at any point a single microservice fails to prepare, the Coordinator will abort the transaction and begin the
 rollback process. Here is a diagram of a 2pc rollback for the customer order example:
 
-<img src="images/2pc rollback for the customer order .png" width="600" />
+<img src="images/2pc%20rollback%20for%20the%20customer%20order%20.png" width="600" />
 
 In the above example, the CustomerMicroservice failed to prepare for some reason, but the OrderMicroservice has replied
 that it is prepared to create the order. The Coordinator will request an abort on the OrderMicroservice with the
@@ -153,7 +153,7 @@ an event bus.
 
 Here is a diagram of the Saga pattern for the customer order example:
 
-<img src="images/Saga pattern for the customer order.png" width="600" />
+<img src="images/Saga%20pattern%20for%20the%20customer%20order.png" width="600" />
 
 In the example above, the OrderMicroservice receives a request to place an order. It first starts a local transaction to
 create an order and then emits an OrderCreated event. The CustomerMicroservice listens for this event and updates a
@@ -163,7 +163,7 @@ will then be emitted, which in this example means the end of the transaction.
 If any microservice fails to complete its local transaction, the other microservices will run compensation transactions
 to rollback the changes. Here is a diagram of the Saga pattern for a compensation transaction:
 
-<img src="images/Saga pattern for a compensation transaction.png" width="600" />
+<img src="images/Saga%20pattern%20for%20a%20compensation%20transaction.png" width="600" />
 
 In the above example, the UpdateCustomerFund failed for some reason and it then emitted a CustomerFundUpdateFailed
 event. The OrderMicroservice listens for the event and start its compensation transaction to revert the order that was

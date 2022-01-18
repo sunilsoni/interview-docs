@@ -2,7 +2,7 @@
 title: Amazon Web Services (AWS)
 has_children: true
 nav_order: 2
-permalink: docs/ui-component/aws
+permalink: docs/aws
 ---
 
 # Amazon Web Services (AWS)

@@ -3,7 +3,7 @@ layout: default
 title: Design Patterns
 has_children: true
 nav_order: 2
-permalink: docs/ui-component/design-patterns
+permalink: docs/design-patterns
 ---
 
 # Design Patterns

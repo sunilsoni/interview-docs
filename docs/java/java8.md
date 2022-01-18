@@ -362,7 +362,7 @@ Therefore, we need to be careful about which operations can be run in parallel.
 
 ## Intermediate and Terminal operations
 
- <img src="images/intermediate and terminal operations.png" width="1000" />
+ <img src="images/intermediate%20and%20terminal%20operations.png" width="1000" />
 
 ### Intermediate vs Terminal operations
 

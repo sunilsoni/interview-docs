@@ -48,7 +48,7 @@ The `@RequestMapping` annotation is used to map the request url. It is applied o
 - **Step 4:** Now DispatcherServlet send the model object to the ViewResolver to get the actual view page.
 - **Step 5:** Finally DispatcherServlet will pass the Model object to the View page to display the result.
 
- <img src="./images/spring-mvc-flow.png" width="500"  />
+ <img src="images/spring-mvc-flow.png" width="500"  />
 
 
 ##  Spring Web Annotations 

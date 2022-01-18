@@ -1,12 +1,17 @@
 ---
 layout: default
-title: DevOps
+title: Java
 has_children: true
 nav_order: 2
-permalink: docs/ui-component/devops
+resource: true
+desc: "Java interview questions and answers."
+categories: [Java,Java8,Multithreading]
+permalink: docs/java
 ---
 
-#  DevOps
+
+
+# Java
 
 {: .no_toc }
 
@@ -20,5 +25,3 @@ permalink: docs/ui-component/devops
 </details>
 
 ---
-
-

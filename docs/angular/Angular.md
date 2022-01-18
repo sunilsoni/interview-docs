@@ -2,7 +2,7 @@
 title: Angular
 has_children: true
 nav_order: 2
-permalink: docs/ui-component/angular
+permalink: docs/angular
 ---
 
 # Angular

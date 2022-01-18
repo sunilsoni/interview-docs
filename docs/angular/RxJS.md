@@ -25,8 +25,8 @@ RxJS is a library for composing asynchronous and callback-based code in a functi
 For example, you can import observables and operators for using HttpClient,
 
 ```typescript
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import {Observable, throwError} from 'docs/angular/RxJS';
+import {catchError, retry} from 'rxjs/operators';
 ```
 
 

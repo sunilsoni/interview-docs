@@ -258,7 +258,7 @@ public class Child implements Interface1, Interface2 {
 }
 
 ```
- <img src="./images/default-methods-error.png" width="800" border="2" />
+ <img src="images/default-methods-error.png" width="800" border="2" />
 
 So, to avoid this error, it is mandatory to provide implementation for common default methods of interfaces
 
@@ -627,11 +627,11 @@ As this checking happens at runtime, method overriding is a typical example of d
 Association can be one way or both ways. When you see this kind of UML diagram, it means ClassA knows about ClassB, but
 the reverse is not true.
 
-<img src="./images/Association.png" width="600" />
+<img src="images/Association.png" width="600" />
 
 The following diagram indicates a two-way association because both classes know each other.
 
-<img src="./images/two-way association.png" width="600" />
+<img src="images/two-way%20association.png" width="600" />
 
 Consider an example. In a college, a student can learn from multiple teachers, and a teacher can teach multiple
 students. There is no ownership in this kind of relationship. So, when you represent them with classes and objects in
@@ -644,7 +644,7 @@ programming, you can say that both kinds of objects can be created and deleted i
 Aggregation is a stronger type of association. The aggregation between a professor and department can be represented as
 follows.
 
-<img src="./images/aggregation between a professor and department.png" width="600" />
+<img src="images/aggregation%20between%20a%20professor%20and%20department.png" width="600" />
 
 Let’s go deeper. Suppose that Professor X submits his resignation letter to his existing organization to join a new
 organization. Although both Professor X and his former institution can survive without each other, Professor X needs to
@@ -662,7 +662,7 @@ Similarly, you can say that a human body has hands, a car has seats, a bike has 
 
 Composition is a stronger form of aggregation, and this time you have a filled diamond in place.
 
-<img src="./images/Composition.png" width="600" />
+<img src="images/Composition.png" width="600" />
 
 A department in a college cannot exist without the college. The college only creates or closes its departments. (You can
 argue that if there is no department at all, a college cannot exist, but you do not need to complicate things by
@@ -685,7 +685,7 @@ automatically. Similarly, you can say the hands (or legs, etc.)of a human being 
 |It may or may not affect the other associated element if one element is deleted. |Deleting one element in the aggregation relationship does not affect other associated elements. | It affects the other element if one of its associated element is deleted.|
 |Example: A tutor can associate with multiple students, or one student can associate with multiple teachers. | Example: A car needs a wheel for its proper functioning, but it may not require the same wheel. It may function with another wheel as well.| Example: If a file is placed in a folder and that is folder is deleted. The file residing inside that folder will also get deleted at the time of folder deletion.|
 
-<img src="./images/Association vs. Aggregation vs. Composition.png" width="600" />
+<img src="images/Association%20vs.%20Aggregation%20vs.%20Composition.png" width="600" />
 
 
 ---
