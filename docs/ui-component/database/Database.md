@@ -1,13 +1,11 @@
 ---
-layout: default
-title: Miscellaneous
+title: Database
 has_children: true
 nav_order: 2
-permalink: docs/ui-component/Miscellaneous
+permalink: docs/ui-component/database
 ---
 
-# Miscellaneous
-
+# Database
 {: .no_toc }
 
 <details open markdown="block">

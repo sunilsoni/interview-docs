@@ -3,7 +3,7 @@ layout: default
 title: Spring
 has_children: true
 nav_order: 2
-permalink: docs/ui-component/Spring
+permalink: docs/ui-component/spring
 ---
 
 # Spring

@@ -2,7 +2,7 @@
 layout: default
 title: Kafka
 nav_order: 2
-permalink: docs/ui-component/Kafka
+permalink: docs/ui-component/kafka
 ---
 
 # Kafka
