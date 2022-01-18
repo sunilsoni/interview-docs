@@ -28,8 +28,6 @@ R
 docs/aws/aws.md,e/c/ecd2f7d76ed36c5f12aa55096970332f97c36075
 V
 &docs/design-patterns/design-pattern.md,b/1/b18f43ac389f0256bc363a87c55c6b73c3ecec84
-D
-docs/devops/Linux.md,0/4/04504a64fca9e2e2a20449fc3b69ecc8f723e579
 S
 #docs/microservices/microservices.md,a/b/ab0d77c7ebc3ca623999f7b3cbb108b8b84acf7f
 ^
