@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Miscellaneous
+title: DevOps
 has_children: true
 nav_order: 2
-permalink: Docs/ui-component/Miscellaneous
+permalink: docs/ui-component/DevOps
 ---
 
-# Miscellaneous
+#  DevOps
 
 {: .no_toc }
 
@@ -20,3 +20,5 @@ permalink: Docs/ui-component/Miscellaneous
 </details>
 
 ---
+
+

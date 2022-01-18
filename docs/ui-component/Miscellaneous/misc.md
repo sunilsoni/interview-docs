@@ -1,17 +1,12 @@
 ---
 layout: default
-title: Java
+title: Miscellaneous
 has_children: true
 nav_order: 2
-resource: true
-desc: "Java interview questions and answers."
-categories: [Java,Java8,Multithreading]
-permalink: Docs/ui-component/Java
+permalink: docs/ui-component/Miscellaneous
 ---
 
-
-
-# Java
+# Miscellaneous
 
 {: .no_toc }
 

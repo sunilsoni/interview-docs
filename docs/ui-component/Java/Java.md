@@ -1,11 +1,18 @@
 ---
-title: Database
+layout: default
+title: Java
 has_children: true
 nav_order: 2
-permalink: Docs/ui-component/Database
+resource: true
+desc: "Java interview questions and answers."
+categories: [Java,Java8,Multithreading]
+permalink: docs/ui-component/Java
 ---
 
-# Database
+
+
+# Java
+
 {: .no_toc }
 
 <details open markdown="block">

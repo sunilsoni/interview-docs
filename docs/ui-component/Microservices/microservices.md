@@ -3,7 +3,7 @@ layout: default
 title: Micro Services
 has_children: true
 nav_order: 2
-permalink: Docs/ui-component/Microservices
+permalink: docs/ui-component/Microservices
 ---
 
 

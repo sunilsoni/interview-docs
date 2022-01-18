@@ -1,13 +1,11 @@
 ---
-layout: default
-title: DevOps
+title: Database
 has_children: true
 nav_order: 2
-permalink: Docs/ui-component/DevOps
+permalink: docs/ui-component/Database
 ---
 
-#  DevOps
-
+# Database
 {: .no_toc }
 
 <details open markdown="block">
@@ -20,5 +18,3 @@ permalink: Docs/ui-component/DevOps
 </details>
 
 ---
-
-
