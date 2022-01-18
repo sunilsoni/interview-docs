@@ -52,10 +52,10 @@ Now, every instance type has a set of instances which are optimized for differen
 
 
 | General Instances | Compute Instances |  Memory Instances | Storage Instances | GPU Instances | 
-|-----------------|----------|---------|-------------------|---------------|
-| t2         |  c4    |  r3   | i2                | g2            |
-| m4         |  c3    |  x1   | d2                |               |  
-| m3         |          |         |                   |               |  
+|-------------------|----------|---------|-------------------|---------------|
+| - t2              |  - c4    |  - r3   | - i2                | - g2            |
+| - m4                |  - c3    |  - x1   | - d2                |               |  
+| - m3                |          |         |                   |               |  
 
 
 ---
