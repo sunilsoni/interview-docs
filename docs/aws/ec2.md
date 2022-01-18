@@ -19,7 +19,7 @@ parent: Amazon Web Services (AWS)
 
 ---
 
-Amazon EC2 provides cloud hosted virtual machines, called "instances", to run applications.
+Amazon EC2 provides cloud hosted virtual machines, called `instances`, to run applications.
 
 ---
 
@@ -36,7 +36,26 @@ Thus, you can rent an instance based on your own CPU and memory requirements and
 
 ---
 
-## 
+## Types of EC2 Computing Instances
+
+
+| Instances Types   | Use Case | Example |
+|-------------------|----------|---------|
+| General Instances | For applications that require a balance of performance and cost.| email responding systems, where you need a prompt response as well as the it should be cost effective, since it doesn’t require much processing.|
+| Compute Instances | For applications that require a lot of processing from the CPU.         |   analysis of data from a stream of data, like Twitter stream      |
+| Memory Instances  | For applications that are heavy in nature, therefore, require a lot of RAM.         | when your system needs a lot of applications running in the background i.e multitasking.       |
+| Storage Instances |  For applications that are huge in size or have a data set that occupies a lot of space.        |  When your application is of huge size.       |
+| GPU Instances     |  For applications that require some heavy graphics rendering.        | 3D modelling etc.       |
+
+
+Now, every instance type has a set of instances which are optimized for different workloads:
+
+
+| General Instances | Compute Instances |  Memory Instances | Storage Instances | GPU Instances | 
+|-----------------|----------|---------|---------|---------|
+| t2         |  c4    |  r3   | i2| g2 |
+| m4         |  c3    |  x1   | d2|  |  
+| m3         |          |         |  |  |  
 
 
 ---
