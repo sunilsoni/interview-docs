@@ -33,7 +33,7 @@ The main components of Kafka are:
 - **Consumer**: The consumer is the one who is going to the consumer the published data. It can subscribe to different topics and then pull data from the brokers.
 
 
-<img src="images/kafka-message-flow.jpeg" width="700"/>
+<img src="kafka/images/kafka-message-flow.jpeg" width="700"/>
 
 ---
 
