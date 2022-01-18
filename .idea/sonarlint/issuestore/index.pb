@@ -24,8 +24,6 @@ F
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 R
 "docs/angular/angular-components.md,8/8/88a9c5d705aba299df45f3a2cf599211e02b58ee
-?
-docs/aws/aws.md,e/c/ecd2f7d76ed36c5f12aa55096970332f97c36075
 V
 &docs/design-patterns/design-pattern.md,b/1/b18f43ac389f0256bc363a87c55c6b73c3ecec84
 S
