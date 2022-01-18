@@ -1,90 +1,60 @@
 
 S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
-r
-BDocs/ui-component/Data Structures and Algorithms/data-structure.md,b/5/b5c5b55eaaf16829eeaa66862cec007c179148c2
-P
- Docs/ui-component/React/React.md,7/3/73653a8bd1782c474060862507f248d2d67d98dd
-W
-'Docs/ui-component/Spring/Spring Boot.md,9/1/91d88ada6765cdcef080048d0656671c23f92687
-V
-&Docs/ui-component/Spring/Spring-aop.md,2/f/2fbca00134d0931b6e10237ec92f5ebae1765f7b
-V
-&Docs/ui-component/Spring/Spring MVC.md,1/e/1ed9c1a4a1275b4208a883dda6638b0e62488dae
-n
->Docs/ui-component/Design Patterns/structural-design-pattern.md,6/4/648c68892d14de806ad24843ab6789be134cfbd5
-n
->Docs/ui-component/Design Patterns/creational-design-pattern.md,b/0/b05ad29916c80973922e7ccc06f2e34288c2f274
-X
-(Docs/ui-component/Spring/Swagger Docs.md,4/4/440c4c9d2af86f414b0e7ebd2464103491c7a852
-n
->Docs/ui-component/Design Patterns/behavioral-design-pattern.md,1/0/10736d10b2c1763108ca250622312a73a6440552
-c
-3Docs/ui-component/Design Patterns/design-pattern.md,7/f/7fb9bdef26f5e8dc0867ca58f560751da061dd89
-R
-"Docs/ui-component/Spring/Spring.md,6/2/62fefdbda5f58ac84e93892f73ac506ac1721c63
-X
-(Docs/ui-component/Spring/Spring Batch.md,e/0/e0b0cc20f0c650f1231c377c73ac4edf6a7ab93a
-l
-<Docs/ui-component/Microservices/Security in Microservices.md,4/9/496e5ef31ae97e063082743dfb764873b396b6f4
-_
-/Docs/ui-component/Microservices/Transactions.md,0/d/0d0794b4dd5b5a25885ee8bf79788cd1b520c7ef
-^
-.Docs/ui-component/Microservices/api-gateway.md,5/1/510f74a05c2226c9b63af8d7f2a91f498652e6ce
-`
-0Docs/ui-component/Microservices/microservices.md,f/e/fe4f6f2de585d24d4474c2ac4ad18c696a648436
-Q
-!Docs/ui-component/DevOps/Linux.md,c/3/c36105786f4eb854bb645bd4bdbc1405bf34037f
-Q
-!Docs/ui-component/DevOps/Maven.md,4/0/401923479debedcd427ff05f39af9e0bc3444ad5
-P
- Docs/ui-component/Kafka/kafka.md,c/f/cff74a48d8a8970f18a41c1a2a92ad2593a3c31a
-^
-.Docs/ui-component/Java/collection-framework.md,0/6/06565483fdcc24132ed833a203135393e56ba7ae
-U
-%Docs/ui-component/Java/java-basics.md,c/0/c0251bb418f11b001e500679003e585c6eea4e89
-R
-"Docs/ui-component/DevOps/DevOps.md,9/f/9fbc9e3f22802f4cd5d6285776f973c5a5601498
-a
-1Docs/ui-component/Angular/angular-data-binding.md,5/2/521b77bbe2ea1e05d381a169b644634314eecc90
-^
-.Docs/ui-component/Angular/angular-directive.md,8/e/8e02830ad138eee4cfbbc576d75ef11fb15d40ca
-a
-1Docs/ui-component/Angular/angular-lazy-loading.md,4/9/4905aae3810ad5a8fb71ec666c6b595c151cb6e0
-d
-4Docs/ui-component/Angular/angular-lifecycle-hooks.md,e/4/e4498d58cfe3a1fe012c5fe8dc73d771146ea518
-Z
-*Docs/ui-component/Angular/angular-pipes.md,e/2/e23382e1e414ecc77329f6704f660cd56d42c492
-\
-,Docs/ui-component/Angular/angular-routing.md,6/b/6ba24796ef9978d1c85ae3c4bd08600f5343db69
-]
--Docs/ui-component/Angular/angular-services.md,a/b/ab7c1c248c7b7878fbf1e4c42f5710c4a6364928
-Q
-!Docs/ui-component/Angular/RxJS.md,a/2/a2bf79e6199deb835b608cf5137093c2eddf7148
-V
-&Docs/ui-component/Database/Database.md,7/d/7dcb1d58ab5fa1070dd903cb631e16c86b7d13f5
-W
-'Docs/ui-component/Database/hibernate.md,f/2/f2efc429cc235b09fc58264b3b3bd9a6e67ddcb0
-R
-"Docs/ui-component/Docker/Docker.md,f/d/fd906961d5f759ac9813011a8fe192ea82c0d141
-N
-Docs/ui-component/OOPS/oops.md,c/1/c16a2a9c3af001e39bedc7bdb772f05995d31402
-o
-?Docs/ui-component/Miscellaneous/images/cross-site-scripting.svg,f/3/f3d228f1e003b5a38a188c28e2bbbfd0dac231a5
-k
-;Docs/ui-component/Miscellaneous/Behavioral & Situational.md,0/0/008c67e8113166d6794600ea83e5ddfe7efb85a9
-X
-(Docs/ui-component/Miscellaneous/owasp.md,b/9/b9a6409dd12c28945cd27f077bc062bca37a4538
-`
-0Docs/ui-component/Miscellaneous/GoodPractices.md,2/d/2d9dfc53500fe054d83539db40042cbe87aafadd
 ;
 sitemap.xml,9/9/991b411cc600215e9528c61790563f0521666950
-W
-'Docs/ui-component/Miscellaneous/http.md,8/3/8302f84420a1056f891ab094c11a0a66d6482c61
-[
-+Docs/ui-component/Miscellaneous/Cucumber.md,f/6/f602100c2c55ca9d7df33b8cede533dabc7d764f
-W
-'Docs/ui-component/Miscellaneous/misc.md,6/7/67748cf76f0967a54e5a269db01223235774ab4d
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+R
+"docs/angular/Angular-versioning.md,4/2/42ca1fa527ac4a0d169428651e2689247a1f3219
+B
+docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
+I
+docs/database/mongo-db.md,f/f/ff16150a72909b644729fe27eb6e35f5471496c2
+B
+docs/aws/Aws-S3.md,6/6/66b2749d834081eb52d4af97bd2c018c25647043
+5
+CNAME,b/9/b9c1aaaf65573c7e15b93b6d826729e7711cf242
+L
+docs/java/multi-threading.md,1/3/138064e85f9f3f2c59bcbfdb9f57526abaed747a
+F
+docs/aws/Aws-Lambda.md,4/0/401d9a36daa0de477d5773765558f9078b99bae4
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+R
+"docs/angular/angular-components.md,8/8/88a9c5d705aba299df45f3a2cf599211e02b58ee
+?
+docs/aws/aws.md,e/c/ecd2f7d76ed36c5f12aa55096970332f97c36075
+V
+&docs/design-patterns/design-pattern.md,b/1/b18f43ac389f0256bc363a87c55c6b73c3ecec84
+D
+docs/devops/Linux.md,0/4/04504a64fca9e2e2a20449fc3b69ecc8f723e579
+E
+docs/devops/Docker.md,c/6/c68713b09e623206d7e72f9e504eb4341b3be6c4
+S
+#docs/microservices/microservices.md,a/b/ab0d77c7ebc3ca623999f7b3cbb108b8b84acf7f
+^
+.docs/miscellaneous/Behavioral & Situational.md,a/e/ae904626354f0e563bca7f8caa6b700d01067085
+J
+docs/miscellaneous/misc.md,4/8/48bdb2278012630f697cfbe6328733706290d206
+A
+docs/oops/oops.md,f/2/f2b1cc92bb06e2223c98af0220775f51f0a5e232
+C
+docs/react/React.md,a/3/a391bfddc53eefbf96b7c66e8410e47fdc5a3059
+E
+docs/spring/Spring.md,d/6/d6eb03167597809a63b652ef7502f9b21181531c
+E
+docs/devops/DevOps.md,0/6/06575c0cdc20da6ff233ca3391d4d8f87dba6761
+A
+docs/java/Java.md,d/e/de418fc77c20469d2a13acceba21fc24fe95896c
+G
+docs/angular/Angular.md,9/4/9443ccbe6ac6bc1d29a6d352a0ccc19bb9252814
+I
+docs/database/Database.md,a/5/a5d5822dcc01f21e2697a7bf395d7ddefa155a0b
+E
+_layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
+;
+_config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
+Q
+!docs/algorithms/data-structure.md,1/1/11dc0031e207270142fbe0a210e7f3d9628feeeb
