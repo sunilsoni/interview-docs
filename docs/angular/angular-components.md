@@ -299,33 +299,33 @@ export class DataService {
 ```
 parent.component.ts
 
-
 ```typescript
-import { Component, OnInit } from '@angular/core';
-import { DataService } from "../data.service";
-import { Subscription } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from "../data.service";
+import {Subscription} from 'docs/angular/rxjs';
 
 @Component({
-  selector: 'app-parent',
-  template: `
+    selector: 'app-parent',
+    template: `
     {{message}}
   `,
-  styleUrls: ['./sibling.component.css']
+    styleUrls: ['./sibling.component.css']
 })
 export class ParentComponent implements OnInit, OnDestroy {
 
-  message:string;
-  subscription: Subscription;
+    message: string;
+    subscription: Subscription;
 
-  constructor(private data: DataService) { }
+    constructor(private data: DataService) {
+    }
 
-  ngOnInit() {
-    this.subscription = this.data.currentMessage.subscribe(message => this.message = message)
-  }
-  
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+    ngOnInit() {
+        this.subscription = this.data.currentMessage.subscribe(message => this.message = message)
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 
 }
 ```
@@ -333,36 +333,37 @@ export class ParentComponent implements OnInit, OnDestroy {
 sibling.component.ts
 
 ```typescript
-import { Component, OnInit } from '@angular/core';
-import { DataService } from "../data.service";
-import { Subscription } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from "../data.service";
+import {Subscription} from 'docs/angular/rxjs';
 
 @Component({
-  selector: 'app-sibling',
-  template: `
+    selector: 'app-sibling',
+    template: `
     {{message}}
     <button (click)="newMessage()">New Message</button>
   `,
-  styleUrls: ['./sibling.component.css']
+    styleUrls: ['./sibling.component.css']
 })
 export class SiblingComponent implements OnInit, OnDestroy {
 
-  message:string;
-  subscription: Subscription;
+    message: string;
+    subscription: Subscription;
 
-  constructor(private data: DataService) { }
+    constructor(private data: DataService) {
+    }
 
-  ngOnInit() {
-    this.subscription = this.data.currentMessage.subscribe(message => this.message = message)
-  }
+    ngOnInit() {
+        this.subscription = this.data.currentMessage.subscribe(message => this.message = message)
+    }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 
-  newMessage() {
-    this.data.changeMessage("Hello from Sibling")
-  }
+    newMessage() {
+        this.data.changeMessage("Hello from Sibling")
+    }
 
 }
 ```

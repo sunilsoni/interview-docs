@@ -110,9 +110,10 @@ this.countryName$ = this.filterDemoService.getCountry().pipe(
 **4. Concat Operator [`concat()`]**: Creates an output Observable which sequentially emits all values from given Observable and then moves on to the next.
 
 Example: Concatenate a timer counting from 0 to 3 with a synchronous sequence from 1 to 10
+
 ```typescript
-import { concat, interval, range } from 'rxjs';
-import { take } from 'rxjs/operators';
+import {concat, interval, range} from 'docs/angular/rxjs';
+import {take} from 'rxjs/operators';
 
 const timer = interval(1000).pipe(take(4));
 const sequence = range(1, 10);
@@ -261,9 +262,10 @@ return this.http
 ```
 
 **11. StartWith Operator [`startWith()`]**:
+
 ```typescript
-import { startWith } from 'rxjs/operators';
-import { of } from 'rxjs';
+import {startWith} from 'rxjs/operators';
+import {of} from 'docs/angular/rxjs';
 
 //emit (1,2,3)
 const source = of(1, 2, 3);
@@ -274,8 +276,9 @@ const subscribe = example.subscribe(val => console.log(val));
 ```
 
 **12. Of Operator [`of()`]**:
+
 ```typescript
-import { of } from 'rxjs';
+import {of} from 'docs/angular/rxjs';
 //emits any number of provided values in sequence
 const source = of(1, 2, 3, 4, 5);
 //output: 1,2,3,4,5
@@ -335,13 +338,14 @@ myObservable.subscribe(myObserver);
 
 An Observable is a unique Object similar to a Promise that can help manage async code. Observables are not part of the JavaScript language so we need to rely on a popular Observable library called RxJS.
 The observables are created using new keyword.
+
 ```typescript
-import { Observable } from 'rxjs';
+import {Observable} from 'docs/angular/rxjs';
 
 const observable = new Observable(observer => {
-  setTimeout(() => {
-    observer.next('Hello from a Observable!');
-  }, 2000);
+    setTimeout(() => {
+        observer.next('Hello from a Observable!');
+    }, 2000);
 });
 ```
 
@@ -385,12 +389,18 @@ RxJS provides creation functions for the process of creating observables from th
 1. Create an observable from a promise
 
 ```typescript
-import { from } from 'rxjs'; // from function
+import {from} from 'docs/angular/rxjs'; // from function
 const data = from(fetch('/api/endpoint')); //Created from Promise
 data.subscribe({
-  next(response) { console.log(response); },
-  error(err) { console.error('Error: ' + err); },
-  complete() { console.log('Completed'); }
+    next(response) {
+        console.log(response);
+    },
+    error(err) {
+        console.error('Error: ' + err);
+    },
+    complete() {
+        console.log('Completed');
+    }
 });
 ```
 2. Create an observable that creates an AJAX request
@@ -401,20 +411,23 @@ const apiData = ajax('/api/data'); // Created from AJAX request
 apiData.subscribe(res => console.log(res.status, res.response));
 ```
 3. Create an observable from a counter
+
 ```typescript
-import { interval } from 'rxjs'; // interval function
+import {interval} from 'docs/angular/rxjs'; // interval function
 const secondsCounter = interval(1000); // Created from Counter value
 secondsCounter.subscribe(n =>
-  console.log(`Counter value: ${n}`));
+    console.log(`Counter value: ${n}`));
 ```
 4. Create an observable from an event
+
 ```typescript
-import { fromEvent } from 'rxjs';
+import {fromEvent} from 'docs/angular/rxjs';
+
 const el = document.getElementById('custom-element');
 const mouseMoves = fromEvent(el, 'mousemove');
 const subscription = mouseMoves.subscribe((e: MouseEvent) => {
-  console.log(`Coordnitaes of mouse pointer: ${e.clientX} * ${e.clientY}`);
-  });
+    console.log(`Coordnitaes of mouse pointer: ${e.clientX} * ${e.clientY}`);
+});
 ```
 
 
