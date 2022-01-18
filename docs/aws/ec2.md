@@ -23,7 +23,7 @@ Amazon EC2 provides cloud hosted virtual machines, called `instances`, to run ap
 
 ---
 
-##EC2 instance
+## EC2 instance
 
 An EC2 instance is nothing but a virtual server in Amazon Web services terminology. It stands for Elastic Compute Cloud. It is a web service where an AWS subscriber can request and provision a compute server in AWS cloud.
 
@@ -52,10 +52,10 @@ Now, every instance type has a set of instances which are optimized for differen
 
 
 | General Instances | Compute Instances |  Memory Instances | Storage Instances | GPU Instances | 
-|-----------------|----------|---------|---------|---------|
-| t2         |  c4    |  r3   | i2| g2 |
-| m4         |  c3    |  x1   | d2|  |  
-| m3         |          |         |  |  |  
+|-----------------|----------|---------|-------------------|---------------|
+| t2         |  c4    |  r3   | i2                | g2            |
+| m4         |  c3    |  x1   | d2                |               |  
+| m3         |          |         |                   |               |  
 
 
 ---
