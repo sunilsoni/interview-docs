@@ -2,6 +2,7 @@ title: Interview Docs
 tagline : Interview questions and answers
 description: Interview questions and answers notes or docs
 # baseurl: "/interview-docs" # the subpath of your site, e.g. /blog
+baseurl: ""
 url: https://interview-docs.com # the base hostname & protocol for your site, e.g. http://example.com
 author:
   name: Sunil Soni
