@@ -46,6 +46,65 @@ Basic concepts are
 - Before updating your stack and making changes to your resources, you can generate a change set, which is a summary of your proposed changes.
 - Change sets allow you to see how your changes might impact your running resources, especially for critical resources, before implementing them.
 
+<img src="images/cloudformation Stack.png" width="900"/>
+
+- With AWS CloudFormation and AWS CodePipeline, you can use continuous delivery to automatically build and test changes to your CloudFormation templates before promoting them to production stacks.
+- CloudFormation artifacts can include a stack template file, a template configuration file, or both. AWS CodePipeline uses these artifacts to work with CloudFormation stacks and change sets.
+
+- **Stack Template File** – defines the resources that CloudFormation provisions and configures. You can use YAML or JSON-formatted templates.
+- **Template Configuration File** – a JSON-formatted text file that can specify template parameter values, a stack policy, and tags. Use these configuration files to specify parameter values or a stack policy for a stack.
+
+Through the AWS PrivateLink, you can use CloudFormation APIs inside of your Amazon VPC and route data between your VPC and CloudFormation entirely within the AWS network.
+
+### Stacks
+
+
+- If a resource cannot be created, CloudFormation rolls the stack back and automatically deletes any resources that were created. If a resource cannot be deleted, any remaining resources are retained until the stack can be successfully deleted.
+- Stack update methods
+  - Direct update
+  - Creating and executing change sets
+- Drift detection enables you to detect whether a stack’s actual configuration differs, or has drifted, from its expected configuration. Use CloudFormation to detect drift on an entire stack, or on individual resources within the stack.
+  - A resource is considered to have drifted if any if its actual property values differ from the expected property values.
+  - A stack is considered to have drifted if one or more of its resources have drifted.
+- To share information between stacks, export a stack’s output values. Other stacks that are in the same AWS account and region can import the exported values.
+- You can nest stacks.
+
+### Templates
+
+- Templates include several major sections. The Resources section is the only required section.
+- CloudFormation Designer is a graphic tool for creating, viewing, and modifying CloudFormation templates. You can diagram your template resources using a drag-and-drop interface, and then edit their details using the integrated JSON and YAML editor.
+- Custom resources enable you to write custom provisioning logic in templates that CloudFormation runs anytime you create, update (if you changed the custom resource), or delete stacks.
+- Template macros enable you to perform custom processing on templates, from simple actions like find-and-replace operations to extensive transformations of entire templates.
+
+
+
+### StackSets
+
+- CloudFormation StackSets allow you to roll out CloudFormation stacks over multiple AWS accounts and in multiple Regions with just a couple of clicks. StackSets is commonly used together with AWS Organizations to centrally deploy and manage services in different accounts.
+- Administrator and target accounts – An administrator account is the AWS account in which you create stack sets. A stack set is managed by signing in to the AWS administrator account in which it was created. A target account is the account into which you create, update, or delete one or more stacks in your stack set.
+- In addition to the organization’s management account, you can delegate other administrator accounts in your AWS Organization that can create and manage stack sets with service-managed permissions for the organization.
+- Stack sets – A stack set lets you create stacks in AWS accounts across regions by using a single CloudFormation template. All the resources included in each stack are defined by the stack set’s CloudFormation template. A stack set is a regional resource.
+- Stack instances – A stack instance is a reference to a stack in a target account within a region. A stack instance can exist without a stack; for example, if the stack could not be created for some reason, the stack instance shows the reason for stack creation failure. A stack instance can be associated with only one stack set.
+- Stack set operations – Create stack set, update stack set, delete stacks, and delete stack set.
+- Tags – You can add tags during stack set creation and update operations by specifying key and value pairs.
+
+### Monitoring
+
+CloudFormation is integrated with AWS CloudTrail, a service that provides a record of actions taken by a user, role, or an AWS service in CloudFormation. CloudTrail captures all API calls for CloudFormation as events, including calls from the CloudFormation console and from code calls to the CloudFormation APIs.
+
+
+### Security
+
+- You can use IAM with CloudFormation to control what users can do with AWS CloudFormation, such as whether they can view stack templates, create stacks, or delete stacks.
+- A service role is an IAM role that allows CloudFormation to make calls to resources in a stack on your behalf. You can specify an IAM role that allows CloudFormation to create, update, or delete your stack resources.
+- You can improve the security posture of your VPC by configuring CloudFormation to use an interface VPC endpoint.
+
+### Pricing
+
+No additional charge for CloudFormation. You pay for AWS resources created using CloudFormation in the same manner as if you created them manually.
+
+
+
 ---
 
 ## A Short Example
@@ -193,3 +252,4 @@ The execution of template will start and you can see the progress in the “Even
 
 ## Links:
 1. [An Introduction to AWS CloudFormation](https://dzone.com/articles/aws-cloudformation-getting-started-for-beginners)
+2. [AWS CloudFormation](https://tutorialsdojo.com/aws-cloudformation/)
