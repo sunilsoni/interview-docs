@@ -1,6 +1,6 @@
 ---
 layout: default
-title: AWS Lambda
+title: Lambda
 parent: Amazon Web Services (AWS)
 ---
 

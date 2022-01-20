@@ -1,6 +1,6 @@
 ---
 layout: default
-title: AWS EC2
+title: EC2
 parent: Amazon Web Services (AWS)
 
 ---

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: AWS CloudFormation
+title: CloudFormation
 parent: Amazon Web Services (AWS)
 
 ---
