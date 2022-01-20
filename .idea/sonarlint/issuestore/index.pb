@@ -40,8 +40,6 @@ E
 docs/spring/Spring.md,d/6/d6eb03167597809a63b652ef7502f9b21181531c
 E
 docs/devops/DevOps.md,0/6/06575c0cdc20da6ff233ca3391d4d8f87dba6761
-A
-docs/java/Java.md,d/e/de418fc77c20469d2a13acceba21fc24fe95896c
 G
 docs/angular/Angular.md,9/4/9443ccbe6ac6bc1d29a6d352a0ccc19bb9252814
 I
