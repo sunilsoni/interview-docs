@@ -127,3 +127,4 @@ In table creation, the table enters the CREATING state, which allocates partitio
 
 ## More Details: 
 1. [What is DynamoDB?](https://www.javatpoint.com/aws-dynamodb)
+2. [DynamoDB](https://www.tutorialspoint.com/dynamodb/dynamodb_basic_concepts.htm)
