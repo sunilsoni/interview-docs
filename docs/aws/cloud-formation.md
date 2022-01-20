@@ -26,6 +26,28 @@ CloudFormation is an automation tool which automates the process of creating res
 
 ---
 
+## Concepts
+
+Basic concepts are 
+
+###  Templates
+
+- A JSON or YAML formatted text file.
+- CloudFormation uses these templates as blueprints for building your AWS resources.
+
+###  Stacks
+
+- Manage related resources as a single unit.
+- All the resources in a stack are defined by the stack’s CloudFormation template.
+
+
+###  Change Sets
+
+- Before updating your stack and making changes to your resources, you can generate a change set, which is a summary of your proposed changes.
+- Change sets allow you to see how your changes might impact your running resources, especially for critical resources, before implementing them.
+
+---
+
 ## A Short Example
 
 we will use a sample CloudFormation template and give you some details on how to configure it. The template will create two EC2 instances and RDS without any manual effort.
