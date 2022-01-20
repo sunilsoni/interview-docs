@@ -5,7 +5,7 @@ parent: Amazon Web Services (AWS)
 
 ---
 
-# AWS - AWS CloudFormation
+# AWS CloudFormation
 {: .no_toc }
 
 <details open markdown="block">
