@@ -89,29 +89,37 @@ The API operations offered by DynamoDB include those of the control plane, data 
 In the data plane, you perform CRUD operations with the following tools −
 
 
-| Create | Read | Update| Delete|
-|--------|------|--------- |--------- |
-| PutItem       | GetItem     | UpdateItem | DeleteItem|
-| BatchWriteItem       |  BatchGetItem |   | BatchWriteItem|
-|        |   Query   | | |
-|        |   Scan   | | |
+| Create | Read | Update     | Delete         |
+|--------|------|------------|----------------|
+| PutItem       | GetItem     | UpdateItem | DeleteItem     |
+| BatchWriteItem   |  BatchGetItem |            | BatchWriteItem |
+|        |   Query   |            |                |
+|        |   Scan   |            |                |
 
 The stream operations control table streams. You can review the following stream tools −
 
-ListStreams
-DescribeStream
-GetShardIterator
-GetRecords
+- ListStreams
+- DescribeStream
+- GetShardIterator
+- GetRecords
 
 
-### Primary
+### Provisioned Throughput
+
+In table creation, you specify provisioned throughput, which reserves resources for reads and writes. You use capacity units to measure and set throughput.
+
+When applications exceed the set throughput, requests fail. The DynamoDB GUI console allows monitoring of set and used throughput for better and dynamic provisioning.
+
+### Read Consistency
+DynamoDB uses eventually consistent and strongly consistent reads to support dynamic application needs. Eventually consistent reads do not always deliver current data.
+
+The strongly consistent reads always deliver current data (with the exception of equipment failure or network problems). Eventually consistent reads serve as the default setting, requiring a setting of true in the ConsistentRead parameter to change it.
 
 
+### Partitions
+DynamoDB uses partitions for data storage. These storage allocations for tables have SSD backing and automatically replicate across zones. DynamoDB manages all the partition tasks, requiring no user involvement.
 
-
-
-### Primary
-
+In table creation, the table enters the CREATING state, which allocates partitions. When it reaches ACTIVE state, you can perform operations. The system alters partitions when its capacity reaches maximum or when you change throughput.
 
 
 
