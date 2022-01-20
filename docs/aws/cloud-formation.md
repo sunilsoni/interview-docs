@@ -250,6 +250,6 @@ The execution of template will start and you can see the progress in the “Even
 
 ---
 
-## Links:
+## Links
 1. [An Introduction to AWS CloudFormation](https://dzone.com/articles/aws-cloudformation-getting-started-for-beginners)
 2. [AWS CloudFormation](https://tutorialsdojo.com/aws-cloudformation/)
