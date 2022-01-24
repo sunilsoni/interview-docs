@@ -12,14 +12,10 @@ B
 docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
 I
 docs/database/mongo-db.md,f/f/ff16150a72909b644729fe27eb6e35f5471496c2
-B
-docs/aws/Aws-S3.md,6/6/66b2749d834081eb52d4af97bd2c018c25647043
 5
 CNAME,b/9/b9c1aaaf65573c7e15b93b6d826729e7711cf242
 L
 docs/java/multi-threading.md,1/3/138064e85f9f3f2c59bcbfdb9f57526abaed747a
-F
-docs/aws/Aws-Lambda.md,4/0/401d9a36daa0de477d5773765558f9078b99bae4
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 R
@@ -28,8 +24,6 @@ V
 &docs/design-patterns/design-pattern.md,b/1/b18f43ac389f0256bc363a87c55c6b73c3ecec84
 S
 #docs/microservices/microservices.md,a/b/ab0d77c7ebc3ca623999f7b3cbb108b8b84acf7f
-^
-.docs/miscellaneous/Behavioral & Situational.md,a/e/ae904626354f0e563bca7f8caa6b700d01067085
 J
 docs/miscellaneous/misc.md,4/8/48bdb2278012630f697cfbe6328733706290d206
 A
@@ -48,5 +42,17 @@ E
 _layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
 ;
 _config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
-Q
-!docs/algorithms/data-structure.md,1/1/11dc0031e207270142fbe0a210e7f3d9628feeeb
+C
+docs/kafka/kafka.md,d/3/d396beb9389d9f17f0da4903f2be601838338b6d
+E
+docs/devops/docker.md,3/5/35e217f1df9e019f153f02996d68ce9b9079c46e
+A
+docs/java/Java.md,d/e/de418fc77c20469d2a13acceba21fc24fe95896c
+H
+docs/java/java-basics.md,6/8/68444e4c966ddb261cccd19be55523357145de73
+>
+docs/aws/s3.md,b/3/b3c5f61fa1b22553f9769f3a9614ea13106ef1de
+D
+docs/devops/linux.md,3/3/33753fc113e7095214f3c50f134db111bcc6ec9d
+D
+docs/angular/rxjs.md,7/e/7ed4c3538e0c80a89345e0c84f36b78c0f2da0fd

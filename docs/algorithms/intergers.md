@@ -1,10 +1,11 @@
 ---
-title: Data Structures
-has_children: true
-nav_order: 2
+layout: default
+title: Intergers
+parent: Data Structures
+
 ---
 
-# Data Structures
+# Intergers
 {: .no_toc }
 
 <details open markdown="block">
@@ -17,15 +18,3 @@ nav_order: 2
 </details>
 
 ---
-
-
-
- 
-
-
-
-
-
-
-
-
