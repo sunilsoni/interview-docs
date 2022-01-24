@@ -8,8 +8,6 @@ S
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
 R
 "docs/angular/Angular-versioning.md,4/2/42ca1fa527ac4a0d169428651e2689247a1f3219
-B
-docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
 I
 docs/database/mongo-db.md,f/f/ff16150a72909b644729fe27eb6e35f5471496c2
 5
