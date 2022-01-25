@@ -59,6 +59,13 @@ class Solution {
 ###  Complexity Analysis
 
 
+**Time Complexity**: 
+
+We are iterating  half array hence it will take O(n/2) which will become O(n).
+
+**Space Complexity**: 
+
+O(1)
 
 
 ---
