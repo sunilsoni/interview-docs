@@ -143,6 +143,61 @@ return new StringBuilder(s).reverse().toString();
 
 ---
 
+## Longest Common Prefix
+
+Write a function to find the longest common prefix string amongst an array of strings.
+
+Iif there is no common prefix, return an empty string "".
+
+**Example 1:**
+
+- Input: strs = ["flower","flow","flight"]
+- Output: "fl"
+
+
+**Example 2:**
+
+- Input: strs = ["dog","racecar","car"]
+- Output: ""
+- Explanation: There is no common prefix among the input strings.
+
+####  Implementation
+
+```java
+ 
+```
+
+####  Runtime
+3 ms
+
+####  Memory
+52.6 MB
+
+####  Complexity Analysis
+
+
+
+---
+
+## Test
+
+
+####  Implementation
+
+```java
+ 
+```
+
+####  Runtime
+
+
+####  Memory
+
+
+####  Complexity Analysis
+
+---
+
 ## More Details: 
 1. [Reverse-string Java, Simple Multiple solutions w/explanations!](https://leetcode.com/problems/reverse-string/discuss/275116/Java-Simple-Multiple-solutions-wexplanations!)
 
