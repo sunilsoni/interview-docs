@@ -80,14 +80,15 @@ Using for loop swap.
 
 ####  Implementation
 ```java
- public void reverseString(char[] s) {
-        for(int i=0; i<s.length/2; i++){    //Do it half the number of String length
+ class Solution {
+    public void reverseString(char[] s) {
+        for (int i = 0; i < s.length / 2; i++) {    //Do it half the number of String length
             char tmp = s[i];
-            s[i] = s[s.length-1-i];     //Front swap with other End side 
-            s[s.length-1-i] = tmp;      //End swap with other Front side
+            s[i] = s[s.length - 1 - i];     //Front swap with other End side 
+            s[s.length - 1 - i] = tmp;      //End swap with other Front side
         }
     }
-
+}
 ```
 
 ####  Runtime
@@ -114,16 +115,17 @@ Add to extra space from rear to front then  Set reversed 'str' into char array '
 
 ####  Implementation
 ```java
-public void reverseString(char[] s) {
+ class Solution {
+    public void reverseString(char[] s) {
         String str = "";                   //Allocate extra space
 
-        for(int i=s.length-1; i>=0; i--)   /*Add to extra space from rear to front */
+        for (int i = s.length - 1; i >= 0; i--)   /*Add to extra space from rear to front */
             str += s[i];
 
-        for(int i=0; i<s.length; i++)      /*Set reversed 'str' into char array 's' */
+        for (int i = 0; i < s.length; i++)      /*Set reversed 'str' into char array 's' */
             s[i] = str.charAt(i);
+    }
 }
-
 ```
 
 
@@ -161,20 +163,69 @@ Iif there is no common prefix, return an empty string "".
 - Output: ""
 - Explanation: There is no common prefix among the input strings.
 
+###  Solution1
+
+1. Take the first(index=0) string in the array as prefix.
+2. Iterate from second(index=1) string till the end.
+3. Use the indexOf() function to check if the prefix is there in the strs[i] or not. If the prefix is there the function returns 0 else -1.
+4. Use the substring function to chop the last letter from prefix each time the function return -1.
+
+```log
+**Example :**
+strs=["flower", "flow", "flight"]
+prefix=flower
+
+**index=1**
+while(strs[index].indexOf(prefix) != 0) means while("flow".indexOf("flower")!=0)
+Since flower as a whole is not in flow, it return -1 and  prefix=prefix.substring(0,prefix.length()-1) reduces prefix to "flowe"
+Again while(strs[index].indexOf(prefix) != 0) means while("flow".indexOf("flowe")!=0)
+Since flowe as a whole is not in flow, it return -1 and  prefix=prefix.substring(0,prefix.length()-1) reduces prefix to "flow"
+Again while(strs[index].indexOf(prefix) != 0) means while("flow".indexOf("flow")!=0)
+Since flow as a whole is in flow, it returns 0 so now prefix=flow
+
+**index=2**
+while(strs[index].indexOf(prefix) != 0) means while("flight".indexOf("flow")!=0)
+Since flow as a whole is not in flight, it return -1 and  prefix=prefix.substring(0,prefix.length()-1) reduces prefix to "flo"
+Again while(strs[index].indexOf(prefix) != 0) means while("flight".indexOf("flo")!=0)
+Since flo as a whole is not in flight, it return -1 and  prefix=prefix.substring(0,prefix.length()-1) reduces prefix to "fl"
+Again while(strs[index].indexOf(prefix) != 0) means while("flight".indexOf("fl")!=0)
+Since fl as a whole is in flight, it returns 0 so now prefix=fl
+
+**index=3** 
+for loop terminates and we return prefix which is equal to fl
+```
+
 ####  Implementation
 
 ```java
- 
+ class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length == 0) return "";
+        String prefix = strs[0];
+        for(int i=1; i< strs.length; i++ ) {
+            while(strs[i].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length()-1);
+            }
+        }
+
+        return prefix;
+    }
+}
 ```
 
 ####  Runtime
-3 ms
+1 ms
 
 ####  Memory
-52.6 MB
+39.2 MB
 
 ####  Complexity Analysis
 
+**Time Complexity**:
+O(n)
+
+**Space Complexity**:
+O(1)
 
 
 ---
@@ -195,6 +246,10 @@ Iif there is no common prefix, return an empty string "".
 
 
 ####  Complexity Analysis
+
+**Time Complexity**:
+
+**Space Complexity**:
 
 ---
 
