@@ -23,9 +23,19 @@ parent: Data Structures
 
 ## Reverse String
 
+Write a function that reverses a string. The input string is given as an array of characters s.
+
+You must do this by modifying the input array in-place with O(1) extra memory.
+
+**Example:**
+
+Input: s = ["h","e","l","l","o"]
+Output: ["o","l","l","e","h"]
+
 ###  Solution
 
-
+Two pointers i and j, pointing to the beginning and end, respectively. While i < j, swap.
+Using a helper swap function severely impacts runtime and memory, so we swap in the loop.
 
 ###  Implementation
 
