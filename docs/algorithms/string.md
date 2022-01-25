@@ -76,7 +76,9 @@ O(1)
 
 ###  Solution2
 
+Using for loop swap.
 
+###  Implementation
 ```java
  public void reverseString(char[] s) {
         for(int i=0; i<s.length/2; i++){    //Do it half the number of String length
@@ -108,7 +110,9 @@ O(1)
 
 ###  Solution3
 
+Add to extra space from rear to front then  Set reversed 'str' into char array 's'
 
+###  Implementation
 ```java
 public void reverseString(char[] s) {
         String str = "";                   //Allocate extra space
@@ -122,11 +126,18 @@ public void reverseString(char[] s) {
 
 ```
 
-####  Runtime
-541 ms
 
-####  Memory
-327.7 MB
+
+###  Solution4
+
+Using StringBuilder reverse method.
+
+###  Implementation
+
+```java
+return new StringBuilder(s).reverse().toString();
+
+```
 
 
 
