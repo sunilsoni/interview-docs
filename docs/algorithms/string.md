@@ -362,25 +362,112 @@ Two-pointers solution no trim( ), no split( ), no StringBuilder
 **Space Complexity**:
 
 
+---
 
-###  Solution 2
+## First Unique or Non Repeated Character in a String
+
+Find First Non Repeated Character in a String
+
+Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1.
+
+**Example 1:**
+
+Input: s = "leetcode"
+Output: 0
+
+**Example 2:**
+
+Input: s = "loveleetcode"
+Output: 2
+
+**Example 3:**
+
+Input: s = "aabb"
+Output: -1
+
+###  Solution 1
+
 ####  Implementation
 
 ```java
- 
+class Solution{
+    public int firstUniqChar(String s) {
+        for(char c : s.toCharArray()){
+            int index = s.indexOf(c);
+            int lastIndex = s.lastIndexOf(c);
+            if(index == lastIndex)
+                return index;
+        }
+        return -1;
+    }
+}
+
 ```
 
 ####  Runtime
-
+20 ms
 
 ####  Memory
-
+39.5 MB
 
 ####  Complexity Analysis
 
 **Time Complexity**:
+O(n^2)
 
 **Space Complexity**:
+O(1)
+
+
+###  Solution 2
+
+####  Implementation
+
+```java
+ class Solution {
+    public int firstUniqChar(String s) {
+        int ans = Integer.MAX_VALUE;
+        for (char i = 'a'; i <= 'z';i++) {
+            int ind = s.indexOf (i);
+            if (ind != -1 && ind == s.lastIndexOf (i))
+                ans = Math.min (ans,ind);
+        }
+        if (ans == Integer.MAX_VALUE)
+            return -1;
+        return ans;
+    }
+}
+```
+
+
+###  Solution 3
+
+Using LinkedHashMap to find first non repeated character of String Algorithm :
+**Step 1:** get character array and loop through it to build a hash table with char and their count.
+**Step 2:** loop through LinkedHashMap to find an entry with value 1, that's your first non-repeated character, as LinkedHashMap maintains insertion order.
+
+####  Implementation
+
+```java
+ class Solution {
+    public static char getFirstNonRepeatedChar(String str) {
+        Map<Character,Integer> counts = new LinkedHashMap<>(str.length());
+
+        for (char c : str.toCharArray()) {
+            counts.put(c, counts.containsKey(c) ? counts.get(c) + 1 : 1);
+        }
+
+        for (Entry<Character,Integer> entry : counts.entrySet()) {
+            if (entry.getValue() == 1) {
+                return entry.getKey();
+            }
+        }
+        throw new RuntimeException("didn't find any non repeated Character");
+    }
+ }
+
+```
+
 
 ---
 
@@ -409,5 +496,6 @@ Two-pointers solution no trim( ), no split( ), no StringBuilder
 
 ## More Details: 
 1. [Reverse-string Java, Simple Multiple solutions w/explanations!](https://leetcode.com/problems/reverse-string/discuss/275116/Java-Simple-Multiple-solutions-wexplanations!)
+2. [3 ways to Find First Non Repeated Character in a String](https://javarevisited.blogspot.com/2014/03/3-ways-to-find-first-non-repeated-character-String-programming-problem.html)
 
 
