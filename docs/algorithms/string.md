@@ -38,7 +38,7 @@ Output: ["o","l","l","e","h"]
 Two pointers i and j, pointing to the beginning and end, respectively. While i < j, swap.
 Using a helper swap function severely impacts runtime and memory, so we swap in the loop.
 
-###  Implementation
+####  Implementation
 
 ```java
 class Solution {
@@ -63,7 +63,7 @@ class Solution {
 ####  Memory
 52.6 MB
 
-###  Complexity Analysis
+####  Complexity Analysis
 
 
 **Time Complexity**: 
@@ -78,7 +78,7 @@ O(1)
 
 Using for loop swap.
 
-###  Implementation
+####  Implementation
 ```java
  public void reverseString(char[] s) {
         for(int i=0; i<s.length/2; i++){    //Do it half the number of String length
@@ -96,7 +96,7 @@ Using for loop swap.
 ####  Memory
 52.7 MB
 
-###  Complexity Analysis
+####  Complexity Analysis
 
 
 **Time Complexity**:
@@ -112,7 +112,7 @@ O(1)
 
 Add to extra space from rear to front then  Set reversed 'str' into char array 's'
 
-###  Implementation
+####  Implementation
 ```java
 public void reverseString(char[] s) {
         String str = "";                   //Allocate extra space
@@ -132,7 +132,7 @@ public void reverseString(char[] s) {
 
 Using StringBuilder reverse method.
 
-###  Implementation
+####  Implementation
 
 ```java
 return new StringBuilder(s).reverse().toString();
