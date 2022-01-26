@@ -1377,12 +1377,12 @@ Also Check: https://java2blog.com/garbage-collection-java/
 ## final, finally and finalize()
 
 
-| BASIS FOR COMPARISON | FINAL Keyword                                      | FINALLY Block                                                                    | FINALIZE Method                  |
-|----------------------|----------------------------------------------------|----------------------------------------------------------------------------------|----------------------------------|
-|   Basic  | Final is a "Keyword" and "access modifier" in Java. | Finally is a "block" in Java                                                     | Finalize is a "method" in Java.  |
-| Applicable to | Final keyword is used with the classes, methods and variables.| Finally block is always related to the try and catch block in exception handling. | finalize() method is used with the objects. |
-| Functionality | 	 Once declared, final variable becomes constant and cannot be modified.final method cannot be overridden by sub class.final class cannot be inherited.  | finally block runs the important code even if exception occurs or not.final class cannot be inherited.           |  finalize method performs the cleaning activities with respect to the object before its destruction. |
-|  Execution   | Final method is executed only when we call it.   |Finally block is executed as soon as the try-catch block is executed.Finally block is executed as soon as the try-catch block is executed.  | finalize method is executed just before the object is destroyed. |
+| BASIS FOR COMPARISON | FINAL Keyword                                     | FINALLY Block                                                                                                                            | FINALIZE Method                |
+|----------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
+|   Basic  | Final is a `Keyword` and `access modifier` in Java. | Finally is a `block` in Java   | Finalize is a `method` in Java.  |
+| Applicable to | Final keyword is used with the classes, methods and variables.| Finally block is always related to the try and catch block in exception handling.                                                        | finalize() method is used with the objects. |
+| Functionality | 	 Once declared, final variable becomes constant and cannot be modified.final method cannot be overridden by sub class.final class cannot be inherited. | finally block runs the important code even if exception occurs or not.final class cannot be inherited.                                   |  finalize method performs the cleaning activities with respect to the object before its destruction. |
+|  Execution   | Final method is executed only when we call it.   | Finally block is executed as soon as the try-catch block is executed.Finally block is executed as soon as the try-catch block is executed. | finalize method is executed just before the object is destroyed. |
 
 
 Modifier `final`:
