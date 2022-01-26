@@ -1452,9 +1452,23 @@ result of a.a() is 2
 !!! done
 ```
 
+### finally keyword 
+
+- finally is a reserved keyword in java so it cannot be used as an identifier name.
+- finally is a block of code that is generally used with a try-catch block.
+- finally block is always executed no matter whether an exception occurs or not and whether the exception is caught in catch block or not.
+- finally block generally contains a piece of code which is closing the file or sockets or any other connection like DB, network so that resource should not be wasted.
+
+###  finalize() method
+
+- It is a method written in Object class and called by Garbage Collector before destroying the objects which are in no use to perform clean up activity.
+- The cleanup activity involves closing the connections or resource de-allocations e.g. Database, Sockets, Files, etc.
+- All classes can override the finalize method as the Object class is the parent class for all java classes to perform their own cleanup activity.
+- The overridden finalize method can also be called using the class object method in which the method is overridden.
+- The resource de-allocation and clean up activity are done once all the methods of a class are executed.
 
 
-### JavaDoc finalize() method
+#### JavaDoc
 
 ```java
     /**
@@ -2028,4 +2042,6 @@ public static List deepCopy(List listCars) {
 ## For more information
 1. [Java 8 Features](https://javapapers.com/java/java-8-features/)
 2. [java-interview](https://github.com/enhorse/java-interview)
-2. [Java Generics Tutorial with Examples](https://www.javaguides.net/2018/08/java-generics-tutorial-with-examples.html)
+3. [Java Generics Tutorial with Examples](https://www.javaguides.net/2018/08/java-generics-tutorial-with-examples.html)
+4. [Difference Between Final, Finally and Finalize in Java](https://techdifferences.com/difference-between-final-finally-and-finalize-in-java.html)
+5. [Know the Differences Between final, finally, and finalize in Java.](https://medium.com/javarevisited/final-finally-and-finalize-in-java-31011ad24450)
