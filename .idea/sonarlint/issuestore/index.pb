@@ -34,10 +34,6 @@ G
 docs/angular/Angular.md,9/4/9443ccbe6ac6bc1d29a6d352a0ccc19bb9252814
 I
 docs/database/Database.md,a/5/a5d5822dcc01f21e2697a7bf395d7ddefa155a0b
-E
-_layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
-;
-_config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
 C
 docs/kafka/kafka.md,d/3/d396beb9389d9f17f0da4903f2be601838338b6d
 E
@@ -66,8 +62,6 @@ B
 docs/aws/ec2.md,c/2/c22f3faa37020d9f36bce7dc253ede01272129f9
 D
 docs/aws/dynamodb.md,c/5/c5d25b75538bae41f8b23c1da8030b92d9798c8c
-B
-docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
 Q
 !docs/java/collection-framework.md,2/1/21c08ff399ce770017258691f16c754a4ef1edbf
 A
