@@ -252,7 +252,7 @@ O(1)
         return c == 0 ? "" : first.substring(0, c);
     }
 }
-}   
+   
 ```
 
 

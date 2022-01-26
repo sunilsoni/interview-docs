@@ -12,8 +12,6 @@ I
 docs/database/mongo-db.md,f/f/ff16150a72909b644729fe27eb6e35f5471496c2
 5
 CNAME,b/9/b9c1aaaf65573c7e15b93b6d826729e7711cf242
-L
-docs/java/multi-threading.md,1/3/138064e85f9f3f2c59bcbfdb9f57526abaed747a
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 R
@@ -70,3 +68,7 @@ D
 docs/aws/dynamodb.md,c/5/c5d25b75538bae41f8b23c1da8030b92d9798c8c
 B
 docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
+Q
+!docs/java/collection-framework.md,2/1/21c08ff399ce770017258691f16c754a4ef1edbf
+A
+docs/java/Java.md,d/e/de418fc77c20469d2a13acceba21fc24fe95896c
