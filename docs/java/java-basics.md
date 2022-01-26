@@ -1453,6 +1453,106 @@ result of a.a() is 2
 ```
 
 
+
+### JavaDoc finalize() method
+
+```java
+    /**
+     * Called by the garbage collector on an object when garbage collection
+     * determines that there are no more references to the object.
+     * A subclass overrides the {@code finalize} method to dispose of
+     * system resources or to perform other cleanup.
+     * <p>
+     * The general contract of {@code finalize} is that it is invoked
+     * if and when the Java virtual
+     * machine has determined that there is no longer any
+     * means by which this object can be accessed by any thread that has
+     * not yet died, except as a result of an action taken by the
+     * finalization of some other object or class which is ready to be
+     * finalized. The {@code finalize} method may take any action, including
+     * making this object available again to other threads; the usual purpose
+     * of {@code finalize}, however, is to perform cleanup actions before
+     * the object is irrevocably discarded. For example, the finalize method
+     * for an object that represents an input/output connection might perform
+     * explicit I/O transactions to break the connection before the object is
+     * permanently discarded.
+     * <p>
+     * The {@code finalize} method of class {@code Object} performs no
+     * special action; it simply returns normally. Subclasses of
+     * {@code Object} may override this definition.
+     * <p>
+     * The Java programming language does not guarantee which thread will
+     * invoke the {@code finalize} method for any given object. It is
+     * guaranteed, however, that the thread that invokes finalize will not
+     * be holding any user-visible synchronization locks when finalize is
+     * invoked. If an uncaught exception is thrown by the finalize method,
+     * the exception is ignored and finalization of that object terminates.
+     * <p>
+     * After the {@code finalize} method has been invoked for an object, no
+     * further action is taken until the Java virtual machine has again
+     * determined that there is no longer any means by which this object can
+     * be accessed by any thread that has not yet died, including possible
+     * actions by other objects or classes which are ready to be finalized,
+     * at which point the object may be discarded.
+     * <p>
+     * The {@code finalize} method is never invoked more than once by a Java
+     * virtual machine for any given object.
+     * <p>
+     * Any exception thrown by the {@code finalize} method causes
+     * the finalization of this object to be halted, but is otherwise
+     * ignored.
+     *
+     * @apiNote
+     * Classes that embed non-heap resources have many options
+     * for cleanup of those resources. The class must ensure that the
+     * lifetime of each instance is longer than that of any resource it embeds.
+     * {@link java.lang.ref.Reference#reachabilityFence} can be used to ensure that
+     * objects remain reachable while resources embedded in the object are in use.
+     * <p>
+     * A subclass should avoid overriding the {@code finalize} method
+     * unless the subclass embeds non-heap resources that must be cleaned up
+     * before the instance is collected.
+     * Finalizer invocations are not automatically chained, unlike constructors.
+     * If a subclass overrides {@code finalize} it must invoke the superclass
+     * finalizer explicitly.
+     * To guard against exceptions prematurely terminating the finalize chain,
+     * the subclass should use a {@code try-finally} block to ensure
+     * {@code super.finalize()} is always invoked. For example,
+     * <pre>{@code      @Override
+     *     protected void finalize() throws Throwable {
+     *         try {
+     *             ... // cleanup subclass state
+     *         } finally {
+     *             super.finalize();
+     *         }
+     *     }
+     * }</pre>
+     *
+     * @deprecated The finalization mechanism is inherently problematic.
+     * Finalization can lead to performance issues, deadlocks, and hangs.
+     * Errors in finalizers can lead to resource leaks; there is no way to cancel
+     * finalization if it is no longer necessary; and no ordering is specified
+     * among calls to {@code finalize} methods of different objects.
+     * Furthermore, there are no guarantees regarding the timing of finalization.
+     * The {@code finalize} method might be called on a finalizable object
+     * only after an indefinite delay, if at all.
+     *
+     * Classes whose instances hold non-heap resources should provide a method
+     * to enable explicit release of those resources, and they should also
+     * implement {@link AutoCloseable} if appropriate.
+     * The {@link java.lang.ref.Cleaner} and {@link java.lang.ref.PhantomReference}
+     * provide more flexible and efficient ways to release resources when an object
+     * becomes unreachable.
+     *
+     * @throws Throwable the {@code Exception} raised by this method
+     * @see java.lang.ref.WeakReference
+     * @see java.lang.ref.PhantomReference
+     * @jls 12.6 Finalization of Class Instances
+     */
+    @Deprecated(since="9")
+    protected void finalize() throws Throwable { }
+```
+
 ---
 
 ## String, StringBuffer, StringBuilder
