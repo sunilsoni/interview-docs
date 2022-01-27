@@ -39,7 +39,7 @@ Output: 1
 Input: nums = [5,4,-1,7,8]
 Output: 23
 
-###  Solution 1
+###  Kadane's Algorithm
 Start traversing your array keep each element in the sum and every time keep the max of currSum and prevSum.
 
 But the catch here is that if at any point sum becomes negative then no point keeping it because 0 is obviously greater than negative, so just make your sum 0.
@@ -83,3 +83,4 @@ O(1)
 ---
 
 ## More Details 
+1. [JAVA | Kadane's Algorithm | Explanation Using Image](https://leetcode.com/problems/maximum-subarray/discuss/1595097/JAVA-or-Kadane's-Algorithm-or-Explanation-Using-Image)
