@@ -83,4 +83,4 @@ O(1)
 ---
 
 ## More Details 
-1. [JAVA | Kadane's Algorithm | Explanation Using Image](https://leetcode.com/problems/maximum-subarray/discuss/1595097/JAVA-or-Kadane's-Algorithm-or-Explanation-Using-Image)
+1. [JAVA Kadane's Algorithm](https://leetcode.com/problems/maximum-subarray/discuss/1595097/JAVA-or-Kadane's-Algorithm-or-Explanation-Using-Image)
