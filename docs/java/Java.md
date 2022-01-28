@@ -219,6 +219,7 @@ Output
 ```
 Simple
 ```
+
 **2. getClass() method of Object class**
 
 It returns the instance of Class class. It should be used if you know the type. Moreover, it can be used with primitives.
