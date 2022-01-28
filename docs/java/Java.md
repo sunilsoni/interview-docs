@@ -104,7 +104,7 @@ Error is irrecoverable e.g. OutOfMemoryError, VirtualMachineError, AssertionErro
 ###  Hierarchy of Java Exception classes
 
 
-<img src="Java/images/Exceptions.png" width="900"  />
+<img src="java/images/Exceptions.png" width="900"  />
 
 
 
