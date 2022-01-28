@@ -123,6 +123,7 @@ Error is irrecoverable e.g. OutOfMemoryError, VirtualMachineError, AssertionErro
 ###  Exception Propagation
 
 An exception is first thrown from the top of the stack and if it is not caught, it drops down the call stack to the previous method, If not caught there, the exception again drops down to the previous method, and so on until they are caught or until they reach the very bottom of the call stack. This is called exception propagation.
+
 ```java
 class TestExceptionPropagation {
 
@@ -201,6 +202,7 @@ There are 3 ways to get the instance of Class class. They are as follows:
 * is used to load the class dynamically.
 * returns the instance of Class class.
 * It should be used if you know the fully qualified name of class.This cannot be used for primitive types.
+
 ```java
 class Simple{}  
   
@@ -211,13 +213,16 @@ class Test {
    }  
 }  
 ```
+
 Output
+
 ```
 Simple
 ```
 **2. getClass() method of Object class**
 
 It returns the instance of Class class. It should be used if you know the type. Moreover, it can be used with primitives.
+
 ```java
 class Simple{}  
   
@@ -240,6 +245,7 @@ Simple
 **3. The .class syntax**
 
 If a type is available but there is no instance then it is possible to obtain a Class by appending ".class" to the name of the type.It can be used for primitive data type also.
+
 ```java
 class Test {  
   public static void main(String args[]) {  
@@ -267,6 +273,7 @@ Test
 ###  Can you declare the main method as final?
 
 Yes. We can declare main method as final. But, In inheritance concept we cannot declare main method as final in parent class. It give compile time error. The main method has to be public because it has to be called by JVM which is outside the scope of the package and hence would need the access specifier-public.
+
 ```java
 public class Test {
 	public final static void main(String[] args) throws Exception {
@@ -400,22 +407,26 @@ overridden method is static
 ###  What are the ways to instantiate the Class class? 
 
 ####  1. Using new keyword 
+
 ```java
 MyObject object = new MyObject();
 ```
 
 ####  2. Using Class.forName() 
+
 ```java
 MyObject object = (MyObject) Class.forName("subin.rnd.MyObject").newInstance();
 ```
 
 ####  3. Using clone() 
+
 ```java
 MyObject anotherObject = new MyObject();
 MyObject object = (MyObject) anotherObject.clone();
 ```
 
 ####  4. Using object deserialization 
+
 ```java
 ObjectInputStream inStream = new ObjectInputStream(anInputStream );
 MyObject object = (MyObject) inStream.readObject();
@@ -425,6 +436,7 @@ MyObject object = (MyObject) inStream.readObject();
 
 ###  What is the difference between creating String as new() and literal?
 When you create String object using `new()` operator, it always create a new object in heap memory. On the other hand, if you create object using String literal syntax e.g. "Java", it may return an existing object from String pool (a cache of String object in Perm gen space, which is now moved to heap space in recent Java release), if it's already exists. Otherwise it will create a new string object and put in string pool for future re-use.
+
 ```java
 String a = "abc"; 
 String b = "abc";
@@ -445,6 +457,7 @@ System.out.println(c == d);  // false
 The difference between `StringBuffer` and `StringBuilder` is that StringBuffer is thread-safe. So when the application needs to be run only in a single thread then it is better to use StringBuilder. StringBuilder is more efficient than StringBuffer.
 
 Example: StringBuffer
+
 ```java
 public class BufferTest{  
    public static void main(String[] args){  
@@ -456,6 +469,7 @@ public class BufferTest{
 ```
 
 Example: StringBuilder
+
 ```java
 public class BuilderTest{  
     public static void main(String[] args){  
