@@ -107,6 +107,204 @@ Error is irrecoverable e.g. OutOfMemoryError, VirtualMachineError, AssertionErro
 <img src="java/images/Exceptions.png" width="900"  />
 
 
+---
+
+## Classloader
+
+The Java ClassLoader is a part of the Java Runtime Environment that dynamically loads Java classes into the Java Virtual Machine. Java code is compiled into class file by javac compiler and JVM executes Java program, by executing byte codes written in class file. ClassLoader is responsible for loading class files from file system, network or any other source.
+
+Types of ClassLoader
+
+###  Bootstrap Class Loader
+It loads standard JDK class files from rt.jar and other core classes. It loads class files from jre/lib/rt.jar. For example, java.lang package class.
+
+###  Extensions Class Loader
+It loads classes from the JDK extensions directly usually JAVA_HOME/lib/ext directory or any other directory as java.ext.dirs.
+
+###  System Class Loader
+It loads application specific classes from the CLASSPATH environment variable. It can be set while invoking program using -cp or classpath command line options.
+
+---
+
+## Types of memory areas are allocated by JVM
+
+JVM is a program which takes Java bytecode and converts the byte code (line by line) into machine understandable code. JVM perform some particular types of operations:
+
+Loading of code
+Verification of code
+Executing the code
+It provide run-time environment to the users
+Types of Memory areas allocated by the JVM:
+
+1. **Classloader**: Classloader is a subsystem of JVM that is used to load class files.
+2. **Class(Method) Area**: Class(Method) Area stores per-class structures such as the runtime constant pool, field and method data, the code for methods.
+3. **Heap**: It is the runtime data area in which objects are allocated.
+4. **Stack**: Java Stack stores frames.It holds local variables and partial results, and plays a part in method invocation and return. Each thread has a private JVM stack, created at the same time as thread.
+5. **Program Counter Register**: PC (program counter) register. It contains the address of the Java virtual machine instruction currently being executed.
+6. **Native Method Stack**: It contains all the native methods used in the application.
+
+
+---
+
+## Java Reflection API
+
+Java Reflection is the process of analyzing and modifying all the capabilities of a class at runtime. Reflection API in Java is used to manipulate class and its members which include fields, methods, constructor, etc. at runtime. The **java.lang.Class** class provides many methods that can be used to get metadata, examine and change the run time behavior of a class.
+
+There are 3 ways to get the instance of Class class. They are as follows:
+
+* forName() method of Class class
+* getClass() method of Object class
+* the .class syntax
+
+**1. forName() method of Class class**
+
+* is used to load the class dynamically.
+* returns the instance of Class class.
+* It should be used if you know the fully qualified name of class.This cannot be used for primitive types.
+```java
+class Simple{}  
+  
+class Test {  
+   public static void main(String args[]) {  
+      Class c = Class.forName("Simple");  
+      System.out.println(c.getName());  
+   }  
+}  
+```
+Output
+```
+Simple
+```
+**2. getClass() method of Object class**
+
+It returns the instance of Class class. It should be used if you know the type. Moreover, it can be used with primitives.
+```java
+class Simple{}  
+  
+class Test {  
+  void printName(Object obj) {  
+    Class c=obj.getClass();    
+    System.out.println(c.getName());  
+  }  
+  public static void main(String args[]) {  
+    Simple s=new Simple();  
+    Test t=new Test();  
+    t.printName(s);  
+  }  
+}  
+```
+Output
+```
+Simple
+```
+**3. The .class syntax**
+
+If a type is available but there is no instance then it is possible to obtain a Class by appending ".class" to the name of the type.It can be used for primitive data type also.
+```java
+class Test {  
+  public static void main(String args[]) {  
+   Class c = boolean.class;   
+   System.out.println(c.getName());  
+  
+   Class c2 = Test.class;   
+   System.out.println(c2.getName());  
+ }  
+}  
+```
+
+Output
+
+```
+boolean
+Test
+```
+
+
+---
+
+## Misc Questions
+
+###  Can you declare the main method as final?
+
+Yes. We can declare main method as final. But, In inheritance concept we cannot declare main method as final in parent class. It give compile time error. The main method has to be public because it has to be called by JVM which is outside the scope of the package and hence would need the access specifier-public.
+```java
+public class Test {
+	public final static void main(String[] args) throws Exception {
+		System.out.println("This is Test Class");
+	}
+}
+ 
+class Child extends Test {
+	public static void main(String[] args) throws Exception {
+		System.out.println("This is Child Class");
+	}
+}
+```
+
+Output
+```
+Cannot override the final method from Test.
+```
+
+###  What is the difference between abstract class and interface?
+
+Abstract class and interface both are used to achieve abstraction where we can declare the abstract methods. Abstract class and interface both can't be instantiated.
+
+|Sl.No|Abstract Class	            |Interface                        |
+|-----|-----------------------------|---------------------------------|
+| 01. |Abstract class can have abstract and non-abstract methods.|	Interface can have only abstract methods. Since Java 8, it can have default and static methods also.|
+| 02. |Abstract class doesn't support multiple inheritance.|	Interface supports multiple inheritance.|
+| 03. |Abstract class can have final, non-final, static and non-static variables.	|Interface has only static and final variables.|
+| 04. |Abstract class can provide the implementation of interface.|Interface can't provide the implementation of abstract class.|
+| 05. |The abstract keyword is used to declare abstract class.|The interface keyword is used to declare interface.|
+| 06. |An abstract class can extend another Java class and implement multiple Java interfaces.|An interface can extend another Java interface only.|
+| 07. |An abstract class can be extended using keyword "extends".|An interface can be implemented using keyword "implements".|
+| 08. |A Java abstract class can have class members like private, protected, etc.|Members of a Java interface are public by default.|
+
+
+###  What are Wrapper classes?
+
+The wrapper class in Java provides the mechanism to convert primitive into object and object into primitive.
+
+**Use of Wrapper classes in Java**
+
+* **Change the value in Method**: Java supports only call by value. So, if we pass a primitive value, it will not change the original value. But, if we convert the primitive value in an object, it will change the original value.
+* **Serialization**: We need to convert the objects into streams to perform the serialization. If we have a primitive value, we can convert it in objects through the wrapper classes.
+* **Synchronization**: Java synchronization works with objects in Multithreading.
+* **java.util package**: The java.util package provides the utility classes to deal with objects.
+* **Collection Framework**: Java collection framework works with objects only. All classes of the collection framework (ArrayList, LinkedList, Vector, HashSet, LinkedHashSet, TreeSet, PriorityQueue, ArrayDeque, etc.) deal with objects only.
+
+| Sl.No|Primitive Type  |	Wrapper class       |
+|------|----------------|----------------------|
+| 01.  |boolean	      |Boolean|
+| 02.  |char	         |Character|
+| 03.  |byte	         |Byte|
+| 04.  |short	         |Short|
+| 05.  |int	            |Integer|
+| 06.  |long	         |Long|
+| 07.  |float	         |Float|
+| 08.  |double	         |Double|
+
+Example: Primitive to Wrapper
+
+```java
+//Java program to convert primitive into objects  
+//Autoboxing example of int to Integer  
+class WrapperExample {  
+  public static void main(String args[]){  
+      //Converting int into Integer  
+      int a=20;  
+      Integer i = Integer.valueOf(a);//converting int into Integer explicitly  
+      Integer j = a; //autoboxing, now compiler will write Integer.valueOf(a) internally  
+  
+   System.out.println(a+" "+i+" "+j);  
+  }
+}  
+```
+Output
+```
+20 20 20
+```
 
 
 
