@@ -9,10 +9,7 @@ categories: [Java,Java8,Multithreading]
 permalink: docs/java
 ---
 
-
-
 # Java
-
 {: .no_toc }
 
 <details open markdown="block">
