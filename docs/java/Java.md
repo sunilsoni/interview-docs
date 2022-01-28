@@ -106,6 +106,46 @@ Error is irrecoverable e.g. OutOfMemoryError, VirtualMachineError, AssertionErro
 
 <img src="java/images/Exceptions.png" width="900"  />
 
+###  Error vs Exception
+
+|BASIS FOR COMPARISON	|ERROR                                    |EXCEPTION                               |
+|-----------------------|-----------------------------------------|----------------------------------------|
+|Basic	               |An error is caused due to lack of system resources.|An exception is caused because of the code.|
+|Recovery	            |An error is irrecoverable.	            |An exception is recoverable.|
+|Keywords	            |There is no means to handle an error by the program code.|	Exceptions are handled using three keywords "try", "catch", and "throw".|
+|Consequences           |As the error is detected the program will terminated abnormally.|As an exception is detected, it is thrown and caught by the "throw" and "catch" keywords correspondingly.|
+|Types	               |Errors are classified as unchecked type.|Exceptions are classified as checked or unchecked type.|
+|Package	               |In Java, errors are defined "java.lang.Error" package.|In Java, an exceptions are defined in"java.lang.Exception".|
+|Example	               |OutOfMemory, StackOverFlow.|Checked Exceptions: NoSuchMethod, ClassNotFound.Unchecked Exceptions: NullPointer, IndexOutOfBounds.|
+
+
+
+###  Exception Propagation
+
+An exception is first thrown from the top of the stack and if it is not caught, it drops down the call stack to the previous method, If not caught there, the exception again drops down to the previous method, and so on until they are caught or until they reach the very bottom of the call stack. This is called exception propagation.
+```java
+class TestExceptionPropagation {
+
+  void m() {  
+    int data = 50/0;  
+  }  
+  void n() {  
+    m();  
+  }  
+  void p() {  
+      try {  
+         n();  
+      } catch(Exception e) { 
+         System.out.println("exception handled");
+      }  
+  }  
+  public static void main(String args[]) {  
+   TestExceptionPropagation obj = new TestExceptionPropagation();  
+   obj.p();  
+   System.out.println("Normal Flow...");  
+  }  
+}  
+```
 
 ---
 
@@ -383,8 +423,48 @@ MyObject object = (MyObject) inStream.readObject();
 
 
 
+###  What is the difference between creating String as new() and literal?
+When you create String object using `new()` operator, it always create a new object in heap memory. On the other hand, if you create object using String literal syntax e.g. "Java", it may return an existing object from String pool (a cache of String object in Perm gen space, which is now moved to heap space in recent Java release), if it's already exists. Otherwise it will create a new string object and put in string pool for future re-use.
+```java
+String a = "abc"; 
+String b = "abc";
+System.out.println(a == b);  // true
+
+String c = new String("abc");
+String d = new String("abc");
+System.out.println(c == d);  // false
+```
 
 
+###  What is difference between String, StringBuffer and StringBuilder?
+
+####  **Mutability Difference:**  
+`String` is **immutable**, if you try to alter their values, another object gets created, whereas `StringBuffer` and `StringBuilder` are **mutable** so they can change their values.
+
+####  **Thread-Safety Difference:** 
+The difference between `StringBuffer` and `StringBuilder` is that StringBuffer is thread-safe. So when the application needs to be run only in a single thread then it is better to use StringBuilder. StringBuilder is more efficient than StringBuffer.
+
+Example: StringBuffer
+```java
+public class BufferTest{  
+   public static void main(String[] args){  
+        StringBuffer buffer=new StringBuffer("Hello");  
+        buffer.append(" World");  
+        System.out.println(buffer);  
+   }  
+}  
+```
+
+Example: StringBuilder
+```java
+public class BuilderTest{  
+    public static void main(String[] args){  
+        StringBuilder builder=new StringBuilder("Hello");  
+        builder.append(" World");  
+        System.out.println(builder);  
+    }  
+}  
+```
 
 
 
