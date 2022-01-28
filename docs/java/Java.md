@@ -307,6 +307,86 @@ Output
 ```
 
 
+###  What are the restrictions that are applied to the Java static methods? 
+If a method is declared as static, it is a member of a class rather than belonging to the object of the class. It can be called without creating an object of the class. A static method also has the power to access static data members of the class.
+
+* There are a few restrictions imposed on a static method
+* The static method cannot use non-static data member or invoke non-static method directly.
+* The `this` and `super` cannot be used in static context.
+* The static method can access only static type data (static type instance variable).
+* There is no need to create an object of the class to invoke the static method.
+* A static method cannot be overridden in a subclass
+
+```java
+class Parent {
+   static void display() {
+      System.out.println("Super class");    
+   }
+}
+public class Example extends Parent {
+   void display()  // trying to override display() {
+      System.out.println("Sub class");  
+   }
+   public static void main(String[] args) {
+      Parent obj = new Example();
+      obj.display();
+   }
+}
+```
+This generates a compile time error. The output is as follows −
+
+```
+Example.java:10: error: display() in Example cannot override display() in Parent
+void display()  // trying to override display()
+     ^
+overridden method is static
+
+1 error
+```
+
+
+###  What is the difference between Serializable and Externalizable interface?
+
+|Sl.No |SERIALIZABLE |	EXTERNALIZABLE        |
+|----|----------------|-----------------------|
+| 01.|Serializable is a marker interface i.e. does not contain any method.|	Externalizable interface contains two methods writeExternal() and readExternal() which implementing classes MUST override.|
+| 02.|Serializable interface pass the responsibility of serialization to JVM and it’s default algorithm.|	Externalizable provides control of serialization logic to programmer – to write custom logic.|
+| 03.|Mostly, default serialization is easy to implement, but has higher performance cost.|Serialization done using Externalizable, add more responsibility to programmer but often result in better performance.|
+| 04.|It’s hard to analyze and modify class structure because any change may break the serialization.|	It’s more easy to analyze and modify class structure because of complete control over serialization logic.|
+| 05.|Default serialization does not call any class constructor.|A public no-arg constructor is required while using Externalizable interface. |
+
+
+
+###  What are the ways to instantiate the Class class? 
+
+####  1. Using new keyword 
+```java
+MyObject object = new MyObject();
+```
+
+####  2. Using Class.forName() 
+```java
+MyObject object = (MyObject) Class.forName("subin.rnd.MyObject").newInstance();
+```
+
+####  3. Using clone() 
+```java
+MyObject anotherObject = new MyObject();
+MyObject object = (MyObject) anotherObject.clone();
+```
+
+####  4. Using object deserialization 
+```java
+ObjectInputStream inStream = new ObjectInputStream(anInputStream );
+MyObject object = (MyObject) inStream.readObject();
+```
+
+
+
+
+
+
+
 
 ## For more information
 

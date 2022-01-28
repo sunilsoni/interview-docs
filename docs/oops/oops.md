@@ -688,7 +688,7 @@ automatically. Similarly, you can say the hands (or legs, etc.)of a human being 
 <tr><td>Examples:<br>- Car has a Driver.<br>- A Human uses Clothes.<br>- A Company is an aggregation of People.<br>- A Text Editor uses a File.<br>- Mobile has a SIM Card.</td><td>Examples:<br>- Engine is a part of Car.<br>- A Human owns the Heart.<br>- A Company is a composition of Accounts.<br>- A Text Editor owns a Buffer.<br>- IMEI Number is a part of a Mobile.</td></tr>
 </tbody></table>
 
-
+---
 ## Association vs. Aggregation vs. Composition
 
 | Association  |  Aggregation   | Composition |
@@ -703,6 +703,31 @@ automatically. Similarly, you can say the hands (or legs, etc.)of a human being 
 
 <img src="images/Association%20vs.%20Aggregation%20vs.%20Composition.png" width="600" />
 
+---
+
+##  Inheritance and Composition 
+
+Though both Inheritance and Composition provides code reusablility, main difference between Composition and Inheritance in Java is that Composition allows reuse of code without extending it but for Inheritance you must extend the class for any reuse of code or functionality. Inheritance is an **"is-a"** relationship. Composition is a **"has-a"**.
+
+Example: Inheritance
+```java
+class Fruit {
+   //...
+}
+class Apple extends Fruit {
+   //...
+}
+```
+Example: Composition
+```java
+class Fruit {
+   //...
+}
+class Apple {
+   private Fruit fruit = new Fruit();
+   //...
+}
+```
 
 ---
 
