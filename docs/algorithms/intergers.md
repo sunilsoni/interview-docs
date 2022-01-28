@@ -142,11 +142,110 @@ class FizzBuzzSolution {
 **Space Complexity**: O(n)
 
 
+---
+
+## Prime Numbers
+
+A prime number is a natural number greater than one that has no positive divisors other than one and itself.
+
+For example, 7 is prime because 1 and 7 are its only positive integer factors, whereas 12 is not because it has the divisors 3 and 2 in addition to 1, 4 and 6.
+
+###  Generating Prime Numbers
+
+The method checks each numbers divisibility by the numbers in a range from 2 till number-1.
+
+If at any point we encounter a number that is divisible, we return false. At the end when we find that number is not divisible by any of its prior number, we return true indicating its a prime number.
+
+####  Implementation
+
+```java
+class Solution {
+ public static List<Integer> primeNumbersBruteForce(int n) {
+  List<Integer> primeNumbers = new LinkedList<>();
+  for (int i = 2; i <= n; i++) {
+   if (isPrimeBruteForce(i)) {
+    primeNumbers.add(i);
+   }
+  }
+  return primeNumbers;
+ }
+ public static boolean isPrimeBruteForce(int number) {
+  for (int i = 2; i < number; i++) {
+   if (number % i == 0) {
+    return false;
+   }
+  }
+  return true;
+ }    
+}
+
+```
 
 
+
+####  Complexity Analysis
+
+**Time Complexity**:
+O(n^2)
+**Space Complexity**:
+O(n)
+
+###  Efficiency and Optimization
+
+When a number is not a prime, this number can be factored into two factors namely a and b i.e. number = a * b. If both a and b were greater than the square root of n, a*b would be greater than n.
+
+So at least one of those factors must be less than or equal the square root of a number and to check if a number is prime, we only need to test for factors lower than or equal to the square root of the number being checked.
+
+Additionally, prime numbers can never be an even number as even numbers are all divisible by 2.
+
+Keeping in mind above ideas, let's improve the algorithm:
+
+####  Implementation
+
+```java
+ class Solution {
+ public static List<Integer> primeNumbersBruteForce(int n) {
+  List<Integer> primeNumbers = new LinkedList<>();
+  if (n >= 2) {
+   primeNumbers.add(2);
+  }
+  for (int i = 3; i <= n; i += 2) {
+   if (isPrimeBruteForce(i)) {
+    primeNumbers.add(i);
+   }
+  }
+  return primeNumbers;
+ }
+ private static boolean isPrimeBruteForce(int number) {
+  for (int i = 2; i*i <= number; i++) {
+   if (number % i == 0) {
+    return false;
+   }
+  }
+  return true;
+ }
+ }
+```
+
+
+###  Using Java 8
+```java
+ class Solution {
+ public static List<Integer> primeNumbersTill(int n) {
+  return IntStream.rangeClosed(2, n)
+          .filter(x -> isPrime(x)).boxed()
+          .collect(Collectors.toList());
+ }
+ private static boolean isPrime(int number) {
+  return IntStream.rangeClosed(2, (int) (Math.sqrt(number)))
+          .allMatch(n -> x % n != 0);
+ }
+}
+```
 ---
 
 ## More Details: 
 1. [Palindrome Number - Leetcode #9 Short & Simple Solution](https://www.code-recipe.com/post/palindrome-number)
+2. [Generating Prime Numbers in Java](https://www.baeldung.com/java-generate-prime-numbers)
 
 
