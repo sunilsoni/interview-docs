@@ -58,5 +58,3 @@ B
 docs/aws/ec2.md,c/2/c22f3faa37020d9f36bce7dc253ede01272129f9
 D
 docs/aws/dynamodb.md,c/5/c5d25b75538bae41f8b23c1da8030b92d9798c8c
-Q
-!docs/java/collection-framework.md,2/1/21c08ff399ce770017258691f16c754a4ef1edbf
