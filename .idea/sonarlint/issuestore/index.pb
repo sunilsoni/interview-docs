@@ -22,8 +22,6 @@ S
 #docs/microservices/microservices.md,a/b/ab0d77c7ebc3ca623999f7b3cbb108b8b84acf7f
 J
 docs/miscellaneous/misc.md,4/8/48bdb2278012630f697cfbe6328733706290d206
-A
-docs/oops/oops.md,f/2/f2b1cc92bb06e2223c98af0220775f51f0a5e232
 C
 docs/react/React.md,a/3/a391bfddc53eefbf96b7c66e8410e47fdc5a3059
 E
@@ -64,5 +62,3 @@ D
 docs/aws/dynamodb.md,c/5/c5d25b75538bae41f8b23c1da8030b92d9798c8c
 Q
 !docs/java/collection-framework.md,2/1/21c08ff399ce770017258691f16c754a4ef1edbf
-A
-docs/java/Java.md,d/e/de418fc77c20469d2a13acceba21fc24fe95896c
