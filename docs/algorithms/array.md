@@ -306,34 +306,27 @@ Total platforms needed at one time can be found by taking the difference of arri
 ```java
 import java.util.*;
 class TUF {
-    static int findPlatform(int arr[], int dep[], int n)
-    {
+    static int findPlatform(int arr[], int dep[], int n) {
         Arrays.sort(arr);
         Arrays.sort(dep);
-
         int plat_needed = 1, result = 1;
         int i = 1, j = 0;
 
         while (i < n && j < n) {
-
             if (arr[i] <= dep[j]) {
                 plat_needed++;
                 i++;
-            }
-
-            else if (arr[i] > dep[j]) {
+            }else if (arr[i] > dep[j]) {
                 plat_needed--;
                 j++;
             }
-
             if (plat_needed > result)
                 result = plat_needed;
         }
-
         return result;
     }
+    
     public static void main (String[] args) {
-
         int[] arr ={900,945,955,1100,1500,1800};
         int[] dep={920,1200,1130,1150,1900,2000};
         int n=arr.length;
@@ -368,17 +361,13 @@ O(1)   (No extra space used).
 ```java
  import java.util.*;
 class TUF {
-    static int countPlatforms(int n,int arr[],int dep[])
-    {
+    static int countPlatforms(int n,int arr[],int dep[]){
         int ans=1; //final value
-        for(int i=0;i<=n-1;i++)
-        {
+        for(int i=0;i<=n-1;i++) {
             int count=1; // count of overlapping interval of only this   iteration
-            for(int j=i+1;j<=n-1;j++)
-            {
+            for(int j=i+1;j<=n-1;j++){
                 if((arr[i]>=arr[j] && arr[i]<=dep[j]) ||
-                        (arr[j]>=arr[i] && arr[j]<=dep[i]))
-                {
+                        (arr[j]>=arr[i] && arr[j]<=dep[i])){
                     count++;
                 }
             }
@@ -386,10 +375,7 @@ class TUF {
         }
         return ans;
     }
-
-
     public static void main (String[] args) {
-
         int[] arr ={900,945,955,1100,1500,1800};
         int[] dep={920,1200,1130,1150,1900,2000};
         int n=arr.length;
