@@ -232,6 +232,7 @@ Scream `false` if we ever fail to add something because it was already added (i.
 }
 ```
 
+
 ####  Runtime
 2 ms
 
@@ -240,9 +241,108 @@ Scream `false` if we ever fail to add something because it was already added (i.
 
 
 
+---
+
+## Minimum Number of Platforms Required for a Railway/Bus Station
+
+Given the arrival and departure times of all trains that reach a railway station, the task is to find the minimum number of platforms required for the railway station so that no train waits.
+We are given two arrays that represent the arrival and departure times of trains that stop.
+
+Examples:
+
+Input: arr[] = {9:00, 9:40, 9:50, 11:00, 15:00, 18:00}
+dep[] = {9:10, 12:00, 11:20, 11:30, 19:00, 20:00}
+Output: 3
+Explanation: There are at-most three trains at a time (time between 9:40 to 12:00)
+
+Input: arr[] = {9:00, 9:40}
+dep[] = {9:10, 12:00}
+Output: 1
+Explanation: Only one platform is needed.
+
+
+Input: N=6,
+arr[] = {9:00, 9:45, 9:55, 11:00, 15:00, 18:00}
+dep[] = {9:20, 12:00, 11:30, 11:50, 19:00, 20:00}
+
+Output:3
+
+Explanation: There are at-most three trains at a time. The train at 11:00 arrived but the trains which had arrived at 9:45 and 9:55 have still not departed. So, we need at least three platforms here.
+
+<img src="images/Platforms.png" width="700" />
+
+###  Efficient Approach by Sorting
+
+**Intuition:** At first we need to sort both the arrays. When the events will be sorted, it will be easy to track the count of trains that have arrived but not departed yet. Total platforms needed at one time can be found by taking the difference of arrivals and departures at that time and the maximum value of all times will be the final answer.
+
+**Approach:**  At first we need to sort both the arrays. When the events will be sorted, it will be easy to track the count of trains that have arrived but not departed yet. Total platforms needed at one time can be found by taking the difference of arrivals and departures at that time and the maximum value of all times will be the final answer. If(arr[i]<=dep[j]) means if arrival time is less than or equal to the departure time then- we need one more platform. So increment count as well as increment i. If(arr[i]>dep[j]) means arrival time is more than the departure time then- we have one extra platform which we can reduce. So decrement count but increment j. Update the ans with max(ans, count) after each iteration of the while loop.
+
+
+####  Implementation
+
+```java
+import java.util.*;
+class TUF {
+    static int findPlatform(int arr[], int dep[], int n)
+    {
+        Arrays.sort(arr);
+        Arrays.sort(dep);
+
+        int plat_needed = 1, result = 1;
+        int i = 1, j = 0;
+
+        while (i < n && j < n) {
+
+            if (arr[i] <= dep[j]) {
+                plat_needed++;
+                i++;
+            }
+
+            else if (arr[i] > dep[j]) {
+                plat_needed--;
+                j++;
+            }
+
+            if (plat_needed > result)
+                result = plat_needed;
+        }
+
+        return result;
+    }
+    public static void main (String[] args) {
+
+        int[] arr ={900,945,955,1100,1500,1800};
+        int[] dep={920,1200,1130,1150,1900,2000};
+        int n=arr.length;
+        int totalCount=findPlatform(arr,dep,n);
+        System.out.println("Minimum number of Platforms required "+totalCount);
+    }
+} 
+```
+
+**Output:**
+
+Minimum number of Platforms required 3
+
+####  Runtime
+
+
+####  Memory
+
+
+####  Complexity Analysis
+
+**Time Complexity**:
+O(nlogn)   (Sorting takes O(nlogn) and traversal of arrays takes O(n) so overall time complexity is O(nlogn)).
+
+**Space Complexity**:
+O(1)   (No extra space used).
+
+
 
 ---
 
 ## More Details 
 1. [JAVA Kadane's Algorithm](https://leetcode.com/problems/maximum-subarray/discuss/1595097/JAVA-or-Kadane's-Algorithm-or-Explanation-Using-Image)
 2. [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/discuss/15472/Short%2BSimple-Java-using-Strings)
+3. [Minimum number of platforms required for a railway](https://takeuforward.org/data-structure/minimum-number-of-platforms-required-for-a-railway/)
