@@ -324,12 +324,6 @@ class TUF {
 
 Minimum number of Platforms required 3
 
-####  Runtime
-
-
-####  Memory
-
-
 ####  Complexity Analysis
 
 **Time Complexity**:
@@ -339,6 +333,60 @@ O(nlogn)   (Sorting takes O(nlogn) and traversal of arrays takes O(n) so overall
 O(1)   (No extra space used).
 
 
+### Naive Approach
+
+**Intuition:** Take each interval of arrival and departure one by one and count the number of overlapping time intervals. This can easily be done using nested for-loops. Maintain the maximum value of the count during the process and return the maximum value at the end.
+
+**Approach**: We need to run two nested for-loops. Inside the inner loop count the number of intervals which intersect with the interval represented by the outer loop. As soon as the inner loop ends just update the maximum value of count and proceed with the next iteration of the outer loop. After the process ends we will get the maximum value of the count.
+
+
+####  Implementation
+
+```java
+ import java.util.*;
+class TUF {
+    static int countPlatforms(int n,int arr[],int dep[])
+    {
+        int ans=1; //final value
+        for(int i=0;i<=n-1;i++)
+        {
+            int count=1; // count of overlapping interval of only this   iteration
+            for(int j=i+1;j<=n-1;j++)
+            {
+                if((arr[i]>=arr[j] && arr[i]<=dep[j]) ||
+                        (arr[j]>=arr[i] && arr[j]<=dep[i]))
+                {
+                    count++;
+                }
+            }
+            ans=Math.max(ans,count); //updating the value
+        }
+        return ans;
+    }
+
+
+    public static void main (String[] args) {
+
+        int[] arr ={900,945,955,1100,1500,1800};
+        int[] dep={920,1200,1130,1150,1900,2000};
+        int n=arr.length;
+        int totalCount=countPlatforms(n,arr,dep);
+        System.out.println("Minimum number of Platforms required "+totalCount);
+    }
+}
+```
+
+Output:
+
+Minimum number of Platforms required 3
+
+####  Complexity Analysis
+
+**Time Complexity**:
+O(n^2)  (due to two nested loops).
+
+**Space Complexity**:
+O(1)  (no extra space used).
 
 ---
 
