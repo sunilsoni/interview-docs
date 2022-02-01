@@ -48,8 +48,6 @@ V
 &docs/algorithms/dynamic-programming.md,a/2/a21391f3c3f284771010826798b24faddbaddd21
 J
 docs/algorithms/sorting.md,2/c/2cd6b61ecb52be5dd51c8a6814f36db8cdd952c3
-N
-docs/algorithms/linked-list.md,7/0/70516a2103d45e3a7280cf61d048453c5d327688
 Q
 !docs/algorithms/data-structure.md,1/1/11dc0031e207270142fbe0a210e7f3d9628feeeb
 B
@@ -58,3 +56,15 @@ B
 docs/aws/ec2.md,c/2/c22f3faa37020d9f36bce7dc253ede01272129f9
 D
 docs/aws/dynamodb.md,c/5/c5d25b75538bae41f8b23c1da8030b92d9798c8c
+L
+docs/java/multi-threading.md,1/3/138064e85f9f3f2c59bcbfdb9f57526abaed747a
+H
+_sass/custom/custom.scss,7/a/7a67b28b5645f838c736d6ae21b2a80b3f352b11
+;
+_config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
+E
+_layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
+B
+docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
+?
+docs/aws/aws.md,e/c/ecd2f7d76ed36c5f12aa55096970332f97c36075
