@@ -88,7 +88,7 @@ O(1)
 
 
 
-## HashSet Approach
+###  HashSet Approach
 
 The simplest approach to solve this problem is to check whether a node in the linked list has been visited before. To perform this operation, a hashmap can be used.
 
@@ -128,7 +128,7 @@ O(N) where N is the number of nodes of the linked list.
 O(N), as HashSet is used
 
 
-## Recursive Approach
+### Recursive Approach
 
 ####  Implementation
 
