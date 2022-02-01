@@ -56,6 +56,8 @@ myQueue.pop(); // return 1, queue is [2]
 myQueue.empty(); // return false
 ```
 
+### Solution 1
+
 I have one input stack, onto which I push the incoming elements, and one output stack, from which I peek/pop. I move elements from input stack to output stack when needed, i.e., when I need to peek/pop but the output stack is empty. When that happens, I move all elements from input to output stack, thereby reversing the order so it's the correct order for peek/pop.
 
 The loop in peek does the moving from input to output stack. Each element only ever gets moved like that once, though, and only after we already spent time pushing it, so the overall amortized cost for each operation is O(1).
@@ -108,3 +110,95 @@ The loop in peek does the moving from input to output stack. Each element only e
 **Time Complexity**:
 
 **Space Complexity**:
+
+
+
+### Solution 2
+
+Keep 2 stacks, let's call them inbox and outbox.
+
+**Enqueue:**
+
+Push the new element onto inbox
+
+**Dequeue:**
+
+If outbox is empty, refill it by popping each element from inbox and pushing it onto outbox
+
+Pop and return the top element from outbox
+
+Using this method, each element will be in each stack exactly once - meaning each element will be pushed twice and popped twice, giving amortized constant time operations.
+
+####  Implementation
+
+```java
+ public class Queue<E>
+{
+
+    private Stack<E> inbox = new Stack<E>();
+    private Stack<E> outbox = new Stack<E>();
+
+    public void queue(E item) {
+        inbox.push(item);
+    }
+
+    public E dequeue() {
+        if (outbox.isEmpty()) {
+            while (!inbox.isEmpty()) {
+                outbox.push(inbox.pop());
+            }
+        }
+        return outbox.pop();
+    }
+
+}
+```
+
+
+####  Complexity Analysis
+
+**Time Complexity**:
+
+**Space Complexity**:
+
+
+### One Stack Solution
+
+You can even simulate a queue using only one stack. The second (temporary) stack can be simulated by the call stack of recursive calls to the insert method.
+
+The principle stays the same when inserting a new element into the queue:
+
+- You need to transfer elements from one stack to another temporary stack, to reverse their order.
+- Then push the new element to be inserted, onto the temporary stack
+- Then transfer the elements back to the original stack
+- The new element will be on the bottom of the stack, and the oldest element is on top (first to be popped)
+
+A Queue class using only one Stack, would be as follows:
+
+####  Implementation
+
+```java
+ public class SimulatedQueue<E> {
+    private java.util.Stack<E> stack = new java.util.Stack<E>();
+
+    public void insert(E elem) {
+        if (!stack.empty()) {
+            E topElem = stack.pop();
+            insert(elem);
+            stack.push(topElem);
+        }
+        else
+            stack.push(elem);
+    }
+
+    public E remove() {
+        return stack.pop();
+    }
+}
+```
+
+
+---
+
+## More Details: 
+1. [How to implement a queue using two stacks?](https://stackoverflow.com/questions/69192/how-to-implement-a-queue-using-two-stacks)
