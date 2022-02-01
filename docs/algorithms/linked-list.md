@@ -133,7 +133,7 @@ O(N), as HashSet is used
 ####  Implementation
 
 ```java
-public class SinglyLinkedListHasCycleHashSet {
+public class SinglyLinkedListHasCycleRecursive {
     class HasCycleInLinkedList{
         public boolean hasCycle(ListNode head){
             if(head == null || head.next == null) return false;
