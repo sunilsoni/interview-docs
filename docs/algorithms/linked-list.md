@@ -87,6 +87,50 @@ O(1)
 
 
 
+
+## HashSet Approach
+
+The simplest approach to solve this problem is to check whether a node in the linked list has been visited before. To perform this operation, a hashmap can be used.
+
+**Algorithm**
+
+- Initialise a hashmap.
+- Traverse the linked list till the head pointer isn’t NULL:
+  - If the current node is already present in the hashset, it ensures that the linked list contains a loop. Hence, terminate and return True.
+  - Else, continue traversing and continue inserting the node into the hashset.
+- Return False if it doesn’t satisfy the above conditions.
+
+####  Implementation
+
+```java
+public class SinglyLinkedListHasCycleHashSet {
+    public boolean hasCycle(ListNode head) {
+        Set<ListNode> mp = new HashSet<>();
+        while (head != null) {
+            if (mp.contains(head)) {
+                return true;
+            }
+            mp.add(head);
+            head = head.next;
+        }
+        return false;
+    }
+} 
+```
+
+####  Runtime
+
+
+####  Memory
+
+
+####  Complexity Analysis
+
+**Time Complexity**:
+
+**Space Complexity**:
+
+
 ---
 
 ## More Details: 
