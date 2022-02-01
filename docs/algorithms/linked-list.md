@@ -118,17 +118,44 @@ public class SinglyLinkedListHasCycleHashSet {
 } 
 ```
 
-####  Runtime
+
+####  Complexity Analysis
+
+**Time Complexity**:
+O(N) where N is the number of nodes of the linked list.
+
+**Space Complexity**:
+O(N), as HashSet is used
 
 
-####  Memory
+## Recursive Approach
+
+####  Implementation
+
+```java
+public class SinglyLinkedListHasCycleHashSet {
+    class HasCycleInLinkedList{
+        public boolean hasCycle(ListNode head){
+            if(head == null || head.next == null) return false;
+            if(head.next == head) return true;
+            ListNode nextNode = head.next;
+            head.next = head;
+            return hasCycle(nextNode);
+        }
+    }
+} 
+```
 
 
 ####  Complexity Analysis
 
 **Time Complexity**:
 
+
 **Space Complexity**:
+
+
+
 
 
 ---
