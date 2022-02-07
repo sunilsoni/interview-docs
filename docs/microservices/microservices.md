@@ -8,7 +8,6 @@ permalink: docs/microservices
 
 
 # Microservices
-
 {: .no_toc }
 
 <details open markdown="block">
