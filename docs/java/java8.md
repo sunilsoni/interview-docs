@@ -834,7 +834,7 @@ class MapExammple {
 
 
 ### flatMap() example
-flatMap() is two step process i.e. map() + Flattening. It helps in converting Collection<Collection<T>> to Collection<T>.
+flatMap() is two step process i.e. map() + Flattening. It helps in converting `Collection<Collection<T>>` to `Collection<T>`
 
 ```java
  class MapExammple {
@@ -863,4 +863,7 @@ flatMap() is two step process i.e. map() + Flattening. It helps in converting Co
 1. [Java 8 Lambda Expressions](https://www.javaguides.net/2018/07/java-8-lambda-expressions.html)
 2. [Java 8 Parallel Streams Example](https://examples.javacodegeeks.com/core-java/java-8-parallel-streams-example/)
 3. [When to Use a Parallel Stream in Java](https://www.baeldung.com/java-when-to-use-parallel-stream)
+4. [The Difference Between map() and flatMap()](https://www.baeldung.com/java-difference-map-and-flatmap)
+5. [What's the difference between map() and flatMap() methods in Java 8?](https://stackoverflow.com/questions/26684562/whats-the-difference-between-map-and-flatmap-methods-in-java-8)
+6. 
 
