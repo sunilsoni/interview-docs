@@ -18,8 +18,6 @@ R
 "docs/angular/angular-components.md,8/8/88a9c5d705aba299df45f3a2cf599211e02b58ee
 V
 &docs/design-patterns/design-pattern.md,b/1/b18f43ac389f0256bc363a87c55c6b73c3ecec84
-S
-#docs/microservices/microservices.md,a/b/ab0d77c7ebc3ca623999f7b3cbb108b8b84acf7f
 J
 docs/miscellaneous/misc.md,4/8/48bdb2278012630f697cfbe6328733706290d206
 C

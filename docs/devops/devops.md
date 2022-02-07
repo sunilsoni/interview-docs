@@ -7,7 +7,6 @@ permalink: docs/devops
 ---
 
 #  DevOps
-
 {: .no_toc }
 
 <details open markdown="block">

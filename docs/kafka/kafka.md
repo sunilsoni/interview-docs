@@ -6,7 +6,6 @@ permalink: docs/kafka
 ---
 
 # Kafka
-
 {: .no_toc }
 
 <details open markdown="block">

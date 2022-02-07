@@ -5,7 +5,6 @@ nav_order: 2
 ---
 
 # Object-oriented programming(OOPS)
-
 {: .no_toc }
 
 <details open markdown="block">

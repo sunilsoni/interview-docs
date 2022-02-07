@@ -7,7 +7,6 @@ permalink: docs/design-patterns
 ---
 
 # Design Patterns
-
 {: .no_toc }
 
 <details open markdown="block">
