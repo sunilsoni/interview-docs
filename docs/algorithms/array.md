@@ -398,14 +398,15 @@ O(n^2)  (due to two nested loops).
 O(1)  (no extra space used).
 
 
-## Implement ArrayList using Array
+## Custom ArrayList 
 
 ArrayList is very similar to Array but provides the feature of dynamic space allocation when the number of objects in the list grows.
+
+### Custom ArrayList using Array
 
 In Array, we have to provide the size at the time of initialization but that is not required for ArrayList.
 
 Actually, when you initialize ArrayList, it automatically assigns its initial capacity to 10.
-
 
 ####  Implementation
 
