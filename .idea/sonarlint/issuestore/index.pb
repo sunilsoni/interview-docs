@@ -62,7 +62,5 @@ H
 _config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
 E
 _layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
-B
-docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
 ?
 docs/aws/aws.md,e/c/ecd2f7d76ed36c5f12aa55096970332f97c36075

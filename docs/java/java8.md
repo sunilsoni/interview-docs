@@ -792,6 +792,70 @@ Method reference is used to refer method of the functional interface. It is a co
 - Reference to an instance method of an arbitrary object of a particular type : `ContainingType::methodName`
 - Reference to a constructor: `ClassName::new`
 
+
+---
+
+##  Stream map() vs flatMap()
+
+Both `map` and `flatMap` can be applied to a `Stream<T>` and they both return a `Stream<R>`. The difference is that the `map` operation produces one output value for each input value, whereas the `flatMap` operation produces an arbitrary number (zero or more) values for each input value.
+
+###  Stream.map()
+
+The map operation takes a Function, which is called for each value in the input stream and produces one result value, which is sent to the output stream.
+
+###  Stream.flatMap()
+
+The flatMap operation takes a function that conceptually wants to consume one value and produce an arbitrary number of values.
+
+Typical use is for the mapper function of flatMap to return Stream.empty() if it wants to send zero values, or something like Stream.of(a, b, c) if it wants to return several values. But of course any stream can be returned.
+
+
+
+| map() | flatMap()                                                                                                                                                                             |
+|---|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Stream.map only applies a function to the stream without flattening the stream.  | Stream.flatMap, as it can be guessed by its name, is the combination of a map and a flat operation. That means that you first apply a function to your elements, and then flatten it. |
+| The function you pass to the map() operation returns a single value.  | The function you pass to flatMap() operation returns a Stream of value.                                                                                                               |
+| map() is used for transformation only  |   flatMap() is used for both transformation and flattening.                                                                                                                                                                                     |
+
+
+### map() example
+
+```java
+class MapExammple {
+  public static void main(String[] args) {
+    List<String> listOfStrings = Arrays.asList("1", "2", "3", "4", "5");
+      List<Integer> listOfIntegers = listOfStrings.stream()
+            .map(Integer::valueOf)
+            .collect(Collectors.toList());
+    System.out.println(listOfIntegers);   //[1, 2, 3, 4, 5]
+  }
+}
+```
+
+
+### flatMap() example
+flatMap() is two step process i.e. map() + Flattening. It helps in converting Collection<Collection<T>> to Collection<T>.
+
+```java
+ class MapExammple {
+  public static void main(String[] args) {
+    List<Integer> list1 = Arrays.asList(1,2,3);
+    List<Integer> list2 = Arrays.asList(4,5,6);
+    List<Integer> list3 = Arrays.asList(7,8,9);
+
+    List<List<Integer>> listOfLists = Arrays.asList(list1, list2, list3);
+
+    List<Integer> listOfAllIntegers = listOfLists.stream()
+            .flatMap(x -> x.stream())
+            .collect(Collectors.toList());
+
+    System.out.println(listOfAllIntegers);    //[1, 2, 3, 4, 5, 6, 7, 8, 9]
+  }
+}
+```
+
+
+
 ---
 
 ## For more information
