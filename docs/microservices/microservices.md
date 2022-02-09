@@ -4,6 +4,9 @@ title: Micro Services
 has_children: true
 nav_order: 2
 permalink: docs/microservices
+resource: true
+desc: "Microservices interview questions and answers."
+categories: [Microservices]
 ---
 
 

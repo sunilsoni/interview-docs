@@ -4,6 +4,9 @@ title: Design Patterns
 has_children: true
 nav_order: 2
 permalink: docs/design-patterns
+resource: true
+desc: " Design Patterns interview questions and answers."
+categories: [Design Patterns]
 ---
 
 # Design Patterns

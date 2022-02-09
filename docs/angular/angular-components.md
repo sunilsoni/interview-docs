@@ -2,6 +2,9 @@
 layout: default
 title: Component
 parent: Angular
+resource: true
+desc: "Angular Component interview questions and answers."
+categories: [Angular Component]
 ---
 
 # Angular Component

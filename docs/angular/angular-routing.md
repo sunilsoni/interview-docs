@@ -2,6 +2,9 @@
 layout: default
 title: Routing and Navigation
 parent: Angular
+resource: true
+desc: "Angular Routing and Navigation interview questions and answers."
+categories: [Angular Routing and Navigation]
 ---
 
 # Angular Routing and Navigation

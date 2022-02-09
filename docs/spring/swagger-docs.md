@@ -2,6 +2,9 @@
 layout: default
 title: Swagger
 parent: Spring
+resource: true
+desc: "Swagger interview questions and answers."
+categories: [Swagger]
 ---
 
 # Swagger

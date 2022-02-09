@@ -2,6 +2,9 @@
 layout: default
 title: Lazy Loading
 parent: Angular
+resource: true
+desc: "Angular Lazy Loading interview questions and answers."
+categories: [Angular Lazy Loading]
 ---
 
 # Angular Lazy Loading

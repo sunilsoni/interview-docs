@@ -2,6 +2,9 @@
 layout: default
 title: Array
 parent: Data Structures
+resource: true
+desc: "Array interview questions and answers."
+categories: [Array]
 
 ---
 

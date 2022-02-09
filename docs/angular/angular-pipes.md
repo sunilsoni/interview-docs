@@ -2,6 +2,9 @@
 layout: default
 title: Pipes
 parent: Angular
+resource: true
+desc: "Angular Pipes interview questions and answers."
+categories: [Angular Pipes]
 ---
 
 # Angular Pipes

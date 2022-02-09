@@ -2,6 +2,9 @@
 layout: default
 title: Creational Design Pattern
 parent: Design Patterns
+resource: true
+desc: "Creational Design Pattern interview questions and answers."
+categories: [Creational Design Pattern]
 ---
 
 # Creational Design Pattern

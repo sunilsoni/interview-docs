@@ -2,6 +2,9 @@
 layout: default
 title: Docker
 parent: DevOps
+resource: true
+desc: "Docker interview questions and answers."
+categories: [Docker]
 ---
 
 # Docker

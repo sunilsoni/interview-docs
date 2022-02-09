@@ -2,6 +2,9 @@
 layout: default
 title: Spring Batch
 parent: Spring
+resource: true
+desc: "Spring Batch interview questions and answers."
+categories: [Spring Batch]
 ---
 
 # Spring Batch

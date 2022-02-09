@@ -2,6 +2,9 @@
 layout: default
 title: Linux
 parent: DevOps
+resource: true
+desc: "Linux interview questions and answers."
+categories: [Linux]
 ---
 
 # Linux

@@ -2,6 +2,9 @@
 layout: default
 title: Spring Boot
 parent: Spring
+resource: true
+desc: "Spring Boot interview questions and answers."
+categories: [Spring Boot]
 ---
 
 # Spring Boot

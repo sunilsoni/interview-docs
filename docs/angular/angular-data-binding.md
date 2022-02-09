@@ -2,6 +2,9 @@
 layout: default
 title: Data Binding
 parent: Angular
+resource: true
+desc: "Angular Data Binding interview questions and answers."
+categories: [Angular Data Binding]
 ---
 
 # Angular Data Binding

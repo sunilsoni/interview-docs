@@ -2,6 +2,9 @@
 layout: default
 title: Security in Microservices
 parent: Micro Services
+resource: true
+desc: "Security in Microservices interview questions and answers."
+categories: [Security in Microservices]
 ---
 
 # Security in Microservices

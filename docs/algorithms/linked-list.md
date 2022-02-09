@@ -2,6 +2,9 @@
 layout: default
 title: Linked List
 parent: Data Structures
+resource: true
+desc: "Linked List interview questions and answers."
+categories: [Linked List]
 
 ---
 

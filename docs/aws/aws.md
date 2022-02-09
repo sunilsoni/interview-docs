@@ -3,6 +3,9 @@ title: Amazon Web Services (AWS)
 has_children: true
 nav_order: 2
 permalink: docs/aws
+resource: true
+desc: "Amazon Web Services (AWS) interview questions and answers."
+categories: [Amazon Web Services (AWS)]
 ---
 
 # Amazon Web Services (AWS)

@@ -2,6 +2,9 @@
 layout: default
 title: Vulnerabilities
 parent: Miscellaneous
+resource: true
+desc: "Common Java Vulnerabilities interview questions and answers."
+categories: [Common Java Vulnerabilities]
 ---
 
 # Common Java Vulnerabilities

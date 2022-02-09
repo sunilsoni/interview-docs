@@ -2,6 +2,9 @@
 layout: default
 title: Collection Framework
 parent: Java
+resource: true
+desc: "Collection Framework interview questions and answers."
+categories: [Collection Framework]
 ---
 
 # Collection Framework

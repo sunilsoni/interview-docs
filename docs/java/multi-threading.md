@@ -2,6 +2,9 @@
 layout: default
 title: Multi threading
 parent: Java
+resource: true
+desc: " Multi threading interview questions and answers."
+categories: [Multi threading]
 ---
 
 # Multi threading

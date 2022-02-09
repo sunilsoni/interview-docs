@@ -2,6 +2,9 @@
 layout: default
 title: Spring MVC
 parent: Spring
+resource: true
+desc: "  Spring MVC interview questions and answers."
+categories: [ Spring MVC]
 ---
 
 # Spring MVC

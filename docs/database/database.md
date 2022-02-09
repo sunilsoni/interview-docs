@@ -3,6 +3,9 @@ title: Database
 has_children: true
 nav_order: 2
 permalink: docs/database
+resource: true
+desc: "Database interview questions and answers."
+categories: [Database]
 ---
 
 # Database

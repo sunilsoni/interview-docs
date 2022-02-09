@@ -2,6 +2,9 @@
 layout: default
 title: Java Basics
 parent: Java
+resource: true
+desc: "Java Basics interview questions and answers."
+categories: [Java Basics]
 ---
 
 # Java Basics

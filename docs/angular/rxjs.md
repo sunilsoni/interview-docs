@@ -2,6 +2,9 @@
 layout: default
 title: RxJS
 parent: Angular
+resource: true
+desc: " RxJS interview questions and answers."
+categories: [RxJS]
 ---
 
 # RxJS

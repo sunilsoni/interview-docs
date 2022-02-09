@@ -3,6 +3,9 @@ layout: default
 title: Cucumber
 parent: Miscellaneous
 categories: [Cucumber]
+resource: true
+desc: "Cucumber interview questions and answers."
+categories: [Cucumber]
 
 ---
 

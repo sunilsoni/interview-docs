@@ -2,6 +2,9 @@
 title: Data Structures
 has_children: true
 nav_order: 2
+resource: true
+desc: " Data Structures interview questions and answers."
+categories: [Data Structures]
 ---
 
 # Data Structures

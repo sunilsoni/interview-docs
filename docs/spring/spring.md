@@ -4,6 +4,9 @@ title: Spring
 has_children: true
 nav_order: 2
 permalink: docs/spring
+resource: true
+desc: "Spring interview questions and answers."
+categories: [Spring]
 ---
 
 # Spring

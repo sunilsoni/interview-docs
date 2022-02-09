@@ -3,6 +3,9 @@ title: Angular
 has_children: true
 nav_order: 2
 permalink: docs/angular
+resource: true
+desc: "Angular interview questions and answers."
+categories: [Angular]
 ---
 
 # Angular

@@ -4,6 +4,9 @@ title: Miscellaneous
 has_children: true
 nav_order: 2
 permalink: docs/miscellaneous
+resource: true
+desc: "Miscellaneous interview questions and answers."
+categories: [Miscellaneous]
 ---
 
 # Miscellaneous

@@ -2,6 +2,9 @@
 layout: default
 title: Services
 parent: Angular
+resource: true
+desc: "Angular Services interview questions and answers."
+categories: [Angular Services]
 ---
 
 # Angular Services

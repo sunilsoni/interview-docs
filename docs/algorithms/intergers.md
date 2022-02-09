@@ -2,6 +2,9 @@
 layout: default
 title: Intergers
 parent: Data Structures
+resource: true
+desc: "Intergers interview questions and answers."
+categories: [Intergers]
 
 ---
 

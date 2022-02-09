@@ -4,6 +4,9 @@ title: DevOps
 has_children: true
 nav_order: 2
 permalink: docs/devops
+resource: true
+desc: "DevOps interview questions and answers."
+categories: [DevOps]
 ---
 
 #  DevOps

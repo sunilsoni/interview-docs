@@ -2,6 +2,9 @@
 layout: default
 title: Queue 
 parent: Data Structures
+resource: true
+desc: "Queue interview questions and answers."
+categories: [Queue]
 
 ---
 

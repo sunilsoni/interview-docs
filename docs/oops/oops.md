@@ -2,6 +2,9 @@
 layout: default
 title: OOPS
 nav_order: 2
+resource: true
+desc: "Object-oriented programming(OOPS) interview questions and answers."
+categories: [Object-oriented programming(OOPS)]
 ---
 
 # Object-oriented programming(OOPS)

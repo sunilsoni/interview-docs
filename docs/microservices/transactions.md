@@ -2,6 +2,9 @@
 layout: default
 title: Managing transactions
 parent: Micro Services
+resource: true
+desc: "Managing transactions interview questions and answers."
+categories: [Managing transactions]
 ---
 
 # Managing transactions

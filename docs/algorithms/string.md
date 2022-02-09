@@ -2,6 +2,9 @@
 layout: default
 title: String
 parent: Data Structures
+resource: true
+desc: "String interview questions and answers."
+categories: [String]
 
 ---
 

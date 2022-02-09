@@ -2,6 +2,9 @@
 layout: default
 title: Behavioral Design Pattern
 parent: Design Patterns
+resource: true
+desc: "Behavioral Design Pattern interview questions and answers."
+categories: [Behavioral Design Pattern]
 ---
 
 # Behavioral Design Pattern

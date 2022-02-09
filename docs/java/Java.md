@@ -5,7 +5,7 @@ has_children: true
 nav_order: 2
 resource: true
 desc: "Java interview questions and answers."
-categories: [Java,Java8,Multithreading]
+categories: [Java]
 permalink: docs/java
 ---
 

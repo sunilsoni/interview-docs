@@ -2,6 +2,9 @@
 layout: default
 title: API Gateway
 parent: Micro Services
+resource: true
+desc: "API Gateway interview questions and answers."
+categories: [API Gateway]
 ---
 
 # API Gateway

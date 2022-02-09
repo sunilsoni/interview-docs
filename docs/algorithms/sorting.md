@@ -2,6 +2,9 @@
 layout: default
 title: Sorting 
 parent: Data Structures
+resource: true
+desc: "Sorting interview questions and answers."
+categories: [Sorting]
 
 ---
 

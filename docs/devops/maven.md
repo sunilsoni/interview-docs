@@ -2,6 +2,9 @@
 layout: default
 title: Maven
 parent: DevOps
+resource: true
+desc: "Maven interview questions and answers."
+categories: [Maven]
 ---
 
 # Maven

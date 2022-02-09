@@ -2,6 +2,9 @@
 layout: default
 title: Hibernate
 parent: Database
+resource: true
+desc: "Hibernate interview questions and answers."
+categories: [Hibernate]
 ---
 
 # Hibernate

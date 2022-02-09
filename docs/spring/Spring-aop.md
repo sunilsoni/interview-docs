@@ -2,6 +2,9 @@
 layout: default
 title: Spring AOP
 parent: Spring
+resource: true
+desc: "Spring AOP interview questions and answers."
+categories: [Spring AOP]
 ---
 
 # Spring AOP

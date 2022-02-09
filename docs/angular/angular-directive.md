@@ -2,6 +2,9 @@
 layout: default
 title: Directive
 parent: Angular
+resource: true
+desc: "Angular Directive interview questions and answers."
+categories: [Angular Directive]
 ---
 
 # Angular Directive

@@ -3,6 +3,9 @@ layout: default
 title: Kafka
 nav_order: 2
 permalink: docs/kafka
+resource: true
+desc: "Kafka interview questions and answers."
+categories: [Kafka]
 ---
 
 # Kafka

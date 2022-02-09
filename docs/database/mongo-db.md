@@ -2,6 +2,9 @@
 layout: default
 title: MongoDB
 parent: Database
+resource: true
+desc: " MongoDB interview questions and answers."
+categories: [MongoDB]
 ---
 
 # MongoDB

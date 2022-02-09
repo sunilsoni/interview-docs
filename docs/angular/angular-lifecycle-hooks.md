@@ -2,6 +2,9 @@
 layout: default
 title: Lifecycle Hooks
 parent: Angular
+resource: true
+desc: "Angular Lifecycle Hooks interview questions and answers."
+categories: [Angular Lifecycle Hooks]
 ---
 
 # Angular Lifecycle Hooks

@@ -2,6 +2,9 @@
 layout: default
 title: Structural Design Pattern
 parent: Design Patterns
+resource: true
+desc: "Structural Design Pattern interview questions and answers."
+categories: [Structural Design Pattern]
 ---
 
 # Structural Design Pattern

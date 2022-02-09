@@ -2,6 +2,9 @@
 layout: default
 title: Java 8
 parent: Java
+resource: true
+desc: "Java 8 interview questions and answers."
+categories: [Java 8]
 ---
 
 # Java 8
