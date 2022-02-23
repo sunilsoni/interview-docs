@@ -474,6 +474,47 @@ Using LinkedHashMap to find first non repeated character of String Algorithm :
 
 ---
 
+## String indexOf() custom method
+
+Get index of first occurrance of second string in the first String using recursion
+
+####  Implementation
+
+```java
+ class Solution {
+    public static int indexOf(String s1, String s2) {
+        if (s1.length() < s2.length()) {
+            return -1;
+        } else if (s1.substring(0, s2.length()).equals(s2)) {
+            return 0;
+        } else {
+            int i = indexOf(s1.substring(1, s1.length()), s2);
+            if (i == -1) {
+                return i;
+            } else {
+                return 1 + i;
+            }
+        }
+    }
+}        
+```
+
+Output: 
+```
+String s1 = "BarackObama";
+String s2 = "rac";
+indexOf(s1, s2);
+```
+
+####  Complexity Analysis
+
+**Time Complexity**:
+
+**Space Complexity**:
+
+---
+---
+
 ## Test
 
 

@@ -36,8 +36,6 @@ H
 docs/algorithms/queue.md,0/8/0858fcad5aeba51c7ac2e3acdce84df6912d9c3b
 J
 docs/algorithms/sorting.md,2/c/2cd6b61ecb52be5dd51c8a6814f36db8cdd952c3
-I
-docs/algorithms/string.md,a/c/ac6768fd34f9d6447e00f673b336a0c3192cd131
 G
 docs/angular/Angular.md,9/4/9443ccbe6ac6bc1d29a6d352a0ccc19bb9252814
 R
