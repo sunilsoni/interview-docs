@@ -478,7 +478,7 @@ Using LinkedHashMap to find first non repeated character of String Algorithm :
 
 Get index of first occurrance of second string in the first String using recursion
 
-####  Implementation
+###  Implementation
 
 ```java
  class Solution {
@@ -506,13 +506,13 @@ String s2 = "rac";
 indexOf(s1, s2);
 ```
 
-####  Complexity Analysis
+###  Complexity Analysis
 
 **Time Complexity**:
 
 **Space Complexity**:
 
----
+
 ---
 
 ## Test
