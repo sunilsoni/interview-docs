@@ -60,16 +60,42 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
 ## Repositories in Spring Data JPA
 
-There are 3 repository interfaces that you should know when you use Spring Data JPA:
+Spring Data Commons project provides repository abstraction which is extended by the datastore-specific subprojects.
 
-###  CrudRepository
-CrudRepository interface defines a repository that offers standard create, read, update and delete operations.
+We have to be familiar with the Spring Data repository interfaces as it will help us with the implementation of the interfaces. Let’s have a look at the interfaces.
 
-###  PagingAndSortingRepository
-The PagingAndSortingRepository extends the CrudRepository and adds findAll methods that enable you to sort the result and to retrieve it in a paginated way. Both interface are also supported by other Spring Data projects, so that you can apply the same concepts to different datastores.
+###  Spring Data Commons
 
-###  JpaRepository
-The JpaRepository adds JPA-specific methods, like flush() to trigger a flush on the persistence context or findAll(Example<S> example) to find entities by example, to the PagingAndSortingRepository. 
+Following interfaces are provided as part of this project:
+
+**Repository<T, ID extends Serializable>**  : 
+This interface is a marker interface.
+- It captures the type of the managed entity and the type of the entity’s id.
+- It helps the Spring container to discover the “concrete” repository interfaces when classpath is scanned.
+**CrudRepository<T, ID extends Serializable>** : 
+- It provides CRUD operations for the managed entity.
+- CrudRepository interface defines a repository that offers standard create, read, update and delete operations.
+
+**PagingAndSortingRepository<T, ID extends Serializable>** : 
+- This interface declares the methods that are used to sort and paginate entities that are retrieved from the database.
+- The PagingAndSortingRepository extends the CrudRepository and adds findAll methods that enable you to sort the result and to retrieve it in a paginated way. Both interface are also supported by other Spring Data projects, so that you can apply the same concepts to different datastores.
+
+**QueryDslPredicateExecutor<T>** : It is not a `repository interface`. It declares the methods that are used to retrieve entities from the database by using QueryDsl Predicate objects.
+
+###  Spring Data JPA
+This project provides the following interfaces:
+
+**JpaRepository<T, ID extends Serializable>**  : 
+- This interface is a JPA specific repository interface that combines the methods declared by the common repository interfaces behind a single interface.
+- The JpaRepository adds JPA-specific methods, like flush() to trigger a flush on the persistence context or findAll(Example<S> example) to find entities by example, to the PagingAndSortingRepository.
+
+**JpaSpecificationExecutor<T>** : This is again not a “repository interface”. It declares the methods that are used to retrieve entities from the database by using Specification<T> objects that use the JPA criteria API.
+
+The repository hierarchy looks as follows:
+
+<img src="images/JpaRepositoryUml.png" width="1000" />
+
+
 
 
 
