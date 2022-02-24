@@ -93,9 +93,11 @@ This project provides the following interfaces:
 
 **JpaRepository<T, ID extends Serializable>**  : 
 - This interface is a JPA specific repository interface that combines the methods declared by the common repository interfaces behind a single interface.
-- The JpaRepository adds JPA-specific methods, like flush() to trigger a flush on the persistence context or findAll(Example<S> example) to find entities by example, to the PagingAndSortingRepository.
+- The JpaRepository adds JPA-specific methods, like flush() to trigger a flush on the persistence context or `findAll(Example<S> example)` to find entities by example, to the PagingAndSortingRepository.
 
-**JpaSpecificationExecutor<T>** : This is again not a “repository interface”. It declares the methods that are used to retrieve entities from the database by using Specification<T> objects that use the JPA criteria API.
+**JpaSpecificationExecutor<T>** : 
+- This is again not a repository interface. 
+- It declares the methods that are used to retrieve entities from the database by using `Specification<T>` objects that use the JPA criteria API.
 
 The repository hierarchy looks as follows:
 
