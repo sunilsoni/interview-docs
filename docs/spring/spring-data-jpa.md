@@ -117,11 +117,184 @@ The repository hierarchy looks as follows:
 <img src="images/JpaRepositoryUml.png" width="1000" />
 
 
-##  Sample Example
+##  Example Using Spring Boot
+
+###  Maven Dependency
+
+We can also use the Spring Boot Starter Data JPA dependency that will automatically configure the DataSource for us.
+
+We need to make sure that the database we want to use is present in the classpath. In our example, we've added the H2 in-memory database:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+    <version>2.6.1</version>
+</dependency>
+<dependency>
+<groupId>com.h2database</groupId>
+<artifactId>h2</artifactId>
+<version>1.4.200</version>
+</dependency>
+```
+
+As a result, just by doing these dependencies, our application is up and running and we can use it for other database operations.
+
+The explicit configuration for a standard Spring application is now included as part of Spring Boot auto-configuration.
+
+We can, of course, modify the auto-configuration by adding our customized explicit configuration.
+
+###  Properties file
+
+Spring Boot provides an easy way to do this using properties in the application.properties file:
+
+```properties
+spring.datasource.url=jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+spring.datasource.username=sa
+spring.datasource.password=sa
+```
+
+or for postgres
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=password
+spring.jpa.generate-ddl=true
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+```
 
 
 
+In this example, we've changed the connection URL and credentials.
 
+###  Spring Data JPA Repository Configuration
+
+To activate the Spring JPA repository support, we can use the @EnableJpaRepositories annotation and specify the package that contains the DAO interfaces:
+
+```java
+@Configuration
+@EnableJpaRepositories
+@EnableTransactionManagement
+class ApplicationConfig {
+
+    @Bean
+    public DataSource dataSource() {
+
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        return builder.setType(EmbeddedDatabaseType.HSQL).build();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("com.acme.domain");
+        factory.setDataSource(dataSource());
+        return factory;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory);
+        return txManager;
+    }
+}
+```
+
+The preceding configuration class sets up an embedded HSQL database by using the EmbeddedDatabaseBuilder API of spring-jdbc. Spring Data then sets up an EntityManagerFactory and uses Hibernate as the sample persistence provider. The last infrastructure component declared here is the JpaTransactionManager. Finally, the example activates Spring Data JPA repositories by using the @EnableJpaRepositories annotation, which essentially carries the same attributes as the XML namespace. If no base package is configured, it uses the one in which the configuration class resides.
+
+###  Repository Interface  
+The repository interface is used for extending the CRUD interface. This interface adds the layer of a repository in the program. Spring Data JPA provides two major ways of creating queries. These queries are then used in the repository interface to fetch the data from the database.
+
+```java
+import java.util.List;
+ 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+ 
+import com.tutorial.model.Employee;
+ 
+@Repository
+public interface EmployeeRepository extends CrudRepository<Employee, Long>{
+    List findByLastName(String lastName);
+     
+@Query("SELECT e FROM Employee e WHERE e.age = :age")
+    public List findByAge(@Param("age") int age);
+}
+
+```
+
+The `CrudRepository` is the interface from SpringData Common project. The two methods mentioned above for query creation is used at the below-mentioned places in the code.
+
+### Controller class
+
+The controller is the most important class of the complete program. This is the class responsible for all the url mapping. We have added the repository methods for data manipulation in this class itself.
+
+```java
+import java.util.List;
+import java.util.Optional;
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+ 
+import com.tutorial.model.Employee;
+import com.tutorial.repo.EmployeeRepository;
+ 
+@RestController
+@RequestMapping("/employee")
+public class WebController {
+    @Autowired
+    EmployeeRepository repository;
+     
+    @RequestMapping(value="/save",method = RequestMethod.POST)
+    public HttpStatus insertEmployee(@RequestBody Employee employee){
+        boolean status = repository.save(employee) != null;     
+        return status? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+    }
+     
+     
+    @RequestMapping("/findall")
+    public List findAll(){
+         
+         
+        return (List) repository.findAll();
+    }
+     
+    @RequestMapping("/findbyid")
+    public Optional findById(@RequestParam("id") long id){
+        Optional result = repository.findById(id);
+        return result;
+    }
+     
+    @RequestMapping("/findbylastname")
+    public List fetchDataByLastName(@RequestParam("lastname") String lastName){
+                 
+        return repository.findByLastName(lastName);
+    }
+    @RequestMapping("/findbyage")
+    public List fetchDataByAge(@RequestParam("age") int age){
+                 
+        return repository.findByAge(age);
+    }
+}
+
+
+```
 
 
 
@@ -130,3 +303,4 @@ The repository hierarchy looks as follows:
 
 ## More Details: 
 1. [What is Spring Data JPA? And why should you use it?](https://thorben-janssen.com/what-is-spring-data-jpa-and-why-should-you-use-it/)
+2. [5. Reference Documentation](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference)
