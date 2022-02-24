@@ -33,9 +33,22 @@ JPA is not an implementation or product, it is just a specification. It contains
 
 **Spring Data Commons**: – It provides the infrastructure that is shared between data store specific spring data projects.
 
-**The JPA provider** which implements the JPA persistence API.
+**The JPA provider** which implements the JPA persistence API. Hibernate, Eclipselink, Toplink, Spring Data JPA, etc.
+
 
 Spring data JPA allows us not to write any boilerplate code by adding an additional repository layer.
+
+##  JPA Vs Hibernate
+
+
+| Category | JPA | Hibernate | 
+|--------|------|-----------|
+|  Type      | JPA is a specification and defines the way to manage relational database data using java objects.     | Hibernate is an implementation of JPA. It is an ORM tool to persist java objects into the relational databases.         | 
+| Package   | JPA uses javax.persistence package.	  | Hibernate uses org.hibernate package.| 
+| Factory   | JPA uses EntityManagerFactory interface to get the entity manager to persist objects.  | Hibernate uses SessionFactory interface to create session object which is then used to persist objects.          | 
+|  CRUD Operations  |JPA uses EntityManager interface to create/read/delete operation and maintains the persistence context.   |Hibernate uses Session interface to create/read/delete operation and maintains the persistence context.           | 
+| Language   | JPA uses JPQL (Java Persistence Query Language) as Object Oriented Query language for database operations.  |  Hibernate uses HQL (Hibernate Query Language) as Object Oriented Query language for database operations.         | 
+
 
 ##  Features
 
@@ -102,6 +115,11 @@ This project provides the following interfaces:
 The repository hierarchy looks as follows:
 
 <img src="images/JpaRepositoryUml.png" width="1000" />
+
+
+##  Sample Example
+
+
 
 
 

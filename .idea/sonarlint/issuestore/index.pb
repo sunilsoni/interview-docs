@@ -62,8 +62,6 @@ D
 docs/aws/aws.md,e/c/ecd2f7d76ed36c5f12aa55096970332f97c36075
 K
 docs/aws/cloud-formation.md,5/7/57de355925bee8bbccc6cbe5c34ae79821dc806d
-D
-docs/aws/dynamodb.md,c/5/c5d25b75538bae41f8b23c1da8030b92d9798c8c
 ?
 docs/aws/ec2.md,c/2/c22f3faa37020d9f36bce7dc253ede01272129f9
 B
