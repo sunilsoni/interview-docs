@@ -83,7 +83,7 @@ This interface is a marker interface.
 - This interface declares the methods that are used to sort and paginate entities that are retrieved from the database.
 - The PagingAndSortingRepository extends the CrudRepository and adds findAll methods that enable you to sort the result and to retrieve it in a paginated way. Both interface are also supported by other Spring Data projects, so that you can apply the same concepts to different datastores.
 
-**QueryDslPredicateExecutor<T>** : 
+**QueryDslPredicateExecutor<T>:** 
 - It is not a `repository interface`. 
 - It declares the methods that are used to retrieve entities from the database by using QueryDsl Predicate objects.
 
