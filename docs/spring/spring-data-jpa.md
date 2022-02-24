@@ -30,7 +30,9 @@ JPA or Java Persistence API is the Java specification for accessing, managing an
 JPA is not an implementation or product, it is just a specification. It contains set of interfaces which need to be implemented. It is a framework that provides an extra layer of abstraction on the JPA implementation. The repository layer will contain three layers as mentioned below.
 
 **Spring Data JPA**: – This provides spring data repository interfaces which are implemented to create JPA repositories.
+
 **Spring Data Commons**: – It provides the infrastructure that is shared between data store specific spring data projects.
+
 **The JPA provider** which implements the JPA persistence API.
 
 Spring data JPA allows us not to write any boilerplate code by adding an additional repository layer.
@@ -72,6 +74,7 @@ Following interfaces are provided as part of this project:
 This interface is a marker interface.
 - It captures the type of the managed entity and the type of the entity’s id.
 - It helps the Spring container to discover the “concrete” repository interfaces when classpath is scanned.
+
 **CrudRepository<T, ID extends Serializable>** : 
 - It provides CRUD operations for the managed entity.
 - CrudRepository interface defines a repository that offers standard create, read, update and delete operations.
@@ -80,7 +83,10 @@ This interface is a marker interface.
 - This interface declares the methods that are used to sort and paginate entities that are retrieved from the database.
 - The PagingAndSortingRepository extends the CrudRepository and adds findAll methods that enable you to sort the result and to retrieve it in a paginated way. Both interface are also supported by other Spring Data projects, so that you can apply the same concepts to different datastores.
 
-**QueryDslPredicateExecutor<T>** : It is not a `repository interface`. It declares the methods that are used to retrieve entities from the database by using QueryDsl Predicate objects.
+**QueryDslPredicateExecutor<T>** : 
+- It is not a `repository interface`. 
+- It declares the methods that are used to retrieve entities from the database by using QueryDsl Predicate objects.
+
 
 ###  Spring Data JPA
 This project provides the following interfaces:
