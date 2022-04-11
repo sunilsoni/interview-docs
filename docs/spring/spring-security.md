@@ -3,7 +3,7 @@ layout: default
 title: Spring Security
 parent: Spring
 resource: true
-desc: "Spring AOP interview questions and answers."
+desc: "Spring Cloud interview questions and answers."
 categories: [Spring Security]
 ---
 
