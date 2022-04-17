@@ -1,6 +1,4 @@
 
-S
-#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 ;
 sitemap.xml,9/9/991b411cc600215e9528c61790563f0521666950
 :
@@ -22,14 +20,10 @@ H
 _sass/custom/custom.scss,7/a/7a67b28b5645f838c736d6ae21b2a80b3f352b11
 E
 _layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
-H
-docs/algorithms/array.md,f/0/f0ef9fec29a2906b45ae7d4ffa7dbdc7f82c80ed
 Q
 !docs/algorithms/data-structure.md,1/1/11dc0031e207270142fbe0a210e7f3d9628feeeb
 V
 &docs/algorithms/dynamic-programming.md,a/2/a21391f3c3f284771010826798b24faddbaddd21
-L
-docs/algorithms/intergers.md,1/0/10eb7d7188f1cbc875263bdbb0e23d90f766d836
 N
 docs/algorithms/linked-list.md,7/0/70516a2103d45e3a7280cf61d048453c5d327688
 H
@@ -88,22 +82,10 @@ D
 docs/devops/linux.md,3/3/33753fc113e7095214f3c50f134db111bcc6ec9d
 D
 docs/devops/maven.md,7/1/71d021faa6c1d41c17afd2cec67983aed82dcdf0
-Q
-!docs/java/collection-framework.md,2/1/21c08ff399ce770017258691f16c754a4ef1edbf
-A
-docs/java/Java.md,d/e/de418fc77c20469d2a13acceba21fc24fe95896c
-B
-docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
-H
-docs/java/java-basics.md,6/8/68444e4c966ddb261cccd19be55523357145de73
-L
-docs/java/multi-threading.md,1/3/138064e85f9f3f2c59bcbfdb9f57526abaed747a
 C
 docs/kafka/kafka.md,d/3/d396beb9389d9f17f0da4903f2be601838338b6d
 Q
 !docs/microservices/api-gateway.md,e/3/e38d674e08e29afca17ec80dcbc44d4e82be67c3
-S
-#docs/microservices/microservices.md,a/b/ab0d77c7ebc3ca623999f7b3cbb108b8b84acf7f
 N
 docs/microservices/security.md,7/5/75e53dd9dc96f0f64c0bed498e49dadac4cbcb70
 R
@@ -128,11 +110,19 @@ E
 docs/spring/spring.md,4/3/43ba054351bb1feb893d381a94b9c6705856e3c5
 K
 docs/spring/spring-batch.md,5/5/55f5949ab4a96fea13b92a4a836fd2eb9ce34aa0
-J
-docs/spring/spring-boot.md,6/7/67bc5efde8f14d2aa13c05ab9a0b63d5d5497a8a
 K
 docs/spring/swagger-docs.md,d/6/d64399927feabbd851eed1ebf5e86fc1214ec665
 E
 docs/devops/docker.md,3/5/35e217f1df9e019f153f02996d68ce9b9079c46e
+I
+docs/spring/spring-mvc.md,4/0/408b63dddb8d350c7063e21f9dd6c6a7df4b6498
+D
+docs/aws/dynamodb.md,c/5/c5d25b75538bae41f8b23c1da8030b92d9798c8c
+J
+docs/spring/spring-boot.md,6/7/67bc5efde8f14d2aa13c05ab9a0b63d5d5497a8a
+I
+docs/spring/Spring-aop.md,5/d/5d8fa5d628fa64a643b0a02b55fef37ce1c79759
+N
+docs/spring/spring-data-jpa.md,2/c/2c70240fee40d1864675dc4fb06b22ac8d74056a
 ;
 _config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425

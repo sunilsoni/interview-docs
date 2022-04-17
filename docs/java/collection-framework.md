@@ -684,7 +684,7 @@ Collections.synchronizedMap(map);
 
 ---
 
-## Concurrent HashMap
+## ConcurrentHashMap
 
 `ConcurrentHashMap` class provides concurrent access to the map, this class is very similar to `HashTable`, except that `ConcurrentHashMap` provides better concurrency than `HashTable` or even `synchronizedMap`.
 
@@ -698,6 +698,12 @@ Some points to remember:
 - put() method acquires lock on the segment
 - get() method returns the most recently updated value
 - iterators returned by `ConcurrentHashMap` are fail-safe and never throw `ConcurrentModificationException`
+
+###  ConcurrentHashMap Internal Working
+
+As opposed to the HashTables where every read/write operation needs to acquire the lock, there is no locking at the object level in CHM and locking is much granular at a hashmap bucket level.
+CHM(ConcurrentHashMap) never locks the whole Map, instead, it divides the map into segments and locking is done on these segments. CHM is separated into different regions(default-16) and locks are applied to them. When setting data in a particular segment, the lock for that segment is obtained. This means that two updates can still simultaneously execute safely if they each affect separate buckets, thus minimizing lock contention and so maximizing performance.
+
 
 ###  ConcurrentHashMap vs Synchronized HashMap
 
