@@ -21,8 +21,19 @@ categories: [System Design]
 
 ---
 
+## [[System Design Interview Tips:](https://github.com/checkcheckzz/system-design-interview)
 
-https://github.com/checkcheckzz/system-design-interview
+---
+
+## [The System Design Primer](https://github.com/donnemartin/system-design-primer)
+
+---
+
+## [Preparation for Lateral Hiring](https://medium.com%2F@medium.com/@varungarg6781/preparation-for-lateral-hiring-1d19aac437ef)
+
+---
+
+## [System Design Cheatsheeth](ttps://gist.github.com/vasanthk/485d1c25737e8e72759f)
 
 
 ---
