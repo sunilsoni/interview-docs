@@ -89,7 +89,7 @@ categories: [System Design]
 ---
 
 
-## Others:
+## Others
 
 - https://leetcode.com/discuss/general-discussion/1105898/System-Design%3A-Introduction-to-Distributed-Systems-or-Designing-a-highly-available-system
 - https://leetcode.com/discuss/general-discussion/1114279/System-Design%3A-Introduction-to-Distributed-Systems-Pt.-2-or-Design-Highly-available-System
