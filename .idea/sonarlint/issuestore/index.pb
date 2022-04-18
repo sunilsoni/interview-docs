@@ -124,5 +124,3 @@ I
 docs/spring/Spring-aop.md,5/d/5d8fa5d628fa64a643b0a02b55fef37ce1c79759
 N
 docs/spring/spring-data-jpa.md,2/c/2c70240fee40d1864675dc4fb06b22ac8d74056a
-;
-_config.yml,c/d/cd089ae45ce870c45e434019e8f1ed4f066cd425
