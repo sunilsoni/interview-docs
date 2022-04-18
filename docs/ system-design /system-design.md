@@ -21,7 +21,7 @@ categories: [System Design]
 
 ---
 
-## [System Design Interview Tips:](https://github.com/checkcheckzz/system-design-interview)
+## [System Design Interview Tips](https://github.com/checkcheckzz/system-design-interview)
 
 ---
 
