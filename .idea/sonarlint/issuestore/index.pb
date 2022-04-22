@@ -62,8 +62,6 @@ B
 docs/aws/lambda.md,8/1/81a9caf47ce4671d11daaa542ebf3f20e47f7e4a
 >
 docs/aws/s3.md,b/3/b3c5f61fa1b22553f9769f3a9614ea13106ef1de
-I
-docs/database/mongo-db.md,f/f/ff16150a72909b644729fe27eb6e35f5471496c2
 a
 1docs/design-patterns/behavioral-design-pattern.md,8/f/8fdd65f611c3404fa98a2726c9cd0098ad557a3a
 a

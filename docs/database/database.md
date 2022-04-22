@@ -59,3 +59,6 @@ Following are the reasons for the poor performance of a query:
 -  Queries that compare variables whose values are not known when the query is compiled and optimized.
 
 
+---
+
+## 
