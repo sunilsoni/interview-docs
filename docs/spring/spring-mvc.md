@@ -354,6 +354,19 @@ Here in ShapeService class, it is autowring the shape Rectangle in two ways.
 |  Ambiguity  |  In case of ambiguity in beans for injection then @Named qualifier should be added in your code.  |   In case of ambiguity in beans for injection then @Qualifer  qualifier should be added in your code. |
 |  Advantage   | It is a part of Java CDI so it is not dependent on any DI framework. It makes your system loosely coupled. | It makes your application tightly coupled with Spring framework. In the future , if you want to move to another DI framework then you need reconfigure your application.  |
 
+###  @Validated
+
+@Validated annotation activates the Spring Validation AOP interceptor and it will examine method parameters to see if they have any validation annotations on them, if they do then Spring will call hibernate validator with each specific annotation for example @Size(min = 8) String password means call hibernate size validator and pass the value of the parameter password in this case hibernate validator does not need to scan java.lang.String to see if it has validation annotations on it. @Validated works on any spring @Component you can use it on @Service classes for example.
+
+
+###  @Valid vs @Validated 
+
+In Spring, we use JSR-303's @Valid annotation for method level validation. We also use it to mark a member attribute for validation. However, this annotation doesn't support group validation.
+
+Groups help to limit the constraints applied during validation. One particular use case is UI wizards. In the first step, we may have a certain sub-group of fields. In the subsequent step, there may be another group belonging to the same bean. So we need to apply constraints on these limited fields in each step, but @Valid doesn't support this.
+
+In this case, for group-level, we have to use Spring's @Validated, which is a variant of JSR-303's @Valid.  This is used at the method-level. For marking member attributes, we continue to use the @Valid annotation.
+
 
 ###  Component Scanning 
 To do dependency injection, Spring creates a so-called application context.

@@ -108,8 +108,6 @@ K
 docs/spring/swagger-docs.md,d/6/d64399927feabbd851eed1ebf5e86fc1214ec665
 E
 docs/devops/docker.md,3/5/35e217f1df9e019f153f02996d68ce9b9079c46e
-I
-docs/spring/spring-mvc.md,4/0/408b63dddb8d350c7063e21f9dd6c6a7df4b6498
 D
 docs/aws/dynamodb.md,c/5/c5d25b75538bae41f8b23c1da8030b92d9798c8c
 J
