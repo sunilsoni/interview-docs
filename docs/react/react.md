@@ -5,11 +5,11 @@ nav_order: 2
 resource: true
 desc: "React interview questions and answers."
 categories: [React]
+
 ---
 
 
 # React
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -80,6 +80,8 @@ The *Virtual DOM* works in three simple steps.
 
 
 
+
+---
 
 
 
