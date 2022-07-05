@@ -76,8 +76,6 @@ D
 docs/devops/linux.md,3/3/33753fc113e7095214f3c50f134db111bcc6ec9d
 D
 docs/devops/maven.md,7/1/71d021faa6c1d41c17afd2cec67983aed82dcdf0
-C
-docs/kafka/kafka.md,d/3/d396beb9389d9f17f0da4903f2be601838338b6d
 Q
 !docs/microservices/api-gateway.md,e/3/e38d674e08e29afca17ec80dcbc44d4e82be67c3
 N
