@@ -46,7 +46,7 @@ React was created by [Jordan Walke](https://github.com/jordwalke), a software en
 
 In the example below text inside `<h1>` tag is returned as JavaScript function to the render function.
 
-```jsx harmony
+```jsx
     class App extends React.Component {
       render() {
         return(
