@@ -76,7 +76,7 @@ The *Virtual DOM* works in three simple steps.
 
 3. Once the calculations are done, the real DOM will be updated with only the things that have actually changed.
 
-<img src="images/vdom3.png" width="700"/>
+<img src="images/vdom3.png" width="500"/>
 
 
 
