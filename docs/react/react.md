@@ -2,7 +2,7 @@
 layout: default
 title: React
 nav_order: 2
-permalink: docs/kafka
+permalink: docs/react
 resource: true
 desc: "React interview questions and answers."
 categories: [React]
