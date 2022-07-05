@@ -96,8 +96,6 @@ J
 docs/miscellaneous/misc.md,4/8/48bdb2278012630f697cfbe6328733706290d206
 K
 docs/miscellaneous/owasp.md,9/8/987469032e7cd4aeaa999de41e93e35b07501f1e
-A
-docs/oops/oops.md,f/2/f2b1cc92bb06e2223c98af0220775f51f0a5e232
 E
 docs/spring/spring.md,4/3/43ba054351bb1feb893d381a94b9c6705856e3c5
 K
