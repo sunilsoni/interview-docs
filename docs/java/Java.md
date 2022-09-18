@@ -118,6 +118,16 @@ Error is irrecoverable e.g. OutOfMemoryError, VirtualMachineError, AssertionErro
 |Example	               |OutOfMemory, StackOverFlow.|Checked Exceptions: NoSuchMethod, ClassNotFound.Unchecked Exceptions: NullPointer, IndexOutOfBounds.|
 
 
+### Custom exception
+
+we can create our own exceptions that are derived classes of the Exception class. Creating our own Exception is known as custom exception or user-defined exception.
+
+**Why we need for custom exceptions?**
+
+- To catch and provide specific treatment to a subset of existing Java exceptions.
+- `Business logic exceptions`: These are the exceptions related to business logic and workflow. It is useful for the application users or the developers to understand the exact problem.
+
+---
 
 ###  Exception Propagation
 
@@ -481,150 +491,6 @@ public class BuilderTest{
 }  
 ```
 
-
-
-## Deadlock
-
-Deadlock in Java is a part of multithreading. Deadlock can occur in a situation when a thread is waiting for an object lock, that is acquired by another thread and second thread is waiting for an object lock that is acquired by first thread. Since, both threads are waiting for each other to release the lock, the condition is called deadlock.
-
-**Example**
-```java
-public class TestDeadlockExample1 {  
-  public static void main(String[] args) {  
-    final String resource1 = "ratan jaiswal";  
-    final String resource2 = "vimal jaiswal";  
-    // t1 tries to lock resource1 then resource2  
-    Thread t1 = new Thread() {  
-      public void run() {  
-          synchronized (resource1) {  
-           System.out.println("Thread 1: locked resource 1");  
-  
-           try { Thread.sleep(100);} catch (Exception e) {}  
-  
-           synchronized (resource2) {  
-            System.out.println("Thread 1: locked resource 2");  
-           }  
-         }  
-      }  
-    };  
-  
-    // t2 tries to lock resource2 then resource1  
-    Thread t2 = new Thread() {  
-      public void run() {  
-        synchronized (resource2) {  
-          System.out.println("Thread 2: locked resource 2");  
-  
-          try { Thread.sleep(100);} catch (Exception e) {}  
-  
-          synchronized (resource1) {  
-            System.out.println("Thread 2: locked resource 1");  
-          }  
-        }  
-      }  
-    };  
-  
-      
-    t1.start();  
-    t2.start();  
-  }  
-}       
-```
-**output** : 
-
-```log
-Thread 1: locked resource 1
-Thread 2: locked resource 2
-```
-
-#### How to Avoid Deadlock in Java?
-
-Deadlocks cannot be completely resolved. But we can avoid them by following basic rules mentioned below:
-
-- **Avoid Nested Locks** : We must avoid giving locks to multiple threads, this is the main reason for a deadlock condition. It normally happens when you give locks to multiple threads.
-- **Avoid Unnecessary Locks** : The locks should be given to the important threads. Giving locks to the unnecessary threads that cause the deadlock condition.
-- **Using Thread Join** : A deadlock usually happens when one thread is waiting for the other to finish. In this case, we can use join with a maximum time that a thread will take.
-
----
-
-## Custom exception
-
-we can create our own exceptions that are derived classes of the Exception class. Creating our own Exception is known as custom exception or user-defined exception.
-
-**Why we need for custom exceptions?**
-
-- To catch and provide specific treatment to a subset of existing Java exceptions.
-- `Business logic exceptions`: These are the exceptions related to business logic and workflow. It is useful for the application users or the developers to understand the exact problem.
-
----
-
-## Difference between volatile and transient keyword in java 
-
-A `volatile keyword` is used in a multithreading environment where two threads reading and writing the same variable simultaneously. The volatile keyword flushes the changes directly to the main memory instead of the CPU cache.
-
-On the other hand, the `transient keyword` is used during serialization. Fields that are marked as transient can not be part of the serialization and deserialization. We don't want to save the value of any variable then we use transient keyword with that variable.
-
-| S.No. | key    | Volatile                          | Transient                            |
-|-------|--------|-----------------------------------|--------------------------------------|
-| 1     | Basic  | Volatile keyword is used to flush changes directly to the main memory  | The transient keyword is used to exclude variable during serialization                                      |
-| 2     |Default value |Volatile are not initialized with a default value  |During deserialization, transient  variables are initialized with a default value                                       |
-| 3     | Static |Volatile can be used with a static variable.  | Transient can not be used with the static keyword                                     |
-| 4     |Final  |Volatile can be used with the final keyword   | Transient can not be used with the final keyword                                     |
-
-**Example of Volatile**
-```java
-class VolatileExmaple extends Thread{
-   booleanvolatile isRunning = true;
-   public void run() {
-      long count=0;
-      while (isRunning) {
-         count++;
-      }
-      System.out.println("Thread terminated." + count);
-   }
-   public static void main(String[] args) throws InterruptedException {
-      VolatileExmaple t = new VolatileExmaple();
-      t.start();
-      Thread.sleep(2000);
-      t.isRunning = false;
-      t.join();
-      System.out.println("isRunning set to " + t.isRunning);
-   }
-}
-```
-**Example of Transient**
-
-A sample class that uses transient keyword to skip their serialization.
-
-```java 
-class TransientExample implements Serializable {
-   transient int age;
-   // serialize other fields
-   private String name;
-   private String address;
-   // other code
-}
-```
-
- 
-## Java For-each Loop | Enhanced For Loop
-
-The Java for-each loop or enhanced for loop is introduced since J2SE 5.0. It provides an alternative approach to traverse the array or collection in Java. It is mainly used to traverse the array or collection elements.
-
-**Advantages** : it eliminates the possibility of bugs and makes the code more readable. It is known as the for-each loop because it traverses each element one by one.
-
-- It makes the code more readable.
-- It eliminates the possibility of programming errors.
-
-**Disadvantages** : it cannot traverse the elements in reverse order. Here, you do not have the option to skip any element because it does not work on an index basis. Moreover, you cannot traverse the odd or even elements only.
-
-**Syntax** :
-The syntax of Java for-each loop consists of data_type with the variable followed by a colon (:), then array or collection.
-
-```java
-for(data_type variable : array | collection){  
-//body of for-each loop  
-} 
- ```
 
 
 

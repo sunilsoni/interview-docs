@@ -1951,6 +1951,83 @@ public static List deepCopy(List listCars) {
 6. You can not synchronize on the null object but your volatile variable in Java could be null.
 
 
+### Volatile vs transient keyword
+
+A `volatile keyword` is used in a multithreading environment where two threads reading and writing the same variable simultaneously. The volatile keyword flushes the changes directly to the main memory instead of the CPU cache.
+
+On the other hand, the `transient keyword` is used during serialization. Fields that are marked as transient can not be part of the serialization and deserialization. We don't want to save the value of any variable then we use transient keyword with that variable.
+
+| S.No. | key    | Volatile                          | Transient                            |
+|-------|--------|-----------------------------------|--------------------------------------|
+| 1     | Basic  | Volatile keyword is used to flush changes directly to the main memory  | The transient keyword is used to exclude variable during serialization                                      |
+| 2     |Default value |Volatile are not initialized with a default value  |During deserialization, transient  variables are initialized with a default value                                       |
+| 3     | Static |Volatile can be used with a static variable.  | Transient can not be used with the static keyword                                     |
+| 4     |Final  |Volatile can be used with the final keyword   | Transient can not be used with the final keyword                                     |
+
+**Example of Volatile**
+
+```java
+class VolatileExmaple extends Thread{
+   booleanvolatile isRunning = true;
+   public void run() {
+      long count=0;
+      while (isRunning) {
+         count++;
+      }
+      System.out.println("Thread terminated." + count);
+   }
+   public static void main(String[] args) throws InterruptedException {
+      VolatileExmaple t = new VolatileExmaple();
+      t.start();
+      Thread.sleep(2000);
+      t.isRunning = false;
+      t.join();
+      System.out.println("isRunning set to " + t.isRunning);
+   }
+}
+```
+
+
+**Example of Transient**
+
+A sample class that uses transient keyword to skip their serialization.
+
+```java 
+class TransientExample implements Serializable {
+   transient int age;
+   // serialize other fields
+   private String name;
+   private String address;
+   // other code
+}
+```
+
+ 
+---
+
+
+## Java For-each Loop | Enhanced For Loop
+
+The Java for-each loop or enhanced for loop is introduced since J2SE 5.0. It provides an alternative approach to traverse the array or collection in Java. It is mainly used to traverse the array or collection elements.
+
+**Advantages** : it eliminates the possibility of bugs and makes the code more readable. It is known as the for-each loop because it traverses each element one by one.
+
+- It makes the code more readable.
+- It eliminates the possibility of programming errors.
+
+**Disadvantages** : it cannot traverse the elements in reverse order. Here, you do not have the option to skip any element because it does not work on an index basis. Moreover, you cannot traverse the odd or even elements only.
+
+**Syntax** :
+The syntax of Java for-each loop consists of data_type with the variable followed by a colon (:), then array or collection.
+
+```java
+for(data_type variable : array | collection){  
+//body of for-each loop  
+} 
+ ```
+
+
+
 ---
 
 ## For more information
