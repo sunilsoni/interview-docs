@@ -688,7 +688,7 @@ Collections.synchronizedMap(map);
 No. If we attempt to add duplicate keys, it will replace the element of the corresponding keys
 
 **example** -
-
+```log
 	public static void main(String[] args)
 	{
 
@@ -708,13 +708,14 @@ No. If we attempt to add duplicate keys, it will replace the element of the corr
 
 		System.out.println("\nAfter inserting duplicate key :\n\n" + hm);
 	}
-output :
+	
+```
+
+Output :
 
 ```logs
 {2=practice, 7=contribute, 12=geeks}
-
 After inserting duplicate key :
-
 {2=practice, 7=geeks, 12=contribute}
 ```
 
