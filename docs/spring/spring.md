@@ -103,6 +103,22 @@ Connecting objects with other objects, or “injecting” objects into other obj
 - makes the code loosely coupled so easy to maintain
 - makes the code easy to test
 
+### Stackoverflow
+
+The Inversion-of-Control (IoC) pattern, is about providing any kind of callback (which "implements" and/or controls reaction), instead of acting ourselves directly (in other words, inversion and/or redirecting control to the external handler/controller).
+
+> For example, rather than having the application call the implementations provided by a library (also known as toolkit), a framework calls the implementations provided by the application.
+
+The Dependency-Injection (DI) pattern is a more specific version of IoC pattern, where implementations are passed into an object through constructors/setters/service lookups, which the object will 'depend' on in order to behave correctly.
+
+> Every DI implementation can be considered IoC, but one should not call it IoC, because implementing Dependency-Injection is harder than callback (Don't lower your product's worth by using the general term "IoC" instead).
+
+**IoC without using DI**, for example, would be the Template pattern because the implementation can only be changed through sub-classing.
+
+**DI frameworks** are designed to make use of DI and can define interfaces (or Annotations in Java) to make it easy to pass in the implementations.
+
+**IoC containers** are DI frameworks that can work outside of the programming language. In some you can configure which implementations to use in metadata files (e.g. XML) which are less invasive. With some you can do IoC that would normally be impossible like inject an implementation at pointcuts.
+
 
 ### Spring IoC Container
 
