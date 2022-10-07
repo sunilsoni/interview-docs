@@ -245,20 +245,21 @@ WHERE a.SALARY < b.SALARY;
 
 ---
 
-## SQL
+## SQL vs NoSQL
+
+### SQL
 
 SQL stands for Structured Query Language. SQL is a standard language for storing, manipulating, and retrieving data in relational database systems.
 
 ---
 
-## NoSQL
+### NoSQL
 
 NoSQL or `non-SQL` is a non-relational database that does not require a fixed schema and is easy to scale.
 
 NoSQL does not necessarily mean that a database does not support SQL. Instead, it means that the database is not an RDBMS.
 
 While traditional RDBMS rely on SQL syntax to store and query data, on the other hand, NoSQL database systems use other technologies and programming languages to store structured, unstructured or semi-structured data.
-
 
 
 ### SQL vs NoSQL
@@ -292,7 +293,7 @@ Database types depend on the way the data is stored.
 4. Graph database – Optimized to capture and search the connections between data elements.
 
 
-### **Schema**
+### Schema
 
 
 A database schema is a structure that defines how a database is constructed. It defines how the data is organized and how the relations among data are associated. There are two types of schemas:
@@ -306,7 +307,7 @@ However, a NoSQL database does not require a predefined schema. NoSQL uses a dyn
 
 
 
-### **Data Model**
+### Data Model
 
 
 The data model shows the logical structure of the database. It organizes elements of data and standardizes how they relate to each other. There are two types of data models:
