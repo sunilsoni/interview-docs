@@ -10,7 +10,6 @@ categories: [Spring]
 ---
 
 # Spring
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -51,7 +50,7 @@ Kotlin, Groovy, dynamic languages.
 
 ---
 
-## Inversion Of Control (IOC) and Dependency Injection
+## Inversion Of Control (IOC) and Dependency Injection(DI)
 
 These are the design patterns that are used to remove dependency from the programming code. They make the code easier to test and maintain. Let's understand this with the following code:
 
@@ -78,11 +77,50 @@ Thus, IOC makes the code loosely coupled. In such case, there is no need to modi
 
 In Spring framework, IOC container is responsible to inject the dependency. We provide metadata to the IOC container either by XML file or annotation.
 
----
 
-## Advantage of Dependency Injection
+
+### Inversion of Control
+
+Inversion of Control is a principle in software engineering which transfers the control of objects or portions of a program to a container or framework.
+
+###  Advantages of Inversion of Control
+
+1. decoupling the execution of a task from its implementation
+2. making it easier to switch between different implementations
+3. greater modularity of a program
+4. greater ease in testing a program by isolating a component or mocking its dependencies, and allowing components to communicate through contracts
+
+We can achieve Inversion of Control through various mechanisms such as: Strategy design pattern, Service Locator pattern, Factory pattern, and Dependency Injection (DI).
+
+### Dependency Injection
+
+Dependency injection is a pattern we can use to implement IoC, where the control being inverted is setting an object's dependencies.
+
+Connecting objects with other objects, or “injecting” objects into other objects, is done by an assembler rather than by the objects themselves.
+
+
+### Advantage of Dependency Injection
 - makes the code loosely coupled so easy to maintain
 - makes the code easy to test
+
+
+### Spring IoC Container
+
+In the Spring framework, the interface ApplicationContext represents the IoC container. The Spring container is responsible for instantiating, configuring and assembling objects known as beans, as well as managing their life cycles.
+
+The Spring framework provides several implementations of the ApplicationContext interface: ClassPathXmlApplicationContext and FileSystemXmlApplicationContext for standalone applications, and WebApplicationContext for web applications.
+
+In order to assemble beans, the container uses configuration metadata, which can be in the form of XML configuration or annotations.
+
+Here's one way to manually instantiate a container:
+
+```java
+ApplicationContext context
+        = new ClassPathXmlApplicationContext("applicationContext.xml");
+```
+
+Dependency Injection in Spring can be done through constructors, setters or fields.
+
 
 ---
 
