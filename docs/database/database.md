@@ -243,6 +243,194 @@ FROM CUSTOMERS a, CUSTOMERS b
 WHERE a.SALARY < b.SALARY;
 ```
 
+---
+
+## SQL
+
+SQL stands for Structured Query Language. SQL is a standard language for storing, manipulating, and retrieving data in relational database systems.
+
+---
+
+## NoSQL
+
+NoSQL or `non-SQL` is a non-relational database that does not require a fixed schema and is easy to scale.
+
+NoSQL does not necessarily mean that a database does not support SQL. Instead, it means that the database is not an RDBMS.
+
+While traditional RDBMS rely on SQL syntax to store and query data, on the other hand, NoSQL database systems use other technologies and programming languages to store structured, unstructured or semi-structured data.
+
+
+
+### SQL vs NoSQL
+
+
+|Comparing       | SQL	                                |NoSQL   |
+|------------------|--------------------------|-------------------------------------------|
+|Query Language 	    |  Structured query language (SQL)                 | No declarative query language                |
+| Database type      |         Table          |     Key-value, document, wide-column, and graph            |
+|  Schema     |    Predefined               |    Dynamic             |
+| Data model      |   Relational                |  Non-relational               |
+|  Popular database examples     | MySQL, PostgreSQL, Oracle, and MS-SQL                  |  MongoDB, Apache HBase, Amazon DynamoDB, Redis, Couchbase, Cassandra, and Elasticsearch               |
+| Ability to scale      |  Vertical                 |   Horizontal              |
+| ACID vs BASE      |    ACID               |     BASE            |
+|  Advantages     |   Cross-platform support, secure and free                | Easy to use, high performance, and flexible tool                |
+|  Disadvantages     |  Complex to maintain and inefficient if processing big data, complex relational database systems are difficult to export into other systems, not good for handling various data types                 | Data is less structured, NoSQL databases are not as reliable (no ACID support), NoSQL databases are newer and may offer less features than their SQL counterparts                |
+| Use cases      |  ACID support, complex queries, no changes or growth                 | Real-time data, volumes of data with no structure, agile business, cloud computing                |
+
+
+
+### Database Types
+
+
+Database types depend on the way the data is stored.
+`SQL` has a table-based database. Table database stores data into tables with fixed rows and columns.
+
+`NoSQL` has 4 types of databases:
+1. Key-value database – Stores every data element as an attribute name or key together with its value.
+2. Document database – Stores data in JSON, BSON, or XML documents.
+3. Wide-column database – Stores and groups data into columns instead of rows.
+4. Graph database – Optimized to capture and search the connections between data elements.
+
+
+### **Schema**
+
+
+A database schema is a structure that defines how a database is constructed. It defines how the data is organized and how the relations among data are associated. There are two types of schemas:
+
+- Predefined
+- Dynamic
+
+SQL needs a predefined schema for unstructured data. You need to predefine data structure in the form of tables before you start to use SQL to manipulate data.
+
+However, a NoSQL database does not require a predefined schema. NoSQL uses a dynamic schema for unstructured data. A dynamic schema allows storing data before applying schema. Schema completely depends on how you want to store data.
+
+
+
+### **Data Model**
+
+
+The data model shows the logical structure of the database. It organizes elements of data and standardizes how they relate to each other. There are two types of data models:
+
+- Relational
+- Nonrelational
+
+We can observe differences between these data models by looking at the multiple entities. Consider an order from a restaurant as an example and two entities: Order and Delivery Address.
+
+SQL uses a `relational data model`. SQL relational model uses many-to-many relationship. In many-to-many relationship, a single Order row can relate to several Delivery Address rows. Similarly, each Delivery address row can relate to several Order rows.
+
+NoSQL uses a `nonrelational data model` that does not use relationships. NoSQL databases denormalize data by duplicating Delivery address in each Order row that contains that delivery address. Therefore, data is stored multiple times. This enables easy storage and data retrieval and increases the speed of the query.
+
+
+
+### Ability to Scale
+
+Database scalability is the ability to hold increasing amounts of data without sacrificing performance. There are two types of scalability:
+
+- Vertical
+- Horizontal
+
+SQL databases are vertically scalable. In vertical scaling, data resides on a single node, and the only way to scale up is by adding more hardware resources, such as CPU and RAM, to one existing machine. This makes vertical scaling more costly. An additional downside of vertical scaling is that it runs on one machine so if the server goes down, your application will go down too.
+
+NoSQL databases are horizontally scalable. In horizontal scaling, each node contains only part of the data which allows you to add more machines to the existing group of distributed systems. This makes horizontal scaling cheaper and quicker.
+
+
+### ACID vs BASE
+
+
+SQL databases use the ACID consistency model. ACID stands for:
+
+- Atomic – All operations in a transaction succeed or every operation is rolled back. Partial success is not allowed.
+- Consistent – Each transaction moves the database from one valid state to another. Transaction can’t leave the database in an inconsistent state.
+- Isolated – Transactions can’t interfere with each other.
+- Durable – The results of applying a transaction are permanent, even in the presence of failures.
+
+The main feature of the ACID model is consistency. When you complete a transaction, its data is consistent and stable.
+
+NoSQL databases use the BASE consistency model. BASE stands for:
+
+- Basically Available – All users can perform a query. The database spreads data across several systems so in case that a failure happens to a segment of data, the database will not experience a complete outage.
+- Soft State – Database state can change over time.
+- Eventual Consistency – If the system is functioning and we wait long enough, the database will eventually become consistent.
+
+The advantage of the BASE consistency model is that transactions are committed faster. Databases that use the BASE model prefer availability over consistency of replicated data.
+
+
+### Use Cases
+
+
+Not every database fits every business needs. Let’s take a closer look at use cases for both types of databases.
+
+
+### Reasons to use an SQL database:
+
+
+- When you need ACID support – With ACID support you get data consistency and 100% data integrity.
+- When you are working with complex queries and reports – SQL is a better fit for complex query environments when compared to NoSQL.
+- When you don’t anticipate a lot of changes or growth – If your business is not growing exponentially, there is no
+  reason to use a system designed to support an increase in data volume.
+
+
+### Reasons to use a NoSQL database:
+
+
+- When you need real-time data – NoSQL does not require schemas, so it makes the information process quicker.
+- When you store volumes of data with no structure – NoSQL supports all data types.
+- When you run an agile business – NoSQL does not require the preparation process, so it reduces downtime.
+- When you want to make most out of cloud computing and storage – For a cloud solution to be scalable, the data must be
+  easy to share across multiple servers.
+
+---
+
+## UNION vs UNION ALL
+
+UNION removes duplicate records (where all columns in the results are the same), UNION ALL does not.
+
+There is a performance hit when using UNION instead of UNION ALL, since the database server must do additional work to
+remove the duplicate rows, but usually you do not want the duplicates (especially when developing reports).
+
+To identify duplicates, records must be comparable types as well as compatible types. This will depend on the SQL
+system. For example the system may truncate all long text fields to make short text fields for comparison (MS Jet), or
+may refuse to compare binary fields (ORACLE)
+
+UNION Example:
+
+```sql
+SELECT 'foo' AS bar
+UNION
+SELECT 'foo' AS bar
+```
+
+Result:
+```log
++-----+
+| bar |
++-----+
+| foo |
+| foo |
++-----+
+2 rows in set (0.00 sec)
+```
+
+UNION ALL example:
+
+```sql
+SELECT 'foo' AS bar
+UNION ALL
+SELECT 'foo' AS bar
+```
+
+Result:
+```log
++-----+
+| bar |
++-----+
+| foo |
+| foo |
++-----+
+2 rows in set (0.00 sec)
+```
+
+
 
 ---
 
