@@ -91,7 +91,7 @@ completed successfully. The following two patterns can resolve the problem:
 1. 2pc (two-phase commit)
 2. Saga
 
-### Two-phase commit (2pc) pattern
+## Two-phase commit (2pc) pattern
 
 2pc is widely used in database systems. For some situations, you can use 2pc for microservices. Just be careful; not all
 situations suit 2pc and, in fact, 2pc is considered impractical within a microservice architecture (explained below).
@@ -147,7 +147,22 @@ long delays with RPC calls, especially when integrating with external services s
 become a system performance bottleneck. Also, it is possible to have two transactions mutually lock each other (
 deadlock) when each transaction requests a lock on a resource the other requires.
 
-### Saga pattern
+---
+
+## Saga pattern
+
+**Problem**
+When each service has its own database and a business transaction spans multiple services, how do we ensure data consistency across services? For example, for an e-commerce application where customers have a credit limit, the application must ensure that a new order will not exceed the customer’s credit limit. Since Orders and Customers are in different databases, the application cannot simply use a local ACID transaction.
+
+**Solution**
+A Saga represents a high-level business process that consists of several sub requests, which each update data within a single service. Each request has a compensating request that is executed when the request fails. It can be implemented in two ways:
+
+### Choreography 
+ — When there is no central coordination, each service produces and listens to another service’s events and decides if an action should be taken or not.
+
+### Orchestration 
+ — An orchestrator (object) takes responsibility for a saga’s decision making and sequencing business logic.
+
 
 The Saga pattern is another widely used pattern for distributed transactions. It is different from 2pc, which is
 synchronous. The Saga pattern is asynchronous and reactive. In a Saga pattern, the distributed transaction is fulfilled

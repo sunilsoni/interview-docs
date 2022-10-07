@@ -80,8 +80,6 @@ Q
 !docs/microservices/api-gateway.md,e/3/e38d674e08e29afca17ec80dcbc44d4e82be67c3
 N
 docs/microservices/security.md,7/5/75e53dd9dc96f0f64c0bed498e49dadac4cbcb70
-R
-"docs/microservices/transactions.md,9/e/9e9f4392693957675c8feda354f5389a0ba1799f
 \
 ,docs/miscellaneous/behavioral-situational.md,6/6/664d196ad7f865783fabc974660627ddebd8f20d
 N
