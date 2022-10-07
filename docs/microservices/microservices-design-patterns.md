@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Microservices Design Patterns
+title: Design Patterns
 parent: Micro Services
 resource: true
 desc: "Microservices Design Patterns interview questions and answers."
