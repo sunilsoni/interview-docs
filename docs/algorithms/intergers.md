@@ -513,6 +513,34 @@ class Solution {
     }
 }
 ```
+
+#### Complexity Analysis
+
+**Time complexity:** O(N). Each number, starting at 2 up to and including N, is visited, computed and then stored for O(1) access later on.
+
+**Space complexity:** O(N). The size of the stack in memory is proportional to N. Also, the memoization hash table is used, which occupies O(N) space.
+
+### Solution 4 : Iterative Bottom-Up Approach
+
+**Intuition**
+
+Let's get rid of the need to use all of that space and instead use the minimum amount of space required. Notice that during each recursive call in the top-down approach and each iteration in the bottom-up approach, we only needed to look at the results of `fib(N-1)` and `fib(N-2)` to determine the result of `fib(N)`. Therefore, we can achieve O(1) space complexity by only storing the value of the two previous numbers and updating them as we iterate to N.
+
+**Algorithm**
+
+* Check if N <= 1, if it is, then we should return N.
+* We need 3 variables to store each state `fib(N), fib(N-1), and fib(N-2)`.
+* Preset the initial values:
+   - Initialize current with 0.
+   - Initialize prev1 with 1, since this will represent `fib(N-1)` when computing the current value.
+   - Initialize prev2 with 0, since this will represent `fib(N-2)` when computing the current value.
+* Iterate, incrementally by 1, all the way up to and including N. Starting at 2, since 0 and 1 are pre-computed.
+* Set the current value to prev1 + prev2 because that is the value we are currently computing.
+* Set the prev2 value to prev1.
+* Set the prev1 value to current.
+* When we reach N+1, we will exit the loop and return the previously set current value.
+
+#### Implementation
 ## More Details: 
 1. [Palindrome Number - Leetcode #9 Short & Simple Solution](https://www.code-recipe.com/post/palindrome-number)
 2. [Generating Prime Numbers in Java](https://www.baeldung.com/java-generate-prime-numbers)
