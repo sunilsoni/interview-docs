@@ -590,33 +590,9 @@ In order to do this we can rely on the matrix equation for the Fibonacci sequenc
 
 #### Implementation
 
-```log
-class Solution {
-    int fib(int N) {
-        if (N <= 1) {
-          return N;
-        }
-        int[][] A = new int[][]{{1, 1}, {1, 0}};
-        matrixPower(A, N - 1);
-
-        return A[0][0];
-    }
-
-    void matrixPower(int[][] A, int N) {
-        if (N <= 1) {
-          return;
-        }
-        matrixPower(A, N / 2);
-        multiply(A, A);
-
-        int[][] B = new int[][]{{1, 1}, {1, 0}};
-        if (N % 2 != 0) {
-            multiply(A, B);
-        }
-    }
+```java
 
 
-}
 ```
 #### Complexity Analysis
 
