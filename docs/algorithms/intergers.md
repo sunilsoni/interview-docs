@@ -587,6 +587,45 @@ In order to do this we can rely on the matrix equation for the Fibonacci sequenc
 * The matrixPower function will be performed for N/2 of the Fibonacci numbers.
 * Within matrixPower, call the multiply function to multiply 2 matrices.
 * Once we finish doing the calculations, return A[0][0] to get the Nth Fibonacci number.
+
+#### Complexity Analysis
+
+**Time complexity:** O(logN). By halving the N value in every matrixPower's call to itself, we are halving the work needed to be done.
+
+**Space complexity:** O(logN). The size of the stack in memory is proportional to the function calls to matrixPower plus the memory used to account for the matrices which use constant space.
+
+### Solution 6 : Math
+
+**Intuition**
+
+<img src="images/integer/mathFibonacci.png" width="500" height="50" />
+
+Here's a link to find out more about how the Fibonacci sequence and the `golden ratio` work.
+
+We can derive the most efficient solution to this problem using only constant space!
+
+**Algorithm**
+
+Use the `golden ratio` formula to calculate the `Nth` Fibonacci number.
+
+#### Implementation
+
+```java
+class Solution {
+    public int fib(int N) {
+        double goldenRatio = (1 + Math.sqrt(5)) / 2;
+        return (int) Math.round(Math.pow(goldenRatio, N) / Math.sqrt(5));
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(logN). We do not use loops or recursion, so the time required equals the time spent performing the calculation using Binet's formula. However, raising the golden_ratio to the power of N requires O(logN) time.
+
+**Space complexity:** O(1). The space used is the space needed to create the variable to store the `golden ratio`.
+
+---
 ## More Details: 
 1. [Palindrome Number - Leetcode #9 Short & Simple Solution](https://www.code-recipe.com/post/palindrome-number)
 2. [Generating Prime Numbers in Java](https://www.baeldung.com/java-generate-prime-numbers)
