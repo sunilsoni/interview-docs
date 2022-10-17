@@ -579,12 +579,6 @@ Use Matrix Exponentiation to get the Fibonacci number from the element at (0, 0)
 In order to do this we can rely on the matrix equation for the Fibonacci sequence, to find the `Nth` Fibonacci number:
 
  <img src="images/integer/MatrixExponentiation.png" width="200" height="100" />
-**Algorithm**
-
-* Check if N is less than or equal to 1. If it is, return N.
-* Use a recursive function, matrixPower, to calculate the power of a given matrix A. The power will be N-1, where N is the `Nth` Fibonacci number.
-* The matrixPower function will be performed for N/2 of the Fibonacci numbers.
-* Within matrixPower, call the multiply function to multiply 2 matrices.
 
 #### Implementation
 
