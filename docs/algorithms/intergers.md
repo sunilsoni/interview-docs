@@ -577,7 +577,9 @@ Use Matrix Exponentiation to get the Fibonacci number from the element at (0, 0)
 
 In order to do this we can rely on the matrix equation for the Fibonacci sequence, to find the `Nth` Fibonacci number:
 
+
  <img src="images/integer/MatrixExponentiation.png" width="200" height="100" />
+
 
 **Algorithm**
 
