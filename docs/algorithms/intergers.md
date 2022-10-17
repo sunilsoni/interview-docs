@@ -372,6 +372,310 @@ class Solution {
 
 **Space complexity** : O(max(m,n)). The length of the new list is at most  max(m,n)+1.
 
+---
+
+## Fibonacci Number
+
+The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,
+```log
+F(0) = 0, F(1) = 1
+F(n) = F(n - 1) + F(n - 2), for n > 1.
+```
+
+Given n, calculate F(n).
+
+**Example 1:**
+```log
+Input: n = 2
+Output: 1
+Explanation: F(2) = F(1) + F(0) = 1 + 0 = 1.
+```
+
+**Example 2:**
+```log
+Input: n = 3
+Output: 2
+Explanation: F(3) = F(2) + F(1) = 1 + 1 = 2.
+```
+
+**Example 3:**
+```log
+Input: n = 4
+Output: 3
+Explanation: F(4) = F(3) + F(2) = 2 + 1 = 3.
+```
+
+**Constraints:**
+
+```log
+0 <= n <= 30
+```
+
+### Solution 1 : Recursion
+
+**Intuition**
+
+Use recursion to compute the Fibonacci number of a given integer.
+
+<img src="images/integer/recursion.png" width="500" height="200"/>
+
+             Figure 1. An example tree representing what fib(5) would look like
+
+**Algorithm**
+
+* Check if the provided input value, N, is less than or equal to 1. If true, return N.
+
+* Otherwise, the function `fib(int N)` calls itself, with the result of the 2 previous numbers being added to each other, passed in as the argument. This is derived directly from the `recurrence relation`: F_{n} = F_{n-1} + F_{n-2}
+  
+* Do this until all numbers have been computed, then return the resulting answer.
+
+#### Implementation
+
+```java
+public class Solution {
+    public int fib(int N) {
+        if (N <= 1) {
+            return N;
+        }
+        return fib(N - 1) + fib(N - 2);
+    }
+}
+```
+#### Complexity Analysis
+
+* **Time complexity:** O(2^N). This is the slowest way to solve the Fibonacci Sequence because it takes exponential time. The amount of operations needed, for each level of recursion, grows exponentially as the depth approaches N.
+
+* **Space complexity:** O(N). We need space proportional to N to account for the max size of the stack, in memory. This stack keeps track of the function calls to `fib(N)`. This has the potential to be bad in cases that there isn't enough physical memory to handle the increasingly growing stack, leading to a StackOverflowError. The Java docs have a good explanation of this, describing it as an error that occurs because an application recurses too deeply.
+
+### Solution 2 : Bottom-Up Approach using Tabulation
+
+**Intuition**
+
+Improve upon the recursive approach by using iteration, still solving for all of the sub-problems and returning the answer for N, using already computed Fibonacci values. While using a bottom-up approach, we can iteratively compute and store the values, only returning once we reach the result.
+
+**Algorithm**
+
+* If N is less than or equal to 1, return N
+* Otherwise, iterate through N, storing each computed answer in an array along the way.
+* Use this array as a reference to the 2 previous numbers to calculate the current Fibonacci number.
+* Once we've reached the last number, return it's Fibonacci number.
+
+#### Implementation
+
+```java
+class Solution {
+    public int fib(int N) {
+        if (N <= 1) {
+            return N;
+        }
+                  
+        int[] cache = new int[N + 1];
+        cache[1] = 1;
+        for (int i = 2; i <= N; i++) {
+            cache[i] = cache[i - 1] + cache[i - 2];
+        }
+    
+        return cache[N];
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(N). Each number, starting at 2 up to and including N, is visited, computed and then stored for O(1) access later on.
+
+**Space complexity:** O(N). The size of the data structure is proportional to N.
+
+### Solution 3 : Top-Down Approach using Memoization
+
+**Intuition**
+
+Solve for all of the sub-problems, use memoization to store the pre-computed answers, then return the answer for N. We will leverage recursion, but in a smarter way by not repeating the work to calculate existing values.
+
+**Algorithm**
+
+* At first, create a map with 0 -> 0 and 1 -> 1 pairs.
+* Call `fib(N)` function.
+     1. At every recursive call of `fib(N)`, if N exists in the map, return the cached value for N.
+     2. Otherwise, set the key N, in our mapping, to the value of fib(N - 1) + fib(N - 2) and return the computed value.
+
+#### Implementation
+```java
+class Solution {
+    // Creating a hash map with 0 -> 0 and 1 -> 1 pairs
+    private Map<Integer, Integer> cache = new HashMap<>(Map.of(0, 0, 1, 1));
+
+    public int fib(int N) {
+        if (cache.containsKey(N)) {
+            return cache.get(N);
+        }
+        cache.put(N, fib(N - 1) + fib(N - 2));
+        return cache.get(N);
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(N). Each number, starting at 2 up to and including N, is visited, computed and then stored for O(1) access later on.
+
+**Space complexity:** O(N). The size of the stack in memory is proportional to N. Also, the memoization hash table is used, which occupies O(N) space.
+
+### Solution 4 : Iterative Bottom-Up Approach
+
+**Intuition**
+
+Let's get rid of the need to use all of that space and instead use the minimum amount of space required. Notice that during each recursive call in the top-down approach and each iteration in the bottom-up approach, we only needed to look at the results of `fib(N-1)` and `fib(N-2)` to determine the result of `fib(N)`. Therefore, we can achieve O(1) space complexity by only storing the value of the two previous numbers and updating them as we iterate to N.
+
+**Algorithm**
+
+* Check if N <= 1, if it is, then we should return N.
+* We need 3 variables to store each state `fib(N), fib(N-1), and fib(N-2)`.
+* Preset the initial values:
+   - Initialize current with 0.
+   - Initialize prev1 with 1, since this will represent `fib(N-1)` when computing the current value.
+   - Initialize prev2 with 0, since this will represent `fib(N-2)` when computing the current value.
+* Iterate, incrementally by 1, all the way up to and including N. Starting at 2, since 0 and 1 are pre-computed.
+* Set the current value to prev1 + prev2 because that is the value we are currently computing.
+* Set the prev2 value to prev1.
+* Set the prev1 value to current.
+* When we reach N+1, we will exit the loop and return the previously set current value.
+
+#### Implementation
+
+
+```java
+class Solution {
+    public int fib(int N) {
+        if (N <= 1) {
+            return N;
+        }
+
+        int current = 0;
+        int prev1 = 1;
+        int prev2 = 0;
+
+        for (int i = 2; i <= N; i++) {
+            current = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = current;
+        }
+        return current;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(N). Each value from 2 to N is computed once. Thus, the time it takes to find the answer is directly proportional to N where N is the Fibonacci Number we are looking to compute.
+
+**Space complexity:** O(1). This requires 1 unit of space for the integer N and 3 units of space to store the computed values (current, prev1, and prev2) for every loop iteration. The amount of space used is independent of N, so this approach uses a constant amount of space.
+
+### Solution 5 : Matrix Exponentiation
+
+**Intuition**
+
+Use Matrix Exponentiation to get the Fibonacci number from the element at (0, 0) in the resultant matrix.
+
+In order to do this we can rely on the matrix equation for the Fibonacci sequence, to find the `Nth` Fibonacci number:
+
+ <img src="images/integer/MatrixExponentiation.png" width="200" height="100" />
+
+**Algorithm**
+
+* Check if N is less than or equal to 1. If it is, return N.
+* Use a recursive function, matrixPower, to calculate the power of a given matrix A. The power will be N-1, where N is the `Nth` Fibonacci number.
+* The matrixPower function will be performed for N/2 of the Fibonacci numbers.
+* Within matrixPower, call the multiply function to multiply 2 matrices.
+* Once we finish doing the calculations, return A[0][0] to get the Nth Fibonacci number.
+
+#### Implementation
+
+```java
+class Solution {
+    int fib(int N) {
+        if (N <= 1) {
+          return N;
+        }
+        int[][] A = new int[][]{{1, 1}, {1, 0}};
+        matrixPower(A, N - 1);
+
+        return A[0][0];
+    }
+
+    void matrixPower(int[][] A, int N) {
+        if (N <= 1) {
+          return;
+        }
+        matrixPower(A, N / 2);
+        multiply(A, A);
+
+        int[][] B = new int[][]{{1, 1}, {1, 0}};
+        if (N % 2 != 0) {
+            multiply(A, B);
+        }
+    }
+
+    void multiply(int[][] A, int[][] B) {
+        int x = A[0][0] * B[0][0] + A[0][1] * B[1][0];
+        int y = A[0][0] * B[0][1] + A[0][1] * B[1][1];
+        int z = A[1][0] * B[0][0] + A[1][1] * B[1][0];
+        int w = A[1][0] * B[0][1] + A[1][1] * B[1][1];
+
+        A[0][0] = x;
+        A[0][1] = y;
+        A[1][0] = z;
+        A[1][1] = w;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(logN). By halving the N value in every matrixPower's call to itself, we are halving the work needed to be done.
+
+**Space complexity:** O(logN). The size of the stack in memory is proportional to the function calls to matrixPower plus the memory used to account for the matrices which use constant space.
+
+### Solution 6 : Math
+
+**Intuition**
+
+<img src="images/integer/mathFibonacci.png" width="500" height="50" />
+
+Here's a link to find out more about how the Fibonacci sequence and the `golden ratio` work.
+
+We can derive the most efficient solution to this problem using only constant space!
+
+**Algorithm**
+
+Use the `golden ratio` formula to calculate the `Nth` Fibonacci number.
+
+#### Implementation
+
+```java
+class Solution {
+    public int fib(int N) {
+        double goldenRatio = (1 + Math.sqrt(5)) / 2;
+        return (int) Math.round(Math.pow(goldenRatio, N) / Math.sqrt(5));
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(logN). We do not use loops or recursion, so the time required equals the time spent performing the calculation using Binet's formula. However, raising the golden_ratio to the power of N requires O(logN) time.
+
+**Space complexity:** O(1). The space used is the space needed to create the variable to store the `golden ratio`.
+
+---
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -579,10 +579,471 @@ after adding elements size =2
 after removing element size =1
  */ 
 ```
-
-
-
 --- 
+
+## Sort an Array
+
+Given an array of integers nums, sort the array in ascending order and return it.
+
+You must solve the problem **without using any built-in** functions in O(nlog(n)) time complexity and with the smallest space complexity possible.
+
+**Example 1:**
+
+```log
+Input: nums = [5,2,3,1]
+Output: [1,2,3,5]
+Explanation: After sorting the array, the positions of some numbers are not changed (for example, 2 and 3), while the positions of other numbers are changed (for example, 1 and 5).
+```
+
+**Example 2:**
+
+```log
+Input: nums = [5,1,1,2,0,0]
+Output: [0,0,1,1,2,5]
+Explanation: Note that the values of nums are not necessairly unique.
+```
+
+**Constraints:**
+
+```log
+1 <= nums.length <= 5 * 104
+-5 * 104 <= nums[i] <= 5 * 104
+```
+
+### Solution 1
+
+**Algorithms:**
+
+* quick sort
+* top-down merge sort
+* bottom-up merge sort
+* heap sort
+* selection sort
+* insertion sort
+* bubble sort (TLE)
+
+#### implementations : 
+
+**1. Quick sort:**
+
+```java
+class Solution {
+    public List<Integer> sortArray(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        quickSort(nums, 0, nums.length - 1);
+        for (int i : nums) res.add(i);
+        return res;
+    }
+    private void quickSort(int[] nums, int l, int r) {
+        if (l >= r) return;
+        int mid = partition(nums, l, r);
+        quickSort(nums, l, mid);
+        quickSort(nums, mid + 1, r);
+    }
+    private int partition(int[] nums, int l, int r) {
+        int pivot = nums[l];
+        while (l < r) {
+            while (l < r && nums[r] >= pivot) r--;
+            nums[l] = nums[r];
+            while (l < r && nums[l] <= pivot) l++;
+            nums[r] = nums[l];
+        }
+        nums[l] = pivot;
+        return l;
+    }
+}
+```
+**2. Top-down merge sort**
+
+```java
+class Solution {
+    public List<Integer> sortArray(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        mergeSort(nums, 0, nums.length - 1);
+        for (int i : nums) res.add(i);
+        return res;
+    }
+    private void mergeSort(int[] nums, int l, int r) {
+        if (l >= r) return;
+        int mid = l + (r - l) / 2;
+        mergeSort(nums, l, mid);
+        mergeSort(nums, mid + 1, r);
+        merge(nums, l, r);
+    }
+    private void merge(int[] nums, int l, int r) {
+        int mid = l + (r - l) / 2;
+        int[] tmp = new int[r - l + 1];
+        int i = l, j = mid + 1, k = 0;
+        while (i <= mid || j <= r) {
+            if (i > mid || j <= r && nums[i] > nums[j]) {
+                tmp[k++] = nums[j++];
+            } else {
+                tmp[k++] = nums[i++];
+            }
+        }
+        System.arraycopy(tmp, 0, nums, l, r - l + 1);
+    }
+}
+```
+
+**3. Bottom-up merge sort**
+
+```java
+class Solution {
+    public List<Integer> sortArray(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        mergeSort2(nums);
+        for (int i : nums) res.add(i);
+        return res;
+    }
+    private void mergeSort2(int[] nums) {
+        for (int size = 1; size < nums.length; size *= 2) {
+            for (int i = 0; i < nums.length - size; i += 2 * size) {
+                int mid = i + size - 1;
+                int end = Math.min(i + 2 * size - 1, nums.length - 1);
+                merge2(nums, i, mid, end);
+            }
+        }
+    }
+    private void merge2(int[] nums, int l, int mid, int r) {
+        int[] tmp = new int[r - l + 1];
+        int i = l, j = mid + 1, k = 0;
+        while (i <= mid || j <= r) {
+            if (i > mid || j <= r && nums[i] > nums[j]) {
+                tmp[k++] = nums[j++];
+            } else {
+                tmp[k++] = nums[i++];
+            }
+        }
+        System.arraycopy(tmp, 0, nums, l, r - l + 1);
+    }
+}
+```
+**4. Heap sort**
+
+```java
+class Solution {
+    public List<Integer> sortArray(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        heapSort(nums);
+        for (int i : nums) res.add(i);
+        return res;
+    }
+    private void heapSort(int[] nums) {
+        for (int i = nums.length / 2 - 1; i >= 0; i--) {
+            heapify(nums, i, nums.length - 1);
+        }
+        for (int i = nums.length - 1; i >= 1; i--) {
+            swap(nums, 0, i);
+            heapify(nums, 0, i - 1);
+        }
+    }
+    private void heapify(int[] nums, int i, int end) {
+        while (i <= end) {
+            int l = 2 * i + 1, r = 2 * i + 2;
+            int maxIndex = i;
+            if (l <= end && nums[l] > nums[maxIndex]) maxIndex = l;
+            if (r <= end && nums[r] > nums[maxIndex]) maxIndex = r;
+            if (maxIndex == i) break;
+            swap(nums, i, maxIndex);
+            i = maxIndex;
+        }
+    }
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
+```
+**5. Selection sort**
+```java
+class Solution {
+    public List<Integer> sortArray(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        selectionSort(nums);
+        for (int i : nums) res.add(i);
+        return res;
+    }
+    private void selectionSort(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j] < nums[minIndex]) minIndex = j;
+            }
+            if (minIndex != i) swap(nums, i, minIndex);
+        }
+    }
+    private void swap(int[] nums, int i, int j) {
+        nums[i] = nums[i] ^ nums[j];
+        nums[j] = nums[i] ^ nums[j];
+        nums[i] = nums[i] ^ nums[j];
+    }
+}
+```
+**6. Insertion sort**
+
+```java
+class Solution {
+    public List<Integer> sortArray(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        insertionSort(nums);
+        for (int i : nums) res.add(i);
+        return res;
+    }
+    private void insertionSort(int[] nums) {
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = i; j >= 1; j--) {
+                if (nums[j] >= nums[j - 1]) break;
+                swap(nums, j, j - 1);
+            }
+        }
+    }
+    private void swap(int[] nums, int i, int j) {
+        nums[i] = nums[i] ^ nums[j];
+        nums[j] = nums[i] ^ nums[j];
+        nums[i] = nums[i] ^ nums[j];
+    }
+}
+```
+**7. bubble sort (TLE)**
+
+```java
+class Solution {
+    public List<Integer> sortArray(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        bubbleSort(nums);
+        for (int i : nums) res.add(i);
+        return res;
+    }
+    private void bubbleSort(int[] nums) {
+        for (int k = nums.length - 1; k >= 1; k--) {
+            for (int i = 0; i < k; i++) {
+                if (nums[i] > nums[i + 1]) swap(nums, i, i + 1);
+            }
+        }
+    }
+    private void swap(int[] nums, int i, int j) {
+        nums[i] = nums[i] ^ nums[j];
+        nums[j] = nums[i] ^ nums[j];
+        nums[i] = nums[i] ^ nums[j];
+    }
+}
+```
+### Solution 2 : Merge sort
+
+```java
+public int[] sortArray(int[] nums) {
+     mergesort(nums, 0, nums.length-1);
+     return nums;
+    }
+	
+    public void mergesort(int[] nums, int start, int end){
+        if(start < end){
+            int mid = (start + end) / 2;
+            mergesort(nums, start, mid);
+            mergesort(nums, mid+1, end);
+            merge(nums, start, mid, end);
+        }
+    }
+    
+    public void merge(int[] nums, int start, int mid, int end){
+    int i= start,  j= mid+1, k=0;
+    int[] temp = new int[end-start+1];
+    while( i <= mid && j<= end)
+    {
+        if (nums[i] < nums[j])
+            temp[k++] = nums[i++];
+        else
+            temp[k++] = nums[j++];
+    }
+    while (i <= mid) { temp[k++] = nums[i++]; } //copy remaining elements
+    while (j <= end) { temp[k++] = nums[j++]; } //copy remaining elements
+    for (int pointer = start; pointer <= end; pointer++){
+        nums[pointer] = temp[pointer-start];
+    }
+  }
+```
+
+
+---
+
+## Single Number
+
+Given a non-empty array of integers `nums`, every element appears twice except for one. Find that single one.
+
+You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+**Example 1:**
+
+```log
+Input: nums = [2,2,1]
+Output: 1
+```
+
+**Example 2:**
+
+```log
+Input: nums = [4,1,2,1,2]
+Output: 4
+```
+
+**Example 3:**
+
+```log
+Input: nums = [1]
+Output: 1
+```
+
+**Constraints:**
+```log
+1 <= nums.length <= 3 * 104
+-3 * 104 <= nums[i] <= 3 * 104
+Each element in the array appears twice except for one element which appears only once.
+```
+### Solution 1 : List operation
+
+**Algorithm**
+
+* Iterate over all the elements in \text{nums}nums
+* If some number in \text{nums}nums is new to array, append it
+* If some number is already in the array, remove it
+
+#### Implementation
+
+```java
+class Solution {
+  public int singleNumber(int[] nums) {
+    List<Integer> no_duplicate_list = new ArrayList<>();
+
+    for (int i : nums) {
+      if (!no_duplicate_list.contains(i)) {
+        no_duplicate_list.add(i);
+      } else {
+        no_duplicate_list.remove(new Integer(i));
+      }
+    }
+    return no_duplicate_list.get(0);
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(n^2). We iterate through nums, taking O(n) time. We search the whole list to find whether there is duplicate number, taking O(n) time. Because search is in the for loop, so we have to multiply both time complexities which is O(n^2).
+
+**Space complexity :** O(n). We need a list of size nn to contain elements in nums.
+
+### Solution 2 : Hash Table
+
+**Algorithm**
+
+We use hash table to avoid the O(n) time required for searching the elements.
+
+* Iterate through all elements in `nums` and set up key/value pair.
+
+* Return the element which appeared only once.
+
+#### Implementation
+```java
+class Solution {
+  public int singleNumber(int[] nums) {
+    HashMap<Integer, Integer> hash_table = new HashMap<>();
+
+    for (int i : nums) {
+      hash_table.put(i, hash_table.getOrDefault(i, 0) + 1);
+    }
+    for (int i : nums) {
+      if (hash_table.get(i) == 1) {
+        return i;
+      }
+    }
+    return 0;
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(n⋅1)=O(n). Time complexity of for loop is O(n).
+
+**Space complexity :** O(n). The space required by *hash_table* is equal to the number of elements in `nums`.
+
+### Solution 3 : Math
+
+**Concept**
+
+`2 * (a + b + c) - (a + a + b + b + c) = c`
+
+#### Implementation
+```java
+class Solution {
+  public int singleNumber(int[] nums) {
+    int sumOfSet = 0, sumOfNums = 0;
+    Set<Integer> set = new HashSet();
+
+    for (int num : nums) {
+      if (!set.contains(num)) {
+        set.add(num);
+        sumOfSet += num;
+      }
+      sumOfNums += num;
+    }
+    return 2 * sumOfSet - sumOfNums;
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(n+n)=O(n). sum will call next to iterate through `nums`. We can see it as `sum(list(i, for i in nums))` which means the time complexity is O(n) because of the number of elements(n) in `nums`.
+
+**Space complexity :** O(n+n)=O(n). set needs space for the elements in `nums`.
+
+### Solution 4 : Bit Manipulation
+
+**Concept**
+
+* If we take XOR of zero and some bit, it will return that bit
+   - a ⊕ 0 = a
+  
+* If we take XOR of two same bits, it will return 0
+   - a ⊕ a = 0
+  
+* a ⊕ b ⊕ a = (a⊕a) ⊕ b = 0 ⊕ b = b
+
+So we can XOR all bits together to find the unique number.
+
+#### Implementation 
+```java
+class Solution {
+  public int singleNumber(int[] nums) {
+    int a = 0;
+    for (int i : nums) {
+      a ^= i;
+    }
+    return a;
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(n). We only iterate through `nums`, so the time complexity is the number of elements in `nums`.
+
+**Space complexity :** O(1).
+
+
+
+
+
+
+
 
 ## More Details 
 1. [JAVA Kadane's Algorithm](https://leetcode.com/problems/maximum-subarray/discuss/1595097/JAVA-or-Kadane's-Algorithm-or-Explanation-Using-Image)

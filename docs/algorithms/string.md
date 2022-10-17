@@ -567,7 +567,7 @@ Explanation: The answer is "wke", with the length of 3.
 Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 ```
 
-### Approach 1: Brute Force
+### Solution 1: Brute Force
 
 **Intuition**
 
@@ -619,11 +619,11 @@ To check if one string has duplicate characters, we can use a set. We iterate th
  }
 ```
 
-**Complexity Analysis**
+#### Complexity Analysis
 
 <img src="images/String/complexity.png" width="900" />
 
-### Approach 2: Sliding Window
+### Solution 2: Sliding Window
 
 **Algorithm**
 
@@ -674,7 +674,7 @@ Back to our problem. We use HashSet to store the characters in current window [i
 ```
 
 
-### Approach 3: Sliding Window Optimized
+### solution 3: Sliding Window Optimized
 
 The above solution requires at most 2n steps. In fact, it could be optimized to require only n steps. Instead of using a set to tell if a character exists or not, we could define a mapping of the characters to its index. Then we can skip the characters immediately when we found a repeated character.
 
@@ -747,13 +747,796 @@ int[256] for Extended ASCII
  }
 ```
 
-**Complexity Analysis**
+#### Complexity Analysis
 
 Time complexity : O(n). Index jj will iterate nn times.
 
 Space complexity (HashMap) : O(min(m,n)). Same as the previous approach.
 
 Space complexity (Table): O(m). m is the size of the charset.
+
+---
+
+## Valid Parentheses
+
+Given a string s containing just the characters `'(', ')', '{', '}', '[' and ']'`, determine if the input string is valid.
+
+An input string is valid if:
+
+1. Open brackets must be closed by the same type of brackets.
+2. Open brackets must be closed in the correct order.
+3. Every close bracket has a corresponding open bracket of the same type.
+
+**Example 1:**
+
+```log
+Input: s = "()"
+Output: true
+```
+
+**Example 2:**
+
+```log
+Input: s = "()[]{}"
+Output: true
+```
+
+**Example 3:**
+
+```log
+Input: s = "(]"
+Output: false
+```
+
+**Constraints:**
+
+```log
+1 <= s.length <= 104
+s consists of parentheses only '()[]{}'.
+```
+
+### Solution 1 : Stacks
+
+**Intuition**  
+
+Imagine you are writing a small compiler for your college project and one of the tasks (or say sub-tasks) for the compiler would be to detect if the parenthesis are in place or not.
+
+The algorithm we will look at in this article can be then used to process all the parenthesis in the program your compiler is compiling and checking if all the parenthesis are in place. This makes checking if a given string of parenthesis is valid or not, an important programming problem.
+
+The expressions that we will deal with in this problem can consist of three different type of parenthesis:
+```log
+(),
+{} and
+[]
+```
+Before looking at how we can check if a given expression consisting of these parenthesis is valid or not, let us look at a simpler version of the problem that consists of just one type of parenthesis. So, the expressions we can encounter in this simplified version of the problem are e.g.
+```log
+(((((()))))) -- VALID
+
+()()()()     -- VALID
+
+(((((((()    -- INVALID
+
+((()(())))   -- VALID
+```
+An interesting property about a valid parenthesis expression is that a sub-expression of a valid expression should also be a valid expression. (Not every sub-expression) e.g.
+
+<img src="images/Parentheses.png" width="700" height="300" />
+
+Also, if you look at the above structure carefully, the color coded cells mark the opening and closing pairs of parenthesis. The entire expression is valid, but sub portions of it are also valid in themselves. This lends a sort of a recursive structure to the problem. For e.g. Consider the expression enclosed within the two green parenthesis in the diagram above. The opening bracket at index `1` and the corresponding closing bracket at index `6`.
+
+**Algorithm**
+
+1. Initialize a stack S.
+2. Process each bracket of the expression one at a time.
+3. If we encounter an opening bracket, we simply push it onto the stack. This means we will process it later, let us simply move onto the sub-expression ahead.
+4. If we encounter a closing bracket, then we check the element on top of the stack. If the element at the top of the stack is an opening bracket of the same type, then we pop it off the stack and continue processing. Else, this implies an invalid expression.
+5. In the end, if we are left with a stack still having elements, then this implies an invalid expression.
+
+```java
+class Solution {
+
+  // Hash table that takes care of the mappings.
+  private HashMap<Character, Character> mappings;
+
+  // Initialize hash map with mappings. This simply makes the code easier to read.
+  public Solution() {
+    this.mappings = new HashMap<Character, Character>();
+    this.mappings.put(')', '(');
+    this.mappings.put('}', '{');
+    this.mappings.put(']', '[');
+  }
+
+  public boolean isValid(String s) {
+
+    // Initialize a stack to be used in the algorithm.
+    Stack<Character> stack = new Stack<Character>();
+
+    for (int i = 0; i < s.length(); i++) {
+      char c = s.charAt(i);
+
+      // If the current character is a closing bracket.
+      if (this.mappings.containsKey(c)) {
+
+        // Get the top element of the stack. If the stack is empty, set a dummy value of '#'
+        char topElement = stack.empty() ? '#' : stack.pop();
+
+        // If the mapping for this bracket doesn't match the stack's top element, return false.
+        if (topElement != this.mappings.get(c)) {
+          return false;
+        }
+      } else {
+        // If it was an opening bracket, push to the stack.
+        stack.push(c);
+      }
+    }
+
+    // If the stack still contains elements, then it is an invalid expression.
+    return stack.isEmpty();
+  }
+}
+```
+#### Complexity analysis
+
+**Time complexity :** O(n) because we simply traverse the given string one character at a time and push and pop operations on a stack take O(1) time.
+
+**Space complexity :** O(n) as we push all opening brackets onto the stack and in the worst case, we will end up pushing all the brackets onto the stack. e.g. ((((((((((.
+
+### Solution 2 : Hashmap
+
+```java
+class Solution {
+    public boolean isValid(String s) {
+        if(s.length()%2!=0)
+            return false;
+        
+        HashMap<Character,Character> paren = new HashMap<>();
+        paren.put('(',')');
+        paren.put('[',']');
+        paren.put('{','}');
+      
+       Stack<Character> stack = new Stack<>();
+        for (char ch: s.toCharArray()) {
+            if (paren.containsKey(ch))
+            {
+                stack.push(ch);
+            }
+            else if (stack.isEmpty() || paren.get(stack.pop()) != ch) {
+                return false;
+            }
+        }
+        return stack.isEmpty();
+
+    }
+}
+```
+
+---
+
+## Add Strings
+
+Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string.
+
+You must solve the problem without using any built-in library for handling large integers (such as BigInteger). You must also not convert the inputs to integers directly.
+
+**Example 1:**
+```log 
+Input: num1 = "11", num2 = "123"
+Output: "134"
+```
+
+**Example 2:**
+```log
+Input: num1 = "456", num2 = "77"
+Output: "533"
+```
+
+**Example 3:**
+```log
+Input: num1 = "0", num2 = "0"
+Output: "0"
+```
+
+**Constraints:**
+```log
+* 1 <= num1.length, num2.length <= 104
+* num1 and num2 consist of only digits.
+* num1 and num2 don't have any leading zeros except for the zero itself.
+```
+### Solution 1 : StringBuilder
+
+**Algorithm**
+
+* Initialize an empty res structure. Once could use StringBuilder in Java.
+
+* Start from carry = 0.
+
+* Set a pointer at the end of each string: p1 = num1.length() - 1, p2 = num2.length() - 1.
+
+* Loop over the strings from the end to the beginning using p1 and p2. Stop when both strings are used entirely.
+
+     1. Set x1 to be equal to a digit from string nums1 at index p1. If p1 has reached the beginning of nums1, set x1 to 0.
+
+     2. Do the same for x2. Set x2 to be equal to digit from string nums2 at index p2. If p2 has reached the beginning of nums2, set x2 to 0.
+
+     3. Compute the current value: value = (x1 + x2 + carry) % 10, and update the carry: carry = (x1 + x2 + carry) / 10.
+
+     4. Append the current value to the result: res.append(value).
+
+* Now both strings are done. If the carry is still non-zero, update the result: res.append(carry).
+
+* Reverse the result, convert it to a string, and return that string.
+
+```java
+class Solution {
+    public String addStrings(String num1, String num2) {
+        StringBuilder res = new StringBuilder();
+
+        int carry = 0;
+        int p1 = num1.length() - 1;
+        int p2 = num2.length() - 1;
+        while (p1 >= 0 || p2 >= 0) {
+            int x1 = p1 >= 0 ? num1.charAt(p1) - '0' : 0;
+            int x2 = p2 >= 0 ? num2.charAt(p2) - '0' : 0;
+            int value = (x1 + x2 + carry) % 10;
+            carry = (x1 + x2 + carry) / 10;
+            res.append(value);
+            p1--;
+            p2--;    
+        }
+        
+        if (carry != 0)
+            res.append(carry);
+        
+        return res.reverse().toString();
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(max(N_1,N_2)), where N_1 N_2 are length of nums1 and nums2. Here we do max(N_1, N_2) iterations at most.
+
+**Space Complexity:** O(max(N_1,N_2)), because the length of the new string is at most max(N_1, N_2) + 1
+
+### Solution 2 : Simple
+
+**Algorithm**
+
+* Start iterating the strings from the end
+* take each digit of the both strings
+* add them up and
+* place the result of sum at desired position in the char array
+
+```java
+class Solution {
+    public String addStrings(String num1, String num2) {
+        
+        int num1Len = num1.length() - 1;
+        int num2Len = num2.length() - 1;
+        int maxLen = Math.max(num1Len, num2Len) + 2;
+        char[] res = new char[maxLen];
+        int sum = 0;
+        
+        while(num1Len >= 0 || num2Len >= 0) {
+            
+            if(num1Len >= 0) {
+                sum += num1.charAt(num1Len--) - '0';
+            }
+            
+            if(num2Len >= 0) {
+                sum += num2.charAt(num2Len--) - '0';
+            }
+            
+            res[--maxLen] = (char)((sum % 10) + '0');
+            sum /= 10;
+        }
+        
+        if(sum != 0) {
+            res[0] = '1';
+            return String.valueOf(res);
+        }
+        
+        return String.valueOf(res, 1, res.length - 1);
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time:**  O(max(m, n)), where m and n are the lengths of given Strings a and b respectively.
+
+**Space:** O(max(m, n)), as we need a char array(res) whose size is equal to max of length of 2 input strings
+
+---
+
+## Valid Anagram
+
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+**Example 1:**
+```log 
+Input: s = "anagram", t = "nagaram"
+Output: true
+```
+
+**Example 2:**
+```log
+Input: s = "rat", t = "car"
+Output: false
+```
+
+**Constraints:**
+```log
+* 1 <= s.length, t.length <= 5 * 104
+* s and t consist of lowercase English letters.
+```
+### Solution 1 : Sorting
+
+**Algorithm**
+
+An anagram is produced by rearranging the letters of s into t. Therefore, if t is an anagram of s, sorting both strings will result in two identical strings. Furthermore, if ss and t have different lengths, t must not be an anagram of s and we can return early.
+
+```java
+public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    char[] str1 = s.toCharArray();
+    char[] str2 = t.toCharArray();
+    Arrays.sort(str1);
+    Arrays.sort(str2);
+    return Arrays.equals(str1, str2);
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(nlogn). Assume that n is the length of s, sorting costs O(nlogn) and comparing two strings costs O(n). Sorting time dominates and the overall time complexity is O(nlogn).
+
+**Space complexity:** O(1). Space depends on the sorting implementation which, usually, costs O(1) auxiliary space if heapsort is used. Note that in Java, toCharArray() makes a copy of the string so it costs O(n) extra space, but we ignore this for complexity analysis because:
+
+* It is a language dependent detail.
+
+* It depends on how the function is designed. For example, the function parameter types can be changed to char[].
+
+### Solution 2 : Frequency Counter
+
+**Algorithm**
+
+To examine if t is a rearrangement of s, we can count occurrences of each letter in the two strings and compare them. We could use a hash table to count the frequency of each letter, however, since both s and t only contain letters from a to z, a simple array of size 26 will suffice.
+
+Do we need two counters for comparison? Actually no, because we can increment the count for each letter in s and decrement the count for each letter in t, and then check if the count for every character is zero.
+
+```java
+public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    int[] counter = new int[26];
+    for (int i = 0; i < s.length(); i++) {
+        counter[s.charAt(i) - 'a']++;
+        counter[t.charAt(i) - 'a']--;
+    }
+    for (int count : counter) {
+        if (count != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+
+Or we could first increment the counter for s, then decrement the counter for t. If at any point the counter drops below zero, we know that t contains an extra letter not in s and return false immediately.
+
+```java
+public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    int[] table = new int[26];
+    for (int i = 0; i < s.length(); i++) {
+        table[s.charAt(i) - 'a']++;
+    }
+    for (int i = 0; i < t.length(); i++) {
+        table[t.charAt(i) - 'a']--;
+        if (table[t.charAt(i) - 'a'] < 0) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(n). Time complexity is O(n) because accessing the counter table is a constant time operation.
+
+**Space complexity:** O(1). Although we do use extra space, the space complexity is O(1) because the table's size stays constant no matter how large n is.
+
+### Solution 3 : Simple 
+
+```java
+public boolean isAnagram(String s, String t) {
+    
+    int[] charsMap = new int['z'-'a'+1];
+    
+    for(char c: s.toCharArray()) {
+        int pos = c - 'a';
+        charsMap[pos]++;
+    }
+    
+    for(char c: t.toCharArray()) {
+        int pos = c - 'a';
+        charsMap[pos]--;
+    }
+    
+    for(int count: charsMap) {
+        if(count != 0) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+```
+---
+
+## Group Anagrams
+
+Given an array of strings `strs`, group the anagrams together. You can return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+**Example 1:**
+
+```log
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+```
+
+**Example 2:**
+
+```log
+Input: strs = [""]
+Output: [[""]]
+```
+**Example 3:**
+
+```log
+Input: strs = ["a"]
+Output: [["a"]]
+```
+
+**Constraints:**
+
+```log
+1 <= strs.length <= 104
+0 <= strs[i].length <= 100
+strs[i] consists of lowercase English letters.
+```
+
+### Solution 1 : Categorize by Sorted String
+
+**Intuition**
+
+Two strings are anagrams if and only if their sorted strings are equal.
+
+**Algorithm**
+
+Maintain a map `ans : {String -> List}` where each key **K** is a sorted string, and each value is the list of strings from the initial input that when sorted, are equal to **K**.
+
+In Java, we will store the key as a string, eg. code. In Python, we will store the key as a hashable tuple, eg. `('c', 'o', 'd', 'e')`.
+
+<img src="images/String/groupAnagram.png" width="600" height="200" />
+
+#### Implementation
+
+```java
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs.length == 0) return new ArrayList();
+        Map<String, List> ans = new HashMap<String, List>();
+        for (String s : strs) {
+            char[] ca = s.toCharArray();
+            Arrays.sort(ca);
+            String key = String.valueOf(ca);
+            if (!ans.containsKey(key)) ans.put(key, new ArrayList());
+            ans.get(key).add(s);
+        }
+        return new ArrayList(ans.values());
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(NKlogK), where N is the length of `strs`, and K is the maximum length of a string in `strs`. The outer loop has complexity O(N) as we iterate through each string. Then, we sort each string in O(KlogK) time.
+
+**Space Complexity:** O(NK), the total information content stored in ans.
+
+### Solution 2 : Categorize by Count
+
+**Intuition**
+
+Two strings are anagrams if and only if their character counts (respective number of occurrences of each character) are the same.
+
+**Algorithm**
+
+We can transform each string s into a character count, **count**, consisting of 26 non-negative integers representing the number of **a**'s, **b**'s, **c**'s, etc. We use these counts as the basis for our hash map.
+
+In Java, the hashable representation of our count will be a string delimited with '#' characters. For example, `abbccc` will be `#1#2#3#0#0#0...#0` where there are 26 entries total. 
+
+<img src="images/String/groupAnagram1.png" width="600" height="200" />
+
+#### Implemention
+```java
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs.length == 0) return new ArrayList();
+        Map<String, List> ans = new HashMap<String, List>();
+        int[] count = new int[26];
+        for (String s : strs) {
+            Arrays.fill(count, 0);
+            for (char c : s.toCharArray()) count[c - 'a']++;
+
+            StringBuilder sb = new StringBuilder("");
+            for (int i = 0; i < 26; i++) {
+                sb.append('#');
+                sb.append(count[i]);
+            }
+            String key = sb.toString();
+            if (!ans.containsKey(key)) ans.put(key, new ArrayList());
+            ans.get(key).add(s);
+        }
+        return new ArrayList(ans.values());
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(NK), where N is the length of `strs`, and K is the maximum length of a string in `strs`. Counting each string is linear in the size of the string, and we count every string.
+
+**Space Complexity:** O(NK), the total information content stored in ans.
+
+---
+
+## Find the Difference
+
+You are given two strings s and t.
+
+String t is generated by random shuffling string s and then add one more letter at a random position.
+
+Return the letter that was added to t.
+
+**Example 1:**
+```log
+Input: s = "abcd", t = "abcde"
+Output: "e"
+Explanation: 'e' is the letter that was added.
+```
+
+**Example 2:**
+```log
+Input: s = "", t = "y"
+Output: "y"
+```
+
+**Constraints:**
+```log
+0 <= s.length <= 1000
+t.length == s.length + 1
+s and t consist of lowercase English letters.
+```
+
+### Solution 1 : Sorting
+
+**Intuition**
+
+The obvious choice is sorting. Why obvious?
+
+It's obvious because the first thing we might think of is, what if string t was not shuffled. If string t was not shuffled this problem would have been so easy.
+
+And then next we might end up bringing the order between the two strings. What better than sorting both the strings.
+
+`i.e. sort(String t) = sort(shuffled(String s + Any character)).`
+
+That said, this could be one of the most brute ways of solving this problem. (There are other brute ways too. The intent is not to challenge your brute instincts :P)
+
+ <img src="images/String/sortTheDifference.png" width="600" height="200" />
+
+Have you played Spot the Difference games, where you match an orange to orange and rule out the possibility? That's exactly what we are doing after sorting the strings.
+
+**Algorithm**
+
+* Sort the string s and string t.
+
+* Iterate through the length of strings and do a character by character comparison. This just checks if the current character in string t is present in string s.
+
+* Once we encounter a character which is in string t but not in string s, we have found the extra character string t was hiding all this while.
+
+#### Implementation
+```java
+class Solution {
+    public char findTheDifference(String s, String t) {
+
+        // Sort both the strings
+        char[] sortedS = s.toCharArray();
+        char[] sortedT = t.toCharArray();
+        Arrays.sort(sortedS);
+        Arrays.sort(sortedT);
+
+        // Character by character comparison
+        int i = 0;
+        while (i < s.length()) {
+            if (sortedS[i] != sortedT[i]) {
+                return sortedT[i];
+            }
+            i += 1;
+        }
+
+        return sortedT[i];
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(Nlog(N)), where N is length of the strings. Sorting is the most expensive operation of this algorithm. Sorting would take O(Nlog(N)) time. Iterating both the strings for character by character comparison would take another O(N) time.
+
+**Space Complexity:** O(N). The sorted character arrays would take O(N) each. An important thing to note here is that we are converting the String in java to an array first and then sorting it. That's what takes the additional space.
+
+### Solution 2 : Using HashMap
+
+This approach is also not very tricky. What is important is to analyze its complexity.
+
+We might just think in worst case the string is of length `N` and each character has a frequency of 1. This would result in a hash map of O(N) space. This is when your attention to detail comes to test.
+
+`The problem states, string s and t consists of only lowercase letters.`
+
+The above statement implies we only have 26 characters i.e. [a, z]. Thus, we have a space complexity for just 26 characters.
+
+It's always good to clarify this with the interviewer as now the space complexity would just be constant. Thus, this approach can also be implemented using array of length 26 as a hash table, where each index corresponds to a letter from [a, z].
+
+**Algorithm**
+
+* Store all the characters of string `s` in a hash map called `counterS`. The key would be the character and value would be number of times the character appeared in the string.
+
+* Now, iterate through string `t` and for each character, check if it is present in the hash map `counterS`.
+
+* If the character is present in `counterS` then we just decrement the corresponding value by `1`.
+
+* If the character is not present in `counterS` or has a frequency of zero in counterS it means we have found the extra character of string `t`.
+
+<img src="images/String/hashmapTheDifference.png" width="800" height="300" />
+
+Note - We are dropping the frequency of a character by 1 every time there is a match. This helps us find out the extra character which is present in both s and t but the number of occurrences vary. Thus keeping frequency is equally important.
+
+#### Implementation
+
+```java
+class Solution {
+    public char findTheDifference(String s, String t) {
+
+        char extraChar = '\0';
+
+        // Prepare a counter for string s.
+        // This hash map holds the characters as keys and respective frequency as value.
+        HashMap <Character,Integer> counterS = new HashMap <>();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            counterS.put(ch, counterS.getOrDefault(ch, 0) + 1);
+        }
+
+        // Iterate through string t and find the character which is not in s.
+        for (int i = 0; i < t.length(); i += 1) {
+            char ch = t.charAt(i);
+            int countOfChar = counterS.getOrDefault(ch, 0);
+            if (countOfChar == 0) {
+                extraChar = ch;
+                break;
+            } else {
+
+                // Once a match is found we reduce frequency left.
+                // This eliminates the possibility of a false match later.
+                counterS.put(ch, countOfChar - 1);
+            }
+        }
+        return extraChar;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(N), where N is length of the strings. Since, we iterate through both the strings once.
+
+**Space Complexity:** O(1). The problem states string `s` and string `t` have lowercase letters. Thus, the total number of unique characters and eventually buckets in the hash map possible are just 26.
+
+### Solution 3 : Bit Manipulation
+
+Don't be scared. This approach is as simple as scary it might sound.
+
+The trick is simple. To use bitwise `XOR` operation on all the elements. `XOR` would help to eliminate the alike and only leave the odd duckling.
+
+To understand how this works, let's brush up our `XOR` concepts first.
+
+```log
+    0 ^ 0 = 0
+    0 ^ 1 = 1
+    1 ^ 0 = 1
+    1 ^ 1 = 0
+```
+Look at how the similar ones just even out. This is what we would use to our advantage. When all the other similar `pairs` just even out or reduce to a zero, the different one would remain.
+
+Thus, the left over bits after `XOR`ing all the characters from string s and string `t` would be from the extra character of string `t`.
+
+<img src="images/String/findTheDifferenceSolution3.png" width="800" height="300" />
+
+**Algorithm**
+
+* Initialize a variable `ch` which would hold the `XOR`ed results.
+
+* `XOR` all the characters with `ch` while iterating through string `s`.
+
+* `XOR` all the characters with `ch` while iterating through string `t`. (Alternatively, we could have also combined steps 2 and 3).
+
+* Return `ch` as the answer.
+
+#### Implementation
+
+```java
+class Solution {
+    public char findTheDifference(String s, String t) {
+
+        // Initialize ch with 0, because 0 ^ X = X
+        // 0 when XORed with any bit would not change the bits value.
+        char ch = 0;
+
+        // XOR all the characters of both s and t.
+        for (int i = 0; i < s.length(); i += 1) {
+            ch ^= s.charAt(i);
+        }
+        for (int i = 0; i < t.length(); i += 1) {
+            ch ^= t.charAt(i);
+        }
+
+        // What is left after XORing everything is the difference.
+        return ch;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(N), where N is length of the strings. Since, we iterate through both the strings once.
+
+**Space Complexity:** O(1).
+
+### Solution 4 : Using array as a map
+
+#### Implementation
+
+```java
+var count = new short[26];
+for (int i=0; i<s.length(); i++) {
+	count[s.charAt(i) - 'a']++;
+	count[t.charAt(i) - 'a']--;
+}
+count[t.charAt(t.length() - 1) - 'a']--;  // since t.length() = s.length() + 1
+for (int i=0; i<count.length; i++) {
+	if (count[i] < 0) {
+		return (char)('a' + i);
+	}
+}
+return (char)0;
+```
+
+
+
+
+
+
+---
+
 
 ## More Details: 
 1. [Reverse-string Java, Simple Multiple solutions w/explanations!](https://leetcode.com/problems/reverse-string/discuss/275116/Java-Simple-Multiple-solutions-wexplanations!)

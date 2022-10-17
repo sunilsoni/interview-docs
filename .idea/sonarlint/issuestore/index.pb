@@ -22,8 +22,6 @@ E
 _layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
 Q
 !docs/algorithms/data-structure.md,1/1/11dc0031e207270142fbe0a210e7f3d9628feeeb
-V
-&docs/algorithms/dynamic-programming.md,a/2/a21391f3c3f284771010826798b24faddbaddd21
 N
 docs/algorithms/linked-list.md,7/0/70516a2103d45e3a7280cf61d048453c5d327688
 H
@@ -114,3 +112,5 @@ U
 %docs/ system-design /system-design.md,2/9/2998bce4e3574a9efede17e74673fc18b47b8aee
 H
 docs/java/java-basics.md,6/8/68444e4c966ddb261cccd19be55523357145de73
+A
+docs/java/Java.md,d/e/de418fc77c20469d2a13acceba21fc24fe95896c
