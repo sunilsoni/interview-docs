@@ -459,6 +459,60 @@ Improve upon the recursive approach by using iteration, still solving for all of
 * Otherwise, iterate through N, storing each computed answer in an array along the way.
 * Use this array as a reference to the 2 previous numbers to calculate the current Fibonacci number.
 * Once we've reached the last number, return it's Fibonacci number.
+
+#### Implementation
+
+```java
+class Solution {
+    public int fib(int N) {
+        if (N <= 1) {
+            return N;
+        }
+                  
+        int[] cache = new int[N + 1];
+        cache[1] = 1;
+        for (int i = 2; i <= N; i++) {
+            cache[i] = cache[i - 1] + cache[i - 2];
+        }
+    
+        return cache[N];
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(N). Each number, starting at 2 up to and including N, is visited, computed and then stored for O(1) access later on.
+
+**Space complexity:** O(N). The size of the data structure is proportional to N.
+
+### Solution 3 : Top-Down Approach using Memoization
+
+**Intuition**
+
+Solve for all of the sub-problems, use memoization to store the pre-computed answers, then return the answer for N. We will leverage recursion, but in a smarter way by not repeating the work to calculate existing values.
+
+**Algorithm**
+
+* At first, create a map with 0 -> 0 and 1 -> 1 pairs.
+* Call `fib(N)` function.
+     1. At every recursive call of `fib(N)`, if N exists in the map, return the cached value for N.
+     2. Otherwise, set the key N, in our mapping, to the value of fib(N - 1) + fib(N - 2) and return the computed value.
+
+#### Implementation
+```java
+class Solution {
+    // Creating a hash map with 0 -> 0 and 1 -> 1 pairs
+    private Map<Integer, Integer> cache = new HashMap<>(Map.of(0, 0, 1, 1));
+
+    public int fib(int N) {
+        if (cache.containsKey(N)) {
+            return cache.get(N);
+        }
+        cache.put(N, fib(N - 1) + fib(N - 2));
+        return cache.get(N);
+    }
+}
+```
 ## More Details: 
 1. [Palindrome Number - Leetcode #9 Short & Simple Solution](https://www.code-recipe.com/post/palindrome-number)
 2. [Generating Prime Numbers in Java](https://www.baeldung.com/java-generate-prime-numbers)
