@@ -590,7 +590,7 @@ In order to do this we can rely on the matrix equation for the Fibonacci sequenc
 
 #### Implementation
 
-```java
+```log
 class Solution {
     int fib(int N) {
         if (N <= 1) {
