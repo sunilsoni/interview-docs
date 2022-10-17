@@ -541,6 +541,44 @@ Let's get rid of the need to use all of that space and instead use the minimum a
 * When we reach N+1, we will exit the loop and return the previously set current value.
 
 #### Implementation
+
+
+```java
+class Solution {
+    public int fib(int N) {
+        if (N <= 1) {
+            return N;
+        }
+
+        int current = 0;
+        int prev1 = 1;
+        int prev2 = 0;
+
+        for (int i = 2; i <= N; i++) {
+            current = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = current;
+        }
+        return current;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(N). Each value from 2 to N is computed once. Thus, the time it takes to find the answer is directly proportional to N where N is the Fibonacci Number we are looking to compute.
+
+**Space complexity:** O(1). This requires 1 unit of space for the integer N and 3 units of space to store the computed values (current, prev1, and prev2) for every loop iteration. The amount of space used is independent of N, so this approach uses a constant amount of space.
+
+### Solution 5 : Matrix Exponentiation
+
+**Intuition**
+
+Use Matrix Exponentiation to get the Fibonacci number from the element at (0, 0) in the resultant matrix.
+
+In order to do this we can rely on the matrix equation for the Fibonacci sequence, to find the `Nth` Fibonacci number:
+
+ <img src="images/integer/MatrixExponentiation.png" width="200" height="100" />
 ## More Details: 
 1. [Palindrome Number - Leetcode #9 Short & Simple Solution](https://www.code-recipe.com/post/palindrome-number)
 2. [Generating Prime Numbers in Java](https://www.baeldung.com/java-generate-prime-numbers)
