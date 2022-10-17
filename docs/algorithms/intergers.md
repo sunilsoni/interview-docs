@@ -588,6 +588,14 @@ In order to do this we can rely on the matrix equation for the Fibonacci sequenc
 * Within matrixPower, call the multiply function to multiply 2 matrices.
 * Once we finish doing the calculations, return A[0][0] to get the Nth Fibonacci number.
 
+#### Implementation
+
+```java
+class Solution {
+
+    
+}
+```
 #### Complexity Analysis
 
 **Time complexity:** O(logN). By halving the N value in every matrixPower's call to itself, we are halving the work needed to be done.
