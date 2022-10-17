@@ -377,6 +377,7 @@ class Solution {
 ## Fibonacci Number
 
 The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,
+
 ```log
 F(0) = 0, F(1) = 1
 F(n) = F(n - 1) + F(n - 2), for n > 1.
@@ -385,6 +386,7 @@ F(n) = F(n - 1) + F(n - 2), for n > 1.
 Given n, calculate F(n).
 
 **Example 1:**
+
 ```log
 Input: n = 2
 Output: 1
@@ -392,6 +394,7 @@ Explanation: F(2) = F(1) + F(0) = 1 + 0 = 1.
 ```
 
 **Example 2:**
+
 ```log
 Input: n = 3
 Output: 2
@@ -441,6 +444,7 @@ public class Solution {
     }
 }
 ```
+
 #### Complexity Analysis
 
 * **Time complexity:** O(2^N). This is the slowest way to solve the Fibonacci Sequence because it takes exponential time. The amount of operations needed, for each level of recursion, grows exponentially as the depth approaches N.
@@ -479,6 +483,7 @@ class Solution {
     }
 }
 ```
+
 #### Complexity Analysis
 
 **Time complexity:** O(N). Each number, starting at 2 up to and including N, is visited, computed and then stored for O(1) access later on.
@@ -499,6 +504,7 @@ Solve for all of the sub-problems, use memoization to store the pre-computed ans
      2. Otherwise, set the key N, in our mapping, to the value of fib(N - 1) + fib(N - 2) and return the computed value.
 
 #### Implementation
+
 ```java
 class Solution {
     // Creating a hash map with 0 -> 0 and 1 -> 1 pairs
@@ -562,7 +568,9 @@ class Solution {
         return current;
     }
 }
+
 ```
+
 #### Complexity Analysis
 
 **Time complexity:** O(N). Each value from 2 to N is computed once. Thus, the time it takes to find the answer is directly proportional to N where N is the Fibonacci Number we are looking to compute.
@@ -581,6 +589,13 @@ In order to do this we can rely on the matrix equation for the Fibonacci sequenc
  <img src="images/integer/MatrixExponentiation.png" width="200" height="100" />
 
 
+**Algorithm**
+
+* Check if N is less than or equal to 1. If it is, return N.
+* Use a recursive function, matrixPower, to calculate the power of a given matrix A. The power will be N-1, where N is the `Nth` Fibonacci number.
+* The matrixPower function will be performed for N/2 of the Fibonacci numbers.
+* Within matrixPower, call the multiply function to multiply 2 matrices.
+* Once we finish doing the calculations, return  `A{0}{0}` to get the Nth Fibonacci number.
 
 #### Implementation
 
