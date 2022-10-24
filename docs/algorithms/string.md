@@ -1300,6 +1300,36 @@ class Solution {
 
 **Space Complexity:** O(NK), the total information content stored in ans.
 
+### Solution 3 : Simple Java Solution Beats 99.05% 5ms
+
+#### Implementation
+
+```java
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String,List<String>> map=new HashMap<>();
+        
+        for(int i=0;i<strs.length;i++){
+            String s1=strs[i];
+            char[] arr=s1.toCharArray();
+            Arrays.sort(arr);
+            String str=new String(arr);
+            
+            if(map.containsKey(str)){
+                map.get(str).add(s1); 
+            }else{
+                map.put(str,new ArrayList<>());
+                map.get(str).add(s1);
+            }
+        }
+        return new ArrayList<>(map.values());
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(n * klog(k)) since we are sorting k characters n times in the loop.
+
 ---
 
 ## Find the Difference
@@ -1530,12 +1560,522 @@ for (int i=0; i<count.length; i++) {
 return (char)0;
 ```
 
+---
+
+## Valid Parenthesis String
+
+Given a string s containing only three types of characters: `'(', ')'` and `'*'`, return true if s is valid.
+
+The following rules define a valid string:
+
+* Any left parenthesis `'('` must have a corresponding right parenthesis `')'`.
+
+* Any right parenthesis `')'` must have a corresponding left parenthesis `'('`.
+
+* Left parenthesis `'('` must go before the corresponding right parenthesis `')'`.
+
+* `'*'` could be treated as a single right parenthesis `')'` or a single left parenthesis `'('` or an empty string `""`.
+
+**Example 1:**
+```log
+Input: s = "()"
+Output: true
+```
+
+**Example 2:**
+```log
+Input: s = "(*)"
+Output: true
+```
+
+**Example 3:**
+```log
+Input: s = "(*))"
+Output: true
+```
+
+**Constraints:**
+```log
+1 <= s.length <= 100
+s[i] is '(', ')' or '*'.
+```
+
+### Solution 1 : Brute Force [Time Limit Exceeded]
+
+**Intuition and Algorithm**
+
+For each asterisk, let's try both possibilities.
+
+```java
+class Solution {
+    boolean ans = false;
+
+    public boolean checkValidString(String s) {
+        solve(new StringBuilder(s), 0);
+        return ans;
+    }
+
+    public void solve(StringBuilder sb, int i) {
+        if (i == sb.length()) {
+            ans |= valid(sb);
+        } else if (sb.charAt(i) == '*') {
+            for (char c: "() ".toCharArray()) {
+                sb.setCharAt(i, c);
+                solve(sb, i+1);
+                if (ans) return;
+            }
+            sb.setCharAt(i, '*');
+        } else
+            solve(sb, i + 1);
+    }
+
+    public boolean valid(StringBuilder sb) {
+        int bal = 0;
+        for (int i = 0; i < sb.length(); i++) {
+            char c = sb.charAt(i);
+            if (c == '(') bal++;
+            if (c == ')') bal--;
+            if (bal < 0) break;
+        }
+        return bal == 0;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N * 3^{N}), where N is the length of the string. For each asterisk we try 3 different values. Thus, we could be checking the validity of up to 3^N strings. Then, each check of validity is O(N).
+
+**Space Complexity:** O(N), the space used by our character array.
+
+### Solution 2 : Dynamic Programming [Accepted]
+
+**Intuition and Algorithm**
+
+Let `dp[i][j]` be true if and only if the interval `s[i], s[i+1], ..., s[j]` can be made valid. Then `dp[i][j]` is true only if:
+
+`s[i]` is `'*'`, and the interval `s[i+1], s[i+2], ..., s[j]` can be made valid;
+
+or, `s[i]` can be made to be `'('`, and there is some k in `[i+1, j]` such that `s[k]` can be made to be `')'`, plus the two intervals cut by `s[k]` `(s[i+1: k]` and `s[k+1: j+1])` can be made valid;
+
+```java
+class Solution {
+    public boolean checkValidString(String s) {
+        int n = s.length();
+        if (n == 0) return true;
+        boolean[][] dp = new boolean[n][n];
+
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '*') dp[i][i] = true;
+            if (i < n-1 &&
+                    (s.charAt(i) == '(' || s.charAt(i) == '*') &&
+                    (s.charAt(i+1) == ')' || s.charAt(i+1) == '*')) {
+                dp[i][i+1] = true;
+            }
+        }
+
+        for (int size = 2; size < n; size++) {
+            for (int i = 0; i + size < n; i++) {
+                if (s.charAt(i) == '*' && dp[i+1][i+size] == true) {
+                    dp[i][i+size] = true;
+                } else if (s.charAt(i) == '(' || s.charAt(i) == '*') {
+                    for (int k = i+1; k <= i+size; k++) {
+                        if ((s.charAt(k) == ')' || s.charAt(k) == '*') &&
+                                (k == i+1 || dp[i+1][k-1]) &&
+                                (k == i+size || dp[k+1][i+size])) {
+                            dp[i][i+size] = true;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[0][n-1];
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N^3), where N is the length of the string. There are O(N^2) states corresponding to entries of dp, and we do an average of O(N) work on each state.
+
+**Space Complexity:** O(N^2), the space used to store intermediate results in dp.
 
 
+### Solution 3 : Greedy [Accepted]
 
+**Intuition**
 
+When checking whether the string is valid, we only cared about the "balance": the number of extra, open left brackets as we parsed through the string. For example, when checking whether `'(()())'` is valid, we had a balance of `1, 2, 1, 2, 1, 0` as we parse through the string: `'('` has 1 left bracket, `'(('` has 2, `'(()'` has 1, and so on. This means that after parsing the first i symbols, (which may include asterisks,) we only need to keep track of what the balance could be.
+
+For example, if we have string `'(***)'`, then as we parse each symbol, the set of possible values for the balance is `[1]` for `'('`; `[0, 1, 2]` for `'(*'`; `[0, 1, 2, 3]` for `'(**'`; `[0, 1, 2, 3, 4]` for `'(***'`, and `[0, 1, 2, 3]` for `'(***)'`.
+
+Furthermore, we can prove these states always form a contiguous interval. Thus, we only need to know the left and right bounds of this interval. That is, we would keep those intermediate states described above as `[lo, hi] = [1, 1], [0, 2], [0, 3], [0, 4], [0, 3]`.
+
+**Algorithm**
+
+Let `lo, hi` respectively be the smallest and largest possible number of open left brackets after processing the current character in the string.
+
+If we encounter a left bracket `(c == '(')`, then `lo++`, otherwise we could write a right bracket, so `lo--`. If we encounter what can be a left bracket `(c != ')')`, then `hi++`, otherwise we must write a right bracket, so `hi--`. If `hi < 0`, then the current prefix can't be made valid no matter what our choices are. Also, we can never have less than 0 open left brackets. At the end, we should check that we can have exactly 0 open left brackets.
+
+```java
+class Solution {
+    public boolean checkValidString(String s) {
+       int lo = 0, hi = 0;
+       for (char c: s.toCharArray()) {
+           lo += c == '(' ? 1 : -1;
+           hi += c != ')' ? 1 : -1;
+           if (hi < 0) break;
+           lo = Math.max(lo, 0);
+       }
+       return lo == 0;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N), where N is the length of the string. We iterate through the string once.
+
+**Space Complexity:** O(1), the space used by our `lo` and `hi` pointers. However, creating a new character array will take O(N) space.
 
 ---
+
+## Remove Invalid Parentheses
+
+Given a string s that contains parentheses and letters, remove the minimum number of invalid parentheses to make the input string valid.
+
+Return all the possible results. You may return the answer in any order.
+
+**Example 1:**
+```log
+Input: s = "()())()"
+Output: ["(())()","()()()"]
+```
+
+**Example 2:**
+```log
+Input: s = "(a)())()"
+Output: ["(a())()","(a)()()"]
+```
+
+**Example 3:**
+```log
+Input: s = ")("
+Output: [""]
+```
+
+**Constraints:**
+```log
+1 <= s.length <= 25
+s consists of lowercase English letters and parentheses '(' and ')'.
+There will be at most 20 parentheses in s.
+```
+
+### Solution 1 : Backtracking
+
+**Algorithm**
+
+* Initialize an array that will store all of our valid expressions finally.
+
+* Start with the leftmost bracket in the given sequence and proceed right in the recursion.
+
+* The state of recursion is defined by the index which we are currently processing in the original expression. Let this index be represented by the character i. Also, we have two different variables `left_count` and `right_count` that represent the number of left and right parentheses we have added to our expression till now. These are the parentheses that were considered.
+
+* If the current character i.e. `S[i]` (considering S is the expression string) is neither a closing or an opening parenthesis, then we simply add this character to our final solution string for the current recursion.
+
+* However, if the current character is either of the two brackets i.e. `S[i] == '(' or S[i] == ')'`, then we have two options. We can either discard this character by marking it an invalid character or we can consider this bracket to be a part of the final expression.
+
+* When all of the parentheses in the original expression have been processed, we simply check if the expression represented by expr i.e. the expression formed till now is valid one or not. The way we check if the final expression is valid or not is by looking at the values in `left_count` and `right_count`. For an expression to be valid `left_count == right_count`. If it is indeed valid, then it could be one of our possible solutions.
+ 
+   - Even though we have a valid expression, we also need to keep track of the number of removals we did to get this expression. This is done by another variable passed in recursion called `rem_count`.
+
+   - Once recursion finishes we check if the current value of `rem_count` is < the least number of steps we took to form a valid expression till now i.e. the global minima. If this is not the case, we don't record the new expression, else we record it.
+
+
+One small optimization that we can do from an implementation perspective is introducing some sort of pruning in our algorithm. Right now we simply go till the very end i.e. process all of the parentheses and when we are done processing all of them, we check if the expression we have can be considered or not.
+
+We have to wait till the very end to decide if the expression formed in recursion is a valid expression or not. Is there a way for us to cutoff from some of the recursion paths early on because they wouldn't lead to a solution? The answer to this is Yes! The optimization is based on the following idea.
+
+For a left bracket encountered during recursion, if we decide to consider it, then it may or may not lead to an invalid final expression. It may lead to an invalid expression eventually if there are no matching closing bracket available afterwards. But, we don't know for sure if this will happen or not.
+
+     However, for a closing bracket, if we decide to keep it as a part of our final expression (remember for every bracket we have two options, either to keep it or to remove it and recurse further) and there is no corresponding opening bracket to match it in the expression till now, then it will definitely lead to an invalid expression no matter what we do afterwards.
+
+e.g.
+
+     ( (  ) ) )
+
+In this case the third closing bracket will make the expression invalid. No matter what comes afterwards, this will give us an invalid expression and if such a thing happens, we shouldn't recurse further and simply prune the recursion tree.
+
+That is why, in addition to having the index in the original string/expression which we are currently processing and the expression string formed till now, we also keep track of the number of left and right parentheses. Whenever we keep a left parenthesis in the expression, we increment its counter. For a right parenthesis, we check if `right_count < left_count`. If this is the case then only we consider that right parenthesis and recurse further. Otherwise we don't as we know it will make the expression invalid. This simple optimization saves a lot of runtime.
+
+Now, let us look at the implementation for this algorithm.
+
+```java
+class Solution {
+
+  private Set<String> validExpressions = new HashSet<String>();
+  private int minimumRemoved;
+
+  private void reset() {
+    this.validExpressions.clear();
+    this.minimumRemoved = Integer.MAX_VALUE;
+  }
+
+  private void recurse(
+      String s,
+      int index,
+      int leftCount,
+      int rightCount,
+      StringBuilder expression,
+      int removedCount) {
+
+    // If we have reached the end of string.
+    if (index == s.length()) {
+
+      // If the current expression is valid.
+      if (leftCount == rightCount) {
+
+        // If the current count of removed parentheses is <= the current minimum count
+        if (removedCount <= this.minimumRemoved) {
+
+          // Convert StringBuilder to a String. This is an expensive operation.
+          // So we only perform this when needed.
+          String possibleAnswer = expression.toString();
+
+          // If the current count beats the overall minimum we have till now
+          if (removedCount < this.minimumRemoved) {
+            this.validExpressions.clear();
+            this.minimumRemoved = removedCount;
+          }
+          this.validExpressions.add(possibleAnswer);
+        }
+      }
+    } else {
+
+      char currentCharacter = s.charAt(index);
+      int length = expression.length();
+
+      // If the current character is neither an opening bracket nor a closing one,
+      // simply recurse further by adding it to the expression StringBuilder
+      if (currentCharacter != '(' && currentCharacter != ')') {
+        expression.append(currentCharacter);
+        this.recurse(s, index + 1, leftCount, rightCount, expression, removedCount);
+        expression.deleteCharAt(length);
+      } else {
+
+        // Recursion where we delete the current character and move forward
+        this.recurse(s, index + 1, leftCount, rightCount, expression, removedCount + 1);
+        expression.append(currentCharacter);
+
+        // If it's an opening parenthesis, consider it and recurse
+        if (currentCharacter == '(') {
+          this.recurse(s, index + 1, leftCount + 1, rightCount, expression, removedCount);
+        } else if (rightCount < leftCount) {
+          // For a closing parenthesis, only recurse if right < left
+          this.recurse(s, index + 1, leftCount, rightCount + 1, expression, removedCount);
+        }
+
+        // Undoing the append operation for other recursions.
+        expression.deleteCharAt(length);
+      }
+    }
+  }
+
+  public List<String> removeInvalidParentheses(String s) {
+
+    this.reset();
+    this.recurse(s, 0, 0, 0, new StringBuilder(), 0);
+    return new ArrayList(this.validExpressions);
+  }
+}
+```
+#### Complexity analysis
+
+**Time Complexity :** O(2^N) since in the worst case we will have only left parentheses in the expression and for every bracket we will have two options i.e. whether to remove it or consider it. Considering that the expression has N parentheses, the time complexity will be O(2^N).
+
+**Space Complexity :** O(N) because we are resorting to a recursive solution and for a recursive solution there is always stack space used as internal function states are saved onto a stack during recursion. The maximum depth of recursion decides the stack space used. Since we process one character at a time and the base case for the recursion is when we have processed all of the characters of the expression string, the size of the stack would be O(N). Note that we are not considering the space required to store the valid expressions. We only count the intermediate space here.
+
+### Solution 2 : Limited Backtracking!
+
+**Algorithm**
+
+The overall algorithm remains exactly the same as before. The changes that we will incorporate are listed below:
+
+* The state of the recursion is now defined by five different variables:
+  1. index which represents the current character that we have to process in the original string.
+  
+  2. `left_count` which represents the number of left parentheses that have been added to the expression we are building.
+  
+  3. `right_count` which represents the number of right parentheses that have been added to the expression we are building.
+
+  4. `left_rem` is the number of left parentheses that remain to be removed.
+
+  5. `right_rem` represents the number of right parentheses that remain to be removed. Overall, for the final expression to be valid, `left_rem == 0` and `right_rem == 0`.
+
+* When we decide to not consider a parenthesis i.e. delete a parenthesis, be it a left or a right parentheses, we have to consider their corresponding remaining counts as well. This means that we can only discard a left parentheses if `left_rem > 0` and similarly for the right one we will check for `right_rem > 0`.
+
+* There are no changes to checks for **considering** a parenthesis. Only the conditions change for **discarding** a parenthesis.
+
+* Condition for an expression being valid in the base case would now become `left_rem == 0` and `right_rem == 0`. Note that we don't have to check if `left_count == right_count` anymore because in the case of a valid expression, we would have removed all the misplaced or invalid parenthesis by the time the recursion ends. So, the only check we need if `left_rem == 0` and `right_rem == 0`.
+
+
+    The most important thing here is that we have completely gotten rid of checking if the number of parentheses removed is lesser than the current minimum or not. The reason for this is we always remove the same number of parentheses as defined by left_rem + right_rem at the start of recursion.
+
+#### Implementation 
+
+```java
+class Solution {
+
+  private Set<String> validExpressions = new HashSet<String>();
+
+  private void recurse(
+      String s,
+      int index,
+      int leftCount,
+      int rightCount,
+      int leftRem,
+      int rightRem,
+      StringBuilder expression) {
+
+    // If we reached the end of the string, just check if the resulting expression is
+    // valid or not and also if we have removed the total number of left and right
+    // parentheses that we should have removed.
+    if (index == s.length()) {
+      if (leftRem == 0 && rightRem == 0) {
+        this.validExpressions.add(expression.toString());
+      }
+
+    } else {
+      char character = s.charAt(index);
+      int length = expression.length();
+
+      // The discard case. Note that here we have our pruning condition.
+      // We don't recurse if the remaining count for that parenthesis is == 0.
+      if ((character == '(' && leftRem > 0) || (character == ')' && rightRem > 0)) {
+        this.recurse(
+            s,
+            index + 1,
+            leftCount,
+            rightCount,
+            leftRem - (character == '(' ? 1 : 0),
+            rightRem - (character == ')' ? 1 : 0),
+            expression);
+      }
+
+      expression.append(character);
+
+      // Simply recurse one step further if the current character is not a parenthesis.
+      if (character != '(' && character != ')') {
+
+        this.recurse(s, index + 1, leftCount, rightCount, leftRem, rightRem, expression);
+
+      } else if (character == '(') {
+
+        // Consider an opening bracket.
+        this.recurse(s, index + 1, leftCount + 1, rightCount, leftRem, rightRem, expression);
+
+      } else if (rightCount < leftCount) {
+
+        // Consider a closing bracket.
+        this.recurse(s, index + 1, leftCount, rightCount + 1, leftRem, rightRem, expression);
+      }
+
+      // Delete for backtracking.
+      expression.deleteCharAt(length);
+    }
+  }
+
+  public List<String> removeInvalidParentheses(String s) {
+
+    int left = 0, right = 0;
+
+    // First, we find out the number of misplaced left and right parentheses.
+    for (int i = 0; i < s.length(); i++) {
+
+      // Simply record the left one.
+      if (s.charAt(i) == '(') {
+        left++;
+      } else if (s.charAt(i) == ')') {
+        // If we don't have a matching left, then this is a misplaced right, record it.
+        right = left == 0 ? right + 1 : right;
+
+        // Decrement count of left parentheses because we have found a right
+        // which CAN be a matching one for a left.
+        left = left > 0 ? left - 1 : left;
+      }
+    }
+
+    this.recurse(s, 0, 0, 0, left, right, new StringBuilder());
+    return new ArrayList<String>(this.validExpressions);
+  }
+}
+```
+
+#### Complexity analysis
+
+**Time Complexity :** The optimization that we have performed is simply a better form of pruning. Pruning here is something that will vary from one test case to another. In the worst case, we can have something like `(((((((((` and the `left_rem = len(S)` and in such a case we can discard all of the characters because all are misplaced. So, in the worst case we still have 2 options per parenthesis and that gives us a complexity of O(2^N).
+
+**Space Complexity :** The space complexity remains the same i.e. O(N) as previous solution. We have to go to a maximum recursion depth of N before hitting the base case. Note that we are not considering the space required to store the valid expressions. We only count the intermediate space here.
+
+### Solution 3 : Optimized Backtracking
+
+#### Implementation
+
+```java
+class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        List<String> ans=new ArrayList<>();
+        HashSet<String> set=new HashSet<String>();
+        
+        int minBracket=removeBracket(s);
+        getAns(s, minBracket,set,ans);
+        
+        return ans;
+    }
+    
+    public void getAns(String s, int minBracket, HashSet<String> set, List<String> ans){
+        if(set.contains(s)) return;
+        
+        set.add(s);
+        
+        if(minBracket==0){
+            int remove=removeBracket(s);   
+            if(remove==0) ans.add(s);
+            return;
+        }
+        
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)!='(' && s.charAt(i)!=')') continue;
+            String L=s.substring(0,i);
+            String R=s.substring(i+1);
+            
+            if(!set.contains(L+R)) getAns(L+R,minBracket-1,set,ans);
+        }
+    }
+    
+    public int removeBracket(String s){
+        Stack<Character> stack=new Stack<>();
+        
+        for(int i=0;i<s.length();i++){
+            char x=s.charAt(i);
+            
+            if(x=='(') stack.push(x);
+            else if(x==')'){
+                if(!stack.isEmpty() && stack.peek()=='(') stack.pop();
+                else stack.push(x);
+            } 
+        }
+        return stack.size();
+    }
+}
+```
+
+---
+
+
+
+
+
 
 
 ## More Details: 

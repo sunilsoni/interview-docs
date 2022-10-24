@@ -1038,6 +1038,441 @@ class Solution {
 
 **Space complexity :** O(1).
 
+---
+
+## Find All Numbers Disappeared in an Array
+
+Given an array `nums` of n integers where `nums[i]` is in the range `[1, n]`, return an array of all the integers in the range `[1, n]` that do not appear in `nums`.
+
+**Example 1:**
+```log
+Input: nums = [4,3,2,7,8,2,3,1]
+Output: [5,6]
+```
+
+**Example 2:**
+```log
+Input: nums = [1,1]
+Output: [2]
+```
+
+**Constraints:**
+```log
+n == nums.length
+1 <= n <= 105
+1 <= nums[i] <= n
+```
+
+### Solution 1 : Using Hash Map
+
+**Intuition**
+
+The intuition behind using a hash map is pretty clear in this case. We are given that the array would be of size `N` and it should contain numbers from `1` to `N`. However, some of the numbers are missing. All we have to do is keep track of which numbers we encounter in the array and then iterate from 1⋯N and check which numbers did not appear in the hash table. Those will be our missing numbers.
+
+**Algorithm**
+
+1. Initialize a hash map, hash to keep track of the numbers that we encounter in the array. Note that we can use a set data structure as well in this case since we are not concerned about the frequency counts of elements.
+
+ <img src="images/NumDisappearInArray(1).png" width="500" height="300" />
+
+      Note that for the purposes of illustration, we have use a hash map of size 14 and have ordered the keys of the hash map from 0 to 14. Also, we will be using a simple hash function that directly maps the array entries to their corresponding keys in the hash map. Usually, the mapping is not this simple and is dependent upon the hash function being used in the implementation of the hash map.
+
+
+2. Next, iterate over the given array one element at a time and for each element, insert an entry in the hash map. Even if an entry were to exist before in the hash map, it will simply be over-written. For the above example, let's look at the final state of the hash map once we process the last element of the array.
+
+<img src="images/NumDisappearInArray(2).png" width="500" height="300" />
+
+3. Now that we know the unique set of elements from the array, we can simply find out the missing elements from the range 1⋯N.
+
+4. Iterate over all the numbers from 1⋯N and for each number, check if there's an entry in the hash map. If there is no entry, add that missing number to a result array that we will return from the function eventually.
+
+#### Implementation 
+```java
+class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        
+        // Hash table for keeping track of the numbers in the array
+        // Note that we can also use a set here since we are not 
+        // really concerned with the frequency of numbers.
+        HashMap<Integer, Boolean> hashTable = new HashMap<Integer, Boolean>();
+        
+        // Add each of the numbers to the hash table
+        for (int i = 0; i < nums.length; i++) {
+            hashTable.put(nums[i], true);
+        }
+        
+        // Response array that would contain the missing numbers
+        List<Integer> result = new LinkedList<Integer>();
+        
+        // Iterate over the numbers from 1 to N and add all those
+        // that don't appear in the hash table. 
+        for (int i = 1; i <= nums.length; i++) {
+            if (!hashTable.containsKey(i)) {
+                result.add(i);
+            }
+        }
+        
+        return result;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity :** O(N)
+
+**Space Complexity :** O(N)
+
+### Solution 2 : O(1) Space InPlace Modification Solution
+
+**Intuition**
+
+We definitely need to keep track of all the unique numbers that appear in the array. However, we don't want to use any extra space for it. This solution that we will look at in just a moment springs from the fact that
+
+    All the elements are in the range [1, N]
+
+Since we are given this information, we can make use of the input array itself to somehow mark visited numbers and then find our missing numbers. Now, we don't want to change the actual data in the array but who's stopping us from changing the magnitude of numbers in the array? That is the basic idea behind this algorithm.
+
+    We will be negating the numbers seen in the array and use the sign of each of the numbers for finding our missing numbers. We will be treating numbers in the array as indices and mark corresponding locations in the array as negative.
+
+**Algorithm**
+
+1. Iterate over the input array one element at a time.
+
+2. For each element `nums[i]`, mark the element at the corresponding location negative if it's not already marked so i.e. ***nums[nums[i]−1]×−1*** .
+
+3. Now, loop over numbers from 1⋯N and for each number check if `nums[j]` is negative. If it is negative, that means we've seen this number somewhere in the array.
+
+4. Add all the numbers to the resultant array which don't have their corresponding locations marked as negative in the original array.
+
+#### Implementation 
+```java
+class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        
+        // Iterate over each of the elements in the original array
+        for (int i = 0; i < nums.length; i++) {
+            
+            // Treat the value as the new index
+            int newIndex = Math.abs(nums[i]) - 1;
+            
+            // Check the magnitude of value at this new index
+            // If the magnitude is positive, make it negative 
+            // thus indicating that the number nums[i] has 
+            // appeared or has been visited.
+            if (nums[newIndex] > 0) {
+                nums[newIndex] *= -1;
+            }
+        }
+        
+        // Response array that would contain the missing numbers
+        List<Integer> result = new LinkedList<Integer>();
+        
+        // Iterate over the numbers from 1 to N and add all those
+        // that have positive magnitude in the array
+        for (int i = 1; i <= nums.length; i++) {
+            
+            if (nums[i - 1] > 0) {
+                result.add(i);
+            }
+        }
+        
+        return result;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity :** O(N)
+
+**Space Complexity :** O(1) since we are reusing the input array itself as a hash table and the space occupied by the output array doesn't count toward the space complexity of the algorithm.
+
+### Solution 3 : Java solution [100%]
+
+I simply allocated a separate index for each number, then checked which indexes are zero - these are our numbers we are looking for.
+
+#### Implementation
+
+```java
+public List<Integer> findDisappearedNumbers(int[] nums) {
+	int[] res = new int[nums.length + 1];
+
+	for (int num : nums) {
+		res[num] = num;
+	}
+
+	List<Integer> result = new ArrayList<>(res.length);
+	for (int i = 1; i < res.length; i++) {
+		if (res[i] == 0) {
+			result.add(i);
+		}
+	}
+
+	return result;
+}
+```
+
+---
+
+## Find All Duplicates in an Array
+
+Given an integer array `nums` of length n where all the integers of `nums` are in the range [1, n] and each integer appears once or twice, return an array of all the integers that appears twice.
+
+You must write an algorithm that runs in O(n) time and uses only constant extra space.
+
+
+
+**Example 1:**
+
+```log
+Input: nums = [4,3,2,7,8,2,3,1]
+Output: [2,3]
+```
+
+
+**Example 2:**
+
+```log
+Input: nums = [1,1,2]
+Output: [1]
+```
+
+
+**Example 3:**
+
+```log
+Input: nums = [1]
+Output: []
+```
+
+
+**Constraints:**
+
+```log
+n == nums.length
+1 <= n <= 105
+1 <= nums[i] <= n
+Each element in nums appears once or twice.
+```
+
+### Solution 1 : Brute Force
+
+**Intuition**
+
+Check for a second occurrence of every element in the rest of the array.
+
+**Algorithm**
+
+When we iterate over the elements of the input array, we can simply look for any other occurrence of the current element in the rest of the array.
+
+Since an element can only occur once or twice, we don't have to worry about getting duplicates of elements that appear twice:
+
+ - Case - I: If an element occurs only once in the array, when you look for it in the rest of the array, you'll find nothing.
+
+ - Case - II: If an element occurs twice, you'll find the second occurrence of the element in the rest of the array. When you chance upon the second occurrence in a later iteration, it'd be the same as Case - I (since there are no more occurrences of this element in the rest of the array).
+
+#### Implementation
+
+```java
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j] == nums[i]) {
+                    ans.add(nums[i]);
+                    break;
+                }
+            }
+        }
+
+        return ans;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** {O}(n^2). For each element in the array, we search for another occurrence in the rest of the array. Hence, for the i^{th} element in the array, we might end up looking through all n - i remaining elements in the worst case. So, we can end up going through about n^2 elements in the worst case.
+
+ <img src="images/FindDuplicateArray.png" width="600" height="50" />
+
+**Space complexity :** No extra space required, other than the space for the output list.
+
+
+### Solution 2 : Sort and Compare Adjacent Elements
+
+**Intuition**
+
+After sorting a list of elements, all elements of equivalent value get placed together. Thus, when you sort an array, equivalent elements form contiguous blocks.
+
+**Algorithm**
+
+  * Sort the array.
+
+  * Compare every element with it's neighbors. If an element occurs more than once, it'll be equal to at-least one of it's neighbors.
+
+To simplify:
+
+1. Compare every element with its predecessor.
+
+   * Obviously the first element doesn't have a predecessor, so we can skip it.
+
+2. Once we've found a match with a predecessor, we can skip the next element entirely!
+
+   * Why? Well, if an element matches with its predecessor, it cannot possibly match with its successor as well. Thus, the next iteration (i.e. comparison between the next element and the current element) can be safely skipped.
+
+#### Implementation 
+
+```java
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+
+        Arrays.sort(nums);
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == nums[i - 1]) {
+                ans.add(nums[i]);
+                i++;        // skip over next element
+            }
+        }
+
+        return ans;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(nlogn)+O(n)≃O(nlogn).
+
+A performant comparison-based sorting algorithm will run in O(nlogn) time. Note that this can be reduced to O(n) using a special sorting algorithm like Radix Sort.
+
+Traversing the array after sorting takes linear time i.e. O(n).
+
+**Space complexity :** No extra space required, other than the space for the output list. Sorting can be done in-place.
+
+### Solution 3 : Store Seen Elements in a Set / Map
+
+**Intuition**
+
+In Solution 1 we used two loops (one nested within the other) to look for two occurrences of an element. In almost all similar situations, you can usually substitute one of the loops with a set / map. Often, it's a worthy trade-off: for a bit of extra memory, you can reduce the order of your runtime complexity.
+
+**Algorithm**
+
+We store all elements that we've seen till now in a map / set. When we visit an element, we query the map / set to figure out if we've seen this element before.
+
+#### Implementation
+
+```java
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+        Set<Integer> seen = new HashSet<>();
+
+        for (int num : nums) {
+            if (seen.contains(num)) {
+                ans.add(num);
+            } else {
+                seen.add(num);
+            }
+        }
+
+        return ans;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(n) average case. O(n^2) worst case.
+
+It takes a linear amount of time to iterate through the array.
+
+Lookups in a hashset are constant time on average, however those can degrade to linear time in the worst case. Note that an alternative is to use tree-based sets, which give logarithmic time lookups always.
+
+**Space complexity :** Upto O(n) extra space required for the set.
+
+If you are tight on space, you can significantly reduce your physical space requirements by using bitsets [1] instead of sets. This data-structure requires just one bit per element, so you can be done in just nn bits of data for elements that go up-to nn. Of course, this doesn't reduce your space complexity: bitsets still grow linearly with the range of values that the elements can take.
+
+### Solution 4 : Mark Visited Elements in the Input Array itself
+
+**Intuition**
+
+All the above approaches have ignored a key piece of information in the problem statement:
+
+      The integers in the input array arr satisfy 1 ≤ arr[i] ≤ n, where n is the size of array. 
+
+
+This presents us with two key insights:
+
+1. All the integers present in the array are positive. i.e. `arr[i] > 0` for any valid index `i`. 
+
+2. The decrement of any integers present in the array must be an accessible index in the array.
+i.e. for any integer `x` in the array, `x-1` is a valid index, and thus, `arr[x-1]` is a valid reference to an element in the array.
+
+**Algorithm**
+
+1. Iterate over the array and for every element `x` in the array, negate the value at index `abs(x)-1`. 
+
+  - The negation operation effectively marks the value `abs(x)` as seen / visited.
+
+2. Iterate over the array again, for every element `x` in the array:
+
+  - If the value at index `abs(x)-1` is positive, it must have been negated twice. Thus `abs(x)` must have appeared twice in the array. We add `abs(x)` to the result.
+
+  - In the above case, when we reach the second occurrence of `abs(x)`, we need to avoid fulfilling this condition again. So, we'll additionally negate the value at index `abs(x)-1`.
+
+
+```java
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+
+        for (int num : nums) {
+            nums[Math.abs(num) - 1] *= -1;
+        }
+
+        for (int num : nums) {
+            if (nums[Math.abs(num) - 1] > 0) {
+                ans.add(Math.abs(num));
+                nums[Math.abs(num) - 1] *= -1;
+            }
+        }
+
+        return ans;
+    }
+}
+```
+Definitely! Notice that if an element `x` occurs just once in the array, the value at index `abs(x)-1` becomes negative and remains so for all of the iterations that follow.
+
+- Traverse through the array. When we see an element `x` for the first time, we'll negate the value at index `abs(x)-1`.
+
+- But, the next time we see an element `x`, we don't need to negate again! If the value at index `abs(x)-1` is already negative, we know that we've seen element `x` before.
+
+So, now we are relying on a single negation to mark the visited status of an element. This is similar to what we did in solution 3, except that we are re-using the array (with some smart negations) instead of a separate set.
+
+```java
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+
+        for (int num : nums) {
+            if (nums[Math.abs(num) - 1] < 0) { // seen before
+                ans.add(Math.abs(num));
+            }
+            nums[Math.abs(num) - 1] *= -1;
+        }
+
+        return ans;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(n). We iterate over the array twice. Each negation operation occurs in constant time.
+
+**Space complexity :** No extra space required, other than the space for the output list. We re-use the input array to store visited status.
 
 
 
