@@ -1073,14 +1073,14 @@ The intuition behind using a hash map is pretty clear in this case. We are given
 
 1. Initialize a hash map, hash to keep track of the numbers that we encounter in the array. Note that we can use a set data structure as well in this case since we are not concerned about the frequency counts of elements.
 
- <img src="images/NumDisappearInArray(1).png" width="500" height="300" />
+ <img src="images/NumDisappearInArray1.png" width="500" height="300" />
 
       Note that for the purposes of illustration, we have use a hash map of size 14 and have ordered the keys of the hash map from 0 to 14. Also, we will be using a simple hash function that directly maps the array entries to their corresponding keys in the hash map. Usually, the mapping is not this simple and is dependent upon the hash function being used in the implementation of the hash map.
 
 
 2. Next, iterate over the given array one element at a time and for each element, insert an entry in the hash map. Even if an entry were to exist before in the hash map, it will simply be over-written. For the above example, let's look at the final state of the hash map once we process the last element of the array.
 
-<img src="images/NumDisappearInArray(2).png" width="500" height="300" />
+<img src="images/NumDisappearInArray2.png" width="500" height="300" />
 
 3. Now that we know the unique set of elements from the array, we can simply find out the missing elements from the range 1⋯N.
 
