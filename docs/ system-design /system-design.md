@@ -25,6 +25,14 @@ categories: [System Design]
 
 ---
 
+## [System Design Interview Questions](https://github.com/sid24rane/System-Design-Interview-Questions)
+
+---
+
+## [System Design Interview Tips](https://github.com/checkcheckzz/system-design-interview)
+
+---
+
 ## [The System Design Primer](https://github.com/donnemartin/system-design-primer)
 
 ---
