@@ -4,7 +4,7 @@ title: Git
 parent: Miscellaneous
 resource: true
 desc: "HTTP methods overview interview questions and answers."
-categories: [HTTP methods overview]
+categories: [Git]
 ---
 
 # Git
