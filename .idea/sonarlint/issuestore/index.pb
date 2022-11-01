@@ -84,10 +84,6 @@ N
 docs/miscellaneous/cucumber.md,e/8/e840ce8d2dc974328fa821b030f713323ef2c824
 T
 $docs/miscellaneous/good-practices.md,c/6/c6da723436b1829ce20b45982c978bbe0f7f6a3c
-J
-docs/miscellaneous/http.md,b/f/bf9a98df73080c8a7d299bfa51af20ce953cb743
-J
-docs/miscellaneous/misc.md,4/8/48bdb2278012630f697cfbe6328733706290d206
 K
 docs/miscellaneous/owasp.md,9/8/987469032e7cd4aeaa999de41e93e35b07501f1e
 K
