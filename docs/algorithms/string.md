@@ -1560,6 +1560,35 @@ for (int i=0; i<count.length; i++) {
 return (char)0;
 ```
 
+### Solution 5 : Two very easy solutions
+
+#### Implementation 1 
+
+```java
+ public char findTheDifference(String s, String t) {
+    int result = 0;
+    for (int i = 0; i < s.length(); i++) {
+      //char - char the result is int
+      result += t.charAt(i) - s.charAt(i);
+    }
+    //use ASCII table to get the letter
+    return (char) (result + t.charAt(t.length() - 1));
+  }
+```
+#### Implementation 2
+
+```java
+  public char findTheDifference(String s, String t) {
+    int result = 0;
+    for (int i = 0; i < s.length(); i++) {
+      //use XOR,just like question 136
+      result ^= s.charAt(i);
+      result ^= t.charAt(i);
+    }
+    return (char) (result ^ t.charAt(t.length() - 1));
+  }
+```
+
 ---
 
 ## Valid Parenthesis String
@@ -2071,6 +2100,188 @@ class Solution {
 ```
 
 ---
+
+## Valid Palindrome
+
+A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+
+Given a string `s`, return `true` if it is a **palindrome**, or `false` otherwise.
+
+**Example 1:**
+
+```log
+Input: s = "A man, a plan, a canal: Panama"
+Output: true
+Explanation: "amanaplanacanalpanama" is a palindrome.
+```
+
+**Example 2:**
+
+```log
+Input: s = "race a car"
+Output: false
+Explanation: "raceacar" is not a palindrome.
+```
+
+**Example 3:**
+
+```log
+Input: s = " "
+Output: true
+Explanation: s is an empty string "" after removing non-alphanumeric characters.
+Since an empty string reads the same forward and backward, it is a palindrome.
+```
+
+**Constraints:**
+
+```log
+1 <= s.length <= 2 * 105
+s consists only of printable ASCII characters.
+```
+
+### Solution 1 : Compare with Reverse
+
+**Intuition**
+
+A palindrome is a word, phrase, or sequence that reads the same backwards as forwards. e.g. `madam`
+
+A palindrome, and its reverse, are identical to each other.
+
+**Algorithm**
+
+We'll reverse the given string and compare it with the original. If those are equivalent, it's a palindrome.
+
+Since only alphanumeric characters are considered, we'll filter out all other types of characters before we apply our algorithm.
+
+Additionally, because we're treating letters as case-insensitive, we'll convert the remaining letters to lower case. The digits will be left the same.
+
+#### Implementation 
+
+```java
+class Solution {
+  public boolean isPalindrome(String s) {
+    StringBuilder builder = new StringBuilder();
+
+    for (char ch : s.toCharArray()) {
+      if (Character.isLetterOrDigit(ch)) {
+        builder.append(Character.toLowerCase(ch));
+      }
+    }
+
+    String filteredString = builder.toString();
+    String reversedString = builder.reverse().toString();
+
+    return filteredString.equals(reversedString);
+  }
+
+  /** An alternate solution using Java 8 Streams */
+  public boolean isPalindromeUsingStreams(String s) {
+    StringBuilder builder = new StringBuilder();
+
+    s.chars()
+        .filter(c -> Character.isLetterOrDigit(c))
+        .mapToObj(c -> Character.toLowerCase((char) c))
+        .forEach(builder::append);
+
+    return builder.toString().equals(builder.reverse().toString());
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity** : O(n), in length nn of the string.
+
+We need to iterate thrice through the string:
+
+ * When we filter out non-alphanumeric characters, and convert the remaining characters to lower-case.
+
+ * When we reverse the string.
+
+ * When we compare the original and the reversed strings.
+
+Each iteration runs linear in time (since each character operation completes in constant time). Thus, the effective run-time complexity is linear.
+
+**Space complexity** : O(n), in length nn of the string. We need O(n) additional space to stored the filtered string and the reversed string.
+
+### Solution 2 : Two Pointers
+
+**Algorithm**
+
+Since the input string contains characters that we need to ignore in our palindromic check, it becomes tedious to figure out the real middle point of our palindromic input.
+
+    Instead of going outwards from the middle, we could just go inwards towards the middle!
+
+So, if we start traversing inwards, from both ends of the input string, we can expect to see the same characters, in the same order.
+
+The resulting algorithm is simple:
+
+  * Set two pointers, one at each end of the input string
+
+  * If the input is palindromic, both the pointers should point to equivalent characters, at all times. [1]
+
+     * If this condition is not met at any point of time, we break and return early. [2]
+
+  * We can simply ignore non-alphanumeric characters by continuing to traverse further.
+
+  * Continue traversing inwards until the pointers meet in the middle.
+
+#### Implementation 
+
+```java
+class Solution {
+  public boolean isPalindrome(String s) {
+    for (int i = 0, j = s.length() - 1; i < j; i++, j--) {
+      while (i < j && !Character.isLetterOrDigit(s.charAt(i))) {
+        i++;
+      }
+      while (i < j && !Character.isLetterOrDigit(s.charAt(j))) {
+        j--;
+      }
+
+      if (Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j)))
+        return false;
+    }
+
+    return true;
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity** : O(n), in length n of the string. We traverse over each character at-most once, until the two pointers meet in the middle, or when we break and return early.
+
+**Space complexity** : O(1). No extra space required, at all.
+
+### Solution 3 : simple java solution using stack
+
+#### Implementation 
+
+```java
+public class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for(int i = 0; i < s.length(); i++) {
+            char a = s.charAt(i);
+            if(a == '(' || a == '[' || a == '{') stack.push(a);
+            else if(stack.empty()) return false;
+            else if(a == ')' && stack.pop() != '(') return false;
+            else if(a == ']' && stack.pop() != '[') return false;
+            else if(a == '}' && stack.pop() != '{') return false;
+        }
+        return stack.empty();
+    }
+}
+```
+
+---
+
+
+
+
+
+
+
 
 
 

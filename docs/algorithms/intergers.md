@@ -281,7 +281,7 @@ Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
 Output: [8,9,9,9,0,0,0,1]
 ```
 
-### Approach 1: Elementary Math
+### Solution 1: Elementary Math
 
 **Intuition**
 
@@ -371,6 +371,65 @@ class Solution {
 **Time complexity** : O(max(m,n)). Assume that mm and nn represents the length of l1 and l2 respectively, the algorithm above iterates at most  `max(m,n)` times.
 
 **Space complexity** : O(max(m,n)). The length of the new list is at most  max(m,n)+1.
+
+### Solution 2
+
+#### Implementation
+```java
+public class AddTwoNumbers {
+
+    private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        // Head of the new linked list - this is the head of the resultant list
+        ListNode head = null;
+        // Reference of head which is null at this point
+        ListNode temp = null;
+        // Carry
+        int carry = 0;
+        // Loop for the two lists
+        while (l1 != null || l2 != null) {
+            // At the start of each iteration, we should add carry from the last iteration
+            int sum = carry;
+            // Since the lengths of the lists may be unequal, we are checking if the
+            // current node is null for one of the lists
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+            // At this point, we will add the total sum % 10 to the new node
+            // in the resultant list
+            ListNode node = new ListNode(sum % 10);
+            // Carry to be added in the next iteration
+            carry = sum / 10;
+            // If this is the first node or head
+            if (temp == null) {
+                temp = head = node;
+            }
+            // For any other node
+            else {
+                temp.next = node;
+                temp = temp.next;
+            }
+        }
+        // After the last iteration, we will check if there is carry left
+        // If it's left then we will create a new node and add it
+        if (carry > 0) {
+            temp.next = new ListNode(carry);
+        }
+        return head;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity** : Since we are iterating both the lists only once, the time complexity would be O(m + n). Here m and n are the numbers of nodes in the two linked lists.
+
+**Space Complexity** : Since we are using extra space only for our variables, our space complexity would be O(1). One might argue that we are using another list to store our result so the space complexity should also be O(m + n).
+
 
 ---
 
@@ -631,7 +690,689 @@ class Solution {
 
 **Space complexity:** O(1). The space used is the space needed to create the variable to store the `golden ratio`.
 
+### Solution 7 : Alternative methods 
+
+#### Implementation 1 : Iterative
+
+```java
+class Solution 
+{
+    public int fib(int N)
+    {
+        if(N <= 1)
+            return N;
+        
+		int a = 0, b = 1;
+		
+		while(N-- > 1)
+		{
+			int sum = a + b;
+			a = b;
+			b = sum;
+		}
+        return b;
+    }
+}
+```
+
+**Time complexity:**  O(n).
+
+**Space complexity:** O(1).
+
+#### Implementation 2 : Recursive
+
+```java
+class Solution 
+{
+    public int fib(int N)
+    {
+        if(N <= 1)
+            return N;
+        else
+            return fib(N - 1) + fib(N - 2);
+    }
+}
+```
+**Time complexity:** O(2^n)- since T(n) = T(n-1) + T(n-2)is an exponential time.
+
+**Space complexity:** O(n) - space for recursive function call stack
+
+#### Implementation 3 : Dynamic Programming - Top Down Approach
+
+```java
+class Solution 
+{
+    int[] fib_cache = new int[31];
+	
+	public int fib(int N)
+    {
+        if(N <= 1)
+            return N;
+        else if(fib_cache[N] != 0)
+            return fib_cache[N];
+		else 
+            return fib_cache[N] = fib(N - 1) + fib(N - 2);
+    }
+}
+```
+**Time complexity:** O(n).
+
+**Space complexity:** O(n).
+
+#### Implementation 4 : Dynamic Programming - Bottom Up Approach
+
+```java
+class Solution 
+{
+    public int fib(int N)
+    {
+        if(N <= 1)
+            return N;
+
+		int[] fib_cache = new int[N + 1];
+		fib_cache[1] = 1;
+
+		for(int i = 2; i <= N; i++)
+		{
+			fib_cache[i] = fib_cache[i - 1] + fib_cache[i - 2];
+		}
+		return fib_cache[N];
+    }
+}
+```
+**Time complexity:** O(n).
+
+**Space complexity:** O(n).
+
+
+
+
 ---
+
+## Perfect Number
+
+A `perfect number` is a **positive integer** that is equal to the sum of its **positive divisors**, excluding the number itself. A divisor of an integer `x` is an integer that can divide `x` evenly.
+
+Given an integer `n`, return `true` if `n` is a `perfect number`, otherwise return `false`.
+
+
+**Example 1:**
+
+```log
+Input: num = 28
+Output: true
+Explanation: 28 = 1 + 2 + 4 + 7 + 14
+1, 2, 4, 7, and 14 are all divisors of 28.
+```
+
+**Example 2:**
+
+```log
+Input: num = 7
+Output: false
+```
+
+**Constraints:**
+
+```log
+1 <= num <= 108
+```
+
+### Solution 1 : Brute Force [Time Limit Exceeded]
+
+**Algorithm**
+
+In brute force approach, we consider every possible number to be a divisor of the given number `num`, by iterating over all the numbers lesser than `num`. Then, we add up all the factors to check if the given number satisfies the `Perfect Number` property. This approach obviously fails if the number `num` is very large.
+
+#### Implementation
+
+```java
+
+public class Solution {
+    public boolean checkPerfectNumber(int num) {
+        if (num <= 0) {
+            return false;
+        }
+        int sum = 0;
+        for (int i = 1; i < num; i++) {
+            if (num % i == 0) {
+                sum += i;
+            }
+
+        }
+        return sum == num;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity** : O(n). We iterate over all the numbers lesser than `n`.
+
+**Space complexity** : O(1). Constant extra space is used.
+
+### Solution 2 : Better Brute Force [Time Limit Exceeded]
+
+**Algorithm**
+
+We can little optimize the brute force by breaking the loop when the value of `sum` increase the value of `num`. In that case, we can directly return `false`.
+
+#### Implementation
+
+```java
+
+public class Solution {
+    public boolean checkPerfectNumber(int num) {
+        if (num <= 0) {
+            return false;
+        }
+        int sum = 0;
+        for (int i = 1; i < num; i++) {
+            if (num % i == 0) {
+                sum += i;
+            }
+            if(sum>num) {
+                return false;
+            }
+        }
+        return sum == num;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity** : O(n). In worst case, we iterate over all the numbers lesser than `n`.
+
+**Space complexity** : O(1). Constant extra space is used.
+
+### Solution 3 : Optimal Solution [Accepted]
+
+**Algorithm**
+
+ <img src="images/integer/PerfectNumOptimalSol.png" width="1000" height="200" />
+
+#### Implementation
+
+```java
+
+    public boolean checkPerfectNumber(int num) {
+        if (num <= 0) {
+            return false;
+        }
+        int sum = 0;
+        for (int i = 1; i * i <= num; i++) {
+            if (num % i == 0) {
+                sum += i;
+                if (i * i != num) {
+                    sum += num / i;
+                }
+
+            }
+        }
+        return sum - num == num;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity** : O(sqrt{n}). We iterate only over the range 1 < i ≤ \sqrt{num}.
+
+**Space complexity** : O(1). Constant extra space is used.
+
+### Solution 4 : Euclid-Euler Theorem [Accepted]
+
+**Algorithm**
+
+Euclid proved that 2^{p−1}(2^p − 1) is an even perfect number whenever 2^p − 1 is prime, where *p* is prime.
+
+For example, the first four perfect numbers are generated by the formula 2^{p−1}(2^p − 1), with *p* a prime number, as follows:
+
+```log
+for p = 2:   21(22 − 1) = 6
+for p = 3:   22(23 − 1) = 28
+for p = 5:   24(25 − 1) = 496
+for p = 7:   26(27 − 1) = 8128.
+```
+
+Prime numbers of the form 2^p − 1 are known as Mersenne primes. For 2^p − 1 to be prime, it is necessary that *p* itself be prime. However, not all numbers of the form 2^p − 1 with a prime *p* are prime; for example, 2^{11} − 1 = 2047 = 23 × 89 is not a prime number.
+
+You can see that for small value of *p*, its related perfect number goes very high. So, we need to evaluate perfect numbers for some primes (2, 3, 5, 7, 13, 17, 19, 31) only, as for bigger prime its perfect number will not fit in 64 bits.
+
+#### Implementation
+
+```java
+public class Solution {
+    public int pn(int p) {
+        return (1 << (p - 1)) * ((1 << p) - 1);
+    }
+    public boolean checkPerfectNumber(int num) {
+        int[] primes=new int[]{2,3,5,7,13,17,19,31};
+        for (int prime: primes) {
+            if (pn(prime) == num)
+                return true;
+        }
+        return false;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity** : O(logn). Number of primes will be in order log *num*.
+
+**Space complexity** : O(logn). Space used to store primes.
+
+---
+
+## Two Sum
+
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.
+
+**Example 1:**
+
+```log
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+```
+
+**Example 2:**
+
+```log
+Input: nums = [3,2,4], target = 6
+Output: [1,2]
+```
+
+**Example 3:**
+
+```log
+Input: nums = [3,3], target = 6
+Output: [0,1]
+```
+
+**Constraints:**
+
+```log
+2 <= nums.length <= 104
+-109 <= nums[i] <= 109
+-109 <= target <= 109
+```
+
+### Solution 1 : Brute Force
+
+**Algorithm**
+
+The brute force approach is simple. Loop through each element *x* and find if there is another value that equals to target - x.
+
+#### Implementation
+
+```java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j] == target - nums[i]) {
+                    return new int[] { i, j };
+                }
+            }
+        }
+        // In case there is no solution, we'll just return null
+        return null;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(n^2). For each element, we try to find its complement by looping through the rest of the array which takes O(n) time. Therefore, the time complexity is O(n^2).
+
+**Space complexity:** O(1). The space required does not depend on the size of the input array, so only constant space is used.
+
+### Solution 2 : Two-pass Hash Table
+
+**Intuition**
+
+To improve our runtime complexity, we need a more efficient way to check if the complement exists in the array. If the complement exists, we need to get its index. What is the best way to maintain a mapping of each element in the array to its index? A hash table.
+
+We can reduce the lookup time from O(n) to O(1) by trading space for speed. A hash table is well suited for this purpose because it supports fast lookup in near constant time. I say "near" because if a collision occurred, a lookup could degenerate to O(n) time. However, lookup in a hash table should be amortized O(1) time as long as the hash function was chosen carefully.
+
+**Algorithm**
+
+A simple implementation uses two iterations. In the first iteration, we add each element's value as a key and its index as a value to the hash table. Then, in the second iteration, we check if each element's complement *(target - nums[i])* exists in the hash table. If it does exist, we return current element's index and its complement's index. Beware that the complement must not be nums[i] itself!
+
+#### Implementation
+
+```java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement) && map.get(complement) != i) {
+                return new int[] { i, map.get(complement) };
+            }
+        }
+        // In case there is no solution, we'll just return null
+        return null;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(n). We traverse the list containing nn elements exactly twice. Since the hash table reduces the lookup time to O(1), the overall time complexity is O(n).
+
+**Space complexity:** O(n). The extra space required depends on the number of items stored in the hash table, which stores exactly nn elements.
+
+### Solution 3 : One-pass Hash Table
+
+**Algorithm**
+
+It turns out we can do it in one-pass. While we are iterating and inserting elements into the hash table, we also look back to check if current element's complement already exists in the hash table. If it exists, we have found a solution and return the indices immediately.
+
+#### Implementation
+
+```java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[] { map.get(complement), i };
+            }
+            map.put(nums[i], i);
+        }
+        // In case there is no solution, we'll just return null
+        return null;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(n). We traverse the list containing n elements only once. Each lookup in the table costs only O(1) time.
+
+**Space complexity:** O(n). The extra space required depends on the number of items stored in the hash table, which stores at most *n* elements.
+
+### Solution 4 : O(nlogn), beats  98.85%
+
+**Algorithm**
+
+step1 : copy an array, and sort it using quick sort, O(nlogn)
+
+step2 : using start and end points to find a, b which satifys a+b==target, O(n)
+
+step3 : find the index of a, b from origin array, O(n)
+
+note: in step3, you should judge whethour a==b, if true, you must find the second index of b.
+
+#### Implementation
+
+```java
+public int[] twoSum_n2(int[] nums, int target) {
+	    	if(nums == null)
+	    		return null;
+	    	int[] nums2 = Arrays.copyOf(nums, nums.length);
+	    	Arrays.sort(nums2);
+	    	int a = 0, b = 0;
+	    	int start = 0, end = nums2.length-1;
+	    	//find two nums
+	    	while(start<end){
+	    		int sum = nums2[start] + nums2[end];
+	    		if(sum < target)
+	    			start++;
+	    		else if(sum > target)
+	    			end--;
+	    		else{
+	    			a = nums2[start]; b = nums2[end];
+	    			break;
+	    		}
+	    	}
+	    	//find the index of two numbers
+	    	int[] res = new int[2];
+	    	for(int i = 0; i < nums.length; i++){
+	    		if(nums[i] == a){
+	    			res[0] = i;
+	    			break;
+	    		}
+	    	}
+	    	if(a != b){
+	    		for(int i = 0; i < nums.length; i++){
+		    		if(nums[i] == b){
+		    			res[1] = i;
+		    			break;
+		    		}
+		    	}
+	    	} else{
+	    		for(int i = 0; i < nums.length; i++){
+		    		if(nums[i] == b && i != res[0]){
+		    			res[1] = i;
+		    			break;
+		    		}
+		    	}
+	    	}
+	    	
+	    	return res;
+	    }
+```
+
+## Subarray Sum Equals K
+
+Given an array of integers `nums` and an integer `k`, return the total number of sub-arrays whose sum equals to `k`.
+
+A sub-array is a contiguous **non-empty** sequence of elements within an array.
+
+
+**Example 1:**
+
+```log
+Input: nums = [1,1,1], k = 2
+Output: 2
+```
+
+**Example 2:**
+
+```log
+Input: nums = [1,2,3], k = 3
+Output: 2
+```
+
+**Constraints:**
+
+```log
+1 <= nums.length <= 2 * 104
+-1000 <= nums[i] <= 1000
+-107 <= k <= 107
+```
+
+## Solution 1 : Brute Force
+
+**Algorithm**
+
+The simplest method is to consider every possible sub-array of the given *nums* array, find the sum of the elements of each of those sub-arrays and check for the equality of the sum obtained with the given *k*. Whenever the sum equals *k*, we can increment the *count* used to store the required result.
+
+#### Implementation
+
+```java
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        for (int start = 0; start < nums.length; start++) {
+            for (int end = start + 1; end <= nums.length; end++) {
+                int sum = 0;
+                for (int i = start; i < end; i++)
+                    sum += nums[i];
+                if (sum == k)
+                    count++;
+            }
+        }
+        return count;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity** : O(n^3). Considering every possible sub-array takes O(n^2) time. For each of the sub-array we calculate the sum taking O(n)O(n) time in the worst case, taking a total of O(n^3) time.
+
+**Space complexity** : O(1). Constant space is used.
+
+### Solution 2 : Using Cumulative Sum
+
+**Algorithm**
+
+Instead of determining the sum of elements every time for every new sub-array considered, we can make use of a cumulative sum array , *sum*. Then, in order to calculate the sum of elements lying between two indices, we can subtract the cumulative sum corresponding to the two indices to obtain the sum directly, instead of iterating over the sub-array to obtain the sum.
+
+#### Implementation
+
+We make use of a cumulative sum array, *sum*, such that sum[i] is used to store the cumulative sum of *nums* array up to the element corresponding to the (i-1)^{th} index. Thus, to determine the sum of elements for the sub-array nums[i:j], we can directly use sum[j+1]−sum[i].
+
+```java
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        int[] sum = new int[nums.length + 1];
+        sum[0] = 0;
+        for (int i = 1; i <= nums.length; i++)
+            sum[i] = sum[i - 1] + nums[i - 1];
+        for (int start = 0; start < nums.length; start++) {
+            for (int end = start + 1; end <= nums.length; end++) {
+                if (sum[end] - sum[start] == k)
+                    count++;
+            }
+        }
+        return count;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity** : O(n^2). Considering every possible sub-array takes O(n^2) time. Finding out the sum of any sub-array takes O(1) time after the initial processing of O(n) for creating the cumulative sum array.
+
+**Space complexity** : O(n). Cumulative sum array *sum* of size `n+1` is used.
+
+### Solution 3 : Without Space
+
+**Algorithm**
+
+Instead of considering all the *start* and *end* points and then finding the sum for each sub-array corresponding to those points, we can directly find the sum on the go while considering different *end* points. i.e. We can choose a particular *start* point and while iterating over the *end* points, we can add the element corresponding to the *end* point to the sum formed till now. Whenever the *sum* equals the required *k* value, we can update the *count* value. We do so while iterating over all the *end* indices possible for every *start* index. Whenever, we update the *start* index, we need to reset the *sum* value to 0.
+
+#### Implementation
+
+```
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        for (int start = 0; start < nums.length; start++) {
+            int sum=0;
+            for (int end = start; end < nums.length; end++) {
+                sum+=nums[end];
+                if (sum == k)
+                    count++;
+            }
+        }
+        return count;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity** : O(n^2). We need to consider every sub-array possible.
+
+**Space complexity** : O(1). Constant space is used.
+
+### Solution 4: Using Hashmap
+
+#### Implementation
+
+```java
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0, sum = 0;
+        HashMap < Integer, Integer > map = new HashMap < > ();
+        map.put(0, 1);
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (map.containsKey(sum - k))
+                count += map.get(sum - k);
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity** : O(n). The entire *nums* array is traversed only once.
+
+**Space complexity** : O(n). Hashmap *map* can contain up to *n* distinct entries in the worst case.
+
+### Solution 5 : easy to optimized
+
+```java
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        
+        // Time Complexity O(sq(n))
+        // int count=0;
+        // int sum=0;
+        // int n=nums.length;
+        // for(int i=0;i<n;i++){
+        //     sum=nums[i];
+        //     if(sum==k){
+        //         count++;
+        //     }
+        //     for(int j=i+1;j<n;j++){
+        //         sum=sum+nums[j];
+        //          if(sum==k){
+        //          count++;
+        //     }
+        //     }
+        // }
+        // return count;
+        
+        // Time Complexity is O(n)
+        int n=nums.length;
+        int res=0;
+        int sum=0;
+        Map<Integer,Integer> pre=new HashMap<>();
+        
+        pre.put(0,1);
+        for(int i=0;i<n;i++){
+            sum+=nums[i];
+            if(pre.containsKey(sum-k)){              
+                        res+=pre.get(sum-k);
+            }
+                 pre.put(sum,(pre.getOrDefault(sum,0)+1));       
+                        
+        }
+        
+        
+        return res;
+        
+    }
+}
+```
+
+---
+
+
+
+
+
+
+
+
+
 ## More Details: 
 1. [Palindrome Number - Leetcode #9 Short & Simple Solution](https://www.code-recipe.com/post/palindrome-number)
 2. [Generating Prime Numbers in Java](https://www.baeldung.com/java-generate-prime-numbers)
