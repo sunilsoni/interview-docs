@@ -46,6 +46,7 @@ Given an integer x, return true if x is palindrome integer.
  Output: false
 
 ###  Solution 1
+
 Lets understand the problem statement first. In this problem we are given an integer value as input, our task is to write an algorithm that tells us whether the given number is a palindrome or not. So, what are palindromic numbers? A number is a palindrome if it remains same when its digits are reversed. In other words a number is a palindrome if we get the same sequence of digits whether we read the number from left to right or right to left. For example 121, 99, 2332 etc. are palindromic numbers.
 
 The idea is to do the steps mentioned here to reverse the given number only up to the middle digit in x and then compare x with the reversedNum. Basically what we do here is reverse only half of the given number x and compare x with reversed number.
@@ -62,7 +63,7 @@ Let take one more example to understand this. Consider x = 1221 is the given num
 
 **Note**: If x contains odd number of digits as in x = 12321, at the end of our loop reversedNum = 123 and x = 12. So we need to divide reversedNum by 10 if x contains odd number of digits before comparing x and reversedNum.
 
-###  Implementation
+####  Implementation
 
 ```java
 class PalindromeSolution {
@@ -85,7 +86,7 @@ class PalindromeSolution {
 }
 ```
 
-###  Complexity Analysis
+####  Complexity Analysis
 
 **Time Complexity**: O(d/2)
 d here is the no. of digits in the given input number. Time complexity of this algorithm is O(d/2) because we only have to check half of the digits in the given number x (last to middle) to determine if the given number is a palindrome.
@@ -93,11 +94,12 @@ d here is the no. of digits in the given input number. Time complexity of this a
 **Space Complexity**: O(1)
 No extra space is used.
 
+
 ###  Solution 2
 
-###  Implementation
+####  Implementation
 
-###  Complexity Analysis
+####  Complexity Analysis
 
 
 
@@ -1163,6 +1165,7 @@ public int[] twoSum_n2(int[] nums, int target) {
 	    	return res;
 	    }
 ```
+---
 
 ## Subarray Sum Equals K
 
@@ -1193,7 +1196,7 @@ Output: 2
 -107 <= k <= 107
 ```
 
-## Solution 1 : Brute Force
+### Solution 1 : Brute Force
 
 **Algorithm**
 
