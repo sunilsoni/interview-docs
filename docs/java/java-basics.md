@@ -2026,6 +2026,21 @@ for(data_type variable : array | collection){
 } 
  ```
 
+---
+
+## Constructors and Methods
+ 
+
+| S.No. | key        | Constructors                                                    | Methods                                                                    |
+|-------|------------|-----------------------------------------------------------------|----------------------------------------------------------------------------|
+| 1     | Purpose    | Constructor is used to create and initialize an Object .| Method is used to execute certain statements.|
+| 2     | Invocation |  A constructor is invoked implicitly by the System.| A method is to be invoked during program code.|
+| 3     | Invocation |  A constructor is invoked when new keyword is used to create an object.| A method is invoked when it is called.|
+| 4     | Return type   | A constructor can not have any return type.| A method can have a return type.|
+| 5     |  Object  | A constructor initializes an object which is not existent.| A method can be invoked only on existing object.|
+| 6     |   Name|  A constructor must have same name as that of the class.| A method name can not be same as class name.|
+| 7     |   Inheritance   | A constructor cannot be inherited by a subclass.| A method is inherited by a subclass.|
+
 
 
 ---

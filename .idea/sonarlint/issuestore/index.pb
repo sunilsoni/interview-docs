@@ -104,7 +104,13 @@ C
 docs/react/react.md,d/2/d275d4faab36ca1e695eebfe5d1fd724a1200cd6
 B
 docs/java/java8.md,5/a/5aed5dc9a85b6cf192a2b3783cba555dad43c93f
-H
-docs/java/java-basics.md,6/8/68444e4c966ddb261cccd19be55523357145de73
 A
 docs/java/Java.md,d/e/de418fc77c20469d2a13acceba21fc24fe95896c
+S
+#docs/microservices/microservices.md,a/b/ab0d77c7ebc3ca623999f7b3cbb108b8b84acf7f
+c
+3docs/microservices/microservices-design-patterns.md,8/3/836f10287c7415b19ff10d9241121a1f9dc399dd
+J
+docs/miscellaneous/misc.md,4/8/48bdb2278012630f697cfbe6328733706290d206
+J
+docs/miscellaneous/http.md,b/f/bf9a98df73080c8a7d299bfa51af20ce953cb743
