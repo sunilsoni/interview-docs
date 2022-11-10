@@ -911,6 +911,27 @@ class Solution {
 }
 ```
 
+### Solution 3 : Simple 
+
+#### Implementation
+
+```java
+public class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for(int i = 0; i < s.length(); i++) {
+            char a = s.charAt(i);
+            if(a == '(' || a == '[' || a == '{') stack.push(a);
+            else if(stack.empty()) return false;
+            else if(a == ')' && stack.pop() != '(') return false;
+            else if(a == ']' && stack.pop() != '[') return false;
+            else if(a == '}' && stack.pop() != '{') return false;
+        }
+        return stack.empty();
+    }
+}
+```
+
 ---
 
 ## Add Strings
@@ -1080,7 +1101,8 @@ Output: false
 An anagram is produced by rearranging the letters of s into t. Therefore, if t is an anagram of s, sorting both strings will result in two identical strings. Furthermore, if ss and t have different lengths, t must not be an anagram of s and we can return early.
 
 ```java
-public boolean isAnagram(String s, String t) {
+class Solution {
+  public boolean isAnagram(String s, String t) {
     if (s.length() != t.length()) {
         return false;
     }
@@ -1089,6 +1111,7 @@ public boolean isAnagram(String s, String t) {
     Arrays.sort(str1);
     Arrays.sort(str2);
     return Arrays.equals(str1, str2);
+  }
 }
 ```
 #### Complexity Analysis
@@ -1110,42 +1133,46 @@ To examine if t is a rearrangement of s, we can count occurrences of each letter
 Do we need two counters for comparison? Actually no, because we can increment the count for each letter in s and decrement the count for each letter in t, and then check if the count for every character is zero.
 
 ```java
-public boolean isAnagram(String s, String t) {
+class Solution {
+  public boolean isAnagram(String s, String t) {
     if (s.length() != t.length()) {
-        return false;
+      return false;
     }
     int[] counter = new int[26];
     for (int i = 0; i < s.length(); i++) {
-        counter[s.charAt(i) - 'a']++;
-        counter[t.charAt(i) - 'a']--;
+      counter[s.charAt(i) - 'a']++;
+      counter[t.charAt(i) - 'a']--;
     }
     for (int count : counter) {
-        if (count != 0) {
-            return false;
-        }
+      if (count != 0) {
+        return false;
+      }
     }
     return true;
+  }
 }
 ```
 
 Or we could first increment the counter for s, then decrement the counter for t. If at any point the counter drops below zero, we know that t contains an extra letter not in s and return false immediately.
 
 ```java
-public boolean isAnagram(String s, String t) {
+class Solution {
+  public boolean isAnagram(String s, String t) {
     if (s.length() != t.length()) {
-        return false;
+      return false;
     }
     int[] table = new int[26];
     for (int i = 0; i < s.length(); i++) {
-        table[s.charAt(i) - 'a']++;
+      table[s.charAt(i) - 'a']++;
     }
     for (int i = 0; i < t.length(); i++) {
-        table[t.charAt(i) - 'a']--;
-        if (table[t.charAt(i) - 'a'] < 0) {
-            return false;
-        }
+      table[t.charAt(i) - 'a']--;
+      if (table[t.charAt(i) - 'a'] < 0) {
+        return false;
+      }
     }
     return true;
+  }
 }
 ```
 
@@ -1158,29 +1185,64 @@ public boolean isAnagram(String s, String t) {
 ### Solution 3 : Simple 
 
 ```java
-public boolean isAnagram(String s, String t) {
-    
-    int[] charsMap = new int['z'-'a'+1];
-    
-    for(char c: s.toCharArray()) {
-        int pos = c - 'a';
-        charsMap[pos]++;
+class Solution {
+  public boolean isAnagram(String s, String t) {
+
+    int[] charsMap = new int['z' - 'a' + 1];
+
+    for (char c : s.toCharArray()) {
+      int pos = c - 'a';
+      charsMap[pos]++;
     }
-    
-    for(char c: t.toCharArray()) {
-        int pos = c - 'a';
-        charsMap[pos]--;
+
+    for (char c : t.toCharArray()) {
+      int pos = c - 'a';
+      charsMap[pos]--;
     }
-    
-    for(int count: charsMap) {
-        if(count != 0) {
-            return false;
-        }
+
+    for (int count : charsMap) {
+      if (count != 0) {
+        return false;
+      }
     }
-    
+
     return true;
+  }
 }
 ```
+### Solution 4 : 3m fastest java solution
+
+#### Implementation
+```java
+class Solution {
+  public boolean isAnagram(String s, String t) {
+    int length = s.length();
+    if(length != t.length()) {
+      return false;
+    }
+    char[] str_s = s.toCharArray();
+    char[] str_t = t.toCharArray();
+    int[] mask = new int[256];
+    for(char c : str_s) {
+      mask[c]++;
+    }
+    for(char c : str_t) {
+      if(mask[c] > 0) {
+        mask[c]--;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+```
+
+
+
+
+
+
 ---
 
 ## Group Anagrams
@@ -1329,6 +1391,45 @@ class Solution {
 #### Complexity Analysis
 
 **Time Complexity:** O(n * klog(k)) since we are sorting k characters n times in the loop.
+
+### Solution 4 : 
+
+#### Implementation
+
+```java
+class Solution {
+  public List<List<String>> groupAnagrams(String[] strs) {
+    if (strs == null || strs.length == 0) return new ArrayList<>();
+    Map<String, List<String>> map = new HashMap<>();
+    for (String s : strs) {
+      char[] ca = s.toCharArray();
+      Arrays.sort(ca);
+      String keyStr = String.valueOf(ca);
+      if (!map.containsKey(keyStr)) map.put(keyStr, new ArrayList<>());
+      map.get(keyStr).add(s);
+    }
+    return new ArrayList<>(map.values());
+  }
+}
+```
+Instead of sorting, we can also build the key string in this way.
+
+```java
+class Solution {
+  public List<List<String>> groupAnagrams(String[] strs) {
+    if (strs == null || strs.length == 0) return new ArrayList<>();
+    Map<String, List<String>> map = new HashMap<>();
+    for (String s : strs) {
+      char[] ca = new char[26];
+      for (char c : s.toCharArray()) ca[c - 'a']++;
+      String keyStr = String.valueOf(ca);
+      if (!map.containsKey(keyStr)) map.put(keyStr, new ArrayList<>());
+      map.get(keyStr).add(s);
+    }
+    return new ArrayList<>(map.values());
+  }
+}
+```
 
 ---
 
@@ -1546,6 +1647,7 @@ class Solution {
 #### Implementation
 
 ```java
+class Solution {
 var count = new short[26];
 for (int i=0; i<s.length(); i++) {
 	count[s.charAt(i) - 'a']++;
@@ -1565,7 +1667,8 @@ return (char)0;
 #### Implementation 1 
 
 ```java
- public char findTheDifference(String s, String t) {
+class Solution {
+  public char findTheDifference(String s, String t) {
     int result = 0;
     for (int i = 0; i < s.length(); i++) {
       //char - char the result is int
@@ -1574,10 +1677,12 @@ return (char)0;
     //use ASCII table to get the letter
     return (char) (result + t.charAt(t.length() - 1));
   }
+}
 ```
 #### Implementation 2
 
 ```java
+ class Solution {
   public char findTheDifference(String s, String t) {
     int result = 0;
     for (int i = 0; i < s.length(); i++) {
@@ -1587,6 +1692,7 @@ return (char)0;
     }
     return (char) (result ^ t.charAt(t.length() - 1));
   }
+}
 ```
 
 ---
@@ -2273,8 +2379,283 @@ public class Solution {
     }
 }
 ```
+### Solution 4 :
+
+#### Implementation
+
+```java
+public class Solution {
+    public boolean isPalindrome(String s) {
+        if (s.isEmpty()) {
+        	return true;
+        }
+        int head = 0, tail = s.length() - 1;
+        char cHead, cTail;
+        while(head <= tail) {
+        	cHead = s.charAt(head);
+        	cTail = s.charAt(tail);
+        	if (!Character.isLetterOrDigit(cHead)) {
+        		head++;
+        	} else if(!Character.isLetterOrDigit(cTail)) {
+        		tail--;
+        	} else {
+        		if (Character.toLowerCase(cHead) != Character.toLowerCase(cTail)) {
+        			return false;
+        		}
+        		head++;
+        		tail--;
+        	}
+        }
+        
+        return true;
+    }
+}
+```
 
 ---
+
+## First Unique Character in a String
+
+**Example 1:**
+
+```log
+Input: s = "leetcode"
+Output: 0
+```
+
+**Example 2:**
+
+```log
+Input: s = "loveleetcode"
+Output: 2
+```
+
+**Example 3:**
+
+```log
+Input: s = "aabb"
+Output: -1
+```
+
+**Constraints:**
+
+```log
+1 <= s.length <= 105
+s consists of only lowercase English letters.
+```
+
+### Solution 1 : Linear time solution
+
+The best possible solution here could be of a linear time because to ensure that the character is unique you have to check the whole string anyway.
+
+The idea is to go through the string and save in a hash map the number of times each character appears in the string. That would take O(N) time, where N is a number of characters in the string.
+
+And then we go through the string the second time, this time we use the hash map as a reference to check if a character is unique or not.
+If the character is unique, one could just return its index. The complexity of the second iteration is O(N) as well.
+
+#### Implementation 
+```java
+class Solution {
+    public int firstUniqChar(String s) {
+        HashMap<Character, Integer> count = new HashMap<Character, Integer>();
+        int n = s.length();
+        // build hash map : character and how often it appears
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            count.put(c, count.getOrDefault(c, 0) + 1);
+        }
+        
+        // find the index
+        for (int i = 0; i < n; i++) {
+            if (count.get(s.charAt(i)) == 1) 
+                return i;
+        }
+        return -1;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(N) since we go through the string of length N two times.
+
+**Space complexity :** O(1) because English alphabet contains 26 letters.
+
+---
+
+## Maximum Number of Occurrences of a Substring
+
+Given a string `s`, return the maximum number of ocurrences of **any** substring under the following rules:
+
+The number of unique characters in the substring must be less than or equal to `maxLetters`.
+The substring size must be between `minSize` and `maxSize` inclusive.
+
+
+**Example 1:**
+
+```log
+Input: s = "aababcaab", maxLetters = 2, minSize = 3, maxSize = 4
+Output: 2
+Explanation: Substring "aab" has 2 ocurrences in the original string.
+It satisfies the conditions, 2 unique letters and size 3 (between minSize and maxSize).
+```
+
+**Example 2:**
+
+```log
+Input: s = "aaaa", maxLetters = 1, minSize = 3, maxSize = 3
+Output: 2
+Explanation: Substring "aaa" occur 2 times in the string. It can overlap.
+```
+
+**Constraints:**
+
+```log
+1 <= s.length <= 105
+1 <= maxLetters <= 26
+1 <= minSize <= maxSize <= min(26, s.length)
+s consists of only lowercase English letters.
+```
+
+### Solution
+
+The return value is the max number of the substring which follows the rule given.
+
+It gives us a `maxSize` and a `minSize` and a `maxLetters` , but `maxSize` is useless !
+
+If we know a substring `A` follows the rule occurs the max times with a size more than `minSize`,
+then this `A's` substring, we call it `B`, whose size is equal to `minSize` also occurs the same times and it has
+at most the same number of characters with `A` , so `B` also occurs the max time and follow the rule.
+
+#### Implementation 
+
+```java
+class Solution {
+    public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+        Map<String,Integer> m = new HashMap<>();
+        int ss = 0 ;
+        int ee = 0;
+        Map<Character,Integer> cnt = new HashMap<>();
+
+        while( ee < s.length())
+        {
+            Character cur =s.charAt(ee);
+            cnt.put(cur,cnt.getOrDefault(cur,0)+1);
+             while( ee-ss+1 > minSize  )
+             {
+                 Character c =s.charAt(ss);
+                 if(cnt.get(c)==1)
+                     cnt.remove(c);
+                 else
+                     cnt.put(c,cnt.get(c)-1);
+                 ss++;
+             }
+             if(cnt.size()<=maxLetters &&ee-ss+1>=minSize )
+                m.put(s.substring(ss,ee+1),m.getOrDefault(s.substring(ss,ee+1),0)+1);
+             ee++;
+        }
+        int ans  = 0 ;
+        for( int it : m.values())
+            ans= Math.max(ans,it);
+        return ans;
+    }
+}
+```
+---
+
+## Longest Palindromic Substring
+
+Given a string `s`, return the longest palindromic substring in `s`.
+
+**Example 1:**
+
+```log
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+```
+
+**Example 2:**
+
+```log
+Input: s = "cbbd"
+Output: "bb"
+```
+
+**Constraints:**
+
+```log
+1 <= s.length <= 1000
+s consist of only digits and English letters.
+```
+
+### Solution 1 : Longest Common Substring
+
+**Common mistake**
+
+Some people will be tempted to come up with a quick solution, which is unfortunately flawed (however can be corrected easily):
+
+    Reverse `S` and become `S'`. Find the longest common substring between S and `S'`, which must also be the longest palindromic substring.
+
+This seemed to work, let’s see some examples below.
+
+For example, S = "caba", S' = "abac".
+
+The longest common substring between `S` and `S'` is "aba", which is the answer.
+
+Let’s try another example: S = "abacdfgdcaba", S' = "abacdgfdcaba".
+
+The longest common substring between `S` and `S'` is "abacd". Clearly, this is not a valid palindrome.
+
+**Algorithm**
+
+We could see that the longest common substring method fails when there exists a reversed copy of a non-palindromic substring in some other part of S. To rectify this, each time we find a longest common substring candidate, we check if the substring’s indices are the same as the reversed substring’s original indices. If it is, then we attempt to update the longest palindrome found so far; if not, we skip this and find the next candidate.
+
+This gives us an O(n^2). Dynamic Programming solution which uses O(n^2) space (could be improved to use O(n) space). 
+
+### Solution 2 : Expand Around Center
+
+In fact, we could solve it in O(n^2) time using only constant space.
+
+We observe that a palindrome mirrors around its center. Therefore, a palindrome can be expanded from its center, and there are only 2n - 1 such centers.
+
+You might be asking why there are 2n - 1 but not nn centers? The reason is the center of a palindrome can be in between two letters. Such palindromes have even number of letters (such as "abba") and its center are between the two 'b's.
+
+#### Implementation
+```java
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() < 1) return "";
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    private int expandAroundCenter(String s, int left, int right) {
+        int L = left, R = right;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(n^2). Since expanding a palindrome around its center could take O(n) time, the overall complexity is O(n^2).
+
+**Space complexity :** O(1).
+
+### Solution 3 : 
+
 
 
 

@@ -1193,21 +1193,23 @@ I simply allocated a separate index for each number, then checked which indexes 
 #### Implementation
 
 ```java
-public List<Integer> findDisappearedNumbers(int[] nums) {
-	int[] res = new int[nums.length + 1];
+class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        int[] res = new int[nums.length + 1];
 
-	for (int num : nums) {
-		res[num] = num;
-	}
+        for (int num : nums) {
+            res[num] = num;
+        }
 
-	List<Integer> result = new ArrayList<>(res.length);
-	for (int i = 1; i < res.length; i++) {
-		if (res[i] == 0) {
-			result.add(i);
-		}
-	}
+        List<Integer> result = new ArrayList<>(res.length);
+        for (int i = 1; i < res.length; i++) {
+            if (res[i] == 0) {
+                result.add(i);
+            }
+        }
 
-	return result;
+        return result;
+    }
 }
 ```
 
@@ -1248,10 +1250,10 @@ Output: []
 **Constraints:**
 
 ```log
-n == nums.length
-1 <= n <= 105
-1 <= nums[i] <= n
-Each element in nums appears once or twice.
+* n == nums.length
+* 1 <= n <= 105
+* 1 <= nums[i] <= n
+* Each element in nums appears once or twice.
 ```
 
 ### Solution 1 : Brute Force
@@ -1400,7 +1402,7 @@ If you are tight on space, you can significantly reduce your physical space requ
 
 All the above approaches have ignored a key piece of information in the problem statement:
 
-      The integers in the input array arr satisfy 1 ≤ arr[i] ≤ n, where n is the size of array. 
+    The integers in the input array arr satisfy 1 ≤ arr[i] ≤ n, where n is the size of array. 
 
 
 This presents us with two key insights:
@@ -1473,6 +1475,365 @@ class Solution {
 **Time complexity :** O(n). We iterate over the array twice. Each negation operation occurs in constant time.
 
 **Space complexity :** No extra space required, other than the space for the output list. We re-use the input array to store visited status.
+
+---
+
+## Median of Two Sorted Arrays
+
+Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return the median of the two sorted arrays.
+
+The overall run time complexity should be O(log (m+n)).
+
+**Example 1:**
+
+```log
+Input: nums1 = [1,3], nums2 = [2]
+Output: 2.00000
+Explanation: merged array = [1,2,3] and median is 2.
+```
+
+**Example 2:**
+
+```log
+Input: nums1 = [1,2], nums2 = [3,4]
+Output: 2.50000
+Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
+```
+
+**Constraints:**
+
+```log
+* nums1.length == m
+* nums2.length == n
+* 0 <= m <= 1000
+* 0 <= n <= 1000
+* 1 <= m + n <= 2000
+* -106 <= nums1[i], nums2[i] <= 106
+```
+
+### Solution 1
+
+* param `nums1` the first sorted arrays.
+
+* param `nums2` the second sorted arrays.
+
+* return the median of the two sorted arrays.
+
+#### Implementation
+```java
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int index1 = 0;
+        int index2 = 0;
+        int med1 = 0;
+        int med2 = 0;
+        for (int i = 0; i <= (nums1.length + nums2.length) / 2; i++) {
+            med1 = med2;
+            if (index1 == nums1.length) {
+                med2 = nums2[index2];
+                index2++;
+            } else if (index2 == nums2.length) {
+                med2 = nums1[index1];
+                index1++;
+            } else if (nums1[index1] < nums2[index2]) {
+                med2 = nums1[index1];
+                index1++;
+            } else {
+                med2 = nums2[index2];
+                index2++;
+            }
+        }
+
+        // the median is the average of two numbers
+        if ((nums1.length + nums2.length) % 2 == 0) {
+            return (float) (med1 + med2) / 2;
+        }
+
+        return med2;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(m+n). Although the running time is similar, it is worse than the required O(log (m+n)).
+
+**Space complexity :**  O(1).
+
+### Solution 2 
+
+#### Implemenatation
+```java
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if(nums1.length > nums2.length)return findMedianSortedArrays(nums2,nums1);
+        int x = nums1.length;
+        int y = nums2.length;
+        int low = 0;
+        int high = x;
+        while(low<=high){
+            int partX =  (low+high)/2;
+            int partY =  (x+y+1)/2 - partX;
+            int xLeft = partX == 0 ? Integer.MIN_VALUE : nums1[partX-1];
+            int xRight = partX == x ? Integer.MAX_VALUE : nums1[partX];
+            int yLeft = partY == 0 ? Integer.MIN_VALUE : nums2[partY-1];
+            int yRight = partY == y ? Integer.MAX_VALUE : nums2[partY];
+            if(xLeft<=yRight && yLeft<=xRight){
+               if((x+y)%2==0){
+                   return ((double)Math.max(xLeft,yLeft) + Math.min(xRight,yRight))/2;
+               }else{
+                   return Math.max(xLeft,yLeft);
+               } 
+            }else if(xLeft>yRight){
+                high = partX -1;
+            }else{
+                low = partX+1;
+            }
+        }
+        return 0;
+    }
+}
+```
+---
+
+## Product of Array Except Self
+
+Given an integer array `nums`, return an array answer such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`.
+
+The product of any prefix or suffix of `nums` is guaranteed to fit in a 32-bit integer.
+
+You must write an algorithm that runs in `O(n)` time and without using the division operation.
+
+
+**Example 1:**
+```log
+Input: nums = [1,2,3,4]
+Output: [24,12,8,6]
+```
+
+**Example 2:**
+```log
+Input: nums = [-1,1,0,-3,3]
+Output: [0,0,9,0,0]
+```
+
+**Constraints:**
+```log
+* 2 <= nums.length <= 105
+* -30 <= nums[i] <= 30
+* The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+```
+### Solution 
+
+---
+
+## Count the Number of Consistent Strings
+
+You are given a string `allowed` consisting of distinct characters and an array of strings `words`. A string is consistent if all characters in the string appear in the string `allowed`.
+
+Return the number of consistent strings in the array `words`.
+
+
+**Example 1:**
+
+```log
+Input: allowed = "ab", words = ["ad","bd","aaab","baa","badab"]
+Output: 2
+Explanation: Strings "aaab" and "baa" are consistent since they only contain characters 'a' and 'b'.
+```
+
+**Example 2:**
+
+```log
+Input: allowed = "abc", words = ["a","b","c","ab","ac","bc","abc"]
+Output: 7
+Explanation: All strings are consistent.
+```
+
+**Example 3:**
+```log
+Input: allowed = "cad", words = ["cc","acd","b","ba","bac","bad","ac","d"]
+Output: 4
+Explanation: Strings "cc", "acd", "ac", and "d" are consistent.
+```
+
+**Constraints:**
+
+```log
+* 1 <= words.length <= 104
+* 1 <= allowed.length <= 26
+* 1 <= words[i].length <= 10
+* The characters in allowed are distinct.
+* words[i] and allowed contain only lowercase English letters.
+```
+
+### Solution
+
+#### Implementation 
+
+```java
+class Solution {
+    public int countConsistentStrings(String allowed, String[] words) {
+        int consistent = 0;
+        Set<Character> allowedLetters = new HashSet<>(); // added Set to search in O(1)
+
+        for (char letter : allowed.toCharArray()) {
+            allowedLetters.add(letter);
+        }
+
+        for (String word : words) {
+            for (int i = 0; i < word.length(); i++) {
+                if (!allowedLetters.contains(word.charAt(i))) {
+                    break;
+                }
+
+                if (i == word.length() - 1) {
+                    consistent++;
+                }
+            }
+        }
+
+        return consistent;
+    }
+}
+```
+---
+
+## Unique Number of Occurrences
+
+Given an array of integers `arr`, return `true` if the number of occurrences of each value in the array is **unique**, or `false` otherwise.
+
+**Example 1:**
+
+```log
+Input: arr = [1,2,2,1,1,3]
+Output: true
+Explanation: The value 1 has 3 occurrences, 2 has 2 and 3 has 1. No two values have the same number of occurrences.
+```
+
+**Example 2:**
+
+```log
+Input: arr = [1,2]
+Output: false
+```
+
+**Example 3:**
+
+```log
+Input: arr = [-3,0,1,-3,1,1,1,-3,10,0]
+Output: true
+```
+
+**Constraints:**
+
+```log
+1 <= arr.length <= 1000
+-1000 <= arr[i] <= 1000
+```
+
+### Solution 1 : Counting Sort
+
+**Algorithm**
+
+Store the frequencies of elements of array `arr` in the array `freq`.
+
+Sort the array `freq` in ascending order.
+
+Iterate over the array `freq`, and for each non-zero value, check if the next value is the same. If yes, return `false`.
+
+We can return `true` after iterating over the whole array.
+
+#### Implementation
+
+```java
+class Solution {
+    // Constant to make elements non-negative.
+    final int K = 1000;
+    
+    public boolean uniqueOccurrences(int[] arr) {
+        int freq[] = new int[2 * K + 1];
+      
+        // Store the frequency of elements in the unordered map.
+        for (int num : arr) {
+            freq[num + K]++;
+        }
+        
+        // Sort the frequency count.
+        Arrays.sort(freq);
+        
+        // If the adjacent freq count is equal, then the freq count isn't unique.
+        for (int i = 0; i < 2 * K; i++) {
+            if (freq[i] != 0 && freq[i] == freq[i + 1]) {
+                return false;
+            }
+        }
+        
+        // If all the elements are traversed, it implies frequency counts are unique.
+        return true;
+    }
+}
+```
+
+#### Complexity Analysis
+
+Here, `N` is the size of array `arr`, and `K` is equal to 1000.
+
+**Time complexity:** O(N+KlogK).
+
+We first iterate over the array `arr` to store the frequency in the array `freq`. This takes O(N) time. Then we sort the array `freq` that has a size of 2K = 2000. Hence it takes O(2Klog2K) time that can be simplified to O(KlogK). In the end, we iterate over the array `freq` to check duplicate values, and this takes O(2K) time. Therefore the total time complexity is equal to O(N+KlogK).
+
+**Space complexity:** O(K).
+
+The only space required is the frequency array `freq` of size 2K to store the frequency of all the elements. Thus, the total space complexity is equal to O(K).
+
+### Solution 2 : HashMap & HashSet
+
+**Intuition**
+
+If we have the frequencies of all elements, we can put them in a hash set. If the size of the hash set is equal to the number of elements, it implies that the frequencies are unique. Hence, we will find the frequencies of all elements in a hash map and then put them in a hash set.
+
+**Algorithm**
+
+Store the frequencies of elements in the array `arr` in the hash map `freq`.
+
+Iterate over the hash map `freq` and insert the frequencies of all unique elements of array `arr` in the hash set `freqSet`.
+
+Return `true` if the size of hash set `freqSet` is equal to the size of hash map `freq`, otherwise return `false`.
+
+#### Implementation
+
+```java
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        // Store the frequency of elements in the unordered map.
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : arr) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+        }
+        
+        // Store the frequency count of elements in the unordered set.
+        Set<Integer> freqSet = new HashSet<>(freq.values());
+        
+        // If the set size is equal to the map size, 
+        // It implies frequency counts are unique.
+        return freq.size() == freqSet.size();
+    }
+}
+```
+
+#### Complexity Analysis
+
+Here, N is the size of array `arr`.
+
+**Time complexity:** O(N).
+
+We iterate over the array `arr` to find the frequency and store them in the hash map `freq`. Then, we insert these frequencies in the hash set `freqSet`, which has the insertion complexity of O(1). Hence, the total time complexity is equal to O(N).
+
+**Space complexity:** O(N).
+
+We are storing the N frequencies in the hash map `freq` that takes O(1) space for each element. We also store the frequency count in the hash set. Therefore, the total space complexity is equal to O(N).
+
+---
 
 
 
