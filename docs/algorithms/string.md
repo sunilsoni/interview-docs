@@ -2654,10 +2654,131 @@ class Solution {
 
 **Space complexity :** O(1).
 
-### Solution 3 : 
+---
+
+## Determine if Two Events Have Conflict
+
+You are given two arrays of strings that represent two inclusive events that happened on the same day, `event1` and `event2`, where:
+
+* `event1 = [startTime1, endTime1]` and
+* `event2 = [startTime2, endTime2]`.
+
+Event times are valid 24 hours format in the form of `HH:MM`.
+
+A conflict happens when two events have some non-empty intersection (i.e., some moment is common to both events).
+
+Return `true` if there is a conflict between two events. Otherwise, return `false`.
+
+**Example 1:**
+
+```log
+Input: event1 = ["01:15","02:00"], event2 = ["02:00","03:00"]
+Output: true
+Explanation: The two events intersect at time 2:00.
+```
+
+**Example 2:**
+
+```log
+Input: event1 = ["01:00","02:00"], event2 = ["01:20","03:00"]
+Output: true
+Explanation: The two events intersect starting from 01:20 to 02:00.
+```
+
+**Example 3:**
+
+```log
+Input: event1 = ["10:00","11:00"], event2 = ["14:00","15:00"]
+Output: false
+Explanation: The two events do not intersect.
+```
 
 
+**Constraints:**
 
+* `evnet1.length == event2.length == 2`.
+* `event1[i].length == event2[i].length == 5`
+* `startTime1 <= endTime1`
+* `startTime2 <= endTime2`
+* All the event times follow the HH:MM format.
+
+### Solution
+
+**Algorithm**
+
+Given 2 segment [left1, right1], [left2, right2], how can we check whether they overlap?
+
+If these two intervals overlap, it should exist a value `x`,
+`left1 <= x <= right1 && left2 <= x <= right2`
+so that
+
+`max(left1, left2) <= x <= min(right1, right 2)`
+so that
+
+`left1 <= right2 && left2 <= right1`
+
+These two are the sufficient and necessary conditions, for two interval overlaps.
+
+#### Implementation
+```java
+ public boolean haveConflict(String[] e1, String[] e2) {
+        return e1[0].compareTo(e2[1]) <= 0 && e2[0].compareTo(e1[1]) <= 0;
+    }
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(1).
+
+**Space Complexity:** O(1).
+
+---
+
+## Word Search
+
+Given an `m x n` grid of characters `board` and a string `word`, return `true` if `word` exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+**Example 1:**
+
+<img src="images/String/Ex1ofWordSearch.png" width="300" height="200" />
+
+```log
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+Output: true
+```
+
+**Example 2:**
+
+<img src="images/String/Ex2ofWordSearch.png" width="300" height="200" />
+
+```log
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+Output: true
+```
+
+**Example 3:**
+
+<img src="images/String/Ex3ofWordSearch.png" width="300" height="200" />
+
+```log
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+Output: false
+```
+
+**Constraints:**
+
+* m == board.length
+
+* n = board[i].length
+
+* 1 <= m, n <= 6
+
+* 1 <= word.length <= 15
+
+* board and word consists of only lowercase and uppercase English letters.
+
+### Solution 1 : Backtracking
 
 
 

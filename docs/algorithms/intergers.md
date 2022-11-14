@@ -1371,6 +1371,810 @@ class Solution {
 
 ---
 
+## Divide Two Integers
+
+Given two integers `dividend` and `divisor`, divide two integers **without** using multiplication, division, and mod operator.
+
+The integer division should truncate toward zero, which means losing its fractional part. For example, `8.345` would be truncated to `8`, and `-2.7335` would be truncated to `-2`.
+
+Return the *quotient* after dividing `dividend` by `divisor`.
+
+**Note:** Assume we are dealing with an environment that could only store integers within the **32-bit** signed integer range: `[−2^31, 2^31 − 1]`. For this problem, if the quotient is **strictly greater than** `2^31 - 1`, then return `2^31 - 1`, and if the quotient is **strictly less than** `-2^31`, then return `-2^31`.
+
+**Example 1:**
+
+```log
+Input: dividend = 10, divisor = 3
+Output: 3
+Explanation: 10/3 = 3.33333.. which is truncated to 3.
+```
+
+
+**Example 2:**
+
+
+```log
+Input: dividend = 7, divisor = -3
+Output: -2
+Explanation: 7/-3 = -2.33333.. which is truncated to -2.
+```
+
+
+
+
+**Constraints:**
+
+```log
+-231 <= dividend, divisor <= 231 - 1
+divisor != 0
+```
+
+### Solution 
+
+#### Implementation
+```java
+public class Solution{
+    public int divide(int dividend, int divisor) {
+        //Reduce the problem to positive long integer to make it easier.
+        //Use long to avoid integer overflow cases.
+        int sign = 1;
+        if ((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0))
+            sign = -1;
+        long ldividend = Math.abs((long) dividend);
+        long ldivisor = Math.abs((long) divisor);
+
+        //Take care the edge cases.
+        if (ldivisor == 0) return Integer.MAX_VALUE;
+        if ((ldividend == 0) || (ldividend < ldivisor))	return 0;
+
+        long lans = ldivide(ldividend, ldivisor);
+
+        int ans;
+        if (lans > Integer.MAX_VALUE){ //Handle overflow.
+            ans = (sign == 1)? Integer.MAX_VALUE : Integer.MIN_VALUE;
+        } else {
+            ans = (int) (sign * lans);
+        }
+        return ans;
+    }
+
+    private long ldivide(long ldividend, long ldivisor) {
+        // Recursion exit condition
+        if (ldividend < ldivisor) return 0;
+
+        //  Find the largest multiple so that (divisor * multiple <= dividend), 
+        //  whereas we are moving with stride 1, 2, 4, 8, 16...2^n for performance reason.
+        //  Think this as a binary search.
+        long sum = ldivisor;
+        long multiple = 1;
+        while ((sum+sum) <= ldividend) {
+            sum += sum;
+            multiple += multiple;
+        }
+        //Look for additional value for the multiple from the reminder (dividend - sum) recursively.
+        return multiple + ldivide(ldividend - sum, ldivisor);
+    }   
+}
+```
+
+## Sliding Window Maximum
+
+You are given an array of integers `nums`, there is a sliding window of size `k` which is moving from the very left of the array to the very right. You can only see the `k` numbers in the window. Each time the sliding window moves right by one position.
+
+Return the *max sliding window*.
+
+**Example 1:**
+
+```log
+Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+Output: [3,3,5,5,6,7]
+Explanation:
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+1 [3  -1  -3] 5  3  6  7       3
+1  3 [-1  -3  5] 3  6  7       5
+1  3  -1 [-3  5  3] 6  7       5
+1  3  -1  -3 [5  3  6] 7       6
+1  3  -1  -3  5 [3  6  7]      7
+```
+
+**Example 2:**
+
+```log
+Input: nums = [1], k = 1
+Output: [1]
+```
+
+
+**Constraints:**
+
+* `1 <= nums.length <= 105`
+* `-104 <= nums[i] <= 104`
+* `1 <= k <= nums.length`
+
+### Solution 1 : Use a Hammer (Bruteforce)
+
+**Intuition**
+
+The straightforward solution is to iterate over all sliding windows and find a maximum for each window. There are `N - k + 1` sliding windows and there are `k` elements in each window, that results in a quite bad time complexity O(Nk).
+
+As you can imagine, this straightforward solution would result in **TLE** (Time Limit Exceed) exception.
+
+It is correct though, one could start with this solution during the interview and improve it later on.
+
+#### Implementation
+
+```java
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        if (n * k == 0) return new int[0];
+        
+        int [] output = new int[n - k + 1];
+        for (int i = 0; i < n - k + 1; i++) {
+            int max = Integer.MIN_VALUE;
+            for(int j = i; j < i + k; j++) 
+                max = Math.max(max, nums[j]);
+            output[i] = max;
+        }
+        return output;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity** : `O(Nk)`, where `N` is number of elements in the array.
+
+**Space complexity** : `O(N−k+1)` for an output array.
+
+### Solution 2 : Deque
+
+**Intuition**
+
+How one could improve the time complexity? The first idea is to use a heap, since in a maximum heap `heap[0]` is always the largest element. Though to add an element in a heap of size `k` costs `log(k)`, that means `O(Nlog(k))` time complexity for the solution.
+
+Let's use a deque (double-ended queue), the structure which pops from / pushes to either side with the same O(1) performance.
+
+It's more handy to store in the deque indexes instead of elements since both are used during an array parsing.
+
+**Algorithm**
+
+The algorithm is quite straigthforward :
+
+* Process the first k elements separately to initiate the deque.
+
+* Iterate over the array. At each step :
+
+  * Clean the deque :
+
+     - Keep only the indexes of elements from the current sliding window.
+
+     - Remove indexes of all elements smaller than the current one, since they will not be the maximum ones.
+
+  * Append the current element to the deque.
+
+  * Append deque[0] to the output.
+
+* Return the output array.
+
+#### Implementation
+
+```java
+class Solution {
+  ArrayDeque<Integer> deq = new ArrayDeque<Integer>();
+  int [] nums;
+
+  public void clean_deque(int i, int k) {
+    // remove indexes of elements not from sliding window
+    if (!deq.isEmpty() && deq.getFirst() == i - k)
+      deq.removeFirst();
+
+    // remove from deq indexes of all elements 
+    // which are smaller than current element nums[i]
+    while (!deq.isEmpty() && nums[i] > nums[deq.getLast()])                           deq.removeLast();
+  }
+
+  public int[] maxSlidingWindow(int[] nums, int k) {
+    int n = nums.length;
+    if (n * k == 0) return new int[0];
+    if (k == 1) return nums;
+
+    // init deque and output
+    this.nums = nums;
+    int max_idx = 0;
+    for (int i = 0; i < k; i++) {
+      clean_deque(i, k);
+      deq.addLast(i);
+      // compute max in nums[:k]
+      if (nums[i] > nums[max_idx]) max_idx = i;
+    }
+    int [] output = new int[n - k + 1];
+    output[0] = nums[max_idx];
+
+    // build output
+    for (int i  = k; i < n; i++) {
+      clean_deque(i, k);
+      deq.addLast(i);
+      output[i - k + 1] = nums[deq.getFirst()];
+    }
+    return output;
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity** : O(N), since each element is processed exactly twice - it's index added and then removed from the deque.
+
+**Space complexity** : O(N), since `O(N−k+1)` is used for an output array and O(k) for a deque.
+
+### Solution 3 : Dynamic programming
+
+**Algorithm**
+
+The algorithm is quite straightforward :
+
+* Iterate along the array in the direction `left->right` and build an array `left`.
+
+* Iterate along the array in the direction `right->left` and build an array `right`.
+
+* Build an output array as `max(right[i], left[i + k - 1])` for `i` in range `(0, n - k + 1)`.
+
+#### Implementation
+
+```java
+class Solution {
+  public int[] maxSlidingWindow(int[] nums, int k) {
+    int n = nums.length;
+    if (n * k == 0) return new int[0];
+    if (k == 1) return nums;
+
+    int [] left = new int[n];
+    left[0] = nums[0];
+    int [] right = new int[n];
+    right[n - 1] = nums[n - 1];
+    for (int i = 1; i < n; i++) {
+      // from left to right
+      if (i % k == 0) left[i] = nums[i];  // block_start
+      else left[i] = Math.max(left[i - 1], nums[i]);
+
+      // from right to left
+      int j = n - i - 1;
+      if ((j + 1) % k == 0) right[j] = nums[j];  // block_end
+      else right[j] = Math.max(right[j + 1], nums[j]);
+    }
+
+    int [] output = new int[n - k + 1];
+    for (int i = 0; i < n - k + 1; i++)
+      output[i] = Math.max(left[i + k - 1], right[i]);
+
+    return output;
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity** : O(N), since all we do is 3 passes along the array of length N.
+
+**Space complexity** : O(N) to keep left and right arrays of length N, and output array of length `N - k + 1`.
+
+---
+
+## Flatten Nested List Iterator
+
+You are given a nested list of integers `nestedList`. Each element is either an integer or a list whose elements may also be integers or other lists. Implement an iterator to flatten it.
+
+Implement the `NestedIterator` class:
+
+* `NestedIterator(List<NestedInteger> nestedList)` Initializes the iterator with the nested list `nestedList`.
+
+* `int next()` Returns the next integer in the nested list.
+
+* `boolean hasNext()` Returns `true` if there are still some integers in the nested list and `false` otherwise.
+
+Your code will be tested with the following pseudocode:
+
+```log
+initialize iterator with nestedList
+res = []
+while iterator.hasNext()
+append iterator.next() to the end of res
+return res
+```
+If `res` matches the expected flattened list, then your code will be judged as correct.
+
+**Example 1:**
+
+```log
+Input: nestedList = [[1,1],2,[1,1]]
+Output: [1,1,2,1,1]
+Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].
+```
+
+**Example 2:**
+
+```log
+Input: nestedList = [1,[4,[6]]]
+Output: [1,4,6]
+Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].
+
+```
+
+**Constraints:**
+
+* `1 <= nestedList.length <= 500`
+
+* The values of the integers in the nested list is in the range `[-106, 106]`.
+
+### Solution 1 : Make a Flat List with Recursion
+
+#### Implementation
+```java
+import java.util.NoSuchElementException;
+
+public class NestedIterator implements Iterator<Integer> {
+    
+    private List<Integer> integers = new ArrayList<Integer>();
+    private int position = 0; // Pointer to next integer to return.
+    
+    public NestedIterator(List<NestedInteger> nestedList) {
+        flattenList(nestedList);
+    }
+
+    // Recursively unpacks a nested list in DFS order.
+    private void flattenList(List<NestedInteger> nestedList) {
+        for (NestedInteger nestedInteger : nestedList) {
+            if (nestedInteger.isInteger()) {
+                integers.add(nestedInteger.getInteger());
+            } else {
+                flattenList(nestedInteger.getList());
+            }
+        }
+    }
+    
+    @Override
+    public Integer next() {
+        // As per Java specs, we should throw an exception if no more ints.
+        if (!hasNext()) throw new NoSuchElementException();
+        // Return int at current position, and then *after*, increment position.
+        return integers.get(position++);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return position < integers.size();
+    }
+}
+```
+#### Complexity Analysis
+
+Let N be the total number of integers within the nested list, L be the total number of lists within the nested list, and D be the maximum nesting depth (maximum number of lists inside each other).
+
+**Time complexity:**
+
+We'll analyze each of the methods separately.
+
+* **Constructor:** O(N + L).
+
+  The constructor is where all the time-consuming work is done.
+
+  For each list within the nested list, there will be one call to `flattenList(...)`. The loop within `flattenList(...)` will then iterate n times, where n is the number of integers within that list. Across all calls to `flattenList(...)`, there will be a total of N loop iterations. Therefore, the time complexity is the number of lists plus the number of integers, giving us O(N+L).
+
+  Notice that the maximum depth of the nesting does not impact the time complexity.
+
+* **next():** O(1).
+
+  Getting the next element requires incrementing `position` by 1 and accessing an element at a particular index of the `integers` list. Both of these are O(1) operations.
+
+* **hasNext():** O(1).
+
+  Checking whether or not there is a next element requires comparing the length of the `integers` list to the `position` variable. This is an O(1) operation.
+
+**Space complexity**: O(N + D).
+
+The most obvious auxiliary space is the integers list. The length of this is O(N).
+
+The less obvious auxiliary space is the space used by the `flattenList(...)` function. Recall that recursive functions need to keep track of where they're up to by putting stack frames on the runtime stack. Therefore, we need to determine what the maximum number of stack frames there could be at a time is. Each time we encounter a nested list, we call `flattenList(...)` and a stack frame is added. Each time we finish processing a nested list, `flattenList(...)` returns and a stack frame is removed. Therefore, the maximum number of stack frames on the runtime stack is the maximum nesting depth, D.
+
+Because these two operations happen one-after-the-other, and either could be the largest, we add their time complexities together giving a final result of O(N + D).
+
+### Solution 2 : Stack
+
+**Intuition**
+
+The downside of Approach 1 is that it creates a new data structure instead of simply iterating over the given one. Instead, we should find a way to step through the integers, one at a time, keeping track of where we're currently up to in `nestedList`.
+
+A better way is to do an iterative depth-first search, based on the following tree traversal algorithm:
+
+```log
+define function iterativeDepthFirstSearch(nestedList):
+    result = []
+
+    stack = a new Stack
+    push all items in nestedList onto stack, in reverse order
+
+    while stack is not empty:
+        nestedInteger = pop top of stack
+        if nestedInteger.isInteger():
+            append nestedInteger.getInteger() to result
+        else:
+            list = nestedInteger.getList()
+            push all items in list onto stack, in reverse order
+
+    return result
+```
+While we could use this algorithm in the constructor like before, a better way would be to store `stack` on the iterator object and progress the algorithm on each call to `next()` to get the next integer out.
+
+Notice that if the top of the stack is an integer, then we've already found the next integer. Otherwise, if it's a list, then the `else` is adding the list contents to `stack`. On the next loop iteration, the same will happen. We could write an algorithm to get the next integer as follows.
+
+```log
+stack = a new Stack
+push all items in nestedList onto stack, in reverse order
+
+define function getNextInteger():
+    while stack is not empty:
+        nestedInteger = pop top off stack
+        if nestedInteger.isInteger():
+            RETURN nestedInteger.getInteger()
+        else:
+            list = nestedInteger.getList()
+            push all items in list onto stack, in reverse order
+```
+
+Notice that the `stack` is shared between calls. This means that `getNextInteger()` will find an integer and return it, while still preserving the state of the stack. We can then call `getNextInteger()` again to get the next integer, and so forth.
+
+To simplify the code a bit, we can change our loop condition so that it checks if the top of the stack is still a list. The loop body should push the contents of the list onto the stack (in reverse). Eventually, there will be an integer on the top of the stack, OR the stack will be empty. Being able to get the next integer to the top of the stack allows the `next()` and `hasNext()` methods to access it.
+
+```log
+stack = a new Stack
+push all items in nestedList onto stack, in reverse order
+
+define function makeStackTopAnInteger():
+    while stack is not empty AND the nestedInteger at top of stack is a list:
+        nestedInteger = pop top off stack
+        list = nestedInteger.getList()
+        push all items in list onto stack, in reverse order
+```
+
+**Algorithm**
+
+Let's define a private method called `makeStackTopAnInteger()` that contains the algorithm to make the stack top an integer (as described above). The `makeStackTopAnInteger()` method never removes integers.
+
+The `next()` and `hasNext()` methods should call `makeStackTopAnInteger()` before doing anything else. This means that they can then assume that either the stack top is an integer, or the stack is empty. Then, their definitions are as follows:
+
+* **hasNext():** Returns `true` if the stack still contains items, `false` if not.
+
+* **next():** If the stack still contains items, then it is guaranteed the top is an integer. This integer is popped and returned. If the stack is empty, then the behavior is language-dependent. For example, in Java, a `NoSuchElementException` should be throw.
+
+#### Implementation
+```java
+import java.util.NoSuchElementException;
+
+public class NestedIterator implements Iterator<Integer> {
+
+    // In Java, the Stack class is considered deprecated. Best practice is to use
+    // a Deque instead. We'll use addFirst() for push, and removeFirst() for pop.
+    private Deque<NestedInteger> stack;
+    
+    public NestedIterator(List<NestedInteger> nestedList) {
+        // The constructor puts them on in the order we require. No need to reverse.
+        stack = new ArrayDeque(nestedList);
+    }
+        
+    
+    @Override
+    public Integer next() {
+        // As per java specs, throw an exception if there's no elements left.
+        if (!hasNext()) throw new NoSuchElementException();
+        // hasNext ensures the stack top is now an integer. Pop and return
+        // this integer.
+        return stack.removeFirst().getInteger();
+    }
+
+    
+    @Override
+    public boolean hasNext() {
+        // Check if there are integers left by getting one onto the top of stack.
+        makeStackTopAnInteger();
+        // If there are any integers remaining, one will be on the top of the stack,
+        // and therefore the stack can't possibly be empty.
+        return !stack.isEmpty();
+    }
+
+
+    private void makeStackTopAnInteger() {
+        // While there are items remaining on the stack and the front of 
+        // stack is a list (i.e. not integer), keep unpacking.
+        while (!stack.isEmpty() && !stack.peekFirst().isInteger()) {
+            // Put the NestedIntegers onto the stack in reverse order.
+            List<NestedInteger> nestedList = stack.removeFirst().getList();
+            for (int i = nestedList.size() - 1; i >= 0; i--) {
+                stack.addFirst(nestedList.get(i));
+            }
+        }
+    }
+}
+```
+#### Complexity Analysis
+
+Let N be the total number of integers within the nested list, L be the total number of lists within the nested list, and D be the maximum nesting depth (maximum number of lists inside each other).
+
+**Time complexity**:
+
+* **Constructor:** O(N + L).
+
+    The worst-case occurs when the initial input nestedList consists entirely of integers and empty lists (everything is in the top-level). In this case, every item is reversed and stored, giving a total time complexity of O(N + L).
+* **makeStackTopAnInteger():** O({L}/{N}) or O(1).
+
+    If the top of the stack is an integer, then this function does nothing; taking O(1) time.
+
+    Otherwise, it needs to process the stack until an integer is on top. The best way of analyzing the time complexity is to look at the total cost across all calls to `makeStackTopAnInteger()` and then divide by the number of calls made. Once the iterator is exhausted `makeStackTopAnInteger()` must have seen every integer at least once, costing O(N) time. Additionally, it has seen every list (except the first) on the stack at least once also, so this costs O(L) time. Adding these together, we get O(N + L) time.
+
+    The amortized time of a single `makeStackTopAnInteger` is the total cost, O(N + L), divided by the number of times it's called. In order to get all integers, we need to have called it N times. This gives us an amortized time complexity of {O(N + L)}/{N} = O({N}/{N} + {L}/{N}) = O({L}/{N}).
+* **next():** O({L}/{N}) or O(1).
+
+    All of this method is O(1), except for possibly the call to `makeStackTopAnInteger()`, giving us a time complexity the same as `makeStackTopAnInteger()`.
+* **hasNext():** O({L}/{N}) or O(1).
+
+  All of this method is O(1), except for possibly the call to `makeStackTopAnInteger()`, giving us a time complexity the same as `makeStackTopAnInteger()`.
+
+**Space complexity :** O(N + L)).
+
+In the worst case, where the top list contains N integers, or L empty lists, it will cost O(N + L) space. Other expensive cases occur when the nesting is very deep. However, it's useful to remember that `D ≤ L` (because each layer of nesting requires another list), and so we don't need to take this into account.
+
+### Solution 3 : Iterator
+
+Given a nested list of integers, implement an iterator to flatten it. Each element is either an integer, or a list -- whose elements may also be integers or other lists.
+
+For example, given the list [[1,1],2,[1,1]], by calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].
+
+#### Implementation 1
+
+```java
+public class NestedIterator implements Iterator<Integer> {
+    Stack<NestedInteger> stack = new Stack<NestedInteger>();
+ 
+    public NestedIterator(List<NestedInteger> nestedList) {
+        if(nestedList==null)
+            return;
+ 
+        for(int i=nestedList.size()-1; i>=0; i--){
+            stack.push(nestedList.get(i));
+        }
+    }
+ 
+    @Override
+    public Integer next() {
+        return stack.pop().getInteger();
+    }
+ 
+    @Override
+    public boolean hasNext() {
+        while(!stack.isEmpty()){
+            NestedInteger top = stack.peek();
+            if(top.isInteger()){
+                return true;
+            }else{
+                stack.pop();
+                for(int i=top.getList().size()-1; i>=0; i--){
+                    stack.push(top.getList().get(i));
+                }
+            }
+        }
+ 
+        return false;
+    }
+}
+```
+
+#### Implementation 2 
+```java
+public class NestedIterator implements Iterator<Integer> {
+    Stack<Iterator<NestedInteger>> stack = new Stack<Iterator<NestedInteger>>();
+    Integer current;
+ 
+    public NestedIterator(List<NestedInteger> nestedList) {
+        if(nestedList==null)
+            return;
+ 
+        stack.push(nestedList.iterator());    
+    }
+ 
+    @Override
+    public Integer next() {
+        Integer result = current;
+        current = null;
+        return result;
+    }
+ 
+    @Override
+    public boolean hasNext() {
+        while(!stack.isEmpty() && current==null){
+            Iterator<NestedInteger> top = stack.peek();
+            if(!top.hasNext()){
+                stack.pop();
+                continue;
+            }
+ 
+            NestedInteger n = top.next();
+            if(n.isInteger()){
+                current = n.getInteger();
+                return true;
+            }else{
+                stack.push(n.getList().iterator());
+            }
+        }
+ 
+        return false;
+    }
+}
+```
+---
+
+## Binary Search
+
+Given an array of integers `nums` which is sorted in ascending order, and an integer `target`, write a function to search `target` in `nums`. If `target` exists, then return its index. Otherwise, return `-1`.
+
+You must write an algorithm with `O(log n)` runtime complexity.
+
+
+**Example 1:**
+
+```log
+Input: nums = [-1,0,3,5,9,12], target = 9
+Output: 4
+Explanation: 9 exists in nums and its index is 4
+```
+
+**Example 2:**
+
+```log
+Input: nums = [-1,0,3,5,9,12], target = 2
+Output: -1
+Explanation: 2 does not exist in nums so return -1
+```
+
+**Constraints:**
+
+* `1 <= nums.length <= 104`
+
+* `-104 < nums[i], target < 104`
+
+* All the integers in `nums` are **unique**.
+
+* `nums` is sorted in ascending order.
+
+### Solution 1 : Simple
+
+#### Implementation
+
+Now inorder to implement Binary Search there are few Steps:-
+
+1. Find mid index :-` mid = (low + high) / 2`
+
+2. If `nums[mid] == target`, return `mid`
+
+3. If `target > nums[mid]`, Repeat `low = mid + 1`
+
+4. If `target < nums[mid]`, Repeat `high = mid - 1`
+
+Let's take on example inorder to understand this,
+
+**Input:** `nums = [-4,-1,3,7,10,11]`, **target** = `7`
+**Output:** `4`
+
+So, first of all we calculate our mid :-
+for that we want our low & high & intially they'll be
+
+```log
+	[-4,-1,3,7,10,11]
+      l            h
+```
+So our, low is intially at `0th` index & high is at last index i.e. `5`
+
+Now calculate mid :- `mid = (low + high) / 2 `=` mid = 0 + 5 / 2 `=` mid = 2`
+
+```log
+Index				" 0  1 2 3 4  5 "
+					[-4,-1,3,7,10,11]
+					  l    ^       h
+```
+
+* If we check is `target` equals to mid & the answer is no.
+
+* Our target is < so the element which we want will never be present on left half from the mid, so we completely discard the left side.
+
+* Now we again repeat it and calculate our mid, but first we will shift our low i.e. `
+`
+  So our, low is at `3rd` index & high is at last index i.e. `5th`
+
+Now calculate mid :- `mid = (low + high) / 2` = `mid = 3 + 5 / 2` = `mid = 4`
+
+```log
+Index				" 0  1 2 3 4  5 "
+					[-4,-1,3,7,10,11]
+					         l  ^  h
+```
+* If we check is `target` equals to mid & the answer is no.
+
+* Our target is > so the element which we want will never be present on right half from the mid, so we completely discard the right side.
+
+* Now we again repeat it and calculate our mid, but first we will shift our high i.e. `high = mid - 1`
+
+So our, low is at `3rd` index & high is at last index i.e. `3th`
+
+Now calculate mid :- `mid = (low + high) / 2` = `mid = 3 + 3 / 2` = `mid = 3`
+
+```log
+Index				" 0  1 2 3 4  5 "
+					[-4,-1,3,7,10,11]
+					         ^ 
+							 l
+							 h
+```
+* If we check is target equals to mid & the answer is Yes. We'll `return our mid`
+
+```java
+class Solution {
+    public int search(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length - 1;
+        
+        while(low <= high){
+            int mid = (low + high) / 2;
+            if(nums[mid] == target) return mid;
+            
+            else if(target > nums[mid]) low = mid + 1;
+            else high = mid - 1;
+        }
+        return -1;
+    }
+}
+```
+#### ANALYSIS :-
+
+**Time Complexity** :- BigO(logN)
+
+**Space Complexity** :- BigO(1)
+
+### Solution 2 : for Recursive
+
+#### Implementation
+
+```java
+class Solution {
+    public int search(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length - 1;
+        return recursive(nums, low, high, target);
+    }
+    public int recursive(int[] nums, int low, int high, int target) {
+        if(low > high) return -1;
+        int mid = (low + high) / 2;
+        
+        if(nums[mid] == target) return mid;
+        
+        if(target > nums[mid]) return recursive(nums, mid + 1, high, target);
+        else return recursive(nums, low, mid - 1, target);
+    }
+}
+```
+
+#### ANALYSIS :-
+
+**Time Complexity**:- BigO(logN)
+
+**Space Complexity** :- BigO(logN)
+
+
+
+
+
+
+
+
+
 
 
 

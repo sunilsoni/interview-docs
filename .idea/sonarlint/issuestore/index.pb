@@ -16,8 +16,6 @@ H
 _sass/custom/custom.scss,7/a/7a67b28b5645f838c736d6ae21b2a80b3f352b11
 E
 _layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
-Q
-!docs/algorithms/data-structure.md,1/1/11dc0031e207270142fbe0a210e7f3d9628feeeb
 N
 docs/algorithms/linked-list.md,7/0/70516a2103d45e3a7280cf61d048453c5d327688
 H
