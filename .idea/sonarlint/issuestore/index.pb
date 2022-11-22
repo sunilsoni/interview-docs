@@ -18,8 +18,6 @@ E
 _layouts/default.html,8/8/88dc137ae43bf7a2fa27381f48221b3eb9908aac
 N
 docs/algorithms/linked-list.md,7/0/70516a2103d45e3a7280cf61d048453c5d327688
-H
-docs/algorithms/queue.md,0/8/0858fcad5aeba51c7ac2e3acdce84df6912d9c3b
 J
 docs/algorithms/sorting.md,2/c/2cd6b61ecb52be5dd51c8a6814f36db8cdd952c3
 G

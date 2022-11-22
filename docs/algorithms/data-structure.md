@@ -492,12 +492,465 @@ In the worst case, when there are not many repetitions, the time complexity and 
 
 **Space complexity:** If there are a total of `N` elements that we encountered throughout, the space complexity is O(N) (similar to Approach 1). However, in the case of repetitions, the space required for storing those k values O(1).
 
+---
 
+## Tweet Counts Per Frequency
 
+A social media company is trying to monitor activity on their site by analyzing the number of tweets that occur in select periods of time. These periods can be partitioned into smaller **time chunks** based on a certain frequency (every **minute**, **hour**, or **day**).
 
+For example, the period `[10, 10000]` (in **seconds**) would be partitioned into the following time chunks with these frequencies:
 
+* Every **minute** (60-second chunks): `[10,69]`, `[70,129]`, `[130,189]`, `...`, `[9970,10000]`
 
+* Every **hour** (3600-second chunks): `[10,3609]`, `[3610,7209]`, `[7210,10000]`
 
+* Every **day** (86400-second chunks): `[10,10000]`
+
+Notice that the last chunk may be shorter than the specified frequency's chunk size and will always end with the end time of the period (`10000` in the above example).
+
+Design and implement an API to help the company with their analysis.
+
+Implement the `TweetCounts` class:
+
+* `TweetCounts()` Initializes the `TweetCounts` object.
+
+* `void recordTweet(String tweetName, int time)` Stores the `tweetName` at the recorded time (in **seconds**).
+
+* `List<Integer> getTweetCountsPerFrequency(String freq, String tweetName, int startTime, int endTime)` Returns a list of integers representing the number of tweets with `tweetName` in each time chunk for the given period of time `[startTime, endTime]` (in **seconds**) and frequency `freq`.
+
+   * `freq` is one of `minute`, `hour`, or `day` representing a frequency of every **minute, hour, or day** respectively.
+
+**Example:**
+
+```log
+Input
+["TweetCounts","recordTweet","recordTweet","recordTweet","getTweetCountsPerFrequency","getTweetCountsPerFrequency","recordTweet","getTweetCountsPerFrequency"]
+[[],["tweet3",0],["tweet3",60],["tweet3",10],["minute","tweet3",0,59],["minute","tweet3",0,60],["tweet3",120],["hour","tweet3",0,210]]
+
+Output
+[null,null,null,null,[2],[2,1],null,[4]]
+
+Explanation
+TweetCounts tweetCounts = new TweetCounts();
+tweetCounts.recordTweet("tweet3", 0);                              // New tweet "tweet3" at time 0
+tweetCounts.recordTweet("tweet3", 60);                             // New tweet "tweet3" at time 60
+tweetCounts.recordTweet("tweet3", 10);                             // New tweet "tweet3" at time 10
+tweetCounts.getTweetCountsPerFrequency("minute", "tweet3", 0, 59); // return [2]; chunk [0,59] had 2 tweets
+tweetCounts.getTweetCountsPerFrequency("minute", "tweet3", 0, 60); // return [2,1]; chunk [0,59] had 2 tweets, chunk [60,60] had 1 tweet
+tweetCounts.recordTweet("tweet3", 120);                            // New tweet "tweet3" at time 120
+tweetCounts.getTweetCountsPerFrequency("hour", "tweet3", 0, 210);  // return [4]; chunk [0,210] had 4 tweets
+```
+
+**Constraints:**
+
+* `0 <= time, startTime, endTime <= 109`
+
+* `0 <= endTime - startTime <= 104`
+
+* There will be at most `104` calls **in total** to `recordTweet` and `getTweetCountsPerFrequency`.
+
+### Solution 
+
+#### Implementation
+
+```java
+class TweetCounts {
+    
+    private class TreeNode {
+        
+        private int val;
+        private TreeNode left;
+        private TreeNode right;
+        
+        private TreeNode(int data) {
+            val = data;
+            left = null;
+            right = null;
+        }
+        
+    }
+    
+    private Map<String, TreeNode> map;
+
+    public TweetCounts() {
+        map = new HashMap<>();
+    }
+    
+    private TreeNode insert(TreeNode root, int val) {
+        if (root == null) {
+            root = new TreeNode(val);
+        }
+        else if (root.val <= val) {
+            root.right = insert(root.right, val);
+        }
+        else {
+            root.left = insert(root.left, val);
+        }
+        return root;
+    }
+    
+    public void recordTweet(String name, int time) {
+        TreeNode root = map.get(name);
+        root = insert(root, time);
+        map.put(name, root);
+    }
+    
+    private int treverse(TreeNode root, int l, int r) {
+        if (root == null || l >= r) {
+            return 0;
+        }
+        if (root.val <= l) {
+            int add = root.val == l ? 1 : 0;
+            return add + treverse(root.right, l, r);
+        }
+        if (root.val >= r) {
+            return treverse(root.left, l, r);
+        }
+        return 1 + treverse(root.left, l, r) + treverse(root.right, l, r);
+    }
+    
+    public List<Integer> getTweetCountsPerFrequency(String freq, String name, int start, int end) {
+        int d = 0;
+        TreeNode root = map.get(name);
+        List<Integer> res = new ArrayList<>();
+        if (freq.equals("minute")) {
+            d = 60;
+        }
+        else if (freq.equals("hour")) {
+            d = 3600;
+        }
+        else {
+            d = 86400;
+        }
+        while (start + d <= end) {
+            int count = treverse(root, start, start + d);
+            start = start + d;
+            res.add(count);
+        }
+        if (start <= end) {
+            int count = treverse(root, start, end + 1);
+            res.add(count);
+            start = end + 1;
+        }
+        return res;
+    }
+    
+}
+```
+
+---
+
+## Design Parking System
+
+Design a parking system for a parking lot. The parking lot has three kinds of parking spaces: big, medium, and small, with a fixed number of slots for each size.
+
+Implement the `ParkingSystem` class:
+
+* `ParkingSystem(int big, int medium, int small)` Initializes object of the `ParkingSystem` class. The number of slots for each parking space are given as part of the constructor.
+
+* `bool addCar(int carType)` Checks whether there is a parking space of `carType` for the car that wants to get into the parking lot. `carType` can be of three kinds: big, medium, or small, which are represented by `1`, `2`, and `3` respectively. **A car can only park in a parking space of its** `carType`. If there is no space available, return `false`, else park the car in that size space and return `true`.
+
+**Example 1:**
+```log
+Input
+["ParkingSystem", "addCar", "addCar", "addCar", "addCar"]
+[[1, 1, 0], [1], [2], [3], [1]]
+Output
+[null, true, true, false, false]
+
+Explanation
+ParkingSystem parkingSystem = new ParkingSystem(1, 1, 0);
+parkingSystem.addCar(1); // return true because there is 1 available slot for a big car
+parkingSystem.addCar(2); // return true because there is 1 available slot for a medium car
+parkingSystem.addCar(3); // return false because there is no available slot for a small car
+parkingSystem.addCar(1); // return false because there is no available slot for a big car. It is already occupied.
+```
+
+**Constraints:**
+
+* `0 <= big, medium, small <= 1000`
+
+* `carType` is `1`, `2`, or `3`
+
+* At most `1000` calls will be made to `addCar`
+
+### Solution 
+
+**Algorithm**
+
+1. we can take 3 variables to hold count of big,med,small counts. here i have taken array of size 3 instead.
+
+2. now just use carType-1 as index of the array and check if value present at that index > 0. if yes return true else false.
+
+3. apart from that keep on decrementing value present on carType-1 index. since not more than 1000 calls cannot be made value decremented cannot go out of range.
+
+#### Implementation
+```java
+class ParkingSystem {
+    private int[] size;
+    public ParkingSystem(int big, int medium, int small) {
+        this.size = new int[]{big, medium, small};
+    }
+    
+    public boolean addCar(int carType) {
+        return size[carType-1]-->0;
+    }
+}
+```
+
+## Number of Islands
+
+Given an `m x n` 2D binary grid `grid` which represents a map of `1`s (land) and `0`s (water), return the number of islands.
+
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+**Example 1:**
+
+```log
+Input: grid = [
+["1","1","1","1","0"],
+["1","1","0","1","0"],
+["1","1","0","0","0"],
+["0","0","0","0","0"]
+]
+Output: 1
+```
+
+**Example 2:**
+
+```log
+Input: grid = [
+["1","1","0","0","0"],
+["1","1","0","0","0"],
+["0","0","1","0","0"],
+["0","0","0","1","1"]
+]
+Output: 3
+```
+
+**Constraints:**
+
+* `m == grid.length`
+
+* `n == grid[i].length`
+
+* `1 <= m, n <= 300`
+
+* `grid[i][j] is '0' or '1'`.
+
+### Solution 1 : DFS [Accepted]
+
+**Intuition**
+
+Treat the 2d grid map as an undirected graph and there is an edge between two horizontally or vertically adjacent nodes of value '`1`'.
+
+**Algorithm**
+
+Linear scan the 2d grid map, if a node contains a '`1`', then it is a root node that triggers a Depth First Search. During DFS, every visited node should be set as '0' to mark as visited node. Count the number of root nodes that trigger DFS, this number would be the number of islands since each DFS starting at some root identifies an island.
+
+#### Implementation
+
+```java
+class Solution {
+  void dfs(char[][] grid, int r, int c) {
+    int nr = grid.length;
+    int nc = grid[0].length;
+
+    if (r < 0 || c < 0 || r >= nr || c >= nc || grid[r][c] == '0') {
+      return;
+    }
+
+    grid[r][c] = '0';
+    dfs(grid, r - 1, c);
+    dfs(grid, r + 1, c);
+    dfs(grid, r, c - 1);
+    dfs(grid, r, c + 1);
+  }
+
+  public int numIslands(char[][] grid) {
+    if (grid == null || grid.length == 0) {
+      return 0;
+    }
+
+    int nr = grid.length;
+    int nc = grid[0].length;
+    int num_islands = 0;
+    for (int r = 0; r < nr; ++r) {
+      for (int c = 0; c < nc; ++c) {
+        if (grid[r][c] == '1') {
+          ++num_islands;
+          dfs(grid, r, c);
+        }
+      }
+    }
+
+    return num_islands;
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(M×N) where M is the number of rows and N is the number of columns.
+
+**Space complexity :** worst case O(M×N) in case that the grid map is filled with lands where DFS goes by M×N deep.
+
+### Solution 2 : BFS [Accepted]
+
+**Algorithm**
+
+Linear scan the 2d grid map, if a node contains a '`1`', then it is a root node that triggers a Breadth First Search. Put it into a queue and set its value as '`0`' to mark as visited node. Iteratively search the neighbors of enqueued nodes until the queue becomes empty.
+
+#### Implementation
+```java
+class Solution {
+  public int numIslands(char[][] grid) {
+    if (grid == null || grid.length == 0) {
+      return 0;
+    }
+
+    int nr = grid.length;
+    int nc = grid[0].length;
+    int num_islands = 0;
+
+    for (int r = 0; r < nr; ++r) {
+      for (int c = 0; c < nc; ++c) {
+        if (grid[r][c] == '1') {
+          ++num_islands;
+          grid[r][c] = '0'; // mark as visited
+          Queue<Integer> neighbors = new LinkedList<>();
+          neighbors.add(r * nc + c);
+          while (!neighbors.isEmpty()) {
+            int id = neighbors.remove();
+            int row = id / nc;
+            int col = id % nc;
+            if (row - 1 >= 0 && grid[row-1][col] == '1') {
+              neighbors.add((row-1) * nc + col);
+              grid[row-1][col] = '0';
+            }
+            if (row + 1 < nr && grid[row+1][col] == '1') {
+              neighbors.add((row+1) * nc + col);
+              grid[row+1][col] = '0';
+            }
+            if (col - 1 >= 0 && grid[row][col-1] == '1') {
+              neighbors.add(row * nc + col-1);
+              grid[row][col-1] = '0';
+            }
+            if (col + 1 < nc && grid[row][col+1] == '1') {
+              neighbors.add(row * nc + col+1);
+              grid[row][col+1] = '0';
+            }
+          }
+        }
+      }
+    }
+
+    return num_islands;
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(M×N) where M is the number of rows and N is the number of columns.
+
+**Space complexity :** O(min(M,N)) because in worst case where the grid is filled with lands, the size of queue can grow up to min(M,N).
+
+### Solution 3 : Union Find (aka Disjoint Set) [Accepted]
+
+**Algorithm**
+
+Traverse the 2d grid map and union adjacent lands horizontally or vertically, at the end, return the number of connected components maintained in the UnionFind data structure.
+
+#### Implementation
+```java
+class Solution {
+  class UnionFind {
+    int count; // # of connected components
+    int[] parent;
+    int[] rank;
+
+    public UnionFind(char[][] grid) { // for problem 200
+      count = 0;
+      int m = grid.length;
+      int n = grid[0].length;
+      parent = new int[m * n];
+      rank = new int[m * n];
+      for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j) {
+          if (grid[i][j] == '1') {
+            parent[i * n + j] = i * n + j;
+            ++count;
+          }
+          rank[i * n + j] = 0;
+        }
+      }
+    }
+
+    public int find(int i) { // path compression
+      if (parent[i] != i) parent[i] = find(parent[i]);
+      return parent[i];
+    }
+
+    public void union(int x, int y) { // union with rank
+      int rootx = find(x);
+      int rooty = find(y);
+      if (rootx != rooty) {
+        if (rank[rootx] > rank[rooty]) {
+          parent[rooty] = rootx;
+        } else if (rank[rootx] < rank[rooty]) {
+          parent[rootx] = rooty;
+        } else {
+          parent[rooty] = rootx; rank[rootx] += 1;
+        }
+        --count;
+      }
+    }
+
+    public int getCount() {
+      return count;
+    }
+  }
+
+  public int numIslands(char[][] grid) {
+    if (grid == null || grid.length == 0) {
+      return 0;
+    }
+
+    int nr = grid.length;
+    int nc = grid[0].length;
+    int num_islands = 0;
+    UnionFind uf = new UnionFind(grid);
+    for (int r = 0; r < nr; ++r) {
+      for (int c = 0; c < nc; ++c) {
+        if (grid[r][c] == '1') {
+          grid[r][c] = '0';
+          if (r - 1 >= 0 && grid[r-1][c] == '1') {
+            uf.union(r * nc + c, (r-1) * nc + c);
+          }
+          if (r + 1 < nr && grid[r+1][c] == '1') {
+            uf.union(r * nc + c, (r+1) * nc + c);
+          }
+          if (c - 1 >= 0 && grid[r][c-1] == '1') {
+            uf.union(r * nc + c, r * nc + c - 1);
+          }
+          if (c + 1 < nc && grid[r][c+1] == '1') {
+            uf.union(r * nc + c, r * nc + c + 1);
+          }
+        }
+      }
+    }
+
+    return uf.getCount();
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(M×N) where M is the number of rows and N is the number of columns. Note that Union operation takes essentially constant time[1] when UnionFind is implemented with both path compression and union by rank.
+
+**Space complexity :** O(M×N) as required by UnionFind data structure.
+
+---
 
 
 

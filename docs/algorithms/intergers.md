@@ -1659,6 +1659,121 @@ class Solution {
 
 **Space complexity** : O(N) to keep left and right arrays of length N, and output array of length `N - k + 1`.
 
+### Solution 4 : Deque or Doubly Linked List With Explanation
+
+**Approach 1 :**
+
+* How mant elements are there in the result array?
+
+   * 1 entry for the first k elements and 1 entry for each num from the rest of n-k elemtns. That is 1+n-k
+
+* Now solving the actual problem.
+
+   * The goal is to keep finding the recent max as we go from left to right. We will maintain the elements in the deque from largest to smallest as we go along. We can keep removing the element from back as long as they are not greater than the current element. Why? Because those elements which are evicted are no good compared to the current element i.e. they are old (their index is encountered before the curr element and they are of lesser value).
+
+   * To remember if the deque head is old or within the sliding window, we need to store indices rather than elements.
+
+   * If head falls outside the current sliding window, we cannot consider even if it is max among all elements in the dequeue, so evict it.
+
+```java
+public class solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (k == 0) return new int[0];
+        LinkedList<Integer> list = new LinkedList<>();
+        int[] res = new int[nums.length - k + 1];
+        for (int i = 0, j = 0, idx = 0; i < nums.length; i++) {
+            while (!list.isEmpty() && nums[list.getLast()] <= nums[i])
+                list.removeLast();
+            list.addLast(i);
+            if (i >= k - 1) {
+                if ((i - list.getFirst() + 1) > k) list.removeFirst(); //head is outside the sliding window
+                res[idx++] = nums[list.getFirst()];
+            }
+        }
+        return res;
+    }
+}
+```
+
+**Approach 2 :** maxHeap based approach - O(n lgk) where n is # of elements
+
+The idea is to maintain a maxHeap of size at most k over the sliding window. To determine, if the current max from the heap is still valid, we should track indices rather than elements.
+
+The number of elements in the result array = 1 spot for first k elements and a sport for each of [k+1..n] elements.
+
+We start filling the res from i-1 == kth spot. keep removing max elements falling outside our curr window - if the current spot is i, last valid element in the window is i-(k-1).
+
+````java
+public class soluution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        if (n == 0) return new int[0];
+        PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>() {
+            public int compare(Integer v1, Integer v2) {
+                return nums[v2] - nums[v1];
+            }
+        });
+        int[] res = new int[1 + n - (k + 1) + 1];
+        for (int i = 0, j = 0; i < n; i++) {
+            pq.add(i);
+            if (i >= k - 1) {
+                while (pq.peek() < i - (k - 1))
+                    pq.remove();
+                res[j++] = nums[pq.peek()];
+            }
+        }
+        return res;
+    }
+}
+````
+
+
+**Approach 1.1 :** Replace `maxHeap` with deque. O(n) where n is # of elements - each element has gone into queue once and removed once.
+
+Maintain `deq` as monotonically decreasing queue. That way, we can keep removing outdated indices from the front and keep removing lesser elements from the back as we have a better candidate (larger being on the right side always wins) now.
+
+```java
+public class solution{
+    //deq sample [10,8,4...], always decreasing numbers as we move right
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        if(n == 0) return new int[0];
+        Deque<Integer> deq = new LinkedList<>();
+        int[] res = new int[1+n-(k+1)+1];
+        for(int i=0,j=0; i < n; i++){
+            //fix front
+            while(!deq.isEmpty() && deq.peekFirst() < (i-(k-1)))
+                deq.removeFirst();
+            //fix back
+            while(!deq.isEmpty() && nums[deq.peekLast()] <= nums[i])
+                deq.removeLast();
+            deq.addLast(i);
+            if(i >= k-1){
+                res[j++] = nums[deq.peekFirst()];
+            }
+        }
+        return res;
+    }
+}
+```
+---	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 ## Flatten Nested List Iterator

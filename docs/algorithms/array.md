@@ -1754,14 +1754,6 @@ class Solution {
 
 ---
 
-
-
-
-
-
-
----
-
 ## Count the Number of Consistent Strings
 
 You are given a string `allowed` consisting of distinct characters and an array of strings `words`. A string is consistent if all characters in the string appear in the string `allowed`.
@@ -1970,6 +1962,215 @@ We iterate over the array `arr` to find the frequency and store them in the hash
 We are storing the N frequencies in the hash map `freq` that takes O(1) space for each element. We also store the frequency count in the hash set. Therefore, the total space complexity is equal to O(N).
 
 ---
+
+## Best Time to Buy and Sell Stock
+
+You are given an array `prices` where `prices[i]` is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+*Return the maximum profit you can achieve from this transaction*. If you cannot achieve any profit, return `0`.
+
+**Example 1:**
+
+```log
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+```
+
+**Example 2:**
+
+```log
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
+```
+
+**Constraints:**
+
+* `1 <= prices.length <= 105`
+* `0 <= prices[i] <= 104`
+
+
+### Solution 1 : Brute Force
+
+#### Implementation
+```java
+public class Solution {
+    public int maxProfit(int prices[]) {
+        int maxprofit = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+            for (int j = i + 1; j < prices.length; j++) {
+                int profit = prices[j] - prices[i];
+                if (profit > maxprofit)
+                    maxprofit = profit;
+            }
+        }
+        return maxprofit;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(n^2). Loop runs {n(n-1)}/2 times.
+
+**Space complexity:** O(1). Only two variables - `maxprofit` and `profit` are used.
+
+### Solution 2 : One Pass
+
+Say the given array is:
+
+     [7, 1, 5, 3, 6, 4]
+
+If we plot the numbers of the given array on a graph, we get:
+
+<img src="images/array/BestTimetoBuyandSellStock.png" width="300" height="200" />
+
+The points of interest are the peaks and valleys in the given graph. We need to find the largest price following each valley, which difference could be the max profit. We can maintain two variables - minprice and maxprofit corresponding to the smallest valley and maximum profit (maximum difference between selling price and minprice) obtained so far respectively.
+
+#### Implementation
+
+```java
+public class Solution {
+    public int maxProfit(int prices[]) {
+        int minprice = Integer.MAX_VALUE;
+        int maxprofit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minprice)
+                minprice = prices[i];
+            else if (prices[i] - minprice > maxprofit)
+                maxprofit = prices[i] - minprice;
+        }
+        return maxprofit;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(n). Only a single pass is needed.
+
+**Space complexity:** O(1). Only two variables are used.
+
+---
+
+## String Compression
+
+Given an array of characters `chars`, compress it using the following algorithm:
+
+Begin with an empty string `s`. For each group of **consecutive repeating characters** in `chars`:
+
+ * If the group's length is `1`, append the character to `s`.
+
+ * Otherwise, append the character followed by the group's length.
+
+The compressed string `s` **should not be returned separately**, but instead, be stored **in the input character array** `chars`. Note that group lengths that are `10` or longer will be split into multiple characters in `chars`.
+
+After you are done **modifying the input array**, return the new length of the array.
+
+You must write an algorithm that uses only constant extra space.
+
+**Example 1:**
+
+```log
+Input: chars = ["a","a","b","b","c","c","c"]
+Output: Return 6, and the first 6 characters of the input array should be: ["a","2","b","2","c","3"]
+Explanation: The groups are "aa", "bb", and "ccc". This compresses to "a2b2c3".
+```
+
+**Example 2:**
+
+```log
+Input: chars = ["a"]
+Output: Return 1, and the first character of the input array should be: ["a"]
+Explanation: The only group is "a", which remains uncompressed since it's a single character.
+```
+
+**Example 3:**
+
+```log
+Input: chars = ["a","b","b","b","b","b","b","b","b","b","b","b","b"]
+Output: Return 4, and the first 4 characters of the input array should be: ["a","b","1","2"].
+Explanation: The groups are "a" and "bbbbbbbbbbbb". This compresses to "ab12".
+```
+
+**Constraints:**
+
+* `1 <= chars.length <= 2000`
+
+* `chars[i]` is a lowercase English letter, uppercase English letter, digit, or symbol.
+
+### Solution 
+
+#### Implementation
+```java
+public class solution {
+public int compress(char[] chars) {
+        int index = 0, count = 0;
+        // We traverse the entire array with this iteration.
+        for (int i = 0; i < chars.length; i++) {
+            count++; // We keep note of number of characters in sequence.
+            /* When the next character is not as same as the previous one,
+             * we modify the array from the beginning with the current character.
+             * Note that the array will only become shorter as we keep updating the data.
+             * So there is no need to create another array.
+             */
+            if (i+1 == chars.length || chars[i] != chars[i+1]) {
+                chars[index++] = chars[i];
+                // If there are multiple characters, we add the number to the array.
+                if (count != 1) {
+                    for (char c : Integer.toString(count).toCharArray()) {
+                        chars[index++] = c;
+                    }
+                }
+                // We initialize count to zero for the next character check.
+                count = 0;
+            }
+        }
+        return index;
+    }
+}
+```
+
+## Subsets
+
+Given an integer array `nums` of **unique** elements, return *all possible subsets (the power set)*.
+
+The solution set **must not** contain duplicate subsets. Return the solution in **any order**.
+
+**Example 1:**
+
+```log
+Input: nums = [1,2,3]
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+```
+
+**Example 2:**
+```log
+Input: nums = [0]
+Output: [[],[0]]
+```
+
+**Constraints:**
+
+* `1 <= nums.length <= 10`
+
+* `-10 <= nums[i] <= 10`
+
+* All the numbers of `nums` are **unique**.
+
+### Solution 
+
+
+
+
+
+
+
+
 
 
 

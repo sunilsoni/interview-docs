@@ -2780,6 +2780,496 @@ Output: false
 
 ### Solution 1 : Backtracking
 
+**Algorithm**
+
+The skeleton of the algorithm is a loop that iterates through each cell in the grid. For each cell, we invoke the backtracking function (i.e. `backtrack()`) to check if we would obtain a solution, starting from this very cell.
+
+For the backtracking function `backtrack(row, col, suffix)`, as a DFS algorithm, it is often implemented as a recursive function. The function can be broke down into the following four steps:
+
+* Step 1). At the beginning, first we check if we reach the bottom case of the recursion, where the word to be matched is empty, i.e. we have already found the match for each prefix of the word.
+
+* Step 2). We then check if the current state is invalid, either the position of the cell is out of the boundary of the board or the letter in the current cell does not match with the first letter of the word.
+
+* Step 3). If the current step is valid, we then start the exploration of backtracking with the strategy of DFS. First, we mark the current cell as visited, e.g. any non-alphabetic letter will do. Then we iterate through the four possible directions, namely up, right, down and left. The order of the directions can be altered, to one's preference.
+
+* Step 4). At the end of the exploration, we revert the cell back to its original state. Finally we return the result of the exploration.
+
+#### Implementation
+
+```java
+class Solution {
+  private char[][] board;
+  private int ROWS;
+  private int COLS;
+
+  public boolean exist(char[][] board, String word) {
+    this.board = board;
+    this.ROWS = board.length;
+    this.COLS = board[0].length;
+
+    for (int row = 0; row < this.ROWS; ++row)
+      for (int col = 0; col < this.COLS; ++col)
+        if (this.backtrack(row, col, word, 0))
+          return true;
+    return false;
+  }
+
+  protected boolean backtrack(int row, int col, String word, int index) {
+    /* Step 1). check the bottom case. */
+    if (index >= word.length())
+      return true;
+
+    /* Step 2). Check the boundaries. */
+    if (row < 0 || row == this.ROWS || col < 0 || col == this.COLS
+        || this.board[row][col] != word.charAt(index))
+      return false;
+
+    /* Step 3). explore the neighbors in DFS */
+    boolean ret = false;
+    // mark the path before the next exploration
+    this.board[row][col] = '#';
+
+    int[] rowOffsets = {0, 1, 0, -1};
+    int[] colOffsets = {1, 0, -1, 0};
+    for (int d = 0; d < 4; ++d) {
+      ret = this.backtrack(row + rowOffsets[d], col + colOffsets[d], word, index + 1);
+      if (ret)
+        break;
+    }
+
+    /* Step 4). clean up and return the result. */
+    this.board[row][col] = word.charAt(index);
+    return ret;
+  }
+}
+```
+**Notes**
+
+There are a few choices that we made for our backtracking algorithm, here we elaborate some thoughts that are behind those choices.
+
+     Instead of returning directly once we find a match, we simply break out of the loop and do the cleanup before returning.
+
+Here is what the alternative solution might look like.
+
+```java
+public class solution {
+  protected boolean backtrack(int row, int col, String word, int index) {
+    /* Step 1). check the bottom case. */
+    if (index >= word.length())
+      return true;
+
+    /* Step 2). Check the boundaries. */
+    if (row < 0 || row == this.ROWS || col < 0 || col == this.COLS
+            || this.board[row][col] != word.charAt(index))
+      return false;
+
+    /* Step 3). explore the neighbors in DFS */
+    // mark the path before the next exploration
+    this.board[row][col] = '#';
+
+    int[] rowOffsets = {0, 1, 0, -1};
+    int[] colOffsets = {1, 0, -1, 0};
+    for (int d = 0; d < 4; ++d) {
+      if (this.backtrack(row + rowOffsets[d], col + colOffsets[d], word, index + 1))
+        // return without cleanup
+        return true;
+    }
+
+    /* Step 4). clean up and return the result. */
+    this.board[row][col] = word.charAt(index);
+    return false;
+  }
+}
+```
+
+As one may notice, we simply `return True` if the result of the recursive call to `backtrack()` is positive. Though this minor modification would have no impact on the time or space complexity, it would however leave with a "side-effect," i.e. the matched letters in the original board would be altered to #.
+
+     Instead of doing the boundary checks before the recursive call on the backtrack() function, we do it within the function.
+
+This is an important choice though. Doing the boundary check within the function would allow us to reach the bottom case, for the test case where the board contains only a single cell, since either of neighbor indices would not be valid.
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N.3^L) where N is the number of cells in the board and  L is the length of the word to be matched.
+
+  * For the backtracking function, initially we could have at most 4 directions to explore, but further the choices are reduced into 3 (since we won't go back to where we come from). As a result, the execution trace after the first step could be visualized as a 3-ary tree, each of the branches represent a potential exploration in the corresponding direction. Therefore, in the worst case, the total number of invocation would be the number of nodes in a full 3-nary tree, which is about 3^L.
+
+  * We iterate through the board for backtracking, i.e. there could be N times invocation for the backtracking function in the worst case.
+
+  * As a result, overall the time complexity of the algorithm would be O(N.3^L).
+
+**Space Complexity:** O(L) where L is the length of the word to be matched.
+
+  * The main consumption of the memory lies in the recursion call of the backtracking function. The maximum length of the call stack would be the length of the word. Therefore, the space complexity of the algorithm is O(L).
+  
+---
+
+## Permutation in String
+
+Given two strings `s1` and `s2`, return `true` if `s2` contains a permutation of `s1`, or `false` otherwise.
+
+In other words, return `true` if one of `s1'`s permutations is the substring of `s2`.
+
+
+**Example 1:**
+```log
+Input: s1 = "ab", s2 = "eidbaooo"
+Output: true
+Explanation: s2 contains one permutation of s1 ("ba").
+```
+
+**Example 2:**
+```log
+Input: s1 = "ab", s2 = "eidboaoo"
+Output: false
+```
+
+**Constraints:**
+
+* `1 <= s1.length, s2.length <= 104`
+
+* `s1` and `s2` consist of lowercase English letters.
+
+### Solution 1 : Brute Force
+
+**Algorithm**
+
+The simplest method is to generate all the permutations of the short string and to check if the generated permutation is a substring of the longer string.
+
+In order to generate all the possible pairings, we make use of a function `permute(string_1, string_2, current_index)`. This function creates all the possible permutations of the short string s1s1.
+
+To do so, permute takes the index of the current element *current_index* as one of the arguments. Then, it swaps the current element with every other element in the array, lying towards its right, so as to generate a new ordering of the array elements. After the swapping has been done, it makes another call to permute but this time with the index of the next element in the array. While returning back, we reverse the swapping done in the current function call.
+
+#### Implementation 
+```java
+public class Solution {
+    boolean flag = false;
+    
+    public boolean checkInclusion(String s1, String s2) {
+        permute(s1, s2, 0);
+        return flag;
+    }
+    
+    public String swap(String s, int i0, int i1) {
+        if (i0 == i1)
+            return s;
+        String s1 = s.substring(0, i0);
+        String s2 = s.substring(i0 + 1, i1);
+        String s3 = s.substring(i1 + 1);
+        return s1 + s.charAt(i1) + s2 + s.charAt(i0) + s3;
+    }
+    
+    void permute(String s1, String s2, int l) {
+        if (l == s1.length()) {
+            if (s2.indexOf(s1) >= 0)
+                flag = true;
+        } else {
+            for (int i = l; i < s1.length(); i++) {
+                s1 = swap(s1, l, i);
+                permute(s1, s2, l + 1);
+                s1 = swap(s1, l, i);
+            }
+        }
+    }
+}
+```
+#### Complexity Analysis
+
+Let n be the length of s1
+
+**Time complexity:** O(n!).
+
+**Space complexity:** O(n^2). The depth of the recursion tree is n(n refers to the length of the short string s1). Every node of the recursion tree contains a string of max. length n.
+
+### Solution 2 : Using sorting
+
+**Algorithm**
+
+The idea behind this approach is that one string will be a permutation of another string only if both of them contain the same characters the same number of times. One string x is a permutation of other string y only if sorted(x)=sorted(y).
+
+In order to check this, we can sort the two strings and compare them. We sort the short string s1 and all the substrings of s2, sort them and compare them with the sorted s1 string. If the two match completely, s1's permutation is a substring of s2, otherwise not.
+
+#### Implementation
+```java
+public class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        s1 = sort(s1);
+        for (int i = 0; i <= s2.length() - s1.length(); i++) {
+            if (s1.equals(sort(s2.substring(i, i + s1.length()))))
+                return true;
+        }
+        return false;
+    }
+    
+    public String sort(String s) {
+        char[] t = s.toCharArray();
+        Arrays.sort(t);
+        return new String(t);
+    }
+}
+```
+#### Complexity Analysis
+
+Let l_1 be the length of string s_1 and l_2 be the length of string s_2.
+
+**Time complexity:** O(l_1log(l_1)+(l_2-l_1)l_1log(l_1).
+
+**Space complexity:** O(l_1). t array is used.
+
+### Solution 3 : Using Hashmap
+
+**Algorithm**
+
+As discussed above, one string will be a permutation of another string only if both of them contain the same characters with the same frequency. We can consider every possible substring in the long string s2 of the same length as that of s1 and check the frequency of occurence of the characters appearing in the two. If the frequencies of every letter match exactly, then only s1's permutation can be a substring of s2.
+
+In order to implement this approach, instead of sorting and then comparing the elements for equality, we make use of a hashmap s1maps1map which stores the frequency of occurence of all the characters in the short string s1. We consider every possible substring of s2 of the same length as that of s1, find its corresponding hashmap as well, namely s2maps2map. Thus, the substrings considered can be viewed as a window of length as that of s1 iterating over s2. If the two hashmaps obtained are identical for any such window, we can conclude that s1's permutation is a substring of s2, otherwise not.
+
+#### Implementation
+```java
+public class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length())
+            return false;
+        HashMap<Character, Integer> s1map = new HashMap<>();
+
+        for (int i = 0; i < s1.length(); i++)
+            s1map.put(s1.charAt(i), s1map.getOrDefault(s1.charAt(i), 0) + 1);
+
+        for (int i = 0; i <= s2.length() - s1.length(); i++) {
+            HashMap<Character, Integer> s2map = new HashMap<>();
+            for (int j = 0; j < s1.length(); j++) {
+                s2map.put(s2.charAt(i + j), s2map.getOrDefault(s2.charAt(i + j), 0) + 1);
+            }
+            if (matches(s1map, s2map))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean matches(HashMap<Character, Integer> s1map, HashMap<Character, Integer> s2map) {
+        for (char key : s1map.keySet()) {
+            if (s1map.get(key) - s2map.getOrDefault(key, -1) != 0)
+                return false;
+        }
+        return true;
+    }
+}
+```
+
+#### Complexity Analysis
+
+Let l_1 be the length of string s_1 and l_2 be the length of string s_2.
+
+**Time complexity:** O(l_1+26l_1(l_2-l_1)). The hashmap contains atmost 26 keys.
+
+**Space complexity:** O(1). Hashmap contains at most 26 key-value pairs.
+
+### Solution 4 : Using Array [Accepted]
+
+**Algorithm**
+
+Instead of making use of a special HashMap datastructure just to store the frequency of occurence of characters, we can use a simpler array data structure to store the frequencies. Given strings contains only lowercase alphabets ('a' to 'z'). So we need to take an array of size 26.The rest of the process remains the same as the last approach.
+
+#### Implementation
+```java
+public class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length())
+            return false;
+        int[] s1map = new int[26];
+        for (int i = 0; i < s1.length(); i++)
+            s1map[s1.charAt(i) - 'a']++;
+        for (int i = 0; i <= s2.length() - s1.length(); i++) {
+            int[] s2map = new int[26];
+            for (int j = 0; j < s1.length(); j++) {
+                s2map[s2.charAt(i + j) - 'a']++;
+            }
+            if (matches(s1map, s2map))
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean matches(int[] s1map, int[] s2map) {
+        for (int i = 0; i < 26; i++) {
+            if (s1map[i] != s2map[i])
+                return false;
+        }
+        return true;
+    }
+}
+```
+#### Complexity Analysis
+
+Let l_1 be the length of string s_1 and l_2 be the length of string s_2.
+
+**Time complexity:** O(l_1+26l_1(l_2-l_1)). The hashmap contains atmost 26 keys.
+
+**Space complexity:** O(1). `s1map` and `s2map` of size 26 is used.
+
+---
+
+## Balanced Binary Tree
+
+Given a binary tree, determine if it is **height-balanced**.
+
+**Example 1 :**
+
+<img src="images/binaryTreeEx1.png" width="300" height="200" />
+
+```log
+Input: root = [3,9,20,null,null,15,7]
+Output: true
+```
+
+**Example 2:**
+
+<img src="images/binaryTreeEx2.png" width="300" height="200" />
+
+```log
+Input: root = [1,2,2,3,3,null,null,4,4]
+Output: false
+```
+
+**Example 3:**
+
+```log
+Input: root = []
+Output: true
+```
+
+**Constraints:**
+
+* The number of nodes in the tree is in the range `[0, 5000]`.
+
+* `-104 <= Node.val <= 104`
+
+### Solution 1 : Top-down recursion
+
+**Algorithm**
+
+First we define a function **height** such that for any node *p* ∈ *T*
+
+<img src="images/binaryTreeSol1.png" width="300" height="200" />
+
+Now that we have a method for determining the height of a tree, all that remains is to compare the height of every node's children. A tree *T* rooted at r is balanced if and only if the height of its two children are within 1 of each other and the subtrees at each child are also balanced. Therefore, we can compare the two child subtrees' heights then recurse on each one.
+
+```log
+isBalanced(root):
+    if (root == NULL):
+        return true
+    if (abs(height(root.left) - height(root.right)) > 1):
+        return false
+    else:
+        return isBalanced(root.left) && isBalanced(root.right)
+```
+
+```java
+class Solution {
+  // Recursively obtain the height of a tree. An empty tree has -1 height
+  private int height(TreeNode root) {
+    // An empty tree has height -1
+    if (root == null) {
+      return -1;
+    }
+    return 1 + Math.max(height(root.left), height(root.right));
+  }
+
+  public boolean isBalanced(TreeNode root) {
+    // An empty tree satisfies the definition of a balanced tree
+    if (root == null) {
+      return true;
+    }
+
+    // Check if subtrees have height within 1. If they do, check if the
+    // subtrees are balanced
+    return Math.abs(height(root.left) - height(root.right)) < 2
+        && isBalanced(root.left)
+        && isBalanced(root.right);
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :**
+
+<img src="images/binaryTreecomplexity.png" width="1000" height="300" />
+
+**Space complexity :** O(n). The recursion stack may contain all nodes if the tree is skewed.
+
+**Fun fact:** f(n) = f(n-1) + f(n-2) + 1 is known as a `Fibonacci meanders sequence`.
+
+### Solution 2 : Bottom-up recursion
+
+**Intuition**
+
+In approach 1, we perform redundant calculations when computing **height**. In each call to **height**, we require that the subtree's heights also be computed. Therefore, when working top down we will compute the height of a subtree once for every parent. We can remove the redundancy by first recursing on the children of the current node and then using their computed height to determine whether the current node is balanced.
+
+**Algorithm**
+
+We will use the same **height** defined in the first approach. The bottom-up approach is a reverse of the logic of the top-down approach since we first check if the child subtrees are balanced before comparing their heights. The algorithm is as follows:
+
+     Check if the child subtrees are balanced. If they are, use their heights to determine if the current subtree is balanced as well as to calculate the current subtree's height.
+
+#### Implementation
+```java
+// Utility class to store information from recursive calls
+final class TreeInfo {
+  public final int height;
+  public final boolean balanced;
+
+  public TreeInfo(int height, boolean balanced) {
+    this.height = height;
+    this.balanced = balanced;
+  }
+}
+
+class Solution {
+  // Return whether or not the tree at root is balanced while also storing
+  // the tree's height in a reference variable.
+  private TreeInfo isBalancedTreeHelper(TreeNode root) {
+    // An empty tree is balanced and has height = -1
+    if (root == null) {
+      return new TreeInfo(-1, true);
+    }
+
+    // Check subtrees to see if they are balanced.
+    TreeInfo left = isBalancedTreeHelper(root.left);
+    if (!left.balanced) {
+      return new TreeInfo(-1, false);
+    }
+    TreeInfo right = isBalancedTreeHelper(root.right);
+    if (!right.balanced) {
+      return new TreeInfo(-1, false);
+    }
+
+    // Use the height obtained from the recursive calls to
+    // determine if the current node is also balanced.
+    if (Math.abs(left.height - right.height) < 2) {
+      return new TreeInfo(Math.max(left.height, right.height) + 1, true);
+    }
+    return new TreeInfo(-1, false);
+  }
+
+  public boolean isBalanced(TreeNode root) {
+    return isBalancedTreeHelper(root).balanced;
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(n)
+
+   For every subtree, we compute its height in constant time as well as compare the height of its children.
+
+**Space complexity :** O(n). The recursion stack may go up to O(n) if the tree is unbalanced.
+
+---
+
+
+
 
 
 
