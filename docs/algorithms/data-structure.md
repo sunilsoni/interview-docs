@@ -950,7 +950,564 @@ class Solution {
 
 **Space complexity :** O(M×N) as required by UnionFind data structure.
 
+### Solution 4 : Very concise Java AC solution
+
+#### Implementation
+```java
+public class Solution {
+
+  private int n;
+  private int m;
+
+  public int numIslands(char[][] grid) {
+    int count = 0;
+    n = grid.length;
+    if (n == 0) return 0;
+    m = grid[0].length;
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++)
+        if (grid[i][j] == '1') {
+          DFSMarking(grid, i, j);
+          ++count;
+        }
+    }
+    return count;
+  }
+
+  private void DFSMarking(char[][] grid, int i, int j) {
+    if (i < 0 || j < 0 || i >= n || j >= m || grid[i][j] != '1') return;
+    grid[i][j] = '0';
+    DFSMarking(grid, i + 1, j);
+    DFSMarking(grid, i - 1, j);
+    DFSMarking(grid, i, j + 1);
+    DFSMarking(grid, i, j - 1);
+  }
+}
+```
+
+### Solution 5 : Java DFS and BFS solution
+
+**DFS:**
+```java
+public class solution{
+    public int numIslands(char[][] grid) {
+    int count=0;
+    for(int i=0;i<grid.length;i++)
+        for(int j=0;j<grid[0].length;j++){
+            if(grid[i][j]=='1'){
+                dfsFill(grid,i,j);
+                count++;
+            }
+        }
+    return count;
+}
+private void dfsFill(char[][] grid,int i, int j){
+    if(i>=0 && j>=0 && i<grid.length && j<grid[0].length&&grid[i][j]=='1'){
+        grid[i][j]='0';
+        dfsFill(grid, i + 1, j);
+        dfsFill(grid, i - 1, j);
+        dfsFill(grid, i, j + 1);
+        dfsFill(grid, i, j - 1);
+    }
+}
+        }
+```
+
+**BFS:**
+
+```java
+public class solution {
+  public int numIslands(char[][] grid) {
+    int count = 0;
+    for (int i = 0; i < grid.length; i++)
+      for (int j = 0; j < grid[0].length; j++) {
+        if (grid[i][j] == '1') {
+          bfsFill(grid, i, j);
+          count++;
+        }
+      }
+    return count;
+  }
+
+  private void bfsFill(char[][] grid, int x, int y) {
+    grid[x][y] = '0';
+    int n = grid.length;
+    int m = grid[0].length;
+    LinkedList<Integer> queue = new LinkedList<Integer>();
+    int code = x * m + y;
+    queue.offer(code);
+    while (!queue.isEmpty()) {
+      code = queue.poll();
+      int i = code / m;
+      int j = code % m;
+      if (i > 0 && grid[i - 1][j] == '1')    //search upward and mark adjacent '1's as '0'.
+      {
+        queue.offer((i - 1) * m + j);
+        grid[i - 1][j] = '0';
+      }
+      if (i < n - 1 && grid[i + 1][j] == '1')  //down
+      {
+        queue.offer((i + 1) * m + j);
+        grid[i + 1][j] = '0';
+      }
+      if (j > 0 && grid[i][j - 1] == '1')  //left
+      {
+        queue.offer(i * m + j - 1);
+        grid[i][j - 1] = '0';
+      }
+      if (j < m - 1 && grid[i][j + 1] == '1')  //right
+      {
+        queue.offer(i * m + j + 1);
+        grid[i][j + 1] = '0';
+      }
+    }
+  }
+}
+```
 ---
+
+## Design Search Autocomplete System
+
+Design a search autocomplete system for a search engine. Users may input a sentence (at least one word and end with a special character `#`).
+
+You are given a string array `sentences` and an integer array `times` both of length `n` where `sentences[i]` is a previously typed sentence and `times[i]` is the corresponding number of times the sentence was typed. For each input character except `#`, return the top `3` historical hot sentences that have the same prefix as the part of the sentence already typed.
+
+Here are the specific rules:
+
+* The hot degree for a sentence is defined as the number of times a user typed the exactly same sentence before.
+
+* The returned top `3` hot sentences should be sorted by hot degree (The first is the hottest one). If several sentences have the same hot degree, use ASCII-code order (smaller one appears first).
+
+* If less than `3` hot sentences exist, return as many as you can.
+
+* When the input is a special character, it means the sentence ends, and in this case, you need to return an empty list.
+
+Implement the `AutocompleteSystem` class:
+
+* `AutocompleteSystem(String[] sentences, int[] times)` Initializes the object with the `sentences` and times `arrays`.
+
+* `List<String> input(char c)` This indicates that the user typed the character `c`.
+
+* Returns an empty array `[]` if `c == '#'` and stores the inputted sentence in the system.
+
+* Returns the top `3` historical hot sentences that have the same prefix as the part of the sentence already typed. If there are fewer than 3 matches, return them all.
+
+
+**Example 1:**
+
+```log
+Input
+["AutocompleteSystem", "input", "input", "input", "input"]
+[[["i love you", "island", "iroman", "i love leetcode"], [5, 3, 2, 2]], ["i"], [" "], ["a"], ["#"]]
+Output
+[null, ["i love you", "island", "i love leetcode"], ["i love you", "i love leetcode"], [], []]
+
+Explanation
+AutocompleteSystem obj = new AutocompleteSystem(["i love you", "island", "iroman", "i love leetcode"], [5, 3, 2, 2]);
+obj.input("i"); // return ["i love you", "island", "i love leetcode"]. There are four sentences that have prefix "i". Among them, "ironman" and "i love leetcode" have same hot degree. Since ' ' has ASCII code 32 and 'r' has ASCII code 114, "i love leetcode" should be in front of "ironman". Also we only need to output top 3 hot sentences, so "ironman" will be ignored.
+obj.input(" "); // return ["i love you", "i love leetcode"]. There are only two sentences that have prefix "i ".
+obj.input("a"); // return []. There are no sentences that have prefix "i a".
+obj.input("#"); // return []. The user finished the input, the sentence "i a" should be saved as a historical sentence in system. And the following input will be counted as a new search.
+
+```
+
+**Constraints:**
+
+* `n == sentences.length`
+
+* `n == times.length`
+
+* `1 <= n <= 100`
+
+* `1 <= sentences[i].length <= 100`
+
+* `1 <= times[i] <= 50`
+
+* `c` is a lowercase English letter, a hash `#`, or space '`  `'.
+
+* Each tested sentence will be a sequence of characters `c` that end with the character `#`.
+
+* Each tested sentence will have a length in the range `[1, 200]`.
+
+* The words in each input sentence are separated by single spaces.
+
+* At most `5000` calls will be made to `input`.
+
+### Solution 
+
+Only thing more than a normal `Trie` is added a map of `sentence` to `count` in each of the `Trie` node to facilitate process of getting top 3 results.
+
+
+#### Implementation
+```java
+public class AutocompleteSystem {
+    class TrieNode {
+        Map<Character, TrieNode> children;
+        Map<String, Integer> counts;
+        boolean isWord;
+        public TrieNode() {
+            children = new HashMap<Character, TrieNode>();
+            counts = new HashMap<String, Integer>();
+            isWord = false;
+        }
+    }
+    
+    class Pair {
+        String s;
+        int c;
+        public Pair(String s, int c) {
+            this.s = s; this.c = c;
+        }
+    }
+    
+    TrieNode root;
+    String prefix;
+    
+    
+    public AutocompleteSystem(String[] sentences, int[] times) {
+        root = new TrieNode();
+        prefix = "";
+        
+        for (int i = 0; i < sentences.length; i++) {
+            add(sentences[i], times[i]);
+        }
+    }
+    
+    private void add(String s, int count) {
+        TrieNode curr = root;
+        for (char c : s.toCharArray()) {
+            TrieNode next = curr.children.get(c);
+            if (next == null) {
+                next = new TrieNode();
+                curr.children.put(c, next);
+            }
+            curr = next;
+            curr.counts.put(s, curr.counts.getOrDefault(s, 0) + count);
+        }
+        curr.isWord = true;
+    }
+    
+    public List<String> input(char c) {
+        if (c == '#') {
+            add(prefix, 1);
+            prefix = "";
+            return new ArrayList<String>();
+        }
+        
+        prefix = prefix + c;
+        TrieNode curr = root;
+        for (char cc : prefix.toCharArray()) {
+            TrieNode next = curr.children.get(cc);
+            if (next == null) {
+                return new ArrayList<String>();
+            }
+            curr = next;
+        }
+        
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> (a.c == b.c ? a.s.compareTo(b.s) : b.c - a.c));
+        for (String s : curr.counts.keySet()) {
+            pq.add(new Pair(s, curr.counts.get(s)));
+        }
+
+        List<String> res = new ArrayList<String>();
+        for (int i = 0; i < 3 && !pq.isEmpty(); i++) {
+            res.add(pq.poll().s);
+        }
+        return res;
+    }
+}
+```
+---
+
+## Frog Jump
+
+A frog is crossing a river. The river is divided into some number of units, and at each unit, there may or may not exist a stone. The frog can jump on a stone, but it must not jump into the water.
+
+Given a list of `stones`' positions (in units) in sorted **ascending order**, determine if the frog can cross the river by landing on the last stone. Initially, the frog is on the first stone and assumes the first jump must be `1` unit.
+
+If the frog's last jump was `k` units, its next jump must be either `k - 1`, `k`, or `k + 1` units. The frog can only jump in the forward direction.
+
+**Example 1:**
+```log
+Input: stones = [0,1,3,5,6,8,12,17]
+Output: true
+Explanation: The frog can jump to the last stone by jumping 1 unit to the 2nd stone, then 2 units to the 3rd stone, then 2 units to the 4th stone, then 3 units to the 6th stone, 4 units to the 7th stone, and 5 units to the 8th stone.
+```
+**Example 2:**
+```log
+Input: stones = [0,1,2,3,4,8,9,11]
+Output: false
+Explanation: There is no way to jump to the last stone as the gap between the 5th and 6th stone is too large.
+```
+ 
+**Constraints:**
+
+* `2 <= stones.length <= 2000`
+
+* `0 <= stones[i] <= 231 - 1`
+
+* `stones[0] == 0`
+
+* `stones` is sorted in a strictly increasing order.
+
+### Solution 1 : Brute Force [Time Limit Exceeded]
+
+In the brute force approach, we make use of a recursive function `canCross` which takes the given stone array, the current position and the current `jumpsize` as input arguments. We start with `currentPosition=0` and `jumpsize=0`. Then for every function call, we start from the `currentPosition` and check if there lies a stone at` (currentPostion + newjumpsize)`, where, the `newjumpsize` could be `jumpsize`, `jumpsize+1` or `jumpsize-1`. In order to check whether a stone exists at the specified positions, we check the elements of the array in a linear manner. If a stone exists at any of these positions, we call the recursive function again with the same stone array, the `currentPosition` and the `newjumpsize` as the parameters. If we are able to reach the end of the stone array through any of these calls, we return `true` to indicate the possibility of reaching the end.
+
+#### Implementation
+
+```java
+public class Solution {
+    public boolean canCross(int[] stones) {
+        return can_Cross(stones, 0, 0);
+    }
+    public boolean can_Cross(int[] stones, int ind, int jumpsize) {
+        for (int i = ind + 1; i < stones.length; i++) {
+            int gap = stones[i] - stones[ind];
+            if (gap >= jumpsize - 1 && gap <= jumpsize + 1) {
+                if (can_Cross(stones, i, gap)) {
+                    return true;
+                }
+            }
+        }
+        return ind == stones.length - 1;
+    }
+}public class Solution {
+    public boolean canCross(int[] stones) {
+        return can_Cross(stones, 0, 0);
+    }
+    public boolean can_Cross(int[] stones, int ind, int jumpsize) {
+        for (int i = ind + 1; i < stones.length; i++) {
+            int gap = stones[i] - stones[ind];
+            if (gap >= jumpsize - 1 && gap <= jumpsize + 1) {
+                if (can_Cross(stones, i, gap)) {
+                    return true;
+                }
+            }
+        }
+        return ind == stones.length - 1;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(3^n). Recursion tree can grow upto 3^n.
+
+**Space complexity :** O(n). Recursion of depth n is used.
+
+### Solution 2 : Better Brute Force[Time Limit Exceeded]
+
+**Algorithm**
+
+In the previous brute force approach, we need to find if a stone exists at (currentPosition + new jumpsize), where newjumpsize could be either of jumpsize-1, jumpsize or jumpsize+1. But in order to check if a stone exists at the specified location, we searched the given array in linearly. To optimize this, we can use binary search to look for the element in the given array since it is sorted. Rest of the method remains the same.
+
+#### Implementation 
+
+```java
+
+public class Solution {
+    public boolean canCross(int[] stones) {
+        return can_Cross(stones, 0, 0);
+    }
+    public boolean can_Cross(int[] stones, int ind, int jumpsize) {
+        if (ind == stones.length - 1) {
+            return true;
+        }
+        int ind1 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize);
+        if (ind1 >= 0 && can_Cross(stones, ind1, jumpsize)) {
+            return true;
+        }
+        int ind2 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize - 1);
+        if (ind2 >= 0 && can_Cross(stones, ind2, jumpsize - 1)) {
+            return true;
+        }
+        int ind3 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize + 1);
+        if (ind3 >= 0 && can_Cross(stones, ind3, jumpsize + 1)) {
+            return true;
+        }
+        return false;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(3^n) . Recursion tree can grow upto 3^n.
+
+**Space complexity :** O(n). Recursion of depth n is used.
+
+### Solution 3 :  Using Memoization [Accepted]
+
+**Algorithm**
+
+Another problem with above approaches is that we can make the same function calls coming through different paths e.g. For a given `currentIndex`, we can call the recursive function `canCross` with the `jumpsize`, say n. This nn could be resulting from previous `jumpsize` being `n-1`,`n` or `n+1`. Thus, many redundant function calls could be made prolonging the running time. This redundancy can be removed by making use of memoization. We make use of a `2-d` `memo` array, initialized by `−1s`, to store the result returned from a function call for a particular `currentIndex` and `jumpsize`. If the same `currentIndex` and `jumpsize` happens is encountered again, we can return the result directly using the `memo` array. This helps to prune the search tree to a great extent.
+
+#### Implementation
+
+```java
+public class Solution {
+    public boolean canCross(int[] stones) {
+        int[][] memo = new int[stones.length][stones.length];
+        for (int[] row : memo) {
+            Arrays.fill(row, -1);
+        }
+        return can_Cross(stones, 0, 0, memo) == 1;
+    }
+    public int can_Cross(int[] stones, int ind, int jumpsize, int[][] memo) {
+        if (memo[ind][jumpsize] >= 0) {
+            return memo[ind][jumpsize];
+        }
+        for (int i = ind + 1; i < stones.length; i++) {
+            int gap = stones[i] - stones[ind];
+            if (gap >= jumpsize - 1 && gap <= jumpsize + 1) {
+                if (can_Cross(stones, i, gap, memo) == 1) {
+                    memo[ind][gap] = 1;
+                    return 1;
+                }
+            }
+        }
+        memo[ind][jumpsize] = (ind == stones.length - 1) ? 1 : 0;
+        return memo[ind][jumpsize];
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(n^3). Memoization will reduce time complexity to O(n^3).
+
+**Space complexity :** O(n^2). `memo` matrix of size n^2 is used.
+
+### Solution 4 : Using Memoization with Binary Search [Accepted]
+
+**Algorithm**
+
+We can optimize the above memoization approach, if we make use of Binary Search to find if a stone exists at currentPostion + newjumpsize instead of searching linearly.
+
+#### Implementation
+
+```java
+public class Solution {
+    public boolean canCross(int[] stones) {
+        int[][] memo = new int[stones.length][stones.length];
+        for (int[] row : memo) {
+            Arrays.fill(row, -1);
+        }
+        return can_Cross(stones, 0, 0, memo) == 1;
+    }
+    public int can_Cross(int[] stones, int ind, int jumpsize, int[][] memo) {
+        if (memo[ind][jumpsize] >= 0) {
+            return memo[ind][jumpsize];
+        }
+        int ind1 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize);
+        if (ind1 >= 0 && can_Cross(stones, ind1, jumpsize, memo) == 1) {
+            memo[ind][jumpsize] = 1;
+            return 1;
+        }
+        int ind2 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize - 1);
+        if (ind2 >= 0 && can_Cross(stones, ind2, jumpsize - 1, memo) == 1) {
+            memo[ind][jumpsize - 1] = 1;
+            return 1;
+        }
+        int ind3 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize + 1);
+        if (ind3 >= 0 && can_Cross(stones, ind3, jumpsize + 1, memo) == 1) {
+            memo[ind][jumpsize + 1] = 1;
+            return 1;
+        }
+        memo[ind][jumpsize] = ((ind == stones.length - 1) ? 1 : 0);
+        return memo[ind][jumpsize];
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(n^2 log(n)). We traverse the complete dp matrix once (O(n^2)). For every entry we take atmost n numbers as pivot.
+
+**Space complexity :** O(n^2). dp matrix of size n^2 is used.
+
+### Solution 5 : Using Dynamic Programming[Accepted]
+
+**Algorithm**
+
+In the DP Approach, we make use of a hashmap `map` which contains `key:value` pairs such that key refers to the position at which a stone is present and value is a set containing the `jumpsize` which can lead to the current stone position. We start by making a hashmap whose `keys` are all the positions at which a stone is present and the `values` are all empty except position 0 whose value contains 0. Then, we start traversing the elements(positions) of the given stone array in sequential order. For the `currentPosition`, for every possible `jumpsize` in the `value` set, we check if `currentPosition + newjumpsize` exists in the `map`, where `newjumpsize` can be either `jumpsize-1`, `jumpsize`, `jumpsize+1`. If so, we append the corresponding `value` set with `newjumpsize`. We continue in the same manner. If at the end, the `value` set corresponding to the last position is non-empty, we conclude that reaching the end is possible, otherwise, it isn't.
+
+#### Implementation
+
+```java
+public class Solution {
+    public boolean canCross(int[] stones) {
+        HashMap<Integer, Set<Integer>> map = new HashMap<>();
+        for (int i = 0; i < stones.length; i++) {
+            map.put(stones[i], new HashSet<Integer>());
+        }
+        map.get(0).add(0);
+        for (int i = 0; i < stones.length; i++) {
+            for (int k : map.get(stones[i])) {
+                for (int step = k - 1; step <= k + 1; step++) {
+                    if (step > 0 && map.containsKey(stones[i] + step)) {
+                        map.get(stones[i] + step).add(step);
+                    }
+                }
+            }
+        }
+        return map.get(stones[stones.length - 1]).size() > 0;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(n^2). Two nested loops are there.
+
+**Space complexity :** O(n^2). `hashmap` size can grow upto n^2.
+
+### Solution 6 : short DP solution
+
+#### Implementation
+
+```java
+class Solution {
+    public boolean canCross(int[] stones) {
+        Map<Integer, Set<Integer>> dp = new HashMap();
+        
+        for(int val: stones) dp.put(val, new HashSet());
+        dp.get(stones[0]).add(1);
+        
+        for(int val: stones){
+            for(int jump: dp.get(val)){
+                if(jump!= 0 && dp.containsKey(val+jump)){
+                    dp.get(val+jump).add(jump-1);
+                    dp.get(val+jump).add(jump);
+                    dp.get(val+jump).add(jump+1);
+                }
+            }
+        }
+        
+        return !dp.get(stones[stones.length-1]).isEmpty();
+    }
+}
+```
+
+---
+
+## Subdomain Visit Count
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2282,11 +2282,417 @@ class Solution {
 
 **Space Complexity** :- BigO(logN)
 
+---
 
+## Multiply Strings
 
+Given two non-negative integers `num1` and `num2` represented as strings, return the product of `num1` and `num2`, also represented as a string.
 
+**Note:** You must not use any built-in BigInteger library or convert the inputs to integer directly.
 
+**Example 1:**
+```log
+Input: num1 = "2", num2 = "3"
+Output: "6"
+```
+**Example 2:**
+```log
+Input: num1 = "123", num2 = "456"
+Output: "56088"
+```
+**Constraints:**
 
+* `1 <= num1.length, num2.length <= 200`
+
+* `num1` and `num2` consist of digits only.
+
+* Both `num1` and `num2` do not contain any leading `zero`, except the number `0` itself.
+
+### Solution 1 : Elementary Math
+
+**Algorithm**
+
+Multiplication of both numbers starts from the ones place digit (the right-most digit), so we should start our multiplication from index `num2.size() - 1` and go to index `0`. Alternatively, we can reverse both inputs and iterate from index 0 to index `num2.size() - 1`.
+
+For each digit in `num2` that we multiply by `num1` we will get a new intermediate result. This intermediate result (`currentResult`) will be stored in a list, string, or StringBuilder, depending on the language of choice. To calculate each intermediate result, we will start by inserting the appropriate number of zeros according to the current digit's place in the second number (i.e. if it is the hundreds place, we append 2 zeros). Then we will perform the multiplication step as demonstrated in the above diagrams. During this step, we will insert the lower place digits into the `currentResult` before the higher place digits. Because we are pushing the lower place digits first and always appending to the end, our result will be in reverse order, so once the multiplication and addition steps are complete, we will need to reverse `answer` before returning.
+
+Let's walk through the steps one by one:
+
+1. Reverse both numbers.
+
+2. For each digit in secondNumber:
+     * Keep a carry variable, initially equal to 0.
+
+     * Initialize currentResult array beginning with the appropriate number of zeros according to the place of the secondNumber digit.
+
+     * For each digit in firstNumber:
+        * Multiply the secondNumber's digit and the firstNumber's digit and add carry to the multiplication.
+
+        * Take the remainder of multiplication with 10 to get the last digit.
+
+        * Append the last digit to the currentResult.
+
+        * Divide multiplication by 10 to get the new value for carry.
+
+     * Append the remaining value for carry (if any) to the currentResult.
+
+     * Push the currentResult into the results array.
+   
+3. Compute the cumulative sum over all the obtained arrays using the ans as an answer.
+
+4. Reverse ans and return it.
+
+#### Implementation
+```java
+class Solution {
+    // Calculate the sum of all of the results from multiplyOneDigit.
+    private StringBuilder sumResults(ArrayList<ArrayList<Integer>> results) {
+        // Initialize answer as a number from results.
+        ArrayList<Integer> answer = new ArrayList<>(results.get(results.size() - 1));
+        ArrayList<Integer> newAnswer = new ArrayList<>();
+        
+        // Sum each digit from answer and result
+        for (int j = 0; j < results.size() - 1; ++j) {
+            ArrayList<Integer> result = new ArrayList<>(results.get(j));
+            newAnswer = new ArrayList<>();
+            
+            int carry = 0;
+            
+            for (int i = 0; i < answer.size() || i < result.size(); ++i) {
+                // If answer is shorter than result or vice versa, use 0 as the current digit.
+                int digit1 = i < result.size() ? result.get(i) : 0;
+                int digit2 = i < answer.size() ? answer.get(i) : 0;
+                // Add current digits of both numbers.
+                int sum = digit1 + digit2 + carry;
+                // Set carry equal to the tens place digit of sum.
+                carry = sum / 10;
+                // Append the ones place digit of sum to answer.
+                newAnswer.add(sum % 10);
+            }
+
+            if (carry != 0) {
+                newAnswer.add(carry);
+            }
+            answer = newAnswer;
+        }
+        
+        // Convert answer to a string.
+        StringBuilder finalAnswer = new StringBuilder(); 
+        for (int digit : answer) {
+            finalAnswer.append(digit);
+        }
+        return finalAnswer;
+    }
+    
+    // Multiply the current digit of secondNumber with firstNumber.
+    ArrayList<Integer> multiplyOneDigit(StringBuilder firstNumber, char secondNumberDigit, int numZeros) {
+        // Insert zeros at the beginning based on the current digit's place.
+        ArrayList<Integer> currentResult = new ArrayList<>();
+        for (int i = 0; i < numZeros; ++i) {
+            currentResult.add(0);
+        }
+        
+        int carry = 0;
+
+        // Multiply firstNumber with the current digit of secondNumber.
+        for (int i = 0; i < firstNumber.length(); ++i) {
+            char firstNumberDigit = firstNumber.charAt(i);
+            int multiplication = (secondNumberDigit - '0') * (firstNumberDigit - '0') + carry;
+            // Set carry equal to the tens place digit of multiplication.
+            carry = multiplication / 10;
+            // Append last digit to the current result.
+            currentResult.add(multiplication % 10);
+        }
+
+        if (carry != 0) {
+            currentResult.add(carry);
+        }
+        return currentResult;
+    }
+    
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        
+        StringBuilder firstNumber = new StringBuilder(num1);
+        StringBuilder secondNumber = new StringBuilder(num2);
+        
+        // Reverse both the numbers.
+        firstNumber.reverse();
+        secondNumber.reverse();
+        
+        // For each digit in secondNumber, multipy the digit by firstNumber and
+        // store the multiplication result (reversed) in results.
+        ArrayList<ArrayList<Integer>> results = new ArrayList<>();
+        for (int i = 0; i < secondNumber.length(); ++i) {
+            results.add(multiplyOneDigit(firstNumber, secondNumber.charAt(i), i));
+        }
+        
+        // Add all the results in the results array, and store the sum in the answer string.
+        StringBuilder answer = sumResults(results);
+        
+        // answer is reversed, so reverse it to get the final answer.
+        answer.reverse();
+        return answer.toString();
+    }
+}
+```
+#### Complexity Analysis
+
+Here N and M are the number of digits in `num1` and `num2` respectively.
+
+**Time complexity:** O(M^2 + M.N).
+
+  During multiplication, we perform N operations for each of the M digits of the second number; this requires O(M⋅N) time. Then we add each of the M multiplication results (of length O(N+M)) to the answer string; this requires O(M⋅(M+N)) time.
+
+     When we multiply a number with one digit, the result's maximum length can be at most one more than the number's length (We can see that when we multiply the max integer of d digits, i.e., 9...99 with 9) and there can be at most (M-1) zeroes initially appended to the result. Hence, each result is of order O(N+M).
+
+  Summing the results requires iterating over the length of the current answer for each result. Since the length of two numbers multiplied together cannot be longer than the sum of the lengths of the two numbers, iterating over each digit in the answer will take O(M+N) time and we will do so M - 1 times (for all but one of the M results). So this step takes O(M⋅(M+N)) time.
+
+  Finally, reversing the answer will require O(M + N) time. Taking all steps into consideration, the total time complexity is O(M^2 + M.N).
+
+**Space complexity**: O(M^2 + M.N).
+
+  We store each result of multiplication for each digit of `num2` with `num1` in the results array. Each multiplication result can have at most N + M length, and there will be M such results. Thus the space complexity is O(M⋅(M+N)).
+
+### Solution 2 : Elementary math using less intermediate space
+
+**Algorithm**
+
+1. Reverse both numbers.
+
+2. Initialize `ans` array with (N+M)(N+M) zeros.
+
+3. For each digit in `secondNumber`:
+   * Keep a `carry` variable, initially equal to 0.
+
+   * Initialize an array (currentResult) that begins with some zeros based on the place of the digit in `secondNumber`.
+
+   * For each digit of `firstNumber`:
+        * Multiply `secondNumber's` digit and `firstNumber's` digit and add previous `carry` to the `multiplication`.
+
+        * Take the remainder of `multiplication` with `10` to get the last digit.
+
+        * Append the last digit to `currentResult` array.
+
+        * Divide the `multiplication` by `10` to obtain the new value for `carry`.
+
+   * After iterating over each digit in the first number, if `carry` is not zero, append `carry` to the `currentResult`.
+
+   * Add `currentResult` to the `ans`.
+   
+4. If the last digit in `ans` is zero, before reversing `ans`, we must pop the zero from `ans`. Otherwise, there would be a leading zero in the final answer.
+
+5. Reverse `ans` and return it.
+
+#### Implementation
+```java
+class Solution {
+    // Function to add two strings.
+    private ArrayList<Integer> addStrings(ArrayList<Integer> num1, ArrayList<Integer> num2) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        int carry = 0;
+        
+        for (int i = 0; i < num1.size() || i < num2.size(); ++i) {
+            // If num2 is shorter than num1 or vice versa, use 0 as the current digit.
+            int digit1 = i < num1.size() ? num1.get(i) : 0;
+            int digit2 = i < num2.size() ? num2.get(i) : 0;
+            
+            // Add current digits of both numbers.
+            int sum = digit1 + digit2 + carry;
+            // Set carry equal to the tens place digit of sum.
+            carry = sum / 10;
+            // Append the ones place digit of sum to answer.
+            ans.add(sum % 10);
+        }
+        
+        if (carry != 0) {
+            ans.add(carry);
+        }
+        return ans;
+    }
+    
+    // Multiply the current digit of secondNumber with firstNumber.
+    ArrayList<Integer> multiplyOneDigit(StringBuilder firstNumber, char secondNumberDigit, int numZeros) {
+        // Insert zeros at the beginning based on the current digit's place.
+        ArrayList<Integer> currentResult = new ArrayList<>();
+        for (int i = 0; i < numZeros; ++i) {
+            currentResult.add(0);
+        }
+        
+        int carry = 0;
+
+        // Multiply firstNumber with the current digit of secondNumber.
+        for (int i = 0; i < firstNumber.length(); ++i) {
+            char firstNumberDigit = firstNumber.charAt(i);
+            int multiplication = (secondNumberDigit - '0') * (firstNumberDigit - '0') + carry;
+            // Set carry equal to the tens place digit of multiplication.
+            carry = multiplication / 10;
+            // Append last digit to the current result.
+            currentResult.add(multiplication % 10);
+        }
+
+        if (carry != 0) {
+            currentResult.add(carry);
+        }
+        return currentResult;
+    }
+    
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        
+        StringBuilder firstNumber = new StringBuilder(num1);
+        StringBuilder secondNumber = new StringBuilder(num2);
+        
+        // Reverse both the numbers.
+        firstNumber.reverse();
+        secondNumber.reverse();
+        
+        // To store the multiplication result of each digit of secondNumber with firstNumber.
+        int N = firstNumber.length() + secondNumber.length();
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < N; ++i) {
+            ans.add(0);
+        }
+        
+        // For each digit in secondNumber, multipy the digit by firstNumber and
+        // add the multiplication result to ans.
+        for (int i = 0; i < secondNumber.length(); ++i) {
+            // Add the current result to final ans.
+            ans = addStrings(multiplyOneDigit(firstNumber, secondNumber.charAt(i), i), ans);
+        }
+        
+        // Pop excess 0 from the rear of ans.
+        if (ans.get(ans.size() - 1) == 0) {
+            ans.remove(ans.size() - 1);
+        }
+        
+        // Ans is in the reversed order.
+        // Copy it in reverse order to get the final ans.
+        StringBuilder answer = new StringBuilder();
+        
+        for (int i = ans.size() - 1; i >= 0; --i) {
+            answer.append(ans.get(i));
+        }
+        
+        return answer.toString();
+    }
+}
+```
+#### Complexity Analysis
+
+Here N and M are the number of elements in `num1` and `num2` strings.
+
+**Time complexity:** O(M⋅(N+M)).
+
+* During multiplication, we perform N operations for each of the M digits of the second number, so we need O(M⋅N) time for it.
+
+* We add the multiplication result to the ans string that has a length of N+M. There will be M such additions since we have M multiplication results. Therefore, the time consumed here will be O(M⋅(N+M)).
+
+* It takes linear time to reverse the strings.
+
+* Overall, this solution takes O(M.N + M.(N+M) + M + N) = O(M.(N+M)) time.
+
+**Space complexity:** O(N + M).
+
+* The answer string and multiplication results will have at most N + M length.
+
+### Solution 3 : Sum the products from all pairs of digits
+
+**Algorithm**
+
+1. Reverse both numbers.
+
+2. Initialize `answer` with N + M zeros.
+
+3. For each digit at position `i` in `secondNumber`:
+   * For each digit at position `j` in `firstNumber`:
+
+       * Multiply the digit from `secondNumber` by the digit from `firstNumber` and add previously carried value to the multiplication result. The previously carried value can be found at position `i + j` in the answer.
+       
+       * Take the remainder of `multiplication` with `10` to get the ones place digit of the `multiplication` result.
+
+       * Put the last digit at current position (position `i + j`) in `answer`.
+
+       * Divide the `multiplication` by `10` to get the new value for carry and add it to `answer` at the next position. Note, the next position is located at `(i + j + 1)`.
+4. If the last digit in `answer` is zero, before reversing `answer`, we must pop the zero from `answer`. Otherwise, there would be a leading zero in the final answer.
+
+5. Reverse `answer` and return it.
+
+#### Implementation
+```java
+class Solution {
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        
+        StringBuilder firstNumber = new StringBuilder(num1);
+        StringBuilder secondNumber = new StringBuilder(num2);
+        
+        // Reverse both the numbers.
+        firstNumber.reverse();
+        secondNumber.reverse();
+        
+        // To store the multiplication result of each digit of secondNumber with firstNumber.
+        int N = firstNumber.length() + secondNumber.length();
+        StringBuilder answer = new StringBuilder();
+        for (int i = 0; i < N; ++i) {
+            answer.append(0);
+        }
+        
+        for (int place2 = 0; place2 < secondNumber.length(); place2++) {
+            int digit2 = secondNumber.charAt(place2) - '0';
+            
+            // For each digit in secondNumber multiply the digit by all digits in firstNumber.
+            for (int place1 = 0; place1 < firstNumber.length(); place1++) {
+                int digit1 = firstNumber.charAt(place1) - '0';
+                
+                // The number of zeros from multiplying to digits depends on the 
+                // place of digit2 in secondNumber and the place of the digit1 in firstNumber.
+                int currentPos = place1 + place2;
+                
+                // The digit currently at position currentPos in the answer string
+                // is carried over and summed with the current result.
+                int carry = answer.charAt(currentPos) - '0';
+                int multiplication = digit1 * digit2 + carry;
+                
+                // Set the ones place of the multiplication result.
+                answer.setCharAt(currentPos, (char)(multiplication % 10 + '0'));
+                
+                // Carry the tens place of the multiplication result by 
+                // adding it to the next position in the answer array.
+                int value = (answer.charAt(currentPos + 1) - '0') + multiplication / 10;
+                answer.setCharAt(currentPos + 1, (char)(value + '0'));
+            }
+        }
+        
+        // Pop excess 0 from the rear of answer.
+        if (answer.charAt(answer.length() - 1) == '0') {
+            answer.deleteCharAt(answer.length() - 1);
+        }
+        
+        answer.reverse();
+        return answer.toString();
+    }
+}
+```
+#### Complexity Analysis
+
+Here N and M are the number of digits in num1 and `num2` respectively.
+
+**Time complexity:** O(M⋅N).
+
+   During multiplication, we perform N operations for each of the M digits of the second number, so we need M⋅N time for it.
+
+**Space complexity:** O(M + N).
+
+ The space used to store the output is not included in the space complexity. However, because strings are immutable in Python, Java, and Javascript, a temporary data structure, using O(M + N) space, is required to store the answer while it is updated.
+
+---
 
 
 
