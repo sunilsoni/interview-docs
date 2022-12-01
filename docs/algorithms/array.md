@@ -25,63 +25,198 @@ categories: [Array]
 
 ## Maximum Subarray
 
-Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
-
-A subarray is a contiguous part of an array.
+Given an integer array `nums`, find the subarray which has the largest sum and return its *sum*.
 
 **Example 1:**
+```log
 Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
 Output: 6
 Explanation: [4,-1,2,1] has the largest sum = 6.
+```
 
 **Example 2:**
+```log
 Input: nums = [1]
 Output: 1
+```
 
 **Example 3:**
+```log
 Input: nums = [5,4,-1,7,8]
 Output: 23
+```
 
-###  Kadane's Algorithm
-Start traversing your array keep each element in the sum and every time keep the max of currSum and prevSum.
+**Constraints:**
 
-But the catch here is that if at any point sum becomes negative then no point keeping it because 0 is obviously greater than negative, so just make your sum 0.
+* `1 <= nums.length <= 105`
 
-<img src="images/KadaneAlgorithm.png" width="900" />
+* `-104 <= nums[i] <= 104`
 
-####  Implementation
+### Solution 1 : Optimized Brute Force
+
+**Algorithm**
+
+1. Initialize a variable `maxSubarray = -infinity` to keep track of the best subarray. We need to use negative infinity, not 0, because it is possible that there are only negative numbers in the array.
+
+2. Use a for loop that considers each index of the array as a starting point.
+
+3. For each starting point, create a variable `currentSubarray = 0`. Then, loop through the array from the starting index, adding each element to `currentSubarray`. Every time we add an element it represents a possible subarray - so continuously update `maxSubarray` to contain the maximum out of the `currentSubarray` and itself.
+
+4. Return `maxSubarray`.
+
+#### Implementation
+```java
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxSubarray = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            int currentSubarray = 0;
+            for (int j = i; j < nums.length; j++) {
+                currentSubarray += nums[j];
+                maxSubarray = Math.max(maxSubarray, currentSubarray);
+            }
+        }
+        
+        return maxSubarray;
+    }
+}
+```
+
+####  Complexity Analysis
+
+**Time Complexity**: O(N^2), where N is the length of `nums`.
+
+ * We use 2 nested `for` loops, with each loop iterating through `nums`.
+ 
+**Space Complexity**: O(1)
+
+ * No matter how big the input is, we are only ever using 2 variables: `ans` and `currentSubarray`.
+
+### Solution 2 : Dynamic Programming, Kadane's Algorithm
+
+**Algorithm**
+
+1. Initialize 2 integer variables. Set both of them equal to the first value in the array.
+
+   * `currentSubarray` will keep the running count of the current subarray we are focusing on.
+
+   * `maxSubarray` will be our final return value. Continuously update it whenever we find a bigger subarray.
+2. Iterate through the array, starting with the 2nd element (as we used the first element to initialize our variables). For each number, add it to the `currentSubarray` we are building. If `currentSubarray` becomes negative, we know it isn't worth keeping, so throw it away. Remember to update `maxSubarray` every time we find a new maximum.
+
+3. Return `maxSubarray`.
+
+#### Implementation
+
+A clever way to update `currentSubarray` is using `currentSubarray = max(num, currentSubarray + num)`. If `currentSubarray` is negative, then `num > currentSubarray + num`.
 
 ```java
 class Solution {
     public int maxSubArray(int[] nums) {
-        int n = nums.length;
-        int max = Integer.MIN_VALUE, sum = 0;
-
-        for(int i=0;i<n;i++){
-            sum += nums[i];
-            max = Math.max(sum,max);
-
-            if(sum<0) sum = 0;
+        // Initialize our variables using the first element.
+        int currentSubarray = nums[0];
+        int maxSubarray = nums[0];
+        
+        // Start with the 2nd element since we already used the first one.
+        for (int i = 1; i < nums.length; i++) {
+            int num = nums[i];
+            // If current_subarray is negative, throw it away. Otherwise, keep adding to it.
+            currentSubarray = Math.max(num, currentSubarray + num);
+            maxSubarray = Math.max(maxSubarray, currentSubarray);
         }
-        return max;
+        
+        return maxSubarray;
     }
-} 
+}
 ```
 
-####  Runtime
-1 ms
+#### Complexity Analysis
 
-####  Memory
-73.2 MB
+**Time complexity:** O(N), where N is the length of `nums`.
 
-####  Complexity Analysis
+   We iterate through every element of `nums` exactly once.
 
-**Time Complexity**:
-O(n)
+**Space complexity:** O(1)
 
-**Space Complexity**:
-O(1)
+   No matter how long the input is, we are only ever using 2 variables: `currentSubarray` and `maxSubarray`.
 
+### Solution 3 : Divide and Conquer (Advanced)
+
+**Algorithm**
+
+Now that we know how to find the best subarray containing elements from both sides of any given array, the algorithm is as follows:
+ 1. Define a helper function that we will use for recursion.
+
+    * This function will take an input `left` and `right`, which defines the bounds of the array. The return value of this function will be the best possible subarray for the array that fits between `left` and `right`.
+
+    * If `left > right`, we have an empty array. Return negative infinity.
+
+    * Find the midpoint of our array. This is `(left + right) / 2`, rounded down. Using this midpoint, find the best possible subarray that uses elements from both sides of the array with the algorithm detailed in the animation above.
+
+    * The best subarray using elements from both sides is only 1 of 3 possibilities. We still need to find the best subarray using only the left or right halves. So, call this function again, once with the left half, and once with the right half.
+
+    * Return the largest of the 3 values - the best left half sum, the best right half sum, and the best combined sum.
+ 2. Call our helper function with the entire input array `(left = 0, right = length - 1)`. This is our final answer, so return it.
+
+#### Implementation
+```java
+class Solution {
+    private int[] numsArray;
+    
+    public int maxSubArray(int[] nums) {
+        numsArray = nums;
+        
+        // Our helper function is designed to solve this problem for
+        // any array - so just call it using the entire input!
+        return findBestSubarray(0, numsArray.length - 1);
+    }
+    
+    private int findBestSubarray(int left, int right) {
+        // Base case - empty array.
+        if (left > right) {
+            return Integer.MIN_VALUE;
+        }
+        
+        int mid = Math.floorDiv(left + right, 2);
+        int curr = 0;
+        int bestLeftSum = 0;
+        int bestRightSum = 0;
+        
+        // Iterate from the middle to the beginning.
+        for (int i = mid - 1; i >= left; i--) {
+            curr += numsArray[i];
+            bestLeftSum = Math.max(bestLeftSum, curr);
+        }
+        
+        // Reset curr and iterate from the middle to the end.
+        curr = 0;
+        for (int i = mid + 1; i <= right; i++) {
+            curr += numsArray[i];
+            bestRightSum = Math.max(bestRightSum, curr);
+        }
+        
+        // The bestCombinedSum uses the middle element and the best
+        // possible sum from each half.
+        int bestCombinedSum = numsArray[mid] + bestLeftSum + bestRightSum;
+        
+        // Find the best subarray possible from both halves.
+        int leftHalf = findBestSubarray(left, mid - 1);
+        int rightHalf = findBestSubarray(mid + 1, right);
+        
+        // The largest of the 3 is the answer for any given input array.
+        return Math.max(bestCombinedSum, Math.max(leftHalf, rightHalf));
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(N⋅logN), where N is the length of `nums`.
+
+On our first call to `findBestSubarray`, we use for loops to visit every element of `nums`. Then, we split the array in half and call `findBestSubarray` with each half. Both those calls will then iterate through every element in that half, which combined is every element of `nums` again. Then, both those halves will be split in half, and 4 more calls to `findBestSubarray` will happen, each with a quarter of `nums`. As you can see, every time the array is split, we still need to handle every element of the original input `nums`. We have to do this logN times since that's how many times an array can be split in half.
+
+**Space complexity:** O(logN), where N is the length of `nums`.
+
+The extra space we use relative to input size is solely occupied by the recursion stack. Each time the array gets split in half, another call of `findBestSubarray` will be added to the recursion stack, until calls start to get resolved by the base case - remember, the base case happens at an empty array, which occurs after logN calls.
 
 
 ---
@@ -2165,16 +2300,109 @@ Output: [[],[0]]
 ### Solution 
 
 
+---
 
+## Max Consecutive Ones
 
+Given a binary array `nums`, return the maximum number of consecutive 1's in the array.
 
+**Example 1:**
+```log
+Input: nums = [1,1,0,1,1,1]
+Output: 3
+Explanation: The first two digits or the last three digits are consecutive 1s. The maximum number of consecutive 1s is 3.
+```
 
+**Example 2:**
+```log
+Input: nums = [1,0,1,1,0,1]
+Output: 2
+```
 
+**Constraints:**
 
+* `1 <= nums.length <= 105`
 
+* `nums[i]` is either `0` or `1`.
 
+### Solution 1 : One pass
 
+**Intuition**
 
+The intuition is pretty simple. We keep a count of the number of 1's encountered. And reset the count whenever we encounter anything other than 1 (which is 0 for this problem). Thus, maintaining count of 1's between zeros or rather maintaining counts of contiguous 1's. It's the same as keeping a track of the number of hours of sleep you had, without waking up in between.
+
+**Algorithm**
+
+1. Maintain a counter for the number of `1`'s.
+
+2. Increment the counter by `1`, whenever you encounter a `1`.
+
+3. Whenever you encounter a 0
+
+   a. Use the current count of `1`'s to find the maximum contiguous `1`'s till now.
+
+   b. Afterwards, reset the counter for `1`'s to 0.
+
+4. Return the maximum in the end.
+
+ <img src="images/array/MaxConsecutiveOnesSol1.png" width="600" height="400" />
+
+In the above diagram we found out that the maximum number of consecutive `1`'s is `3`. There were two breaks in the count we encountered while iterating the array. Every time the break i.e. `0` was encountered we had to reset the count of `1` to zero.
+
+     Note - The maximum count is only calculated when we encounter a break i.e. 0, since thats where a subarray of 1's ends.
+
+#### Implementation
+```java
+class Solution {
+  public int findMaxConsecutiveOnes(int[] nums) {
+    int count = 0;
+    int maxCount = 0;
+    for(int i = 0; i < nums.length; i++) {
+      if(nums[i] == 1) {
+        // Increment the count of 1's by one.
+        count += 1;
+      } else {
+        // Find the maximum till now.
+        maxCount = Math.max(maxCount, count);
+        // Reset count of 1.
+        count = 0;
+      }
+    }
+    return Math.max(maxCount, count);
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N), where N is the number of elements in the array.
+
+**Space Complexity:** O(1). We do not use any extra space.
+
+### Solution 2 : Easy java solution
+
+```java
+class Solution {
+public int findMaxConsecutiveOnes(int[] nums)
+{
+int count=0,max=0;
+for (int i=0; i<nums.length; i++)
+{
+if(nums[i]==1)
+{
+count++;
+}
+else
+{
+max=Math.max(max,count);
+count=0;
+}
+}
+return Math.max(count,max); //to get all test cases i.e(when nums[]=[1]
+}
+}
+```
+---
 
 
 
