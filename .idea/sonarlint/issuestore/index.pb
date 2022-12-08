@@ -102,7 +102,5 @@ J
 docs/miscellaneous/misc.md,4/8/48bdb2278012630f697cfbe6328733706290d206
 J
 docs/miscellaneous/http.md,b/f/bf9a98df73080c8a7d299bfa51af20ce953cb743
-Q
-!docs/algorithms/data-structure.md,1/1/11dc0031e207270142fbe0a210e7f3d9628feeeb
 H
 docs/algorithms/queue.md,0/8/0858fcad5aeba51c7ac2e3acdce84df6912d9c3b

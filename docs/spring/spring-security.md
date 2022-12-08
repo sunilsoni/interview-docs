@@ -103,6 +103,27 @@ In Spring Security,  the Security module comprises separate jar files based on i
 **OAuth 2.0 Client** 
     – Spring Security’s client support for OAuth 2.0 Authorization Framework and OpenID Connect Core 1.0.
 
+**Secure:** 
+
+Spring has provided a separate module for securing the application. Spring Security is a Java SE/Java EE security framework to provide Authentication, Authorization, SSO and other Security features for Web Applications or Enterprise Applications. Spring Security supports the various types of security such as :
+
+1. Authentication and Authorization.
+2. BASIC,Digest and Form-Based Authentication.
+3. LDAP Authentication.
+4. OpenID Authentication.
+5. SSO (Single Sign-On) Implementation.
+6. Cross-Site Request Forgery (CSRF) Implementation.
+7. `Remember-Me` Feature through HTTP Cookies.
+8. Implementation of ACLs.
+9. `Channel Security` that means automatically switching between HTTP and HTTPS.
+10. JAAS (Java Authentication and Authorization Service).
+11. Flow Authorization using Spring WebFlow Framework.
+12. WS-Security using Spring Web Services.
+
+
+
+
+
 
 
 ## Reference Links
