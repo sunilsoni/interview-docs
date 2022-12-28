@@ -2404,6 +2404,2157 @@ return Math.max(count,max); //to get all test cases i.e(when nums[]=[1]
 ```
 ---
 
+## Find First and Last Position of Element in Sorted Array (1)
+
+Given an array of integers `nums` sorted in non-decreasing order, find the starting and ending position of a given `target` value.
+
+If `target` is not found in the array, return `[-1, -1]`.
+
+You must write an algorithm with `O(log n)` runtime complexity.
+
+**Example 1:**
+```log
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+```
+
+**Example 2:**
+```log
+Input: nums = [5,7,7,8,8,10], target = 6
+Output: [-1,-1]
+```
+
+**Example 3:**
+```log
+Input: nums = [], target = 0
+Output: [-1,-1]
+```
+
+**Constraints:**
+
+* `0 <= nums.length <= 105`
+
+* `-109 <= nums[i] <= 109`
+
+* `nums` is a non-decreasing array.
+
+* `-109 <= target <= 109`
+
+### Solution 1 : Binary Search
+
+**Algorithm**
+
+1. Define a function called `findBound` which takes three arguments: the `array`, the `target` to search for, and a boolean value `isFirst` which indicates if we are trying to find the first or the last occurrence of `target`.
+
+2. We use 2 variables to keep track of the subarray that we are scanning. Let's call them `begin` and `end`. Initially, `begin` is set to `0` and `end` is set to the last index of the array.
+
+3. We iterate until `begin` is greater than or equal to `end`.
+
+4. At each step, we calculate the middle element `mid = (begin + end) / 2`. We use the value of the middle element to decide which half of the array we need to search.
+   * *nums[mid] == target*
+       * isFirst is true ~ This implies that we are trying to find the first occurrence of the element. If `mid == begin` or `nums[mid - 1] != target`, then we return mid as the first occurrence of the target. Otherwise, we update `end = mid - 1`
+
+       * isFirst is false ~ This implies we are trying to find the last occurrence of the element. If `mid == end` or `nums[mid + 1] != target`, then we return mid as the last occurrence of the target. Otherwise, we update `begin = mid + 1`
+   * *nums[mid] > target* ~ We update `end = mid - 1` since we must discard the right side of the array as the middle element is greater than target.
+
+   * *nums[mid] < target* ~ We update `begin = mid + 1` since we must discard the left side of the array as the middle element is less than target.
+5. We return a value of -1 at the end of our function which indicates that target was not found in the array.
+
+6. In the main searchRange function, we first call `findBound` with `isFirst` set to true. If this value is -1, we can simply return `[-1, -1]`. Otherwise, we call `findBound` with `isFirst` set to false to get the last occurrence and then return the result.
+
+#### Implementation
+```java
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        
+        int firstOccurrence = this.findBound(nums, target, true);
+        
+        if (firstOccurrence == -1) {
+            return new int[]{-1, -1};
+        }
+        
+        int lastOccurrence = this.findBound(nums, target, false);
+        
+        return new int[]{firstOccurrence, lastOccurrence};
+    }
+    
+    private int findBound(int[] nums, int target, boolean isFirst) {
+        int N = nums.length;
+        int begin = 0, end = N - 1;
+        
+        while (begin <= end) {
+            
+            int mid = (begin + end) / 2;
+            
+            if (nums[mid] == target) {
+                
+                if (isFirst) {
+                    
+                    // This means we found our lower bound.
+                    if (mid == begin || nums[mid - 1] != target) {
+                        return mid;
+                    }
+                    
+                    // Search on the left side for the bound.
+                    end = mid - 1;
+                    
+                } else {
+                    
+                    // This means we found our upper bound.
+                    if (mid == end || nums[mid + 1] != target) {
+                        return mid;
+                    }
+                    
+                    // Search on the right side for the bound.
+                    begin = mid + 1;
+                }
+                
+            } else if (nums[mid] > target) {
+                end = mid - 1;
+            } else {
+                begin = mid + 1;
+            }
+        }
+        
+        return -1;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(logN) considering there are N elements in the array. This is because binary search takes logarithmic time to scan an array of N elements. Why? Because at each step we discard half of the array we are scanning and hence, we're done after a logarithmic number of steps. We simply perform binary search twice in this case.
+
+**Space Complexity:** O(1) since we only use space for a few variables and our result array, all of which require constant space.
+
+---
+
+## Rearrange positive and negative numbers with constant extra space
+
+Given an array of positive and negative numbers, arrange them such that all negative integers appear before all the positive integers in the array without using any additional data structure like a hash table, arrays, etc. The order of appearance should be maintained.
+
+**Examples:**
+```log
+Input:  [12 11 -13 -5 6 -7 5 -3 -6]
+Output: [-13 -5 -7 -3 -6 12 11 6 5]
+```
+### Solution 1 : Modified Partition Process of Quick Sort
+
+We can reverse the order of positive numbers whenever the relative order is changed. This will happen if there are more than one positive element between the last negative number in the left subarray and the current negative element.
+
+Below are the steps on how this will happen:
+```log
+Current Array :- [Ln, P1, P2, P3, N1, .......]
+Here, Ln is the left subarray(can be empty) that contains only negative elements. P1, P2, P3 are the positive numbers and N1
+is the negative number that we want to move at correct place.
+If difference of indices between positive number and negative number is greater than 1,
+1. Swap P1 and N1, we get [Ln, N1, P2, P3, P1, ......]
+2. Rotate array by one position to right, i.e. rotate array [P2, P3, P1], we get [Ln, N1, P1, P2, P3, ......]
+```
+
+```java
+// Java program for
+// moving negative numbers to left
+// while maintaining the order
+class GFG {
+ 
+  static int[] rotateSubArray(int[] arr, int l, int r) {
+    int temp = arr[r];
+    for (int j = r; j > l - 1; j--) {
+      arr[j] = arr[j - 1];
+    }
+    arr[l] = temp;
+ 
+    return arr;
+  }
+ 
+  static int[] moveNegative(int[] arr) {
+ 
+    int last_negative_index = -1;
+ 
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] < 0) {
+        last_negative_index += 1;
+        int temp = arr[i];
+        arr[i] = arr[last_negative_index];
+        arr[last_negative_index] = temp;
+ 
+        // Done to manage order too
+        if (i - last_negative_index >= 2)
+          rotateSubArray(arr, last_negative_index + 1, i);
+      }
+    }
+ 
+    return arr;
+  }
+ 
+  // Driver Code
+  public static void main(String args[]) {
+    int[] arr = { 5, 5, -3, 4, -8, 0, -7, 3, -9, -3, 9, -2, 1 };
+    arr = moveNegative(arr);
+ 
+    for (int i : arr) {
+      System.out.print(i + " ");
+    }
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(n2).
+
+**Auxiliary Space:** O(1).
+
+### Solution 2 : Modified Insertion Sort
+
+**Algorithm:**
+
+* Loop from i = 1 to n - 1.
+
+   a) If the current element is positive, do nothing.
+
+   b) If the current element arr[i] is negative, 
+
+* we insert it into sequence arr[0..i-1] such that all positive elements in arr[0..i-1] are shifted one position to their right and arr[i] is inserted at index of first positive element.
+
+```java
+// Java program to Rearrange positive
+// and negative numbers in a array
+import java.io.*;
+ 
+class GFG {
+    // A utility function to print
+    // an array of size n
+    static void printArray(int arr[], int n)
+    {
+        for (int i = 0; i < n; i++)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
+ 
+    // Function to Rearrange positive and negative
+    // numbers in a array
+    static void RearrangePosNeg(int arr[], int n)
+    {
+        int key, j;
+        for (int i = 1; i < n; i++) {
+            key = arr[i];
+ 
+            // if current element is positive
+            // do nothing
+            if (key > 0)
+                continue;
+ 
+            /* if current element is negative,
+            shift positive elements of arr[0..i-1],
+            to one position to their right */
+            j = i - 1;
+            while (j >= 0 && arr[j] > 0) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+ 
+            // Put negative element at its right position
+            arr[j + 1] = key;
+        }
+    }
+ 
+    // Driver program
+    public static void main(String[] args)
+    {
+        int arr[] = { -12, 11, -13, -5, 6, -7, 5, -3, -6 };
+        int n = arr.length;
+        RearrangePosNeg(arr, n);
+        printArray(arr, n);
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(n2).
+
+**Auxiliary Space:** O(1).
+
+### Solution 3 : Optimized Merge Sort
+
+Merge method of standard merge sort algorithm can be modified to solve this problem. While merging two sorted halves say left and right, we need to merge in such a way that negative part of left and right sub-array is copied first followed by positive part of left and right sub-array.
+
+```java
+// Java program to Rearrange positive
+// and negative numbers in a array
+import java.io.*;
+ 
+class GFG {
+    /* Function to print an array */
+    static void printArray(int A[], int size)
+    {
+        for (int i = 0; i < size; i++)
+            System.out.print(A[i] + " ");
+        System.out.println();
+    }
+ 
+    // Merges two subarrays of arr[].
+    // First subarray is arr[l..m]
+    // Second subarray is arr[m+1..r]
+    static void merge(int arr[], int l, int m, int r)
+    {
+        int i, j, k;
+        int n1 = m - l + 1;
+        int n2 = r - m;
+ 
+        /* create temp arrays */
+        int L[] = new int[n1];
+        int R[] = new int[n2];
+ 
+        /* Copy data to temp arrays L[] and R[] */
+        for (i = 0; i < n1; i++)
+            L[i] = arr[l + i];
+        for (j = 0; j < n2; j++)
+            R[j] = arr[m + 1 + j];
+ 
+        /* Merge the temp arrays back into arr[l..r]*/
+        // Initial index of first subarray
+        i = 0;
+ 
+        // Initial index of second subarray
+        j = 0;
+ 
+        // Initial index of merged subarray
+        k = l;
+ 
+        // Note the order of appearance of elements should
+        // be maintained - we copy elements of left subarray
+        // first followed by that of right subarray
+ 
+        // copy negative elements of left subarray
+        while (i < n1 && L[i] < 0)
+            arr[k++] = L[i++];
+ 
+        // copy negative elements of right subarray
+        while (j < n2 && R[j] < 0)
+            arr[k++] = R[j++];
+ 
+        // copy positive elements of left subarray
+        while (i < n1)
+            arr[k++] = L[i++];
+ 
+        // copy positive elements of right subarray
+        while (j < n2)
+            arr[k++] = R[j++];
+    }
+ 
+    // Function to Rearrange positive and negative
+    // numbers in a array
+    static void RearrangePosNeg(int arr[], int l, int r)
+    {
+        if (l < r) {
+            // Same as (l + r)/2, but avoids overflow for
+            // large l and h
+            int m = l + (r - l) / 2;
+ 
+            // Sort first and second halves
+            RearrangePosNeg(arr, l, m);
+            RearrangePosNeg(arr, m + 1, r);
+ 
+            merge(arr, l, m, r);
+        }
+    }
+ 
+    // Driver program
+    public static void main(String[] args)
+    {
+        int arr[] = { -12, 11, -13, -5, 6, -7, 5, -3, -6 };
+        int arr_size = arr.length;
+        RearrangePosNeg(arr, 0, arr_size - 1);
+        printArray(arr, arr_size);
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(n log n).
+
+**Auxiliary Space:** O(n1 + n2 + log n), log n, as implicit stack is used due to recursive call.
+
+---
+
+## Target Sum
+
+You are given an integer array `nums` and an integer `target`.
+
+You want to build an *expression* out of nums by adding one of the symbols `+` and `-` before each integer in nums and then concatenate all the integers.
+
+* For example, if `nums = [2, 1]`, you can add a `+` before `2` and `a` `-` before `1` and concatenate them to build the expression `+2-1`.
+Return the number of different *expressions* that you can build, which evaluates to `target`.
+
+**Example 1:**
+```log
+Input: nums = [1,1,1,1,1], target = 3
+Output: 5
+Explanation: There are 5 ways to assign symbols to make the sum of nums be target 3.
+-1 + 1 + 1 + 1 + 1 = 3
++1 - 1 + 1 + 1 + 1 = 3
++1 + 1 - 1 + 1 + 1 = 3
++1 + 1 + 1 - 1 + 1 = 3
++1 + 1 + 1 + 1 - 1 = 3
+```
+
+**Example 2:**
+```log
+Input: nums = [1], target = 1
+Output: 1
+```
+
+**Constraints:**
+
+* `1 <= nums.length <= 20`
+
+* `0 <= nums[i] <= 1000`
+
+* `0 <= sum(nums[i]) <= 1000`
+
+* `-1000 <= target <= 1000`
+
+### Solution 1 : Brute Force
+
+**Algorithm**
+
+The brute force approach is based on recursion. We need to try to put both the `+` and `-` symbols at every location in the given `nums` array and find out the assignments which lead to the required result `S`.
+
+For this, we make use of a recursive function `calculate(nums, i, sum, S)`, which returns the assignments leading to the sum `S`, starting from the `i^{th}` index onwards, provided the sum of elements up to the `i^{th}` element is sum. This function appends a `+` sign and a `-` sign both to the element at the current index and calls itself with the updated `sum` as `sum+nums[i]` and `sum−nums[i]` respectively along with the updated current index as `i+1`. Whenever we reach the end of the array, we compare the sum obtained with `S`. If they are equal, we increment the `count` value to be returned.
+
+Thus, the function call `calculate(nums, 0, 0, S)` returns the required number of assignments.
+
+#### Implementation
+```java
+public class Solution {
+    int count = 0;
+    
+    public int findTargetSumWays(int[] nums, int S) {
+        calculate(nums, 0, 0, S);
+        return count;
+    }
+    
+    public void calculate(int[] nums, int i, int sum, int S) {
+        if (i == nums.length) {
+            if (sum == S) {
+                count++;
+            }
+        } else {
+            calculate(nums, i + 1, sum + nums[i], S);
+            calculate(nums, i + 1, sum - nums[i], S);
+        }
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(2^n). Size of recursion tree will be 2^n . n refers to the size of `nums` array.
+
+**Space complexity:** O(n). The depth of the recursion tree can go up to n.
+
+### Solution 2 : Recursion with Memoization
+
+**Algorithm**
+
+In the last approach, we can observe that a lot of redundant function calls were made with the same value of `i` as the current index and the same value of `sum` as the current sum, since the same values could be obtained through multiple paths in the recursion tree. In order to remove this redundancy, we make use of memoization as well to store the results which have been calculated earlier.
+
+Thus, for every call to `calculate(nums, i, sum, S)`, we store the result obtained in `memo[i][sum + total]`, where total stands for the sum of all the elements from the input array. The factor of total has been added as an offset to the `sum` value to map all the `sum` possible to positive integer range. By making use of memoization, we can get the result of each redundant function call in constant time.
+
+#### Implementation
+
+```java
+public class Solution {
+    int total;
+    
+    public int findTargetSumWays(int[] nums, int S) {
+        total = Arrays.stream(nums).sum();
+        
+        int[][] memo = new int[nums.length][2 * total + 1];
+        for (int[] row : memo) {
+            Arrays.fill(row, Integer.MIN_VALUE);
+        }
+        return calculate(nums, 0, 0, S, memo);
+    }
+    
+    public int calculate(int[] nums, int i, int sum, int S, int[][] memo) {
+        if (i == nums.length) {
+            if (sum == S) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            if (memo[i][sum + total] != Integer.MIN_VALUE) {
+                return memo[i][sum + total];
+            }
+            int add = calculate(nums, i + 1, sum + nums[i], S, memo);
+            int subtract = calculate(nums, i + 1, sum - nums[i], S, memo);
+            memo[i][sum + total] = add + subtract;
+            return memo[i][sum + total];
+        }
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(t⋅n). The `memo` array of size `O(t⋅n)` has been filled just once. Here, `t` refers to the sum of the `nums` array and `n` refers to the length of the `nums` array.
+
+**Space complexity:** O(t⋅n). The depth of recursion tree can go up to `n`. The `memo` array contains `t⋅n` elements.
+
+### Solution 3 : 2D Dynamic Programming
+
+#### Implementation
+```java
+public class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        int total = Arrays.stream(nums).sum();
+        int[][] dp = new int[nums.length][2 * total + 1];
+        dp[0][nums[0] + total] = 1;
+        dp[0][-nums[0] + total] += 1;
+        
+        for (int i = 1; i < nums.length; i++) {
+            for (int sum = -total; sum <= total; sum++) {
+                if (dp[i - 1][sum + total] > 0) {
+                    dp[i][sum + nums[i] + total] += dp[i - 1][sum + total];
+                    dp[i][sum - nums[i] + total] += dp[i - 1][sum + total];
+                }
+            }
+        }
+        
+        return Math.abs(S) > total ? 0 : dp[nums.length - 1][S + total];
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(t⋅n). The `dp` array of size O(t⋅n) has been filled just once. Here, `t` refers to the sum of the `nums` array and `n` refers to the length of the `nums` array.
+
+**Space complexity:** O(t⋅n). `dp` array of size t⋅n is used.
+
+### Solution 4 : 1D Dynamic Programming
+
+#### Implementation 
+```java
+public class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
+        int total = Arrays.stream(nums).sum();
+        int[] dp = new int[2 * total + 1];
+        dp[nums[0] + total] = 1;
+        dp[-nums[0] + total] += 1;
+        
+        for (int i = 1; i < nums.length; i++) {
+            int[] next = new int[2 * total + 1];
+            for (int sum = -total; sum <= total; sum++) {
+                if (dp[sum + total] > 0) {
+                    next[sum + nums[i] + total] += dp[sum + total];
+                    next[sum - nums[i] + total] += dp[sum + total];
+                }
+            }
+            dp = next;
+        }
+        
+        return Math.abs(S) > total ? 0 : dp[S + total];
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(t⋅n). Each of the *n* `dp` arrays of size `t` has been filled just once. Here, `t` refers to the sum of the `nums` array and `n` refers to the length of the `nums` array.
+
+**Space complexity:** O(t). Two `dp` arrays of size `2⋅t+1` are used, therefore the space usage is O(t).
+
+---
+
+## Find First And Last Positions Of Element In Sorted Array (2)
+
+Given an array of integers `nums` sorted in *ascending order*, find the starting and ending position of a given target value.
+
+If target is not found in the array, return [-1, -1].
+
+`Follow up:` Could you write an algorithm with O(log n) runtime complexity?
+
+**Thoughts Before Coding**
+
+- The brute force approach will be two perform a single iteration through the input array to find the starting and ending indices
+- This approach will us O(n) time complexity
+- Since, we are looking for elements inside a sorted array
+- We can use modified binary search
+- We will find the ending index and then the starting index
+- How can we find the `end` index?
+- For each of the element at index `mid`
+- If `nums[mid]` is equal to `target`
+- This means we will need to continue our search to the right with `mid` inclusive
+- How can we find the `start` index?
+- For each of the element at index `mid`
+- If `nums[mid]` is equal to `target`
+- This means we will need to continue our search to the left with `mid` inclusive
+
+### Solution 
+
+**Algorithm**
+
+Lets first find the `end` index
+- Create two variables
+- left, our left boundary
+- right, our right boundary
+- While `left` is less than `right`
+- Calculate `mid`
+- `mid = (left + (right - left) / 2) + 1`
+- `+1`, we pick the *upper mid index*
+- `[8, (8)]`
+- If `nums[mid]` is equal to `target`
+- Set `left` to `mid`
+- Else if `nums[mid]` is less than `target`
+- Set `left` to `mid + 1`
+- Else `nums[mid]` is greater than `target`
+- Set `right` to `mid - 1`
+- If `left` is out of bound (all elements inside the input array is less than `target`)
+- Set `end` to `-1`
+- If `nums[left]` is not equal to `target`
+- Set `end` to `-1`
+- Set `end` to `left` (rightmost index)
+- If `end` is equal to `-1`
+- Return` { -1, -1 }`
+- Find the `start` index
+- Create two variables
+- left, the left boundary
+- right, the right boundary
+- While `left` is less than `right`
+- Calculate the `mid` index
+- `mid = left + (right - left) / 2`
+-` [(8), 8]`
+- If `nums[mid]` is equal to `target`
+- Set `right` to `mid`
+- Else if `nums[mid]` is less than `target`
+- Set `'left' `to `mid + 1`
+- Else
+- Set `right` to `mid - 1`
+- Set `start` to `left`
+- Return `{ start, end }`
+
+#### Implementation
+```java
+public class FindFirstAndLastPositionsOfElementInSortedArray {
+    public int[] searchRange(int[] nums, int target) {
+        int end = findEndIndex(nums, target);
+
+        if (end == -1) return new int[] { -1, -1 };
+
+        int start = findStartIndex(nums, target);
+
+        return new int[] { start, end };
+    }
+
+    private int findStartIndex(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                right = mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return left;
+    }
+
+    private int findEndIndex(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+
+        while (left < right) {
+            int mid = (left + (right - left) / 2) + 1;
+
+            if (nums[mid] == target) {
+                left = mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return (left >= nums.length || nums[left] != target) ? -1 : left;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity: ** O(2 * logn) = O(logn), where n is the length of the input array O(2 * logn), 2 binary search
+
+**Space Complexity:** O(1).
+
+---
+
+## Find K Closest Elements
+
+Given a sorted integer array `arr`, two integers `k` and `x`, return the `k` closest integers to `x` in the array. The result should also be sorted in ascending order.
+
+An integer `a` is closer to `x` than an integer `b` if:
+
+`|a - x| < |b - x|`, or
+`|a - x| == |b - x|` and `a < b`
+
+
+**Example 1:**
+```log
+Input: arr = [1,2,3,4,5], k = 4, x = 3
+Output: [1,2,3,4]
+```
+
+**Example 2:**
+```log
+Input: arr = [1,2,3,4,5], k = 4, x = -1
+Output: [1,2,3,4]
+```
+
+**Constraints:**
+
+* `1 <= k <= arr.length`
+
+* `1 <= arr.length <= 104`
+
+* `arr` is sorted in *ascending order*.
+
+* `-104 <= arr[i], x <= 104`
+
+### Solution 1 : Sort With Custom Comparator
+
+**Intuition**
+
+This first approach is the most intuitive one that most people probably think of first - check every number in `arr` for its distance from `x` and sort the numbers by this criterion. Then, the answer will be the first `k` elements of our new sorted array.
+
+**Algorithm**
+
+Create a new array `sortedArr`, that is arr sorted with a custom comparator. The comparator should be `abs(x - num)` for each num in `arr`. Sorting the array in ascending order means that the first `k` elements will be the `k` closest elements to `x`.
+
+We also have to sort the "sorted" array, since the problem wants our output in ascending order. Return the first `k` elements of `sortedArr`, sorted by value, in ascending order.
+
+#### Implementation
+
+```java
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        // Convert from array to list first to make use of Collections.sort()
+        List<Integer> sortedArr = new ArrayList<Integer>();
+        for (int num: arr) {
+            sortedArr.add(num);
+        }
+        
+        // Sort using custom comparator
+        Collections.sort(sortedArr, (num1, num2) -> Math.abs(num1 - x) - Math.abs(num2 - x));
+        
+        // Only take k elements
+        sortedArr = sortedArr.subList(0, k);
+        
+        // Sort again to have output in ascending order
+        Collections.sort(sortedArr);
+        return sortedArr;
+    }
+}
+```
+#### Complexity Analysis
+
+Given `N` as the length of `arr`,
+
+**Time complexity:** O(N⋅log(N)+k⋅log(k)).
+
+To build `sortedArr`, we need to sort every element in the array by a new criteria: `x - num`. This costs O(N⋅log(N)). Then, we have to sort `sortedArr` again to get the output in ascending order. This costs O(k⋅log(k)) time since `sortedArr`.length is only `k`.
+
+**Space complexity:** O(N).
+
+Before we slice `sortedArr` to contain only `k` elements, it contains every element from `arr`, which requires O(N) extra space. Note that we can use less space if we sort the input in place.
+
+### Solution 2 : Binary Search + Sliding Window
+
+**Algorithm**
+
+As a base case, if `arr.length == k`, return `arr`.
+
+Use binary search to find the index of the closest element to `x` in `arr`. Initailize two pointers left and right, with left set equal to this index, and right equal to this index plus one.
+
+While the window's size is less than `k`, check which number is closer to `x: arr[left]` or `arr[right]`. Whichever pointer has the closer number, move that pointer towards the edge to include that element in our output.
+
+Return the elements inside `arr` contained within the window defined between left and right.
+
+#### Implementation
+
+```java
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        List<Integer> result = new ArrayList<Integer>();
+        
+        // Base case
+        if (arr.length == k) {
+            for (int i = 0; i < k; i++) {
+                result.add(arr[i]);
+            }
+            
+            return result;
+        }
+        
+        // Binary search to find the closest element
+        int left = 0;
+        int right = arr.length;
+        int mid = 0;
+        while (left < right) {
+            mid = (left + right) / 2;
+            if (arr[mid] >= x) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        // Initialize our sliding window's bounds
+        left -= 1;
+        right = left + 1;
+        
+        // While the window size is less than k
+        while (right - left - 1 < k) {
+            // Be careful to not go out of bounds
+            if (left == -1) {
+                right += 1;
+                continue;
+            }
+            
+            // Expand the window towards the side with the closer number
+            // Be careful to not go out of bounds with the pointers
+            if (right == arr.length || Math.abs(arr[left] - x) <= Math.abs(arr[right] - x)) {
+                left -= 1;
+            } else {
+                right += 1;
+            }
+        } 
+
+        // Build and return the window
+        for (int i = left + 1; i < right; i++) {
+            result.add(arr[i]);
+        }
+        
+        return result;
+    }
+}
+```
+
+#### Complexity Analysis
+
+Given `N` as the length of `arr`,
+
+**Time complexity:** O(log(N)+k).
+
+The initial binary search to find where we should start our window costs O(log(N)). Our sliding window initially starts with size 0 and we expand it one by one until it is of size k, thus it costs O(k) to expand the window.
+
+**Space complexity:** O(1)
+
+We only use integer variables left and right that are O(1) regardless of input size. Space used for the output is not counted towards the space complexity.
+
+### Solution 3 : Binary Search To Find The Left Bound
+
+**Algorithm**
+
+Initalize two variables to perform binary search with, `left = 0` and `right = len(arr) - k`.
+
+Perform a binary search. At each operation, calculate `mid = (left + right) / 2` and compare the two elements located at `arr[mid]` and `arr[mid + k]`. If the element at `arr[mid]` is closer to `x`, then move the right pointer. If the element at `arr[mid + k]` is closer to `x`, then move the left pointer. Remember, the smaller element always wins when there is a tie.
+
+At the end of the binary search, we have located the `leftmost` index for the final answer. Return the subarray starting at this index that contains `k` elements.
+
+#### Implementation
+```java
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        // Initialize binary search bounds
+        int left = 0;
+        int right = arr.length - k;
+        
+        // Binary search against the criteria described
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (x - arr[mid] > arr[mid + k] - x) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        
+        // Create output in correct format
+        List<Integer> result = new ArrayList<Integer>();
+        for (int i = left; i < left + k; i++) {
+            result.add(arr[i]);
+        }
+        
+        return result;
+    }
+}
+```
+
+#### Complexity Analysis
+
+Given `N` as the length of `arr`,
+
+**Time complexity:** O(log(N−k)+k).
+
+Although finding the bounds only takes O(log(N−k)) time from the binary search, it still costs us O(k) to build the final output.
+
+Java implementations require O(k) time to build the result. However, it is worth noting that if the input array were given as a list instead of an array of integers, then the Java implementation could use the `ArrayList.subList()` method to build the result in O(1) time. If this were the case, the Java solution would have an (extremely fast) overall time complexity of O(log(N−k)).
+
+**Space complexity:** O(1).
+
+Again, we use a constant amount of space for our pointers, and space used for the output does not count towards the space complexity.
+
+---
+
+## Kth Largest Element in an Array
+
+Given an integer array `nums` and an integer `k`, return the `kth` largest element in the array.
+
+**Note** :  that it is the `kth` *largest element* in the sorted order, not the `kth` *distinct element*.
+
+You must solve it in O(n) time complexity.
+
+**Example 1:**
+```log
+Input: nums = [3,2,1,5,6,4], k = 2
+Output: 5
+```
+**Example 2:**
+```log
+Input: nums = [3,2,3,1,2,4,5,5,6], k = 4
+Output: 4
+```
+
+**Constraints:**
+
+* `1 <= k <= nums.length <= 105`
+
+* `-104 <= nums[i] <= 104`
+
+### Solution 1 : Sort
+
+The naive solution would be to sort an array first and then return `kth` element from the end, something like `sorted(nums)[-k]` on Python. That would be an algorithm of O(NlogN) time complexity and O(1) space complexity. This time complexity is not really exciting so let's check how to improve it by using some additional space.
+
+### Solution 2 : Heap
+
+The idea is to init a heap "the smallest element first", and add all elements from the array into this heap one by one keeping the size of the heap always less or equal to `k`. That would results in a heap containing `k` largest elements of the array.
+
+The head of this heap is the answer, i.e. the `kth` largest element of the array.
+
+The **time complexity** of adding an element in a heap of size `k` is `O(logk)`, and we do it `N` times that means `O(Nlogk)` time complexity for the algorithm.
+
+This algorithm improves time complexity, but one pays with `O(k)` **space complexity**.
+
+#### Implementation
+```java
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        // init heap 'the smallest element first'
+        PriorityQueue<Integer> heap =
+            new PriorityQueue<Integer>((n1, n2) -> n1 - n2);
+
+        // keep k largest elements in the heap
+        for (int n: nums) {
+          heap.add(n);
+          if (heap.size() > k)
+            heap.poll();
+        }
+
+        // output
+        return heap.poll();        
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(Nlogk).
+
+**Space complexity :** O(k) to store the heap elements.
+
+### Solution 3 : Quickselect
+
+```java
+import java.util.Random;
+class Solution {
+  int [] nums;
+
+  public void swap(int a, int b) {
+    int tmp = this.nums[a];
+    this.nums[a] = this.nums[b];
+    this.nums[b] = tmp;
+  }
+
+
+  public int partition(int left, int right, int pivot_index) {
+    int pivot = this.nums[pivot_index];
+    // 1. move pivot to end
+    swap(pivot_index, right);
+    int store_index = left;
+
+    // 2. move all smaller elements to the left
+    for (int i = left; i <= right; i++) {
+      if (this.nums[i] < pivot) {
+        swap(store_index, i);
+        store_index++;
+      }
+    }
+
+    // 3. move pivot to its final place
+    swap(store_index, right);
+
+    return store_index;
+  }
+
+  public int quickselect(int left, int right, int k_smallest) {
+    /*
+    Returns the k-th smallest element of list within left..right.
+    */
+
+    if (left == right) // If the list contains only one element,
+      return this.nums[left];  // return that element
+
+    // select a random pivot_index
+    Random random_num = new Random();
+    int pivot_index = left + random_num.nextInt(right - left); 
+    
+    pivot_index = partition(left, right, pivot_index);
+
+    // the pivot is on (N - k)th smallest position
+    if (k_smallest == pivot_index)
+      return this.nums[k_smallest];
+    // go left side
+    else if (k_smallest < pivot_index)
+      return quickselect(left, pivot_index - 1, k_smallest);
+    // go right side
+    return quickselect(pivot_index + 1, right, k_smallest);
+  }
+
+  public int findKthLargest(int[] nums, int k) {
+    this.nums = nums;
+    int size = nums.length;
+    // kth largest is (N - k)th smallest
+    return quickselect(0, size - 1, size - k);
+  }
+}
+```
+
+####  Complexity Analysis
+
+**Time complexity :** O(N) in the average case, O(N^2) in the worst case.
+
+**Space complexity :** O(1).
+
+---
+
+## Container With Most Water
+
+You are given an integer array height of length `n`. There are `n` vertical lines drawn such that the two endpoints of the ith line are `(i, 0)` and `(i, height[i])`.
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.
+
+*Notice* that you may not slant the container.
+
+**Example 1:**
+
+<img src="images/array/WaterContainerEx.png" width="500" height="300" />
+
+```log
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+```
+
+**Example2 :**
+```log
+Input: height = [1,1]
+Output: 1
+```
+
+**Constraints:**
+
+* `n == height.length`
+
+* `2 <= n <= 105`
+
+* `0 <= height[i] <= 104`
+
+### Solution 1 : Brute Force
+
+**Algorithm**
+
+In this case, we will simply consider the area for every possible pair of the lines and find out the maximum area out of those.
+
+     Note: Brute force approaches are often included because they are intuitive starting points when solving a problem. However, they are often expected to receive Time Limit Exceeded since they would not be accepted in an interview setting.
+
+```java
+public class Solution {
+    public int maxArea(int[] height) {
+        int maxarea = 0;
+        for (int left = 0; left < height.length; left++) {
+            for (int right = left + 1; right < height.length; right++) {
+                int width = right - left;
+                maxarea = Math.max(maxarea, Math.min(height[left], height[right]) * width);
+            }
+        }
+        return maxarea;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(n^2). Calculating area for all {n(n-1)}/{2} height pairs.
+
+**Space complexity:** O(1). Constant extra space is used.
+
+### Solution 2 : Two Pointer Approach
+
+**Algorithm**
+
+The intuition behind this approach is that the area formed between the lines will always be limited by the height of the shorter line. Further, the farther the lines, the more will be the area obtained.
+
+We take two pointers, one at the beginning and one at the end of the array constituting the length of the lines. Futher, we maintain a variable `maxarea` to store the maximum area obtained till now. At every step, we find out the area formed between them, update `maxarea` and move the pointer pointing to the shorter line towards the other end by one step.
+
+How does this approach work?
+
+Initially we consider the area constituting the exterior most lines. Now, to maximize the area, we need to consider the area between the lines of larger lengths. If we try to move the pointer at the longer line inwards, we won't gain any increase in area, since it is limited by the shorter line. But moving the shorter line's pointer could turn out to be beneficial, as per the same argument, despite the reduction in the width. This is done since a relatively longer line obtained by moving the shorter line's pointer might overcome the reduction in area caused by the width reduction.
+
+```java
+public class Solution {
+    public int maxArea(int[] height) {
+        int maxarea = 0;
+        int left = 0; 
+        int right = height.length - 1;
+        while (left < right) {
+            int width = right - left;
+            maxarea = Math.max(maxarea, Math.min(height[left], height[right]) * width);
+            if (height[left] <= height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return maxarea;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(n). Single pass.
+
+**Space complexity:** O(1). Constant space is used.
+
+### Solution 3 : 
+
+**Algorithm**
+
+check for every possible subarrays
+
+**Time:** O(N^2)
+
+**Example**
+```log
+height = [1,8,6,2,5,4,8,3,7]
+(0,1) (1,2) (2,3) .....
+(0,2) (1,3)
+(0,3) (1,4)
+(0,4) (1,5)
+(0,5) (1,6)
+(0,6) (1,7)
+(0,7) (1,8)
+(0,8)
+```
+
+1. `area = (j-i)*Math.min(height[i],height[j]);`
+
+2. `j-i` : width
+
+3. `Math.min(height[i],height[j])` : height
+
+4. But we can approch greedly , 
+
+    * Let say `(0,8)` `height[0]` is less than `height[8]` so no need to check for `(0,1) ... (0,7)` because `(j-i :width is going to decrease)` and height part will either remain **constant** or **decrease** `Math.min(height[i],height[j]) : height` I know that` height[0]<height[8]` and `height[1]...height[7] `can be either greater than `height[0]` (new height will be `height[0]` i.e as of previous height `(0,8)`)less than `height[0]` (new height will be less than `height[0]` i.e less than previous height `(0,8)`) equal to `height[0]` (same as of earlier) so `width` is decreasing and `height` is also decreasing/constant . No need to check for `(0,1)...(0,7)` discard them and increase pointer from `0` to `1`.(increase the pointer from where the `height` is less).
+
+#### Implementation
+```java
+class Solution {
+    public int maxArea(int[] height) {
+        int i=0;
+        int j=height.length-1;
+        
+        int ans=0;
+        while(i!=j){
+            
+            int area=(j-i)*Math.min(height[i],height[j]);
+            
+            if(area>ans){
+                ans=area;
+            }
+            
+            if(height[i]>height[j]){
+                j--;
+            }else{
+                i++;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+---
+
+## Intersection of Two Arrays
+
+Given two integer arrays `nums1` and `nums2`, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.
+
+**Example 1:**
+```log
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2]
+```
+
+**Example 2:**
+```log
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [9,4]
+Explanation: [4,9] is also accepted.
+```
+
+**Constraints:**
+
+* `1 <= nums1.length, nums2.length <= 1000`
+
+* `0 <= nums1[i], nums2[i] <= 1000`
+
+### Solution 1 : Two Sets
+
+**Intuition**
+
+The naive approach would be to iterate along the first array `nums1` and to check for each value if this value in `nums2` or not. If yes - add the value to output. Such an approach would result in a pretty bad `O(n×m)` time complexity, where n and m are arrays' lengths.
+
+      To solve the problem in linear time, let's use the structure set, which provides in/contains operation in O(1) time in average case.
+
+#### Implementation
+
+```java
+class Solution {
+  public int[] set_intersection(HashSet<Integer> set1, HashSet<Integer> set2) {
+    int [] output = new int[set1.size()];
+    int idx = 0;
+    for (Integer s : set1)
+      if (set2.contains(s)) output[idx++] = s;
+
+    return Arrays.copyOf(output, idx);
+  }
+
+  public int[] intersection(int[] nums1, int[] nums2) {
+    HashSet<Integer> set1 = new HashSet<Integer>();
+    for (Integer n : nums1) set1.add(n);
+    HashSet<Integer> set2 = new HashSet<Integer>();
+    for (Integer n : nums2) set2.add(n);
+
+    if (set1.size() < set2.size()) return set_intersection(set1, set2);
+    else return set_intersection(set2, set1);
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(n+m), where n and m are arrays' lengths. O(n) time is used to convert `nums1` into set, O(m) time is used to convert `nums2`, and contains/in operations are O(1) in the average case.
+
+**Space complexity :** O(m+n) in the worst case when all elements in the arrays are different.
+
+### Solution 2 : Built-in Set Intersection
+
+**Intuition**
+
+There are built-in intersection facilities, which provide O(n+m) time complexity in the average case and O(n×m) time complexity in the worst case.
+
+#### Implementation
+```java
+class Solution {
+  public int[] intersection(int[] nums1, int[] nums2) {
+    HashSet<Integer> set1 = new HashSet<Integer>();
+    for (Integer n : nums1) set1.add(n);
+    HashSet<Integer> set2 = new HashSet<Integer>();
+    for (Integer n : nums2) set2.add(n);
+
+    set1.retainAll(set2);
+
+    int [] output = new int[set1.size()];
+    int idx = 0;
+    for (int s : set1) output[idx++] = s;
+    return output;
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(n+m) in the average case and O(n×m) in the worst case when *load factor is high enough*.
+
+**Space complexity :** O(n+m) in the worst case when all elements in the arrays are different.
+
+### Solution 3 : HashMap
+
+**Algorithm**
+
+Use a HashMap to store the first array, then check each element of the second array and see if it is in the map. Note that since we need to output all repeated elements, we also need to count the occurrence of each array element in the map, and consume it when we compare with the second array.
+
+#### Implementation
+```java
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        
+        if(nums1 == null || nums2 == null || nums1.length==0  || nums2.length==0)
+            return new int[0];
+        // step1: Put elements in nums1 into the map
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int num:nums1)
+            if(map.containsKey(num))
+                map.put(num,map.get(num)+1);
+            else
+                map.put(num,1);
+// step 2: iterate the nums2 and get the result        
+        List<Integer> result = new ArrayList<>();
+        
+            for (int num : nums2) {
+                if (map.containsKey(num) && map.get(num) > 0) 
+                {   result.add(num);
+                    int freq = map.get(num);
+                    freq--;
+                    map.put(num, freq);
+            }
+        }
+         
+        return listToArray(result);
+    }
+     
+    private int[] listToArray(List<Integer> list) {
+        int[] result = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+         
+        return result;
+    }
+}
+```
+### Solution 4 : ArrayList
+
+**Algorithm**
+
+Sort the two arrays and iterate over to find out the intersections. So the overall time complexity is bounded by O(n logn), where n is the length of the longer array. The main body of the loop is bounded by O(m + n).
+
+#### Implementation
+
+```java
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        
+     
+        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) {
+            return new int[0];
+        }
+         
+        int i = 0;
+        int j = 0;
+         
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+         
+        List<Integer> result = new ArrayList<>();
+         
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] == nums2[j]) {
+                result.add(nums1[i]);
+                i++;
+                j++;
+            } else if (nums1[i] < nums2[j]){
+                i++;
+            } else {
+                j++;
+            }
+        }
+         
+        // Convert list to array
+        return listToArray(result);
+    }
+     
+    private int[] listToArray(List<Integer> list) {
+        int[] result = new int[list.size()];
+         
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+         
+        return result;
+    }
+}
+```
+
+---
+
+## Move Zeroes
+
+Given an integer array `nums`, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+    Note that you must do this in-place without making a copy of the array.
+
+**Example 1:**
+```log
+Input: nums = [0,1,0,3,12]
+Output: [1,3,12,0,0]
+```
+
+**Example 2:**
+```log
+Input: nums = [0]
+Output: [0]
+```
+
+**Constraints:**
+
+* `1 <= nums.length <= 104`
+
+* `-231 <= nums[i] <= 231 - 1`
+
+### Solution 
+
+---
+
+## Top K Frequent Elements
+
+Given an integer array `nums` and an integer `k`, return the `k` most frequent elements. You may return the answer in any order.
+
+**Example 1:**
+```log
+Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+```
+
+**Example 2:**
+```log
+Input: nums = [1], k = 1
+Output: [1]
+```
+
+**Constraints:**
+
+* `1 <= nums.length <= 105`
+
+* `-104 <= nums[i] <= 104`
+
+* `k` is in the range `[1, the number of unique elements in the array]`.
+
+* It is **guaranteed** that the answer is **unique**.
+
+### Solution 1 : Heap
+
+Let's start from the simple `heap` approach with O(Nlogk) time complexity. To ensure that O(Nlogk) is always less than O(NlogN), the particular case k=N could be considered separately and solved in O(N) time.
+
+**Algorithm**
+
+* The first step is to build a hash map `element -> its frequency`. In Java, we use the data structure `HashMap`. This step takes O(N) time where N is a number of elements in the list.
+
+* The second step is to build a heap of size k using N elements. To add the first k elements takes a linear time O(k) in the average case, and O(log1+log2+...+logk)=O(logk!)=O(klogk) in the worst case. It's equivalent to `heapify implementation in Python`. After the first k elements we start to push and pop at each step, N - k steps in total. The time complexity of heap push/pop is O(logk) and we do it N - k times that means O((N−k)logk) time complexity. Adding both parts up, we get O(Nlogk) time complexity for the second step.
+
+* The third and the last step is to convert the heap into an output array. That could be done in O(klogk) time.
+
+#### Implementation
+```java
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        // O(1) time
+        if (k == nums.length) {
+            return nums;
+        }
+        
+        // 1. build hash map : character and how often it appears
+        // O(N) time
+        Map<Integer, Integer> count = new HashMap();
+        for (int n: nums) {
+          count.put(n, count.getOrDefault(n, 0) + 1);
+        }
+
+        // init heap 'the less frequent element first'
+        Queue<Integer> heap = new PriorityQueue<>(
+            (n1, n2) -> count.get(n1) - count.get(n2));
+
+        // 2. keep k top frequent elements in the heap
+        // O(N log k) < O(N log N) time
+        for (int n: count.keySet()) {
+          heap.add(n);
+          if (heap.size() > k) heap.poll();    
+        }
+
+        // 3. build an output array
+        // O(k log k) time
+        int[] top = new int[k];
+        for(int i = k - 1; i >= 0; --i) {
+            top[i] = heap.poll();
+        }
+        return top;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(Nlogk) if k<N and O(N) in the particular case of N=k. That ensures time complexity to be better than O(NlogN).
+
+**Space complexity :** O(N+k) to store the hash map with not more N elements and a heap with k elements.
+
+### Solution 2 : Quickselect (Hoare's selection algorithm)
+
+#### Implementation
+```java
+class Solution {
+    int[] unique;
+    Map<Integer, Integer> count;
+
+    public void swap(int a, int b) {
+        int tmp = unique[a];
+        unique[a] = unique[b];
+        unique[b] = tmp;
+    }
+
+    public int partition(int left, int right, int pivot_index) {
+        int pivot_frequency = count.get(unique[pivot_index]);
+        // 1. move pivot to end
+        swap(pivot_index, right);
+        int store_index = left;
+
+        // 2. move all less frequent elements to the left
+        for (int i = left; i <= right; i++) {
+            if (count.get(unique[i]) < pivot_frequency) {
+                swap(store_index, i);
+                store_index++;
+            }
+        }
+
+        // 3. move pivot to its final place
+        swap(store_index, right);
+
+        return store_index;
+    }
+    
+    public void quickselect(int left, int right, int k_smallest) {
+        /*
+        Sort a list within left..right till kth less frequent element
+        takes its place. 
+        */
+
+        // base case: the list contains only one element
+        if (left == right) return;
+        
+        // select a random pivot_index
+        Random random_num = new Random();
+        int pivot_index = left + random_num.nextInt(right - left); 
+
+        // find the pivot position in a sorted list
+        pivot_index = partition(left, right, pivot_index);
+
+        // if the pivot is in its final sorted position
+        if (k_smallest == pivot_index) {
+            return;    
+        } else if (k_smallest < pivot_index) {
+            // go left
+            quickselect(left, pivot_index - 1, k_smallest);     
+        } else {
+            // go right 
+            quickselect(pivot_index + 1, right, k_smallest);  
+        }
+    }
+    
+    public int[] topKFrequent(int[] nums, int k) {
+        // build hash map : character and how often it appears
+        count = new HashMap();
+        for (int num: nums) {
+            count.put(num, count.getOrDefault(num, 0) + 1);
+        }
+        
+        // array of unique elements
+        int n = count.size();
+        unique = new int[n]; 
+        int i = 0;
+        for (int num: count.keySet()) {
+            unique[i] = num;
+            i++;
+        }
+        
+        // kth top frequent element is (n - k)th less frequent.
+        // Do a partial sort: from less frequent to the most frequent, till
+        // (n - k)th less frequent element takes its place (n - k) in a sorted array. 
+        // All element on the left are less frequent.
+        // All the elements on the right are more frequent. 
+        quickselect(0, n - 1, n - k);
+        // Return top k frequent elements
+        return Arrays.copyOfRange(unique, n - k, n);
+    }
+}
+```
+## Form minimum number from given sequence
+
+Auxiliary Given a pattern containing only `I’s` and `D’s`. `I` for increasing and `D` for decreasing. Device an algorithm to print the minimum number following that pattern. Digits from 1-9 and digits can’t repeat.
+
+**Examples:**
+```log
+Input: D        Output: 21
+Input: I        Output: 12
+Input: DD       Output: 321
+Input: II       Output: 123
+Input: DIDI     Output: 21435
+Input: IIDDD    Output: 126543
+Input: DDIDDIID Output: 321654798
+```
+### Solution 1 :
+
+**Algorithm**
+
+* Since digits can’t repeat, there can be at most 9 digits in output.
+
+* Also, number of digits in output is one more than number of characters in input. Note that the first character of input corresponds to two digits in output.
+
+* Idea is to iterate over input array and keep track of last printed digit and maximum digit printed so far.
+
+#### Implementation
+```java
+// Java program to print minimum number that can be formed
+// from a given sequence of Is and Ds
+class GFG
+{
+	
+	// Prints the minimum number that can be formed from
+	// input sequence of I's and D's
+	static void PrintMinNumberForPattern(String arr)
+	{
+		// Initialize current_max (to make sure that
+		// we don't use repeated character
+		int curr_max = 0;
+
+		// Initialize last_entry (Keeps track for
+		// last printed digit)
+		int last_entry = 0;
+
+		int j;
+
+		// Iterate over input array
+		for (int i = 0; i < arr.length(); i++)
+		{
+			// Initialize 'noOfNextD' to get count of
+			// next D's available
+			int noOfNextD = 0;
+
+			switch (arr.charAt(i))
+			{
+				case 'I':
+					// If letter is 'I'
+
+					// Calculate number of next consecutive D's
+					// available
+					j = i + 1;
+					while (j < arr.length() && arr.charAt(j) == 'D')
+					{
+						noOfNextD++;
+						j++;
+					}
+
+					if (i == 0)
+					{
+						curr_max = noOfNextD + 2;
+
+						// If 'I' is first letter, print incremented
+						// sequence from 1
+						System.out.print(" " + ++last_entry);
+						System.out.print(" " + curr_max);
+
+						// Set max digit reached
+						last_entry = curr_max;
+					}
+					else
+					{
+						// If not first letter
+
+						// Get next digit to print
+						curr_max = curr_max + noOfNextD + 1;
+
+						// Print digit for I
+						last_entry = curr_max;
+						System.out.print(" " + last_entry);
+					}
+
+					// For all next consecutive 'D' print
+					// decremented sequence
+					for (int k = 0; k < noOfNextD; k++)
+					{
+						System.out.print(" " + --last_entry);
+						i++;
+					}
+					break;
+
+				// If letter is 'D'
+				case 'D':
+					if (i == 0)
+					{
+						// If 'D' is first letter in sequence
+						// Find number of Next D's available
+						j = i + 1;
+						while (j < arr.length()&&arr.charAt(j) == 'D')
+						{
+							noOfNextD++;
+							j++;
+						}
+
+						// Calculate first digit to print based on
+						// number of consecutive D's
+						curr_max = noOfNextD + 2;
+
+						// Print twice for the first time
+						System.out.print(" " + curr_max + " " + (curr_max - 1));
+
+						// Store last entry
+						last_entry = curr_max - 1;
+					}
+					else
+					{
+						// If current 'D' is not first letter
+
+						// Decrement last_entry
+						System.out.print(" " + (last_entry - 1));
+						last_entry--;
+					}
+					break;
+			}
+		}
+		System.out.println();
+	}
+
+	// Driver code
+	public static void main(String[] args)
+	{
+		PrintMinNumberForPattern("IDID");
+		PrintMinNumberForPattern("I");
+		PrintMinNumberForPattern("DD");
+		PrintMinNumberForPattern("II");
+		PrintMinNumberForPattern("DIDI");
+		PrintMinNumberForPattern("IIDDD");
+		PrintMinNumberForPattern("DDIDDIID");
+	}
+}
+
+// This code is contributed by Princi Singh
+
+```
+**Output**
+```log
+ 1 3 2 5 4
+ 1 2
+ 3 2 1
+ 1 2 3
+ 2 1 4 3 5
+ 1 2 6 5 4 3
+ 3 2 1 6 5 4 7 9 8
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N^2), overall time complexity. Where, N is the length of the string.
+
+**Auxiliary Space:** O(1).
+
+*This solution is suggested by **Swapnil Trambake**.*
+
+### Solution 2 :
+
+**Intution**
+
+Let’s observe a few facts in case of a minimum number:
+
+* The digits can’t repeat hence there can be 9 digits at most in output.
+
+* To form a minimum number , at every index of the output, we are interested in the minimum number which can be placed at that index.
+
+**Algorithm**
+
+The idea is to iterate over the entire input array , keeping track of the minimum number (1-9) which can be placed at that position of the output.
+
+The tricky part of course occurs when ‘D’ is encountered at index other than 0. In such a case we have to track the nearest ‘I’ to the left of ‘D’ and increment each number in the output vector by 1 in between ‘I’ and ‘D’.
+We cover the base case as follows:
+
+* If the first character of input is ‘I’ then we append 1 and 2 in the output vector and the minimum available number is set to 3 .The index of most recent ‘I’ is set to 1.
+
+* If the first character of input is ‘D’ then we append 2 and 1 in the output vector and the minimum available number is set to 3, and the index of most recent ‘I’ is set to 0.
+
+Now we iterate the input string from index 1 till its end and:
+
+* If the character scanned is ‘I’ , a minimum value that has not been used yet is appended to the output vector .We increment the value of minimum no. available and index of most recent ‘I’ is also updated.
+
+* If the character scanned is ‘D’ at index i of input array, we append the ith element from output vector in the output and track the nearest ‘I’ to the left of ‘D’ and increment each number in the output vector by 1 in between ‘I’ and ‘D’.
+
+#### Implementation
+```java
+// Java program to print minimum number that can be formed
+// from a given sequence of Is and Ds
+import java.io.*;
+import java.util.*;
+public class GFG {
+
+	static void printLeast(String arr)
+	{
+			// min_avail represents the minimum number which is
+			// still available for inserting in the output vector.
+			// pos_of_I keeps track of the most recent index
+			// where 'I' was encountered w.r.t the output vector
+			int min_avail = 1, pos_of_I = 0;
+
+			//vector to store the output
+			ArrayList<Integer> al = new ArrayList<>();
+			
+			// cover the base cases
+			if (arr.charAt(0) == 'I')
+			{
+				al.add(1);
+				al.add(2);
+				min_avail = 3;
+				pos_of_I = 1;
+			}
+
+			else
+			{
+				al.add(2);
+				al.add(1);
+				min_avail = 3;
+				pos_of_I = 0;
+			}
+
+			// Traverse rest of the input
+			for (int i = 1; i < arr.length(); i++)
+			{
+				if (arr.charAt(i) == 'I')
+				{
+					al.add(min_avail);
+					min_avail++;
+					pos_of_I = i + 1;
+				}
+				else
+				{
+					al.add(al.get(i));
+					for (int j = pos_of_I; j <= i; j++)
+							al.set(j, al.get(j) + 1);
+
+					min_avail++;
+				}
+			}
+
+			// print the number
+			for (int i = 0; i < al.size(); i++)
+				System.out.print(al.get(i) + " ");
+			System.out.println();
+	}
+
+
+	// Driver code
+	public static void main(String args[])
+	{
+			printLeast("IDID");
+			printLeast("I");
+			printLeast("DD");
+			printLeast("II");
+			printLeast("DIDI");
+			printLeast("IIDDD");
+			printLeast("DDIDDIID");
+	}
+}
+// This code is contributed by rachana soma
+```
+
+**Output**
+```log
+ 1 3 2 5 4
+ 1 2
+ 3 2 1
+ 1 2 3
+ 2 1 4 3 5
+ 1 2 6 5 4 3
+ 3 2 1 6 5 4 7 9 8
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N^2), overall time complexity. Where, N is the length of the string.
+
+**Auxiliary Space:** O(1).
+
+*This solution is suggested by **Ashutosh Kumar**.*
+
+---
+
+## Sort Array by Increasing Frequency
+
+Given an array of integers `nums`, sort the array in **increasing** order based on the frequency of the values. If multiple values have the same frequency, sort them in **decreasing** order.
+
+*Return the sorted array.*
+
+**Example 1:**
+```log
+Input: nums = [1,1,2,2,2,3]
+Output: [3,1,1,2,2,2]
+Explanation: '3' has a frequency of 1, '1' has a frequency of 2, and '2' has a frequency of 3.
+```
+
+**Example 2:**
+```log
+Input: nums = [2,3,1,3,2]
+Output: [1,3,3,2,2]
+Explanation: '2' and '3' both have a frequency of 2, so they are sorted in decreasing order.
+
+```
+
+**Example 3:**
+```log
+Input: nums = [-1,1,-6,4,5,-6,1,4,1]
+Output: [5,-1,4,4,-6,-6,1,1,1]
+
+```
+
+**Constraints:**
+
+* `1 <= nums.length <= 100`
+
+* `-100 <= nums[i] <= 100`
+
+### Solution : Simple Custom Sort with Detailed Explanation!
+
+custom sort explanation:
+
+* **.stream(nums)**
+iterates through the nums array
+
+* **.boxed()**
+converts each int to Integer object, this is because .sorted() can only operate on objects
+
+* **.sorted((a,b) -> map.get(a) != map.get(b) ? map.get(a) - map.get(b) : b - a)**
+if frequency of two numbers are not the same, sort by ascending frequency. If frequencies are the same, sort by decending numeric value
+
+* **.mapToInt(n -> n)**
+converts Integer to int
+
+* **.toArray()**
+returns array
+
+#### Implementation
+```java
+public class Student{
+    public int[] frequencySort(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        // count frequency of each number
+        Arrays.stream(nums).forEach(n -> map.put(n, map.getOrDefault(n, 0) + 1));
+        // custom sort
+        return Arrays.stream(nums).boxed()
+                .sorted((a,b) -> map.get(a) != map.get(b) ? map.get(a) - map.get(b) : b - a)
+                .mapToInt(n -> n)
+                .toArray();
+    }    
+}
+```
+---
+
+## Pairs of Songs With Total Durations Divisible by 60
+
+You are given a list of songs where the ``ith`` song has a duration of `time[i]` seconds.
+
+*Return the number of pairs of songs for which their total duration in seconds is divisible by 60.* Formally, we want the number of indices `i`, `j` such that `i < j` with `(time[i] + time[j]) % 60 == 0`.
+
+**Example 1:**
+```log
+Input: time = [30,20,150,100,40]
+Output: 3
+Explanation: Three pairs have a total duration divisible by 60:
+(time[0] = 30, time[2] = 150): total duration 180
+(time[1] = 20, time[3] = 100): total duration 120
+(time[1] = 20, time[4] = 40): total duration 60
+```
+
+**Example 2:**
+```log
+Input: time = [60,60,60]
+Output: 3
+Explanation: All three pairs have a total duration of 120, which is divisible by 60.
+```
+
+**Constraints:**
+
+* `1 <= time.length <= 6 * 104`
+
+* `1 <= time[i] <= 500`
+
+### Solution 1 : Brute Force
+
+One of the most straightforward approaches would be iterating through the entire array using a nested loop to examine that, for each element `a` in time, whether there is another element `b` such that `(a + b) % 60 == 0`. Note that this approach might be too brutal to pass an interview.
+
+#### Implementation
+```java
+class Solution {
+    public int numPairsDivisibleBy60(int[] time) {
+        int count = 0, n = time.length;
+        for (int i = 0; i < n; i++) {
+            // j starts with i+1 so that i is always to the left of j
+            // to avoid repetitive counting
+            for (int j = i + 1; j < n; j++) {
+                if ((time[i] + time[j]) % 60 == 0) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(n^2), when n is the length of the input array. For each item in time, we iterate through the rest of the array to find a qualified complement taking O(n) time.
+
+**Space complexity:** O(1).
+
+### Solution 2 : Use an Array to Store Frequencies
+
+#### Implementation
+```java
+class Solution {
+    public int numPairsDivisibleBy60(int[] time) {
+        int remainders[] = new int[60];
+        int count = 0;
+        for (int t: time) {
+            if (t % 60 == 0) { // check if a%60==0 && b%60==0
+                count += remainders[0];
+            } else { // check if a%60+b%60==60
+                count += remainders[60 - t % 60];
+            }
+            remainders[t % 60]++; // remember to update the remainders
+        }
+        return count;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(n), when n is the length of the input array, because we would visit each element in time once.
+
+**Space complexity:** O(1), because the size of the array remainders is fixed with 60.
+
+### Solution 3 : Simple and Good Solution!! (99.7%)
+
+#### Implementation
+
+This solution only use an array. Map is good alternative to solve but it may be not good performance.
+
+**Time complexity :** O(n)
+
+```java
+class Solution {
+    public int numPairsDivisibleBy60(int[] time) {
+        int array[] = new int[60];
+        int retVal = 0;
+        for(int i : time) {
+            int n = i % 60;
+            retVal += array[n==0 ? 0 : 60-n];
+            array[n]++;
+        }
+        return retVal;
+    }
+}
+```
+## Minimum Size Subarray Sum
+
+Given an array of positive integers `nums` and a positive integer `target`, return *the **minimal length** of a subarray whose sum is greater than or equal to* `target`. If there is no such subarray, return `0` instead.
+
+**Example 1:**
+```log
+Input: target = 7, nums = [2,3,1,2,4,3]
+Output: 2
+Explanation: The subarray [4,3] has the minimal length under the problem constraint.
+```
+
+**Example 2:**
+```log
+Input: target = 4, nums = [1,4,4]
+Output: 1
+```
+
+**Example 3:**
+```log
+Input: target = 11, nums = [1,1,1,1,1,1,1,1]
+Output: 0
+```
+
+**Constraints:**
+
+* `1 <= target <= 109`
+
+* `1 <= nums.length <= 105`
+
+* `1 <= nums[i] <= 104`
+
+### Solution : O(n) solution (two pointers)
+
+#### Implementation
+```java
+public class Solution {
+    public int minSubArrayLen(int s, int[] a) {
+        if (a == null || a.length == 0)
+            return 0;
+
+        int i = 0, j = 0, sum = 0, min = Integer.MAX_VALUE;
+
+        while (j < a.length) {
+            sum += a[j++];
+
+            while (sum >= s) {
+                min = Math.min(min, j - i);
+                sum -= a[i++];
+            }
+        }
+
+        return min == Integer.MAX_VALUE ? 0 : min;
+    }   
+}
+```
+
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## More Details 

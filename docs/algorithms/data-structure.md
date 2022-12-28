@@ -1068,6 +1068,8 @@ public class solution {
 
 ## Design Search Autocomplete System
 
+### Problem 1 
+
 Design a search autocomplete system for a search engine. Users may input a sentence (at least one word and end with a special character `#`).
 
 You are given a string array `sentences` and an integer array `times` both of length `n` where `sentences[i]` is a previously typed sentence and `times[i]` is the corresponding number of times the sentence was typed. For each input character except `#`, return the top `3` historical hot sentences that have the same prefix as the part of the sentence already typed.
@@ -1133,7 +1135,7 @@ obj.input("#"); // return []. The user finished the input, the sentence "i a" sh
 
 * At most `5000` calls will be made to `input`.
 
-### Solution 
+### Solution 1 : Trie and PriorityQueue
 
 Only thing more than a normal `Trie` is added a map of `sentence` to `count` in each of the `Trie` node to facilitate process of getting top 3 results.
 
@@ -1217,6 +1219,174 @@ public class AutocompleteSystem {
     }
 }
 ```
+
+### Problem 2 
+
+Design a search autocomplete system for a search engine. Users may input a sentence (at least one word and end with a special character '#'). For each character they type except '#', you need to return the top 3 historical hot sentences that have prefix the same as the part of sentence already typed. Here are the specific rules:
+
+1. The hot degree for a sentence is defined as the number of times a user typed the exactly same sentence before.
+
+2. The returned top 3 hot sentences should be sorted by hot degree (The first is the hottest one). If several sentences have the same degree of hot, you need to use ASCII-code order (smaller one appears first).
+
+3. If less than 3 hot sentences exist, then just return as many as you can.
+
+4. When the input is a special character, it means the sentence ends, and in this case, you need to return an empty list. Your job is to implement the following functions:
+
+The constructor function:
+
+AutocompleteSystem(String[] sentences, int[] times): This is the constructor. The input is historical data. Sentences is a string array consists of previously typed sentences. Times is the corresponding times a sentence has been typed. Your system should record these historical data.
+
+Now, the user wants to input a new sentence. The following function will provide the next character the user types:
+
+List input(char c): The input c is the next character typed by the user. The character will only be lower-case letters ('a' to 'z'), blank space (' ') or a special character ('#'). Also, the previously typed sentence should be recorded in your system. The output will be the top 3 historical hot sentences that have prefix the same as the part of sentence already typed.
+
+**Example:**
+```log
+Operation: AutocompleteSystem(["i love you", "island","ironman", "i love leetcode"], [5,3,2,2])
+The system have already tracked down the following sentences and their corresponding times:
+"i love you" : 5 times
+"island" : 3 times
+"ironman" : 2 times
+"i love leetcode" : 2 times
+Now, the user begins another search:
+
+Operation: input('i')
+Output: ["i love you", "island","i love leetcode"]
+Explanation:
+There are four sentences that have prefix "i". Among them, "ironman" and "i love leetcode" have same hot degree. Since ' ' has ASCII code 32 and 'r' has ASCII code 114, "i love leetcode" should be in front of "ironman". Also we only need to output top 3 hot sentences, so "ironman" will be ignored.
+
+Operation: input(' ')
+Output: ["i love you","i love leetcode"]
+Explanation:
+There are only two sentences that have prefix "i ".
+
+Operation: input('a')
+Output: []
+Explanation:
+There are no sentences that have prefix "i a".
+
+Operation: input('#')
+Output: []
+Explanation:
+The user finished the input, the sentence "i a" should be saved as a historical sentence in system. And the following input will be counted as a new search.
+
+```
+
+**Note:** The input sentence will always start with a letter and end with '#', and only one blank space will exist between two words. The number of complete sentences that to be searched won't exceed 100. The length of each sentence including those in the historical data won't exceed 100. Please use double-quote instead of single-quote when you write test cases even for a character input. Please remember to RESET your class variables declared in class AutocompleteSystem, as static/class variables are persisted across multiple test cases.
+
+### Solution 
+
+#### Implementation
+```java
+class AutocompleteSystem {
+    class TrieNode {
+        public boolean isLeaf;
+        public List<String> cands;
+        HashMap<Character, TrieNode> children;
+        public TrieNode() {
+            isLeaf = false;
+            children = new HashMap<Character, TrieNode>();
+            cands = new LinkedList<String>();
+        }
+    }
+    class Trie {
+        private TrieNode root;
+        public Trie() {
+            root = new TrieNode();
+        }
+        // Inserts a word into the trie.
+        public void insert(String word) {
+            TrieNode node = root;
+            for (int i = 0; i < word.length(); i ++) {
+                HashMap<Character, TrieNode> children = node.children;
+                char c = word.charAt(i);
+                if (!children.containsKey(c)) {
+                    children.put(c, new TrieNode());
+                }
+                children.get(c).cands.add(word);
+                if (i == word.length() - 1) {
+                    children.get(c).isLeaf = true;
+                }
+                node = node.children.get(c);
+            }
+        }
+        private TrieNode searchNode(String pre) {
+            HashMap<Character, TrieNode> children = root.children;
+            TrieNode node = root;
+            for (int i = 0; i < pre.length(); i ++) {
+                if (!children.containsKey(pre.charAt(i))) {
+                    return null;
+                }
+                node = children.get(pre.charAt(i));
+                children = node.children;
+            }
+            return node;
+        }
+    }
+    HashMap<String, Integer> count = new HashMap<String, Integer>();
+    Trie trie = new Trie();
+    String curr = "";
+    public AutocompleteSystem(String[] sentences, int[] times) {
+        for (int i = 0; i < sentences.length; i ++) {
+            count.put(sentences[i], times[i]);
+            trie.insert(sentences[i]);
+        }
+    }
+
+    public List<String> input(char c) {
+        List<String> res = new LinkedList<String>();
+        if (c == '#') {
+            if (!count.containsKey(curr)) {
+                trie.insert(curr);
+                count.put(curr, 1);
+            }
+            else {
+                count.put(curr, count.get(curr) + 1);
+            }
+            curr = "";
+        }
+        else {
+            curr += c;
+            res = getSuggestions();
+        }
+
+        return res;
+    }
+    private List<String> getSuggestions() {
+        List<String> res = new LinkedList<String>();
+        TrieNode node = trie.searchNode(curr);
+        if (node == null) {
+            return res;
+        }
+        List<String> cands = node.cands;
+        Collections.sort(cands, new Comparator<String>(){
+            public int compare(String s1, String s2) {
+                if (count.get(s1) != count.get(s2)) {
+                    return count.get(s2) - count.get(s1);
+                }
+                return s1.compareTo(s2);
+            } 
+        });
+        int added = 0; 
+        for (String s:cands) {
+            res.add(s);
+            added ++;
+            if (added > 2) {
+                break;
+            }
+        }
+        return res;
+    }
+
+}
+
+/**
+ * Your AutocompleteSystem object will be instantiated and called as such:
+ * AutocompleteSystem obj = new AutocompleteSystem(sentences, times);
+ * List<String> param_1 = obj.input(c);
+ */
+```
+
 ---
 
 ## Frog Jump
@@ -1491,10 +1661,649 @@ class Solution {
 
 ---
 
+## Finding the Users Active Minutes
+
+You are given the logs for users' actions on LeetCode, and an integer `k`. The logs are represented by a 2D integer array `logs` where each `logs[i] = [IDi, timei]` indicates that the user with IDi performed an action at the minute `timei`.
+
+**Multiple users** can perform actions simultaneously, and a single user can perform **multiple actions** in the same minute.
+
+The **user active minutes (UAM)** for a given user is defined as the **number of unique minutes** in which the user performed an action on LeetCode. A minute can only be counted once, even if multiple actions occur during it.
+
+You are to calculate a **1-indexed** array `answer` of size `k` such that, for each `j` `(1 <= j <= k),` `answer[j]` is the **number of users** whose **UAM** equals `j`.
+
+Return the array `answer` as described above.
+
+**Example 1:**
+```log
+Input: logs = [[0,5],[1,2],[0,2],[0,5],[1,3]], k = 5
+Output: [0,2,0,0,0]
+Explanation:
+The user with ID=0 performed actions at minutes 5, 2, and 5 again. Hence, they have a UAM of 2 (minute 5 is only counted once).
+The user with ID=1 performed actions at minutes 2 and 3. Hence, they have a UAM of 2.
+Since both users have a UAM of 2, answer[2] is 2, and the remaining answer[j] values are 0.
+```
+
+**Example 2:**
+```log
+Input: logs = [[1,1],[2,2],[2,3]], k = 4
+Output: [1,1,0,0]
+Explanation:
+The user with ID=1 performed a single action at minute 1. Hence, they have a UAM of 1.
+The user with ID=2 performed actions at minutes 2 and 3. Hence, they have a UAM of 2.
+There is one user with a UAM of 1 and one with a UAM of 2.
+Hence, answer[1] = 1, answer[2] = 1, and the remaining values are 0.
+```
+
+**Constraints:**
+
+* `1 <= logs.length <= 104`
+
+* `0 <= IDi <= 109`
+
+* `1 <= timei <= 105`
+
+* `k` is in the range `[The maximum UAM for a user, 105]`.
+
+### Solution 1 : Straightforward
+
+**Basic idea:**
+
+Use a HashMap to take record of the user id and its unique active minutes. Then we can use the hashmap to get the final result by counting the size of each set.
+
+#### Implementation
+```java
+ public class solution {
+  public int[] findingUsersActiveMinutes(int[][] logs, int k) {
+    int[] res = new int[k];
+    Map<Integer, Set<Integer>> map = new HashMap<>();
+    for (int[] l : logs) {
+      map.putIfAbsent(l[0], new HashSet<>());
+      map.get(l[0]).add(l[1]);
+    }
+    for (int key : map.keySet()) {
+      res[map.get(key).size() - 1]++;
+    }
+    return res;
+  }
+}
+```
+
+#### Complexity Analysis
+
+Let N represent the input size, then
+
+**Time Complexity:** O(N).
+
+**Space Complexity:** O(max(K, N)).
+
+### Solution 2 : HashMap + HashSet
+
+**Idea:**
+
+* Goal is to get unique time for every id. Unique gives birth to HashMap or HashSet in 90% cases.
+
+So we can Maintain a HashMap<Integer,HashSet< Integer>> where `key : ids and value:HashSet of time`
+
+#### Implementation
+```java
+public class solution {
+  public int[] findingUsersActiveMinutes(int[][] logs, int k) {
+    int[] result = new int[k];
+    HashMap<Integer, HashSet<Integer>> map = new HashMap<>();
+
+    for (int[] log : logs) {
+      int id = log[0];
+      int t = log[1];
+      if (!map.containsKey(id)) map.put(id, new HashSet<>());
+      map.get(id).add(t);
+    }
+
+    for (int id : map.keySet()) {
+      int UAM = map.get(id).size();
+      result[UAM - 1]++;
+    }
+    return result;
+  }
+}
+```
+
+#### Complexity:
+
+**Time:** ` O(n) and O(n+k) where n=logs.length`.
+
+---
+
 ## Subdomain Visit Count
 
+A website domain `discuss.leetcode.com` consists of various subdomains. At the top level, we have `com`, at the next level, we have `leetcode.com` and at the lowest level, `discuss.leetcode.com`. When we visit a domain like `discuss.leetcode.com`, we will also visit the parent domains `leetcode.com` and `com` implicitly.
 
+A **count-paired domain** is a domain that has one of the two formats `rep d1.d2.d3` or `rep d1.d2` where `rep` is the number of visits to the domain and `d1.d2.d3` is the domain itself.
 
+* For example, `9001 discuss.leetcode.com` is a **count-paired domain** that indicates that `discuss.leetcode.com` was visited `9001` times.
+
+Given an array of **count-paired domains** `cpdomains`, return an array of the **count-paired domains** of each subdomain in the input. You may return the answer in **any order**.
+
+**Example 1:**
+```log
+Input: cpdomains = ["9001 discuss.leetcode.com"]
+Output: ["9001 leetcode.com","9001 discuss.leetcode.com","9001 com"]
+Explanation: We only have one website domain: "discuss.leetcode.com".
+As discussed above, the subdomain "leetcode.com" and "com" will also be visited. So they will all be visited 9001 times.
+```
+
+**Example 2:**
+```log
+Input: cpdomains = ["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
+Output: ["901 mail.com","50 yahoo.com","900 google.mail.com","5 wiki.org","5 org","1 intel.mail.com","951 com"]
+Explanation: We will visit "google.mail.com" 900 times, "yahoo.com" 50 times, "intel.mail.com" once and "wiki.org" 5 times.
+For the subdomains, we will visit "mail.com" 900 + 1 = 901 times, "com" 900 + 50 + 1 = 951 times, and "org" 5 times.
+```
+
+**Constraints:**
+
+* `1 <= cpdomain.length <= 100`
+
+* `1 <= cpdomain[i].length <= 100`
+
+* `cpdomain[i]` follows either the `repi d1i.d2i.d3i` format or the `repi d1i.d2i` format.
+
+* `repi` is an integer in the range `[1, 104]`.
+
+* `d1i`, `d2i`, and `d3i` consist of lowercase English letters.
+
+### Solution 1 : Hash Map [Accepted]
+
+**Intuition and Algorithm**
+
+The algorithm is straightforward: we just do what the problem statement tells us to do.
+
+For an address like `a.b.c`, we will count `a.b.c`, `b.c`, and `c`. For an address like `x.y`, we will count `x.y` and `y`.
+
+To count these strings, we will use a hash map. To split the strings into the required pieces, we will use library `split` functions.
+
+#### Implementation
+```java
+class Solution {
+    public List<String> subdomainVisits(String[] cpdomains) {
+        Map<String, Integer> counts = new HashMap();
+        for (String domain: cpdomains) {
+            String[] cpinfo = domain.split("\\s+");
+            String[] frags = cpinfo[1].split("\\.");
+            int count = Integer.valueOf(cpinfo[0]);
+            String cur = "";
+            for (int i = frags.length - 1; i >= 0; --i) {
+                cur = frags[i] + (i < frags.length - 1 ? "." : "") + cur;
+                counts.put(cur, counts.getOrDefault(cur, 0) + count);
+            }
+        }
+
+        List<String> ans = new ArrayList();
+        for (String dom: counts.keySet())
+            ans.add("" + counts.get(dom) + " " + dom);
+        return ans;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N), where N is the length of `cpdomains`, and assuming the length of `cpdomains[i]` is fixed.
+
+**Space Complexity:** O(N), the space used in our count.
+
+### Solution 2 : Easy Understood Solution
+
+#### Implementation
+```java
+public class solution {
+  public List<String> subdomainVisits(String[] cpdomains) {
+    Map<String, Integer> count = new HashMap();
+    for (String cd : cpdomains) {
+      int i = cd.indexOf(' ');
+      int n = Integer.valueOf(cd.substring(0, i));
+      String s = cd.substring(i + 1);
+      for (i = 0; i < s.length(); ++i) {
+        if (s.charAt(i) == '.') {
+          String d = s.substring(i + 1);
+          count.put(d, count.getOrDefault(d, 0) + n);
+        }
+      }
+      count.put(s, count.getOrDefault(s, 0) + n);
+    }
+
+    List<String> res = new ArrayList();
+    for (String d : count.keySet()) res.add(count.get(d) + " " + d);
+    return res;
+  }
+}
+```
+
+---
+
+## Second Highest Salary
+
+Table: `Employee`
+```log
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| salary      | int  |
++-------------+------+
+id is the primary key column for this table.
+Each row of this table contains information about the salary of an employee.
+```
+Write an SQL query to report the second highest salary from the `Employee` table. If there is no second highest salary, the query should report `null`.
+
+The query result format is in the following example.
+
+**Example 1:**
+```log
+Input:
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+Output:
++---------------------+
+| SecondHighestSalary |
++---------------------+
+| 200                 |
++---------------------+
+```
+
+**Example 2:**
+```log
+Input:
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
++----+--------+
+Output:
++---------------------+
+| SecondHighestSalary |
++---------------------+
+| null                |
++---------------------+
+```
+### Solution 1 : Using sub-query and LIMIT clause [Accepted]
+
+**Algorithm**
+
+Sort the distinct salary in descend order and then utilize the `LIMIT` clause to get the second highest salary.
+```log
+SELECT DISTINCT
+Salary AS SecondHighestSalary
+FROM
+Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1
+However, this solution will be judged as 'Wrong Answer' if there is no such second highest salary since there might be only one record in this table. To overcome this issue, we can take this as a temp table.
+```
+
+**MySQL**
+```log
+SELECT
+(SELECT DISTINCT
+Salary
+FROM
+Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1) AS SecondHighestSalary
+;
+```
+
+### Solution 2 : Using IFNULL and LIMIT clause [Accepted]
+
+Another way to solve the `NULL` problem is to use `IFNULL` function as below.
+
+**MySQL**
+```log
+SELECT
+IFNULL(
+(SELECT DISTINCT Salary
+FROM Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1),
+NULL) AS SecondHighestSalary
+```
+---
+
+## Unique Paths
+
+There is a robot on an `m x n` grid. The robot is initially located at the *top-left corner* (i.e., `grid[0][0]`). The robot tries to move to the *bottom-right corner* (i.e., `grid[m - 1][n - 1]`). The robot can only move either down or right at any point in time.
+
+Given the two integers `m` and `n`, return *the number of possible unique paths that the robot can take to reach the bottom-right corner*.
+
+The test cases are generated so that the answer will be less than or equal to `2 * 109`.
+
+**Example 1:**
+```log
+Input: m = 3, n = 7
+Output: 28
+```
+
+**Example 2:**
+```log
+Input: m = 3, n = 2
+Output: 3
+Explanation: From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+1. Right -> Down -> Down
+2. Down -> Down -> Right
+3. Down -> Right -> Down
+```
+
+**Constraints:**
+
+* `1 <= m, n <= 100`
+
+### Solution 1 : Dynamic Programming
+
+One could rewrite recursive approach into dynamic programming one.
+
+**Algorithm**
+
+* Initiate 2D array `d[m][n] = number of paths`. To start, put number of paths equal to 1 for the first row and the first column. For the simplicity, one could initiate the whole 2D array by ones.
+
+* Iterate over all "inner" cells: `d[col][row] = d[col - 1][row] + d[col][row - 1]`.
+
+* Return `d[m - 1][n - 1]`.
+
+#### Implementation
+
+```java
+class Solution {
+  public int uniquePaths(int m, int n) {
+    int[][] d = new int[m][n];
+
+    for(int[] arr : d) {
+      Arrays.fill(arr, 1);
+    }
+    for(int col = 1; col < m; ++col) {
+      for(int row = 1; row < n; ++row) {
+        d[col][row] = d[col - 1][row] + d[col][row - 1];
+      }
+    }
+    return d[m - 1][n - 1];
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(N×M).
+
+**Space complexity:** O(N×M).
+
+---
+
+## Design Linked List
+
+Design your implementation of the linked list. You can choose to use a singly or doubly linked list.
+
+A node in a singly linked list should have two attributes: `val` and `next`. `val` is the value of the current node, and `next` is a pointer/reference to the next node.
+
+If you want to use the doubly linked list, you will need one more attribute `prev` to indicate the previous node in the linked list. Assume all nodes in the linked list are **0-indexed**.
+
+Implement the MyLinkedList class:
+
+* `MyLinkedList()` Initializes the `MyLinkedList` object.
+
+* `int get(int index)` Get the value of the `indexth` node in the linked list. If the index is invalid, return `-1`.
+
+* `void addAtHead(int val)` Add a node of value `val` before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+
+* `void addAtTail(int val)` Append a node of value `val` as the last element of the linked list.
+
+* `void addAtIndex(int index, int val)` Add a node of value `val` before the `indexth` node in the linked list. If `index` equals the length of the linked list, the node will be appended to the end of the linked list. If `index` is greater than the length, the node **will not be inserted**.
+
+* `void deleteAtIndex(int index)` Delete the `indexth` node in the linked list, if the index is valid.
+
+**Example 1:**
+```log
+Input
+["MyLinkedList", "addAtHead", "addAtTail", "addAtIndex", "get", "deleteAtIndex", "get"]
+[[], [1], [3], [1, 2], [1], [1], [1]]
+Output
+[null, null, null, null, 2, null, 3]
+
+Explanation
+MyLinkedList myLinkedList = new MyLinkedList();
+myLinkedList.addAtHead(1);
+myLinkedList.addAtTail(3);
+myLinkedList.addAtIndex(1, 2);    // linked list becomes 1->2->3
+myLinkedList.get(1);              // return 2
+myLinkedList.deleteAtIndex(1);    // now the linked list is 1->3
+myLinkedList.get(1);              // return 3
+```
+
+**Constraints:**
+
+* `0 <= index, val <= 1000`
+
+* Please do not use the built-in LinkedList library.
+
+* At most `2000` calls will be made to `get`, `addAtHead`, `addAtTail`, `addAtIndex` and `deleteAtIndex`.
+
+### Solution 1 : Singly Linked List
+
+#### Implementation
+```java
+public class ListNode {
+  int val;
+  ListNode next;
+  ListNode(int x) { val = x; }
+}
+
+class MyLinkedList {
+  int size;
+  ListNode head;  // sentinel node as pseudo-head
+  public MyLinkedList() {
+    size = 0;
+    head = new ListNode(0);
+  }
+
+  /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+  public int get(int index) {
+    // if index is invalid
+    if (index < 0 || index >= size) return -1;
+
+    ListNode curr = head;
+    // index steps needed 
+    // to move from sentinel node to wanted index
+    for(int i = 0; i < index + 1; ++i) curr = curr.next;
+    return curr.val;
+  }
+
+  /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+  public void addAtHead(int val) {
+    addAtIndex(0, val);
+  }
+
+  /** Append a node of value val to the last element of the linked list. */
+  public void addAtTail(int val) {
+    addAtIndex(size, val);
+  }
+
+  /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+  public void addAtIndex(int index, int val) {
+    // If index is greater than the length, 
+    // the node will not be inserted.
+    if (index > size) return;
+
+    // [so weird] If index is negative, 
+    // the node will be inserted at the head of the list.
+    if (index < 0) index = 0;
+
+    ++size;
+    // find predecessor of the node to be added
+    ListNode pred = head;
+    for(int i = 0; i < index; ++i) pred = pred.next;
+
+    // node to be added
+    ListNode toAdd = new ListNode(val);
+    // insertion itself
+    toAdd.next = pred.next;
+    pred.next = toAdd;
+  }
+
+  /** Delete the index-th node in the linked list, if the index is valid. */
+  public void deleteAtIndex(int index) {
+    // if the index is invalid, do nothing
+    if (index < 0 || index >= size) return;
+
+    size--;
+    // find predecessor of the node to be deleted
+    ListNode pred = head;
+    for(int i = 0; i < index; ++i) pred = pred.next;
+
+    // delete pred.next 
+    pred.next = pred.next.next;
+  }
+}
+```
+#### Complexity Analysis
+
+**Time complexity:** O(1) for addAtHead. O(k) for `get`, `addAtIndex`, and `deleteAtIndex`, where k is an index of the element to get, add or delete. O(N) for `addAtTail`.
+
+**Space complexity:** O(1) for all operations.
+
+### Solution 2 : Doubly Linked List
+
+#### Implementation
+```java
+public class ListNode {
+  int val;
+  ListNode next;
+  ListNode prev;
+  ListNode(int x) { val = x; }
+}
+
+class MyLinkedList {
+  int size;
+  // sentinel nodes as pseudo-head and pseudo-tail
+  ListNode head, tail;
+  public MyLinkedList() {
+    size = 0;
+    head = new ListNode(0);
+    tail = new ListNode(0);
+    head.next = tail;
+    tail.prev = head;
+  }
+
+  /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+  public int get(int index) {
+    // if index is invalid
+    if (index < 0 || index >= size) return -1;
+
+    // choose the fastest way: to move from the head
+    // or to move from the tail
+    ListNode curr = head;
+    if (index + 1 < size - index)
+      for(int i = 0; i < index + 1; ++i) curr = curr.next;
+    else {
+      curr = tail;
+      for(int i = 0; i < size - index; ++i) curr = curr.prev;
+    }
+
+    return curr.val;
+  }
+
+  /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+  public void addAtHead(int val) {
+    ListNode pred = head, succ = head.next;
+
+    ++size;
+    ListNode toAdd = new ListNode(val);
+    toAdd.prev = pred;
+    toAdd.next = succ;
+    pred.next = toAdd;
+    succ.prev = toAdd;
+  }
+
+  /** Append a node of value val to the last element of the linked list. */
+  public void addAtTail(int val) {
+    ListNode succ = tail, pred = tail.prev;
+
+    ++size;
+    ListNode toAdd = new ListNode(val);
+    toAdd.prev = pred;
+    toAdd.next = succ;
+    pred.next = toAdd;
+    succ.prev = toAdd;
+  }
+
+  /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+  public void addAtIndex(int index, int val) {
+    // If index is greater than the length, 
+    // the node will not be inserted.
+    if (index > size) return;
+
+    // [so weird] If index is negative, 
+    // the node will be inserted at the head of the list.
+    if (index < 0) index = 0;
+
+    // find predecessor and successor of the node to be added
+    ListNode pred, succ;
+    if (index < size - index) {
+      pred = head;
+      for(int i = 0; i < index; ++i) pred = pred.next;
+      succ = pred.next;
+    }
+    else {
+      succ = tail;
+      for (int i = 0; i < size - index; ++i) succ = succ.prev;
+      pred = succ.prev;
+    }
+
+    // insertion itself
+    ++size;
+    ListNode toAdd = new ListNode(val);
+    toAdd.prev = pred;
+    toAdd.next = succ;
+    pred.next = toAdd;
+    succ.prev = toAdd;
+  }
+
+  /** Delete the index-th node in the linked list, if the index is valid. */
+  public void deleteAtIndex(int index) {
+    // if the index is invalid, do nothing
+    if (index < 0 || index >= size) return;
+
+    // find predecessor and successor of the node to be deleted
+    ListNode pred, succ;
+    if (index < size - index) {
+      pred = head;
+      for(int i = 0; i < index; ++i) pred = pred.next;
+      succ = pred.next.next;
+    }
+    else {
+      succ = tail;
+      for (int i = 0; i < size - index - 1; ++i) succ = succ.prev;
+      pred = succ.prev.prev;
+    }
+
+    // delete pred.next 
+    --size;
+    pred.next = succ;
+    succ.prev = pred;
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(1) for addAtHead and addAtTail. O(min(k,N−k)) for get, addAtIndex, and deleteAtIndex, where k is an index of the element to get, add or delete.
+
+**Space complexity:** O(1) for all operations.
+
+---
 
 
 

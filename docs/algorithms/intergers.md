@@ -25,81 +25,95 @@ categories: [Intergers]
 
 ## Palindrome Number
 
-An integer is a palindrome when it reads the same backward as forward.
+Given an integer `x`, return `true` if `x` is a palindrome and `false` otherwise.
 
-For example, 121 is a palindrome while 123 is not.
+**Example 1:**
+```log
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+```
 
-###  Problem Statement
+**Example 2:**
+```log
+Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
 
-Given an integer x, return true if x is palindrome integer.
+```
 
-1. **Example 1**
- Input: x = 121
- Output: true
+**Example 3:**
+```log
+Input: x = 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+```
 
-2. **Example 2**
- Input: x = -121
- Output: false
+**Constraints:**
 
-3. **Example 3**
- Input: x = 10
- Output: false
+* `-231 <= x <= 231 - 1`
 
-###  Solution 1
+### Solution 1 : O(1) space solution
 
-Lets understand the problem statement first. In this problem we are given an integer value as input, our task is to write an algorithm that tells us whether the given number is a palindrome or not. So, what are palindromic numbers? A number is a palindrome if it remains same when its digits are reversed. In other words a number is a palindrome if we get the same sequence of digits whether we read the number from left to right or right to left. For example 121, 99, 2332 etc. are palindromic numbers.
-
-The idea is to do the steps mentioned here to reverse the given number only up to the middle digit in x and then compare x with the reversedNum. Basically what we do here is reverse only half of the given number x and compare x with reversed number.
-
-This algorithm involves the following steps:
-
-1. Reverse half of the digits of the given number x. (Reversing is done using same steps described in solution 1).
-2. Once half of the digits in x are reversed, reversedNum will contain the reversed second half of the original input number and x (modified) will contain the first half of the original input number. For example if the given input is x = 123321, then after reversing half of the digits, reversedNum will be 123 and modified x will be 123.
-3. Now compare the modified x with the reversedNum.
-4. If both x and reversedNum are equal then return true as result, otherwise return false.
-
-
-Let take one more example to understand this. Consider x = 1221 is the given number, our algorithm reverses the last two digits in x i.e. 21 (until middle digit). So, at the end of our loop x = 12 and reversedNum = 12. Now compare (x, reversedNum) and return the result.
-
-**Note**: If x contains odd number of digits as in x = 12321, at the end of our loop reversedNum = 123 and x = 12. So we need to divide reversedNum by 10 if x contains odd number of digits before comparing x and reversedNum.
+#### Implementation
+```java
+public class Solution{
+    public boolean isPalindrome(int x) {
+        if(x<0 || (x!=0 && x%10==0))
+            return false;
+        int res = 0;
+        while(x>res){
+            res = res*10 + x%10;
+            x = x/10;
+        }
+        return (x==res || x==res/10);
+    }  
+}
+```
+### Solution 2 : Beats 99.5 java solutions, easy to understand
 
 ####  Implementation
-
 ```java
-class PalindromeSolution {
- public boolean isPalindrome(int x) {
-  // If x is a negative number it is not a palindrome
-  // If x % 10 = 0, in order for it to be a palindrome the first digit should also be 0
-  if (x < 0 || (x != 0 && x % 10 == 0))
-    return false;
-  int res = 0;
-  while (x > res) {
-     res = res * 10 + x % 10;
-    x = x / 10;
-  }
-  // If x is equal to reversed number then it is a palindrome
-  // If x has odd number of digits, dicard the middle digit before comparing with x
-  // Example, if x = 23132, at the end of for loop x = 23 and reversedNum = 231
-  // So, reversedNum/10 = 23, which is equal to x
-  return (x == res || x == res / 10);
- }
+public class Solution {
+    static int v;
+    public static boolean isPalindrome(int x) {
+        //optimizations
+        if(x<0) return false;
+        if(x<10) return true;
+        if(x%10==0) return false;
+        if(x<100&&x%11==0) return true;
+        if(x<1000&&((x/100)*10+x%10)%11==0) return true;
+
+        //actual logic
+        v=x%10;
+        x=x/10;
+        while(x-v>0)
+        {
+                v=v*10+x%10;
+                x/=10;
+        }
+        if(v>x){v/=10;}
+        return v==x?true:false;
+    }
 }
 ```
 
-####  Complexity Analysis
-
-**Time Complexity**: O(d/2)
-d here is the no. of digits in the given input number. Time complexity of this algorithm is O(d/2) because we only have to check half of the digits in the given number x (last to middle) to determine if the given number is a palindrome.
-
-**Space Complexity**: O(1)
-No extra space is used.
-
-
-###  Solution 2
+### Solution 3 : No String
 
 ####  Implementation
-
-####  Complexity Analysis
+```java
+class Solution {
+    public boolean isPalindrome(int x) {
+        int original = x;
+        int rev = 0;
+        while(x>0){
+            rev = x%10 + rev*10;
+            x= x/10;
+        }
+        return rev==original ? true : false;
+    }
+}
+```
 
 
 
@@ -2693,6 +2707,130 @@ Here N and M are the number of digits in num1 and `num2` respectively.
  The space used to store the output is not included in the space complexity. However, because strings are immutable in Python, Java, and Javascript, a temporary data structure, using O(M + N) space, is required to store the answer while it is updated.
 
 ---
+
+## Integer to Roman
+
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
+```log
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+
+```
+For example, `2` is written as `II` in Roman numeral, just two one's added together. `12` is written as `XII`, which is simply `X + II`. The number `27` is written as `XXVII`, which is `XX + V + II`.
+
+Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not `IIII`. Instead, the number four is written as `IV`. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as `IX`. There are six instances where subtraction is used:
+
+* `I` can be placed before `V` (5) and `X` (10) to make 4 and 9.
+
+* `X` can be placed before `L` (50) and `C` (100) to make 40 and 90.
+
+* `C` can be placed before `D` (500) and `M` (1000) to make 400 and 900.
+
+Given an integer, convert it to a roman numeral.
+
+**Example 1:**
+```log
+Input: num = 3
+Output: "III"
+Explanation: 3 is represented as 3 ones.
+```
+
+**Example 2:**
+```log
+Input: num = 58
+Output: "LVIII"
+Explanation: L = 50, V = 5, III = 3.
+```
+
+**Example 3:**
+```log
+Input: num = 1994
+Output: "MCMXCIV"
+Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+```
+
+**Constraints:**
+
+* `1 <= num <= 3999`
+
+### Solution 1 : Greedy
+
+#### Implementation
+```java
+class Solution {
+    private static final int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};    
+    private static final String[] symbols = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+
+    public String intToRoman(int num) {
+        StringBuilder sb = new StringBuilder();
+        // Loop through each symbol, stopping if num becomes 0.
+        for (int i = 0; i < values.length && num > 0; i++) {
+            // Repeat while the current symbol still fits into num.
+            while (values[i] <= num) {
+                num -= values[i];
+                sb.append(symbols[i]);
+            }
+        }
+        return sb.toString();
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(1).
+
+As there is a finite set of roman numerals, there is a hard upper limit on how many times the loop can iterate. This upper limit is `15` times, and it occurs for the number `3888`, which has a representation of `MMMDCCCLXXXVIII`. Therefore, we say the time complexity is constant, i.e. O(1).
+
+**Space complexity :** O(1).
+
+The amount of memory used does not change with the size of the input integer, and is therefore constant.
+
+### Solution 2 : Hardcode Digits
+
+**Algorithm**
+
+The cleanest way to go about it in code is to have 4 separate arrays; one for each place value. Then, extract the digits, look up their symbols in the relevant array, and append them all together.
+
+#### Implementation
+```java
+class Solution { 
+    private static final String[] thousands = {"", "M", "MM", "MMM"};
+    private static final String[] hundreds = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"}; 
+    private static final String[] tens = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+    private static final String[] ones = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+    
+    public String intToRoman(int num) { 
+        return thousands[num / 1000] + hundreds[num % 1000 / 100] + tens[num % 100 / 10] + ones[num % 10];
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(1).
+
+The same number of operations is done, regardless of the size of the input. Therefore, the time complexity is constant.
+
+**Space complexity :** O(1).
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

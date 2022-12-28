@@ -258,7 +258,70 @@ O(1)
    
 ```
 
+### Solution 3 :
 
+```java
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        String prefix = strs[0];
+        for(int index=1;index<strs.length;index++){
+            while(strs[index].indexOf(prefix) != 0){
+                prefix=prefix.substring(0,prefix.length()-1);
+            }
+        }
+        return prefix;
+    }
+}
+```
+
+**Working:**
+
+1)Take the first(index=0) string in the array as prefix.
+
+2)Iterate from second(index=1) string till the end.
+
+3)Use the indexOf() function to check if the prefix is there in the strs[i] or not.
+If the prefix is there the function returns 0 else -1.
+
+4)Use the substring function to chop the last letter from prefix each time the function return -1.
+
+**eg:**
+
+* strs=["flower", "flow", "flight"]
+
+* prefix=flower
+
+**index=1**
+
+* while(strs[index].indexOf(prefix) != 0) means while("flow".indexOf("flower")!=0)
+
+* Since flower as a whole is not in flow, it return -1 and  prefix=prefix.substring(0,prefix.length()-1) reduces prefix to "flowe"
+
+* Again while(strs[index].indexOf(prefix) != 0) means while("flow".indexOf("flowe")!=0)
+
+* Since flowe as a whole is not in flow, it return -1 and  prefix=prefix.substring(0,prefix.length()-1) reduces prefix to "flow"
+
+* Again while(strs[index].indexOf(prefix) != 0) means while("flow".indexOf("flow")!=0)
+
+* Since flow as a whole is in flow, it returns 0 so now prefix=flow
+
+**index=2**
+
+* while(strs[index].indexOf(prefix) != 0) means while("flight".indexOf("flow")!=0)
+
+* Since flow as a whole is not in flight, it return -1 and  prefix=prefix.substring(0,prefix.length()-1) reduces prefix to "flo"
+
+* Again while(strs[index].indexOf(prefix) != 0) means while("flight".indexOf("flo")!=0)
+
+* Since flo as a whole is not in flight, it return -1 and  prefix=prefix.substring(0,prefix.length()-1) reduces prefix to "fl"
+
+* Again while(strs[index].indexOf(prefix) != 0) means while("flight".indexOf("fl")!=0)
+
+* Since fl as a whole is in flight, it returns 0 so now prefix=fl
+
+**index=3**
+
+for loop terminates and we return prefix which is equal to fl
 
 
 ---
@@ -3411,6 +3474,973 @@ class Solution {
 **Space Complexity:** O(n). For the cpp implementation, O(1) if return string is not considered extra space.
 
 ---
+
+## Validate Binary Search Tree
+
+Given the `root` of a binary tree, determine if it is a valid binary search tree (BST).
+
+A `valid BST` is defined as follows:
+
+* The left subtree of a node contains only nodes with keys `less than` the node's key.
+
+* The right subtree of a node contains only nodes with keys `greater than` the node's key.
+
+* Both the left and right subtrees must also be binary search trees.
+
+**Example : 1**
+
+<img src="images/String/Ex1_ValidateBinarySearchTree.png" width="300" height="200" />
+
+```log
+Input: root = [2,1,3]
+Output: true
+```
+
+**Example: 2**
+
+<img src="images/String/Ex2_ValidateBinarySearchTree.png" width="300" height="200" />`
+
+```log
+Input: root = [5,1,4,null,null,3,6]
+Output: false
+Explanation: The root node's value is 5 but its right child's value is 4.
+```
+
+**Constraints:**
+
+* The number of nodes in the tree is in the range `[1, 104]`.
+
+* `-231 <= Node.val <= 231 - 1`
+
+###  Solution 1 : Recursive Traversal with Valid Range
+
+**Tree definition**
+
+First of all, here is the definition of the `TreeNode` which we would use.
+
+```java
+// Definition for a binary tree node.
+public class TreeNode {
+  int val;
+  TreeNode left;
+  TreeNode right;
+
+  TreeNode(int x) {
+    val = x;
+  }
+}
+```
+
+#### Implementation
+```java
+class Solution {
+    public boolean validate(TreeNode root, Integer low, Integer high) {
+        // Empty trees are valid BSTs.
+        if (root == null) {
+            return true;
+        }
+        // The current node's value must be between low and high.
+        if ((low != null && root.val <= low) || (high != null && root.val >= high)) {
+            return false;
+        }
+        // The left and right subtree must also be valid.
+        return validate(root.right, root.val, high) && validate(root.left, low, root.val);
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, null, null);
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(N) since we visit each node exactly once.
+
+**Space complexity :** O(N) since we keep up to the entire tree.
+
+### Solution 2 :  Iterative Traversal with Valid Range
+
+The above recursion could be converted into iteration, with the help of an explicit stack. DFS would be better than BFS since it works faster here.
+
+```java
+class Solution {
+
+    private Deque<TreeNode> stack = new LinkedList();
+    private Deque<Integer> upperLimits = new LinkedList();
+    private Deque<Integer> lowerLimits = new LinkedList();
+
+    public void update(TreeNode root, Integer low, Integer high) {
+        stack.add(root);
+        lowerLimits.add(low);
+        upperLimits.add(high);
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        Integer low = null, high = null, val;
+        update(root, low, high);
+
+        while (!stack.isEmpty()) {
+            root = stack.poll();
+            low = lowerLimits.poll();
+            high = upperLimits.poll();
+
+            if (root == null) continue;
+            val = root.val;
+            if (low != null && val <= low) {
+                return false;
+            }
+            if (high != null && val >= high) {
+                return false;
+            }
+            update(root.right, val, high);
+            update(root.left, low, val);
+        }
+        return true;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(N) since we visit each node exactly once.
+
+**Space complexity :** O(N) since we keep up to the entire tree.
+
+### Solution 3 : Recursive Inorder Traversal
+
+```java
+class Solution {
+    // We use Integer instead of int as it supports a null value.
+    private Integer prev;
+
+    public boolean isValidBST(TreeNode root) {
+        prev = null;
+        return inorder(root);
+    }
+
+    private boolean inorder(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        if (!inorder(root.left)) {
+            return false;
+        }
+        if (prev != null && root.val <= prev) {
+            return false;
+        }
+        prev = root.val;
+        return inorder(root.right);
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(N) in the worst case when the tree is a BST or the "bad" element is a rightmost leaf.
+
+**Space complexity :** O(N) for the space on the run-time stack.
+
+### Solution 4 :  Iterative Inorder Traversal
+
+Alternatively, we could implement the above algorithm iteratively.
+
+```java
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        Integer prev = null;
+
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            // If next element in inorder traversal
+            // is smaller than the previous one
+            // that's not BST.
+            if (prev != null && root.val <= prev) {
+                return false;
+            }
+            prev = root.val;
+            root = root.right;
+        }
+        return true;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(N) in the worst case when the tree is BST or the "bad" element is a rightmost leaf.
+
+**Space complexity :** O(N) to keep `stack`.
+
+---
+
+## Remove Duplicates from Sorted Array II
+
+Given an integer array `nums` sorted in *non-decreasing order*, remove some duplicates `in-place` such that each unique element appears *at most* twice. The *relative order* of the elements should be kept the *same*.
+
+Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array `nums`. More formally, if there are `k` elements after removing the duplicates, then the first `k` elements of `nums` should hold the final result. It does not matter what you leave beyond the first `k` elements.
+
+Return `k` after placing the final result in the first k slots of `nums`.
+
+Do *not* allocate extra space for another array. You must do this by *modifying the input array* `in-place` with O(1) extra memory.
+
+**Custom Judge:**
+
+The judge will test your solution with the following code:
+
+```log
+int[] nums = [...]; // Input array
+int[] expectedNums = [...]; // The expected answer with correct length
+
+int k = removeDuplicates(nums); // Calls your implementation
+
+assert k == expectedNums.length;
+for (int i = 0; i < k; i++) {
+    assert nums[i] == expectedNums[i];
+}
+```
+If all assertions pass, then your solution will be `accepted`.
+
+**Example 1:**
+
+```log
+Input: nums = [1,1,1,2,2,3]
+Output: 5, nums = [1,1,2,2,3,_]
+Explanation: Your function should return k = 5, with the first five elements of nums being 1, 1, 2, 2 and 3 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+```
+
+**Example 2:**
+
+```log
+Input: nums = [0,0,1,1,1,1,2,3,3]
+Output: 7, nums = [0,0,1,1,2,3,3,_,_]
+Explanation: Your function should return k = 7, with the first seven elements of nums being 0, 0, 1, 1, 2, 3 and 3 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+```
+
+**Constraints:**
+
+* `1 <= nums.length <= 3 * 104`
+
+* `-104 <= nums[i] <= 104`
+
+* `nums` is sorted in *non-decreasing order*.
+
+### Solution 1 : Popping Unwanted Duplicates
+
+**Intuition**
+
+The input array is already sorted and hence, all the duplicates appear next to each other. The problem statement mentions that we are not allowed to use any additional space and we have to modify the array in-place. The easiest approach for in-place modifications would be to get rid of all the unwanted duplicates. For every number in the array, if we detect > 2 duplicates, we simply remove them from the list of elements and we do this for all the elements in the array.
+
+**Algorithm**
+
+1. The implementation is slightly tricky so to say since we will be removing elements from the array and iterating over it at the same time. So, we need to keep updating the array's indexes as and when we pop an element else we'll be accessing invalid indexes.
+
+2. Say we have two variables, i which is the array pointer and count which keeps track of the count of a particular element in the array. Note that the minimum count would always be 1.
+
+
+3. We start with index 1 and process one element at a time in the array.
+
+4. If we find that the current element is the same as the previous element i.e. nums[i] == nums[i - 1], then we increment the count. If the value of count > 2, then we have encountered an unwanted duplicate element and we can remove it from the array. Since we know the index of this element, we can use the del or pop or remove operation (or whatever corresponding operation is supported in your language of choice) to delete the element at index i from the array. Since we popped an element, we decrement the index by 1 as well.
+
+
+5. If we encounter that the current element is not the same as the previous element i.e. nums[i] != nums[i - 1], then it means we have a new element at hand and so accordingly, we update count = 1.
+
+
+6. Since we are removing all the unwanted duplicates from the original array, the final array that remains after process all the elements will only contain the valid elements and hence we simply return the length of this array.
+
+#### Implementation
+```java
+class Solution {
+    
+    public int[] remElement(int[] arr, int index) {
+        
+        //
+        // Overwrite the element at the given index by 
+        // moving all the elements to the right of the
+        // index, one position to the left.
+        //
+        for (int i = index + 1; i < arr.length; i++) {
+            arr[i - 1] = arr[i];
+        }
+        
+        return arr;
+    }    
+    
+    public int removeDuplicates(int[] nums) {
+        
+        // Initialize the counter and the array index.
+        int i = 1, count = 1, length = nums.length;
+        
+        //
+        // Start from the second element of the array and process
+        // elements one by one.
+        //
+        while (i < length) {
+            
+            //
+            // If the current element is a duplicate, 
+            // increment the count.
+            //
+            if (nums[i] == nums[i - 1]) {
+                
+                count++;
+                
+                //    
+                // If the count is more than 2, this is an unwanted duplicate element
+                // and hence we remove it from the array.
+                //    
+                if (count > 2) {
+                    
+                    this.remElement(nums, i);
+                    
+                    //
+                    // Note that we have to decrement the array index value to
+                    // keep it consistent with the size of the array.
+                    //    
+                    i--;
+                    
+                    //
+                    // Since we have a fixed size array and we can't actually
+                    // remove an element, we reduce the length of the array as
+                    // well.
+                    //
+                    length--;
+                }
+            } else {
+                
+                //
+                // Reset the count since we encountered a different element
+                // than the previous one.
+                //
+                count = 1;
+            }
+                
+            // Move on to the next element in the array
+            i++;
+        }
+            
+        return length;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** Let's see what the costly operations in our array are:
+
+* We have to iterate over all the elements in the array. Suppose that the original array contains N elements, the time taken here would be O(N).
+
+* Next, for every unwanted duplicate element, we will have to perform a delete operation and deletions in arrays are also O(N).
+
+* The worst case would be when all the elements in the array are the same. In that case, we would be performing N−2 deletions thus giving us O(N^2) complexity for deletions
+
+* Overall complexity = O(N) + O(N^2) ≡ O(N^2).
+
+**Space Complexity:** O(1) since we are modifying the array in-place.
+
+### Solution 2 : Overwriting unwanted duplicates
+
+**Intuition**
+
+The second approach is really inspired by the fact that the problem statement asks us to return the new length of the array from the function. If all we had to do was remove elements, the function would not really ask us to return the updated length. However, in our scenario, this is really an indication that we don't need to actually remove elements from the array. Instead, we can do something better and simply overwrite the duplicate elements that are unwanted.
+
+       We won't be able to achieve this using a single pointer. We will be using a two-pointer approach where one pointer iterates over the original set of elements and another one that keeps track of the next "empty" location in the array or the next location that can be overwritten in the array.
+
+#### Implementation
+```java
+class Solution {
+    
+    public int removeDuplicates(int[] nums) {
+        
+        //
+        // Initialize the counter and the second pointer.
+        //
+        int j = 1, count = 1;
+        
+        //
+        // Start from the second element of the array and process
+        // elements one by one.
+        //
+        for (int i = 1; i < nums.length; i++) {
+            
+            //
+            // If the current element is a duplicate, increment the count.
+            //
+            if (nums[i] == nums[i - 1]) {
+                
+                count++;
+                
+            } else {
+                
+                //
+                // Reset the count since we encountered a different element
+                // than the previous one.
+                //
+                count = 1;
+            }
+            
+            //
+            // For a count <= 2, we copy the element over thus
+            // overwriting the element at index "j" in the array
+            //
+            if (count <= 2) {
+                nums[j++] = nums[i];
+            }
+        }
+        return j;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(N) since we process each element exactly once.
+
+**Space Complexity:** O(1).
+
+---
+
+## Backspace String Compare
+
+Given two strings `s` and `t`, return `true` if they are equal when both are typed into empty text editors. `#` means a backspace character.
+
+Note that after backspacing an empty text, the text will continue empty.
+
+**Example 1:**
+```log
+Input: s = "ab#c", t = "ad#c"
+Output: true
+Explanation: Both s and t become "ac".
+```
+
+**Example 2:**
+```log
+Input: s = "ab##", t = "c#d#"
+Output: true
+Explanation: Both s and t become "".
+```
+
+**Example 3:**
+```log
+Input: s = "a#c", t = "b"
+Output: false
+Explanation: s becomes "c" while t becomes "b".
+```
+
+**Constraints:**
+
+* `1 <= s.length, t.length <= 200`
+
+* `s` and `t` only contain lowercase letters and '#' characters.
+
+### Solution 1 : Build String [Accepted]
+
+**Intuition**
+
+Let's individually build the result of each string (`build(S)` and `build(T)`), then compare if they are equal.
+
+**Algorithm**
+
+To build the result of a string `build(S)`, we'll use a stack based approach, simulating the result of each keystroke.
+
+#### Implementation
+```java
+class Solution {
+    public boolean backspaceCompare(String S, String T) {
+        return build(S).equals(build(T));
+    }
+
+    public String build(String S) {
+        Stack<Character> ans = new Stack();
+        for (char c: S.toCharArray()) {
+            if (c != '#')
+                ans.push(c);
+            else if (!ans.empty())
+                ans.pop();
+        }
+        return String.valueOf(ans);
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(M+N), where M,N are the lengths of S and T respectively.
+
+**Space Complexity:** O(M+N).
+
+### Solution 2 : Two Pointer [Accepted]
+
+**Intuition**
+
+When writing a character, it may or may not be part of the final string depending on how many backspace keystrokes occur in the future.
+
+If instead we iterate through the string in reverse, then we will know how many backspace characters we have seen, and therefore whether the result includes our character.
+
+**Algorithm**
+
+Iterate through the string in reverse. If we see a backspace character, the next non-backspace character is skipped. If a character isn't skipped, it is part of the final answer.
+
+See the comments in the code for more details.
+
+#### Implementation
+```java
+class Solution {
+    public boolean backspaceCompare(String S, String T) {
+        int i = S.length() - 1, j = T.length() - 1;
+        int skipS = 0, skipT = 0;
+
+        while (i >= 0 || j >= 0) { // While there may be chars in build(S) or build (T)
+            while (i >= 0) { // Find position of next possible char in build(S)
+                if (S.charAt(i) == '#') {skipS++; i--;}
+                else if (skipS > 0) {skipS--; i--;}
+                else break;
+            }
+            while (j >= 0) { // Find position of next possible char in build(T)
+                if (T.charAt(j) == '#') {skipT++; j--;}
+                else if (skipT > 0) {skipT--; j--;}
+                else break;
+            }
+            // If two actual characters are different
+            if (i >= 0 && j >= 0 && S.charAt(i) != T.charAt(j))
+                return false;
+            // If expecting to compare char vs nothing
+            if ((i >= 0) != (j >= 0))
+                return false;
+            i--; j--;
+        }
+        return true;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(M+N), where M,N are the lengths of S and T respectively.
+
+**Space Complexity:** O(1).
+
+### Solution 3 : StringBuilder
+
+#### Implementation
+```java
+   public class Solution {
+  public boolean backspaceCompare(String S, String T) {
+    return sb(S).equals(sb(T));
+  }
+
+  private String sb(String str) {
+    StringBuilder sbr = new StringBuilder();
+
+    for (char c : str.toCharArray()) {
+
+      if (c != '#') {
+        sbr.append(c);
+      } else if (sbr.length() != 0) {
+        sbr.deleteCharAt(sbr.length() - 1);
+      }
+    }
+    return sbr.toString();
+  }
+}
+```
+
+### Solution 4 : Stack
+
+#### Implementation
+```java
+  public class Solution {
+  public boolean backspaceCompare(String S, String T) {
+    return stackSolution(S).equals(stackSolution(T));
+  }
+
+  private String stackSolution(String str) {
+    Stack<Character> stack = new Stack<Character>();
+
+    for (char c : str.toCharArray()) {
+
+      if (c != '#') {
+        stack.push(c);
+
+      } else if (!stack.isEmpty()) {
+        stack.pop();
+      }
+    }
+    return stack.toString();
+  }   
+}
+   
+```
+---
+
+## Palindromic Substrings
+
+Given a string `s`, return the number of **palindromic substrings in it.
+
+A string is a **palindrome** when it reads the same backward as forward.
+
+A **substring** is a contiguous sequence of characters within the string.
+
+
+**Example 1:**
+```log
+Input: s = "abc"
+Output: 3
+Explanation: Three palindromic strings: "a", "b", "c".
+```
+
+**Example 2:**
+```log
+Input: s = "aaa"
+Output: 6
+Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
+```
+
+**Constraints:**
+
+* `1 <= s.length <= 1000`
+
+* `s` consists of lowercase English letters.
+
+### Solution 1 : Check All Substrings
+
+**Intuition**
+
+Just do what the question says! We look at all substrings of the input string and check if they are palindromes.
+
+**Algorithm**
+
+Each substring is denoted by a pair of variables pointing to the start and end indices of the sub-string.
+
+     A single character substring is denoted by start and end indices being equal in value.
+
+Checking for a palindrome is simple; we check if the ends of the substring are the same character, going outside-in:
+
+* If they aren't, this substring is not a palindrome.
+
+* Else, we continue checking inwards until we get to the middle.
+
+#### Implementation
+```java
+class Solution {
+    private boolean isPalindrome(String s, int start, int end) {
+        while (start < end) {
+            if (s.charAt(start) != s.charAt(end)) 
+                return false;
+
+            ++start;
+            --end;
+        }
+
+        return true;
+    }
+
+    public int countSubstrings(String s) {
+        int ans = 0;
+
+        for (int start = 0; start < s.length(); ++start)
+            for (int end = start; end < s.length(); ++end) 
+                ans += isPalindrome(s, start, end) ? 1 : 0;
+
+        return ans;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(N^3) for input string of length N.
+
+**Space Complexity:** O(1). We don't need to allocate any extra space since we are repeatedly iterating on the input string itself.
+
+### Solution 2 : Dynamic Programming
+
+#### Implementation
+```java
+class Solution {
+    public int countSubstrings(String s) {
+        int n = s.length(), ans = 0;
+
+        if (n <= 0) 
+            return 0;
+
+        boolean[][] dp = new boolean[n][n];
+
+        // Base case: single letter substrings
+        for (int i = 0; i < n; ++i, ++ans) 
+            dp[i][i] = true;
+
+        // Base case: double letter substrings
+        for (int i = 0; i < n - 1; ++i) {
+            dp[i][i + 1] = (s.charAt(i) == s.charAt(i + 1));
+            ans += (dp[i][i + 1] ? 1 : 0);
+        }
+
+        // All other cases: substrings of length 3 to n
+        for (int len = 3; len <= n; ++len)
+            for (int i = 0, j = i + len - 1; j < n; ++i, ++j) {
+                dp[i][j] = dp[i + 1][j - 1] && (s.charAt(i) == s.charAt(j));
+                ans += (dp[i][j] ? 1 : 0);
+            }
+
+        return ans;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N^2) for input string of length N.
+
+**Space Complexity:** O(N^2)for an input string of length N.
+
+### Solution 3 : Expand Around Possible Centers
+
+#### Implementation
+```java
+class Solution {
+    public int countSubstrings(String s) {
+        int ans = 0;
+
+        for (int i = 0; i < s.length(); ++i) {
+            // odd-length palindromes, single character center
+            ans += countPalindromesAroundCenter(s, i, i);
+
+            // even-length palindromes, consecutive characters center
+            ans += countPalindromesAroundCenter(s, i, i + 1);
+        }
+
+        return ans;
+    }
+
+    private int countPalindromesAroundCenter(String ss, int lo, int hi) {
+        int ans = 0;
+
+        while (lo >= 0 && hi < ss.length()) {
+            if (ss.charAt(lo) != ss.charAt(hi))
+                break;      // the first and last characters don't match!
+
+            // expand around the center
+            lo--;
+            hi++;
+
+            ans++;
+        }
+
+        return ans;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N^2) for input string of length N.
+
+**Space Complexity:** O(1).
+
+---
+
+## Valid Palindrome II
+
+Given a string `s`, return `true` if the `s` can be palindrome after deleting at most one character from it.
+
+**Example 1:**
+```log
+Input: s = "aba"
+Output: true
+```
+
+**Example 2:**
+```log
+Input: s = "abca"
+Output: true
+Explanation: You could delete the character 'c'.
+```
+
+**Example 3:**
+```log
+Input: s = "abc"
+Output: false
+```
+
+**Constraints:**
+
+* `1 <= s.length <= 105`
+
+* `s` consists of lowercase English letters.
+
+### Solution 1 : Two Pointers
+
+#### Implementation
+```java
+class Solution {
+  private boolean checkPalindrome(String s, int i, int j) {
+    while (i < j) {
+      if (s.charAt(i) != s.charAt(j)) {
+        return false;
+      }
+
+      i++;
+      j--;
+    }
+
+    return true;
+  }
+
+  public boolean validPalindrome(String s) {
+    int i = 0;
+    int j = s.length() - 1;
+
+    while (i < j) {
+      // Found a mismatched pair - try both deletions
+      if (s.charAt(i) != s.charAt(j)) {
+        return (checkPalindrome(s, i, j - 1) || checkPalindrome(s, i + 1, j));
+      }
+
+      i++;
+      j--;
+    }
+
+    return true;
+  }
+}
+```
+#### Complexity Analysis
+
+Given N as the length of `s`,
+
+**Time complexity:** O(N).
+
+**Space complexity:** O(1).
+
+---
+
+## Reverse String
+
+Write a function that reverses a string. The input string is given as an array of characters s.
+
+You must do this by modifying the input array `in-place` with O(1) extra memory.
+
+**Example 1:**
+```log
+Input: s = ["h","e","l","l","o"]
+Output: ["o","l","l","e","h"]
+```
+
+**Example 2:**
+```log
+Input: s = ["H","a","n","n","a","h"]
+Output: ["h","a","n","n","a","H"]
+```
+
+**Constraints:**
+
+* `1 <= s.length <= 105`
+
+* `s[i]` is a **printable ascii character**.
+
+### Solution 1 : Recursion, In-Place, O(N) Space
+
+**Algorithm**
+
+Here is an example. Let's implement recursive function `helper` which receives two pointers, left and right, as arguments.
+
+Base case: if `left >= right`, do nothing.
+
+Otherwise, swap `s[left]` and `s[right]` and call `helper(left + 1, right - 1)`.
+
+To solve the problem, call helper function passing the head and tail indexes as arguments: return `helper(0, len(s) - 1)`.
+
+#### Implementation
+```java
+class Solution {
+  public void helper(char[] s, int left, int right) {
+    if (left >= right) return;
+    char tmp = s[left];
+    s[left++] = s[right];
+    s[right--] = tmp;
+    helper(s, left, right);
+  }
+
+  public void reverseString(char[] s) {
+    helper(s, 0, s.length - 1);
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(N) time to perform N/2 swaps.
+
+**Space complexity :** O(N) to keep the recursion stack.
+
+### Solution 2 :  Two Pointers, Iteration, O(1) Space
+
+#### Implementation
+```java
+class Solution {
+    public void reverseString(char[] s) {
+        int left = 0, right = s.length - 1;
+        while (left < right) {
+            char tmp = s[left];
+            s[left++] = s[right];
+            s[right--] = tmp;
+        }
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(N) to swap N/2 element.
+
+**Space complexity :** O(1), it's a constant space solution.
+
+### Solution 3 : Simple Multiple solutions w/explanations!
+
+#### Implementation 1 : 1ms
+```java
+    public void reverseString(char[] s) {
+        for(int i=0; i<s.length/2; i++){    //Do it half the number of String length
+            char tmp = s[i];
+            s[i] = s[s.length-1-i];     //Front swap with other End side 
+            s[s.length-1-i] = tmp;      //End swap with other Front side
+        }
+    }
+```
+
+#### Implementation 2 : 400ms
+```java
+    public void reverseString(char[] s) {
+        String str = "";                   //Allocate extra space
+        
+        for(int i=s.length-1; i>=0; i--)   /*Add to extra space from rear to front */
+            str += s[i];
+        
+        for(int i=0; i<s.length; i++)      /*Set reversed 'str' into char array 's' */
+            s[i] = str.charAt(i);
+    }
+```
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
