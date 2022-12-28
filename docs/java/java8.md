@@ -22,7 +22,21 @@ categories: [Java 8]
 ---
  
 
-## New features
+## Java 8 New features
+
+- Lambda expressions: These allow you to create anonymous functions, which can be passed as arguments to methods or stored in variables.
+
+- Streams: These provide a way to process data in a declarative manner, allowing you to perform operations on collections of data in a more functional style.
+
+- Functional interfaces: These are interfaces that have a single abstract method, which can be used in combination with lambda expressions to create more concise and expressive code.
+
+- Default methods: These allow interfaces to have code implemented in them, which can be inherited by classes that implement the interface.
+
+- Optional class: This is a container class that is used to represent optional values, which can help prevent NullPointerExceptions.
+
+- Date and time API (java.time): This new API replaces the java.util.Date class and provides a more comprehensive set of classes for working with dates and times.
+
+- Nashorn JavaScript engine: This is a new JavaScript engine that allows you to execute JavaScript code from within a Java application.
 
 
 - **Lambda Expressions** − a new language feature allowing treating actions as objects •Method References − enable
