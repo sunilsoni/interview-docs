@@ -20,7 +20,7 @@ categories: [Java 17]
 </details>
 
 ---
- 
+
 
 ## Java 17 New features
 

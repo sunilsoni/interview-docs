@@ -420,6 +420,26 @@ Therefore, we need to be careful about which operations can be run in parallel.
 
 ## Functional Interface
 
+functional interface is an interface that has a single abstract method. These types of interfaces are used to represent functions as objects, and they can be used with lambda expressions and method references to create concise, functional-style code.
+
+```java
+@FunctionalInterface
+public interface Converter<F, T> {
+T convert(F from);
+}
+```
+
+This interface has a single abstract method, convert, which takes an argument of type F and returns a value of type T. The @FunctionalInterface annotation is optional, but it is recommended to use it as it helps the compiler to ensure that the interface is indeed a functional interface and can be used with lambda expressions.
+
+Here is an example of how you could use this functional interface with a lambda expression:
+```java
+Converter<String, Integer> converter = (from) -> Integer.valueOf(from);
+Integer converted = converter.convert("123");
+System.out.println(converted);  // 123
+```
+
+In this example, the lambda expression (from) -> Integer.valueOf(from) implements the convert method of the Converter interface. This allows you to pass the lambda expression as an argument to a method that expects a Converter.
+
 
 - An Interface that contains exactly one abstract method is known as a functional interface.
 - It can have any number of `default`, `static` methods but can contain only one abstract method. It can also declare
