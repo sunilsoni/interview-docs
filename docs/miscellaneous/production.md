@@ -4,7 +4,7 @@ title: Production
 parent: Miscellaneous
 resource: true
 desc: "Production interview questions and answers."
-categories: [Git]
+categories: [Production]
 ---
 
 # Production
