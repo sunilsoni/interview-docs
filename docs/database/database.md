@@ -22,7 +22,112 @@ categories: [Database]
 
 ---
 
-## Increase SQL performance
+## SQL performance 
+
+
+### SQL performance in productions
+
+#### Indexing
+
+Indexing can greatly improve the performance of SQL queries by allowing the database to quickly locate and retrieve specific rows of data. For example, creating an index on a frequently searched column can improve query performance.
+
+
+```sql
+CREATE INDEX idx_name ON table_name (column_name);
+
+```
+
+#### Normalization
+
+Normalizing the database can reduce data redundancy and improve performance by reducing the amount of data that needs to be read and processed. For example, breaking a large table into smaller, more specific tables can improve performance.
+
+
+```sql
+CREATE TABLE orders (
+                      order_id INT PRIMARY KEY,
+                      customer_id INT,
+                      order_date DATE
+);
+
+CREATE TABLE order_items (
+                           order_id INT,
+                           product_id INT,
+                           quantity INT,
+                           FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+```
+
+#### Caching
+
+Caching can improve performance by storing frequently accessed data in memory, allowing for faster retrieval. For example, using a caching solution like Redis or Memcached can improve performance by reducing the number of database queries required.
+
+```sql
+
+# Example of caching a query result in Redis
+import redis
+r = redis.Redis(host='localhost', port=6379, db=0)
+r.set("query_result", query_result)
+
+
+```
+
+#### Optimizing Queries
+
+Optimizing SQL queries can improve performance by reducing the amount of data that needs to be read and processed. For example, using the EXPLAIN keyword to analyze a query and identify which indexes are being used, or rewriting a query to use JOINs instead of subqueries can improve performance.
+
+
+```sql
+EXPLAIN SELECT * FROM orders
+JOIN order_items ON orders.order_id = order_items.order_id;
+
+```
+
+#### Partitioning
+
+Partitioning a table can improve performance by distributing large amounts of data across multiple storage devices, reducing the amount of I/O required to access the data. For example, partitioning a table based on a specific column can improve performance by reducing the number of rows that need to be searched.
+
+```sql
+ALTER TABLE orders
+PARTITION BY RANGE (order_date)
+(PARTITION p_early VALUES LESS THAN ('2020-01-01'),
+  PARTITION p_late VALUES LESS THAN ('2021-01-01'));
+
+```
+
+
+#### Proper use of transactions
+
+Misuse of transactions can cause performance issues such as deadlocks, lock waits and blocking. Proper use of transactions such as using the correct isolation level, using as smaller transactions as possible and keeping transactions as short as possible can avoid these issues.
+
+
+
+```sql
+BEGIN;
+UPDATE orders SET status = 'shipped' WHERE order_id = 1;
+COMMIT;
+```
+
+
+#### Use of Stored Procedures
+
+Stored procedures are precompiled, which makes them faster than executing the same SQL statement repeatedly. Stored procedures are also more secure because they can be executed with the necessary permissions and can be invoked with parameters, which reduces the risk of SQL injection.
+
+
+```sql
+CREATE PROCEDURE update_order_status (IN order_id INT, IN new_status VARCHAR(20))
+BEGIN
+UPDATE orders SET status = new_status WHERE order_id = order_id;
+END;
+```
+
+
+#### Monitoring and Performance tuning: Regular monitoring of the database performance and identifying and fixing any bottlenecks can improve performance. Tools like SQL Profiler, Performance Monitor, and Query Store can help identify the issues and fine-tune the performance of the database.
+
+These are general suggestions and the best approach may vary depending on the specific needs of your database. It's important to test and measure the performance before and after any changes to ensure that the performance has been improved.
+
+
+### Increase SQL performance
 
 - Every index increases the time takes to perform INSERTS, UPDATES, and DELETES, so the number of indexes should not be too much. Try to use maximum 4-5 indexes on one table, not more. If you have read-only table, then the number of indexes may be increased.
 
