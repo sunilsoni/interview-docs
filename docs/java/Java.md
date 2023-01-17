@@ -84,6 +84,60 @@ If you have to run Java applets, then JRE must be installed in your system.
 
 ---
 
+
+
+## Java performance troubleshooting
+
+Java performance troubleshooting is the process of identifying and resolving performance issues in Java applications. Here are a few steps that can be taken to troubleshoot performance issues in Java:
+
+### Profiling
+
+Use a profiler to identify performance bottlenecks in the application. Profilers can provide detailed information about the performance of the application, including information about CPU usage, memory usage, and thread activity. Popular profilers for Java include VisualVM, JProfiler, and YourKit.
+
+### Logging
+
+Add logging statements to the application to track the flow of execution. This can help identify where the application is spending most of its time and can help identify the source of performance issues.
+
+### Monitoring
+
+Use monitoring tools to track the performance of the application in production. These tools can provide information about resource usage, response times, and errors. Popular monitoring tools for Java include JMX, JConsole, and JavaMelody.
+
+### Thread dump
+
+Thread dump is a snapshot of all threads that are running in a java process. Thread dump can be captured using jstack command in linux or jcmd command in windows. Thread dump analysis can help to identify the blocked threads, deadlock, resource contention and more.
+
+### Memory dump
+
+Memory dump is a snapshot of the heap memory of a java process. Memory dump can be captured using jmap command in linux or jcmd command in windows. Memory dump analysis can help to identify memory leaks, object retention, and more.
+
+### Code review
+
+Review the application's code to identify any potential performance issues. Look for common performance anti-patterns such as poor caching strategy, unnecessary object creation, and inefficient algorithms.
+
+### Testing
+
+Test the application under different load conditions to identify performance issues that may not be visible in normal usage. Use load testing tools like Apache JMeter or Gatling to simulate different levels of traffic and usage patterns. This can help identify bottlenecks and scalability issues that may not be visible during normal usage.
+
+### Configuration review
+
+Review the application's configuration to ensure that it is optimized for performance. This includes reviewing settings such as JVM heap size, GC settings, thread pool sizes, and connection pool sizes.
+
+### Data Analysis
+
+Look for patterns in your data that could be causing performance issues. Use SQL profiler to identify slow queries and indexes that could be improved. Analyze the data to identify any data issues that could be impacting performance.
+
+### Network
+
+Network issues can also cause performance problems. Check for network bottlenecks, dropped packets, and other network-related problems.
+
+It's important to note that performance troubleshooting can be a complex process, and it may be necessary to use multiple techniques to fully identify and resolve a performance issue. It's also important to have a clear understanding of the requirements of the application, as well as the expected usage patterns, to effectively troubleshoot performance issues.
+
+
+---
+
+
+
+
 ## Exceptions
 
 Exception is an error event that can happen during the execution of a program and disrupts its normal flow.
