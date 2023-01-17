@@ -37,7 +37,6 @@ Runs the project locally in development mode and starts a development server. It
 
 ```typescript
 ng serve
-
 ```
 
 ###   `ng generate [schematic] [name]`
@@ -45,9 +44,7 @@ ng serve
 Generates new files and updates existing files based on a schematic. The schematic can be a component, service, module, etc.
 
 ```typescript
-
 ng generate component my-component
-
 ```
 
 ###   `ng build`
@@ -56,8 +53,6 @@ Builds the project for production and creates a distribution version in the dist
 
 ```typescript
 ng build --prod
-
-
 ```
 
 ###    `ng test`
@@ -67,8 +62,6 @@ Runs unit tests for the project using the Karma test runner.
 
 ```typescript
 ng test
-
-
 ```
 
 ###    `ng lint`
@@ -79,8 +72,6 @@ Lints the project's code using the configured linter. It checks for code style a
 
 ```typescript
 ng lint
-
-
 ```
 
 ###    `ng e2e`
@@ -89,9 +80,7 @@ Runs end-to-end (E2E) tests for the project using the Protractor test framework.
 
 
 ```typescript
-
 ng e2e
-
 ```
 
 ###    `ng update`
@@ -101,19 +90,15 @@ Updates the project's dependencies and configuration to the latest version of An
 
 ```typescript
 ng update @angular/cli
-
-
 ```
 
-###   ` ng xi18n`
+###   `ng xi18n`
 
 Extracts i18n messages from the project's code for localization.
 
 
 ```typescript
 ng xi18n --output-path src/locale
-
-
 ```
 
 ###    `ng add [package]`
@@ -123,8 +108,6 @@ Add new capabilities to your project with additional libraries or packages.
 
 ```typescript
 ng add @ng-bootstrap/schematics
-
-
 ```
 
 ###    `ng deploy`
@@ -134,8 +117,6 @@ Deploys the application to a specified platform.
 
 ```typescript
 ng deploy --project my-project
-
-
 ```
 
 ###    `ng doc [keyword]`
@@ -144,35 +125,28 @@ Opens the official Angular documentation in the browser and searches for the spe
 
 ```typescript
 ng doc component
-
-
 ```
 ###    `ng eject`
 
 Ejects the project from the Angular CLI and gives you full control over the build and configuration.
 
 ```typescript
-
 ng eject
-
 ```
 
 ###   ` ng help`
 
 Displays a list of available commands and their descriptions.
+
 ```typescript
-
 ng help
-
 ```
 ###    `ng version`
 
 Shows the version of the installed Angular CLI and the version of the locally installed packages.
 
 ```typescript
-
 ng version
-
 ```
 
  
