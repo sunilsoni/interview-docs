@@ -122,7 +122,9 @@ END;
 ```
 
 
-#### Monitoring and Performance tuning: Regular monitoring of the database performance and identifying and fixing any bottlenecks can improve performance. Tools like SQL Profiler, Performance Monitor, and Query Store can help identify the issues and fine-tune the performance of the database.
+#### Monitoring and Performance tuning
+
+Regular monitoring of the database performance and identifying and fixing any bottlenecks can improve performance. Tools like SQL Profiler, Performance Monitor, and Query Store can help identify the issues and fine-tune the performance of the database.
 
 These are general suggestions and the best approach may vary depending on the specific needs of your database. It's important to test and measure the performance before and after any changes to ensure that the performance has been improved.
 
