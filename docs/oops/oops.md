@@ -719,6 +719,91 @@ considering this type of corner case.) In other words, the lifetime of a departm
 This is also known as a `death relationship` because if you destroy the college, all of its departments are destroyed
 automatically. Similarly, you can say the hands (or legs, etc.)of a human being cannot exist without the body.
 
+### Inheritance vs Composition
+
+**Inheritance:**
+
+- Establishes an "is-a" relationship between classes, where a subclass inherits properties and methods from its superclass.
+- Allows for code reuse by making the properties and methods of the superclass available to the subclass.
+- The subclass can override the inherited properties and methods, but cannot change the type of the superclass.
+- The subclass can only inherit from one superclass.
+- Can make the class hierarchy more rigid, as changes to the superclass can affect all the subclasses.
+
+**Composition:**
+
+- Establishes a "has-a" relationship between classes, where a class contains an instance of another class.
+- Allows for a more flexible relationship between classes, as the containing class can change the composed class at runtime.
+- The containing class can use the methods and properties of the composed class, but can also add its own methods and properties.
+- A class can have multiple composed objects, allowing for more fine-grained relationships.
+- Can make the class hierarchy more flexible, as changes to the composed class only affect the containing class.
+
+**Examples:** 
+
+Inheritance and composition are two important concepts in object-oriented programming that allow developers to create relationships between classes.
+
+Inheritance is a mechanism that allows a new class to inherit the properties and methods of an existing class. The new class is called a derived class or a subclass, and the existing class is called a base class or a superclass. The main advantage of inheritance is that it allows for code reuse.
+
+For example, consider a class called "Vehicle" that has properties such as "numWheels" and "color", and methods such as "startEngine" and "stopEngine". We can create a new class called "Car" that inherits from the "Vehicle" class. The "Car" class will have all the properties and methods of the "Vehicle" class, as well as any additional properties or methods specific to cars.
+
+```java
+class Vehicle {
+    int numWheels;
+    String color;
+
+    public void startEngine() {
+        // code to start engine
+    }
+
+    public void stopEngine() {
+        // code to stop engine
+    }
+}
+
+class Car extends Vehicle {
+    int numDoors;
+
+    public void honkHorn() {
+        // code to honk horn
+    }
+}
+
+```
+
+Composition, on the other hand, is a mechanism that allows a class to contain an instance of another class. The class that contains the instance is called the "composing" class, and the class that is contained is called the "composed" class. The main advantage of composition is that it allows for a more flexible relationship between classes, as the composing class can change the composed class at runtime.
+
+For example, consider a class called "Engine" that has properties such as "numCylinders" and "horsepower", and methods such as "start" and "stop". We can create a new class called "Car" that has an instance of the "Engine" class. The "Car" class can use the methods and properties of the "Engine" class, but can also change the engine at runtime.
+
+
+
+```java
+class Engine {
+    int numCylinders;
+    int horsepower;
+
+    public void start() {
+        // code to start engine
+    }
+
+    public void stop() {
+        // code to stop engine
+    }
+}
+
+class Car {
+    Engine engine;
+
+    public void honkHorn() {
+        // code to honk horn
+    }
+}
+
+
+```
+
+In summary, Inheritance is useful when the relationship between classes is "is-a" and when the subclasses will share the same behavior and properties. Composition is useful when the relationship between classes is "has-a" and when the composed object is optional or changeable at runtime.
+
+
+
 ---
 
 ## Aggregation vs. Composition
