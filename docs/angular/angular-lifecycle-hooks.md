@@ -25,6 +25,96 @@ categories: [Angular Lifecycle Hooks]
 
 ##  Angular Lifecycle Hooks
 
+###  Ans1
+
+Angular 12 provides a set of lifecycle hooks that allow you to tap into different phases of a component's lifecycle and perform custom logic. 
+
+The following are the lifecycle hooks available in Angular 12:
+
+- **ngOnChanges** − This hook is called when one or more of the input properties of a component change. It is used to update the component's internal state and re-render the view if necessary.
+
+```typescript
+ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+}
+
+```
+
+
+- **ngOnInit** − This hook is called after the first ngOnChanges and it is used to initialize the component's state. This is a good place to make API calls or other initialization logic.
+
+```typescript
+ngOnInit() {
+    console.log("Component initialized");
+}
+
+
+``` 
+- **ngDoCheck** − This hook is called during every change detection cycle and it is used to check for and act on changes that Angular can't detect on its own.
+ 
+```typescript
+ngDoCheck() {
+    console.log("Checking for changes");
+  }
+
+
+``` 
+
+- **ngAfterContentInit** −This hook is called after the component's content has been initialized and projected into the view. It is used to interact with the projected content.
+
+```typescript
+ngAfterContentInit() {
+    console.log("Content initialized");
+  }
+
+
+``` 
+
+- **ngAfterContentChecked**− This hook is called after every change detection cycle that affects the component's content.
+ 
+```typescript
+ngAfterContentChecked() {
+    console.log("Content checked");
+  }
+
+
+``` 
+
+- **ngAfterViewInit** − This hook is called after the component's view and child views have been initialized. It is used to interact with the initialized views.
+
+ 
+```typescript
+ngAfterViewInit() {
+    console.log("View initialized");
+  }
+
+
+``` 
+
+- **ngAfterViewChecked** −This hook is called after every change detection cycle that affects the component's view.
+
+
+```typescript
+ngAfterViewChecked() {
+    console.log("View checked");
+  }
+
+
+``` 
+
+- **ngOnDestroy** − This hook is called just before a component is destroyed. It is used to clean up any resources or subscriptions that the component has created.
+ 
+```typescript
+ngOnDestroy() {
+    console.log("Component destroyed");
+  }
+
+
+``` 
+
+
+
+###  Ans2
 Angular creates and renders components along with their children, checks when their data-bound properties change, and destroys them before removing them from the DOM.
 
 Angular offers lifecycle hooks that provide visibility into these key life moments and the ability to act when they occur.
