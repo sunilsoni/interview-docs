@@ -93,7 +93,58 @@ Some points to remember:
 - Hashmap has a default initial capacity of 16, which means it has 16 buckets or bins to store map entries, each bucket is a singly linked list. The default load factor in HashMap is 0.75
 - Load factor is that threshold value which when crossed will double the hashmap’s capacity i.e. when you add 13th element in hashmap, the capacity will increase from 16 to 32
 
-###  HashMap Internal working
+###  HashMap Internal working 1
+
+HashMap is a data structure that uses a hash function to map keys to their values. The internal working of HashMap in Java involves the following steps:
+
+####  Hashcode Calculation
+
+ When a key is added to the HashMap, its hashcode is calculated using the hashCode() method. This hashcode is then used to determine the index of the bucket where the key-value pair will be stored.
+
+####  Buckets
+
+ The HashMap is divided into an array of buckets, where each bucket is a linked list of elements. The number of buckets is determined by the initial capacity of the HashMap.
+
+####  Resizing
+
+ If the number of elements in the HashMap exceeds the capacity of the buckets, the HashMap is resized to accommodate more elements. This is done by creating a new array of buckets with a larger capacity and rehashing all the elements to their new locations.
+
+####  Collision Resolution
+
+ When two or more keys have the same hashcode, they are stored in the same bucket. This is known as a collision. HashMap uses a technique called open addressing to resolve collisions. In open addressing, if a collision occurs, the next available bucket is checked for an empty slot to store the key-value pair.
+
+####  Rehashing
+
+ When a key-value pair is added to the HashMap, the key's hashcode is used to determine the index of the bucket where it should be stored. If the bucket is already full, the HashMap checks the next available bucket, and so on, until an empty slot is found.
+
+####  Iteration
+
+ To iterate over the elements of a HashMap, the HashMap's entrySet() method is used to return a Set view of the mappings contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa.
+
+####  Load Factor
+
+ HashMap uses a load factor to determine when to resize the map. The load factor is a measure of how full the map is allowed to get before its capacity is automatically increased. The default load factor of HashMap is 0.75, meaning that the map can be filled to 75% of its capacity before it is resized.
+
+####  Concurrency
+
+ HashMap is not thread-safe and it is not intended for use in concurrent environments. If multiple threads access a HashMap concurrently and at least one of the threads modifies the map, it must be synchronized externally.
+
+####  Performance
+
+ HashMap provides constant-time performance for basic operations like get and put, assuming that the hash function distributes the keys evenly across the buckets. However, if the hash function is not good, the performance of the HashMap can degrade to linear time. Also, if the number of collisions is high, the performance of HashMap can also degrade.
+
+####  Null keys and values
+
+ HashMap allows null keys and values. However, it is important to note that only one null key is allowed in the map and if a null key is used, it will always be stored at index 0. Also, if multiple null values are added to the map, they will be stored in the same bucket.
+
+####  HashMap implementation in the JDK
+
+ HashMap is implemented in the JDK using an array of Entry objects, where each Entry object represents a key-value pair. Each Entry object also contains a reference to the next Entry object in the same bucket, in case of collisions.
+
+In summary, It uses a hash function to map keys to their values, and it uses open addressing to resolve collisions. HashMap provides constant-time performance for basic operations, but its performance can degrade if the hash function is not good or if there are a large number of collisions. It is important to understand the internal working of HashMap to effectively use it in your code and to optimize its performance.
+
+
+###  HashMap Internal working 2
 
 - HashMap works on the principal of hashing.
 - HashMap in Java uses the `hashCode()` method to calculate a hash value. Hash value is calculated using the key object. This hash value is used to find the correct bucket where Entry object will be stored.
