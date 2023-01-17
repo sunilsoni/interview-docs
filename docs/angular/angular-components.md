@@ -373,6 +373,61 @@ export class SiblingComponent implements OnInit, OnDestroy {
 
 
 ---
+## when to use angular component vs directive ?
+
+In Angular, both components and directives are used to create reusable UI elements, but they are used for different purposes.
+
+* `Components` are the building blocks of an Angular application, they allow you to create custom elements that can be used in your templates. Components have a well-defined lifecycle, and they are associated with a specific view. They are used to create reusable UI elements that can be composed to create more complex views.
+
+* `Directives`, on the other hand, are used to add behavior to existing elements. They do not have their own view and don't have a lifecycle of their own. Directives are used to manipulate the DOM, and they can be used to add functionality to existing elements, such as adding validation to form inputs or creating custom directives that can be used to create reusable UI elements.
+
+* In general, you should use a component when you need to create a reusable UI element that has its own view and lifecycle. You should use a directive when you need to add behavior to existing elements, such as adding validation to form inputs, or creating custom directives that can be used to create reusable UI elements.
+
+* It's worth noting that starting Angular 9 version, Angular introduced a new feature called `Component Directives` which allows you to define a directive with a template, this way you can create reusable components using directive with less boilerplate code.
+
+In summary, you should use a component when you need to create a reusable UI element with its own view and lifecycle, and use a directive when you need to add behavior to existing elements or create reusable UI elements that don't have their own view.
+
+### Difference between in angular component vs directive
+
+The main difference between components and directives in Angular is their purpose and how they are used.
+
+* `Components` are the building blocks of an Angular application, they allow you to create custom elements that can be used in your templates. `Components` have a well-defined lifecycle, and they are associated with a specific view. They are used to create reusable UI elements that can be composed to create more complex views. Components have a template, a class, and metadata (decorated by @Component) that defines the behavior of the component.
+
+* `Directives`, on the other hand, are used to add behavior to existing elements. They do not have their own view and don't have a lifecycle of their own. `Directives` are used to manipulate the DOM, and they can be used to add functionality to existing elements, such as adding validation to form inputs or creating custom directives that can be used to create reusable UI elements. Directives have a class and metadata (decorated by @Directive) that defines the behavior of the directive.
+
+* `Components` are used to create reusable UI elements that have a view and lifecycle, while `directives` are used to add behavior to existing elements without having a view of their own.
+
+* Another key difference is that `components` have a template and a class, while `directives` only have a class. `Components` can also have inputs and outputs, which allow them to communicate with other components, while `directives` do not have this capability.
+
+* In summary, `components` are used to create reusable UI elements with their own view and lifecycle, while `directives` are used to add behavior to existing elements without having a view of their own.
+
+* Another difference between **Angular components and directives** is how they are used in the template. Components are used as elements, with a custom tag name, for example, `<app-header>` or `<app-footer>`. Directives are used as attributes, and are applied to existing elements, for example,` <div *ngIf="showHeader"></div>` or`FAngular Http Interceptor`.
+
+* It's also worth noting that Angular provides some built-in directives like ngIf, ngFor, ngSwitch, etc.., these directives are used to add behavior to the existing element, like adding or removing an element based on some condition, displaying a list of elements, etc..
+
+* Another difference is that components can have their own styles, encapsulated to the component, while directives don't have this feature.
+
+* In short, Components are more powerful than Directives, they have more features and capabilities, like having their own views, lifecycle, inputs, outputs, styles, etc. while Directives are mainly used to add behavior to existing elements and manipulate the DOM.
+
+* It's worth mentioning that starting Angular 9 version, Angular introduced a new feature called 'Component Directives' which allows you to define a directive with a template, this way you can create reusable components using directive with less boilerplate code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ##  For more information
 

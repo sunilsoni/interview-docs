@@ -3832,6 +3832,8 @@ Output: [0]
 
 ### Solution 
 
+
+
 ---
 
 ## Top K Frequent Elements
@@ -4536,18 +4538,411 @@ public class Solution {
 
 ---
 
+## Remove Duplicates from Sorted Array
+
+Given an integer array `nums` sorted in non-decreasing order, remove the duplicates **in-place** such that each unique element appears only once. The relative order of the elements should be kept the same.
+
+Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array `nums`. More formally, if there are `k` elements after removing the duplicates, then the first `k` elements of `nums` should hold the final result. It does not matter what you leave beyond the first `k` elements.
+
+Return `k` after placing the final result in the first k slots of `nums`.
+
+Do **not** allocate extra space for another array. You must do this by **modifying the input array** `in-place` with O(1) extra memory.
+
+**Custom Judge:**
+
+The judge will test your solution with the following code:
+```log
+int[] nums = [...]; // Input array
+int[] expectedNums = [...]; // The expected answer with correct length
+
+int k = removeDuplicates(nums); // Calls your implementation
+
+assert k == expectedNums.length;
+for (int i = 0; i < k; i++) {
+assert nums[i] == expectedNums[i];
+}
+```
+
+If all assertions pass, then your solution will be accepted.
+
+**Example 1:**
+```log
+Input: nums = [1,1,2]
+Output: 2, nums = [1,2,_]
+Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+```
+**Example 2:**
+```log
+Input: nums = [0,0,1,1,1,2,2,3,3,4]
+Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+```
+
+**Constraints:**
+
+* `1 <= nums.length <= 3 * 104`
+
+* `-100 <= nums[i] <= 100`
+
+* `nums` is sorted in `non-decreasing `order.
+
+### Solution 1 : Two indexes approach
+
+#### Implementation
+
+```java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int insertIndex = 1;
+        for(int i = 1; i < nums.length; i++){
+            // We skip to next index if we see a duplicate element
+            if(nums[i - 1] != nums[i]) {
+                /* Storing the unique element at insertIndex index and incrementing
+                   the insertIndex by 1 */
+                nums[insertIndex] = nums[i];     
+                insertIndex++;
+            }
+        }
+        return insertIndex;
+    }
+}
+```
+
+#### Complexity Analysis
+
+Let N be the size of the input array.
+
+**Time Complexity:** O(N), since we only have 2 pointers, and both the pointers will traverse the array at most once.
+
+**Space Complexity:** O(1), since we are not using any extra space.
+
+---
+
+## Trapping Rain Water
+
+Given `n` non-negative integers representing an elevation map where the width of each bar is `1`, compute how much water it can trap after raining.
 
 
 
+**Example 1:**
+
+ <img src="images/array/TrappingRainWaterEx.png" width="300" height="200" />
+
+```log
+Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+Explanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.
+
+```
+
+**Example 2:**
+```log
+Input: height = [4,2,0,3,2,5]
+Output: 9
+```
+
+**Constraints:**
+
+* `n == height.length`
+
+* `1 <= n <= 2 * 104`
+
+* `0 <= height[i] <= 105`
+
+### Solution 1 : Brute force
+
+**Note:**
+
+* When `i` equals `0` and` n - 1`, the amount must be 0 since `min(leftMax, rightMax)` is `0`.
+
+* Notice that if the amount of water is negative, we just skip it. It happens when `height[i]` is greater than `min(leftMax, rightMax)`, which means no water is stored on it.
+
+#### Implementation
+```java
+public class Solution{
+    public int trap(int[] height) {
+        int n = height.length;
+        int totalWater = 0;
+        for (int k = 0; k < n; ++k) {
+            int leftMax = 0;
+            for (int i = 0; i <= k - 1; ++i) {
+                leftMax = Math.max(leftMax, height[i]);
+            }
+            int rightMax = 0;
+            for (int i = k + 1; i < n; ++i) {
+                rightMax = Math.max(rightMax, height[i]);
+            }
+            int water = Math.min(leftMax, rightMax) - height[k];
+            totalWater += (water > 0) ? water : 0;
+        }
+        return totalWater;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N^2) since computing `leftMax` and `rightMax` in each round takes O(N).
+
+**Space Complexity:** O(1).
+
+### Solution 2 : DP (pre-compute)
+
+Based on the brute-force approach, we can pre-compute all `leftMax` and `rightMax` in advance, which reduces time complexity to O(N).
+
+We denote `leftMax[i]` as the highest bar in `height[0...i]` and `rightMax[i]` as the highest bar in `height[i...n-1]`.
+
+**Note:**   
+
+Before pre-computation, `leftMax[0]` and `rightMax[n - 1]` are each initialized by `height[0]` and `height[n - 1]`. By doing this, the code in the loop is cleaner.
+
+#### Implementation
+```java
+public class Solution{
+    public int trap(int[] height) {
+        int n = height.length;
+        if (n <= 2) return 0;
+        // pre-compute
+        int[] leftMax = new int[n];
+        int[] rightMax = new int[n];
+        leftMax[0] = height[0]; // init
+        rightMax[n - 1] = height[n - 1];
+        for (int i = 1, j = n - 2; i < n; ++i, --j) {
+            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+            rightMax[j] = Math.max(rightMax[j + 1], height[j]);
+        }
+        // water
+        int totalWater = 0;
+        for (int k = 1; k < n - 1; ++k) { // do not consider the first and the last places
+            int water = Math.min(leftMax[k - 1], rightMax[k + 1]) - height[k];
+            totalWater += (water > 0) ? water : 0;
+        }
+        return totalWater;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N).
+
+**Space Complexity:** O(N).
+
+### Solution 3 : Prefix Sum approach
+
+So in this approach we were actually traversing the entire list again just to calculate the left and right maximum, doesn't it make sense to store prefix sum in an array for left and suffix sum for right values.
+
+#### Implementation
+```java
+public class Solution {
+    public int trapPrefix(int[] height) {
+        int n = height.length;
+        if(n <= 2) return 0;
+        int sum = 0;
+        // store maximum to the left
+        int[] pre = new int[n];
+        pre[0] = height[0];
+        for(int i = 1; i < n; i++) {
+            pre[i] = Math.max(pre[i-1], height[i]);
+        }
+        // store maximum to the right
+        int[] suff = new int[n];
+        suff[n-1] = height[n-1];
+        for(int i = n-2; i >= 0; i--) {
+            suff[i] = Math.max(suff[i+1], height[i]);
+        }
+        for(int i = 0; i < n; i++) {
+            sum += Math.min(pre[i], suff[i]) - height[i];
+        }
+        return sum;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(n).
+
+**Space Complexity:** O(n).
+
+### Solution 4 : Two pointer approach
+
+Now talking about the optimal solution we have two pointer approach.
+
+#### Implementation
+```java
+public class Solution{
+    public int trap(int[] height) {
+        int n = height.length;
+        if(n <= 2) return 0;
+        int sum = 0;
+
+        int l = 0, r = n - 1;
+        int leftMax = 0, rightMax = 0;
+        while(l < r) {
+            if(height[l] <= height[r]) {
+                if(height[l] >= leftMax) leftMax = height[l];
+                else {
+                    sum += leftMax - height[l];
+                }
+                l++;
+            } else {
+                if(height[r] >= rightMax) rightMax = height[r];
+                else {
+                    sum += rightMax - height[r];
+                }
+                r--;
+            }
+        }
+
+        return sum;
+    }
+}
+```
+---
+
+## Shuffle an Array
+
+Given an integer array `nums`, design an algorithm to randomly shuffle the array. All permutations of the array should be **equally likely** as a result of the shuffling.
+
+Implement the `Solution` class:
+
+1. `Solution(int[] nums) `Initializes the object with the integer array `nums`.
+
+2. `int[] reset()` Resets the array to its original configuration and returns it.
+
+3. `int[] shuffle()` Returns a random shuffling of the array.
 
 
+**Example 1:**
+```log
+Input
+["Solution", "shuffle", "reset", "shuffle"]
+[[[1, 2, 3]], [], [], []]
+Output
+[null, [3, 1, 2], [1, 2, 3], [1, 3, 2]]
+
+Explanation
+Solution solution = new Solution([1, 2, 3]);
+solution.shuffle();    // Shuffle the array [1,2,3] and return its result.
+                       // Any permutation of [1,2,3] must be equally likely to be returned.
+                       // Example: return [3, 1, 2]
+solution.reset();      // Resets the array back to its original configuration [1,2,3]. Return [1, 2, 3]
+solution.shuffle();    // Returns the random shuffling of array [1,2,3]. Example: return [1, 3, 2]
+
+```
 
 
+**Constraints:**
 
+* `1 <= nums.length <= 50`
 
+* `-106 <= nums[i] <= 106`
 
+* All the elements of `nums` are unique.
 
+* At most 104 calls in total will be made to reset and shuffle.
 
+### Solution 1 : Brute Force [Accepted]
+
+#### Implementation
+```java
+class Solution {
+    private int[] array;
+    private int[] original;
+
+    private Random rand = new Random();
+
+    private List<Integer> getArrayCopy() {
+        List<Integer> asList = new ArrayList<Integer>();
+        for (int i = 0; i < array.length; i++) {
+            asList.add(array[i]);
+        }
+        return asList;
+    }
+
+    public Solution(int[] nums) {
+        array = nums;
+        original = nums.clone();
+    }
+    
+    public int[] reset() {
+        array = original;
+        original = original.clone();
+        return array;
+    }
+    
+    public int[] shuffle() {
+        List<Integer> aux = getArrayCopy();
+
+        for (int i = 0; i < array.length; i++) {
+            int removeIdx = rand.nextInt(aux.size());
+            array[i] = aux.get(removeIdx);
+            aux.remove(removeIdx);
+        }
+
+        return array;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(n^2). The quadratic time complexity arises from the calls to `list.remove` (or `list.pop`), which run in linear time. nnn linear list removals occur, which results in a fairly easy quadratic analysis.
+
+**Space complexity :** O(n). Because the problem also asks us to implement reset, we must use linear additional space to store the original array. Otherwise, it would be lost upon the first call to `shuffle`.
+
+### Solution 2 : Fisher-Yates Algorithm [Accepted]
+
+#### Implementation
+```java
+class Solution {
+    private int[] array;
+    private int[] original;
+
+    Random rand = new Random();
+
+    private int randRange(int min, int max) {
+        return rand.nextInt(max - min) + min;
+    }
+
+    private void swapAt(int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    public Solution(int[] nums) {
+        array = nums;
+        original = nums.clone();
+    }
+    
+    public int[] reset() {
+        array = original;
+        original = original.clone();
+        return original;
+    }
+    
+    public int[] shuffle() {
+        for (int i = 0; i < array.length; i++) {
+            swapAt(i, randRange(i, array.length));
+        }
+        return array;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(n)
+
+The Fisher-Yates algorithm runs in linear time, as generating a random index and swapping two values can be done in constant time.
+
+**Space complexity :** O(n)
+
+Although we managed to avoid using linear space on the auxiliary array from the brute force approach, we still need it for reset, so we're stuck with linear space complexity.
+
+---
 
 
 

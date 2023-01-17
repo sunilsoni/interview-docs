@@ -121,45 +121,281 @@ class Solution {
 
 ## Fizz Buzz
 
-Given an integer n, return a string array answer (1-indexed) where:
+Given an integer `n`, return a string array `answer` **(1-indexed)** where:
 
-- answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
-- answer[i] == "Fizz" if i is divisible by 3.
-- answer[i] == "Buzz" if i is divisible by 5.
-- answer[i] == i (as a string) if none of the above conditions are true.
+- `answer[i] == "FizzBuzz"` if i is divisible by `3` and `5`.
+- `answer[i] == "Fizz"` if i is divisible by `3`.
+- `answer[i] == "Buzz"` if i is divisible by `5`.
+- `answer[i] == i` (as a string) if none of the above conditions are true.
 
-**Example:**
+**Example 1:**
+```log
+Input: n = 3
+Output: ["1","2","Fizz"]
+```
 
+**Example 2:**
+```log
+Input: n = 5
+Output: ["1","2","Fizz","4","Buzz"]
+```
+
+**Example 3:**
+```log
 Input: n = 15
 Output: ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"]
 
+```
 
-###  Solution 
+**Constraints:**
+
+`1 <= n <= 104`
+
+###  Solution 1 : Naive Approach
+
+**Intuition**
+
+The moment you hear of FizzBuzz you think whether the number is divisible by `3`, `5` or `both`.
+
+**Algorithm**
+
+1. Initialize an empty answer list.
+
+2. Iterate on the numbers from 1...N.
+
+3. For every number, if it is divisible by both `3` and `5`, add FizzBuzz to the answer list.
+
+4. Else, Check if the number is divisible by `3`, add Fizz.
+
+5. Else, Check if the number is divisible by `5`, add Buzz.
+
+6. Else, add the number.
 
 
 
 ###  Implementation
 ```java
-class FizzBuzzSolution {
-    public List<String> fizzBuzz(int n) {
-        List<String> ls = new ArrayList<String>();
-        for (int i = 1; i <= n; i++) {
-            if (i%3 == 0 && i%5 == 0) ls.add("FizzBuzz");
-            else if (i%3 == 0) ls.add("Fizz");
-            else if (i%5 == 0) ls.add("Buzz");
-            else ls.add(Integer.toString(i));
-        }
-        return ls;
+class Solution {
+  public List<String> fizzBuzz(int n) {
+
+    // ans list
+    List<String> ans = new ArrayList<String>();
+
+    for (int num = 1; num <= n; num++) {
+
+      boolean divisibleBy3 = (num % 3 == 0);
+      boolean divisibleBy5 = (num % 5 == 0);
+
+      if (divisibleBy3 && divisibleBy5) {
+        // Divides by both 3 and 5, add FizzBuzz
+        ans.add("FizzBuzz");
+      } else if (divisibleBy3) {
+        // Divides by 3, add Fizz
+        ans.add("Fizz");
+      } else if (divisibleBy5) {
+        // Divides by 5, add Buzz
+        ans.add("Buzz");
+      } else {
+        // Not divisible by 3 or 5, add the number
+        ans.add(Integer.toString(num));
+      }
     }
+
+    return ans;
+  }
 }
 ```
 
 ###  Complexity Analysis
 
-**Time Complexity**: O(n) 1ms time taken.
+**Time Complexity**: O(N) .
 
-**Space Complexity**: O(n)
+**Space Complexity**: O(1)
 
+### Solution 2 : String Concatenation
+
+**Algorithm**
+
+Instead of checking for every combination of these conditions, check for divisibility by given numbers i.e. 3, 5 as given in the problem. If the number is divisible, concatenate the corresponding string mapping `Fizz` or `Buzz` to the current answer string.
+
+For eg. If we are checking for the number 15, the steps would be:
+
+```log
+Condition 1: 15 % 3 == 0 , num_ans_str = "Fizz"
+Condition 2: 15 % 5 == 0 , num_ans_str += "Buzz"
+=> num_ans_str = "FizzBuzz"
+```
+
+So for `FizzBuzz` we just check for two conditions instead of three conditions as in the first approach.
+
+Similarly, for `FizzBuzzJazz` now we would just have three conditions to check for divisibility.
+
+#### Implementation
+```java
+class Solution {
+    public List<String> fizzBuzz(int n) {
+        // ans list
+        List<String> ans = new ArrayList<String>();
+
+        for (int num = 1; num <= n; num++) {
+
+            boolean divisibleBy3 = (num % 3 == 0);
+            boolean divisibleBy5 = (num % 5 == 0);
+
+            String numAnsStr = "";
+
+            if (divisibleBy3) {
+                // Divides by 3, add Fizz
+                numAnsStr += "Fizz";
+            }
+
+            if (divisibleBy5) {
+                // Divides by 5, add Buzz
+                numAnsStr += "Buzz";
+            }
+
+            if (numAnsStr.equals("")) {
+                // Not divisible by 3 or 5, add the number
+                numAnsStr += Integer.toString(num);
+            }
+
+            // Append the current answer str to the ans list
+            ans.add(numAnsStr);
+        }
+
+        return ans;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N).
+
+**Space Complexity:** O(1).
+
+### Solution 3 : Hash it!
+
+**Algorithm**
+
+* Put all the mappings in a hash table. The hash table `fizzBuzzHash` would look something like `{ 3: 'Fizz', 5: 'Buzz' }`
+
+* Iterate on the numbers from 1...N.
+
+* For every number, iterate over the `fizzBuzzHash` keys and check for divisibility.
+
+* If the number is divisible by the key, concatenate the corresponding hash value to the answer string for current number. We do this for every entry in the hash table.
+
+* Add the answer string to the answer list.
+         
+       This way you can add/delete mappings to/from to the hash table and not worry about changing the code.
+
+So, for `FizzBuzzJazz` the hash table would look something like `{ 3: 'Fizz', 5: 'Buzz', 7: 'Jazz' }`
+
+#### Implementation
+```java
+class Solution {
+    public List<String> fizzBuzz(int n) {
+
+        // ans list
+        List<String> ans = new ArrayList<String>();
+
+        // Hash map to store all fizzbuzz mappings.
+        HashMap<Integer, String> fizzBuzzDict =
+                new HashMap<Integer, String>() {
+                    {
+                        put(3, "Fizz");
+                        put(5, "Buzz");
+                    }
+                };
+            
+        // List of divisors which we will iterate over.
+        List<Integer> divisors = new ArrayList<>(Arrays.asList(3, 5));
+
+        for (int num = 1; num <= n; num++) {
+
+            String numAnsStr = "";
+
+            for (Integer key : divisors) {
+
+                // If the num is divisible by key,
+                // then add the corresponding string mapping to current numAnsStr
+                if (num % key == 0) {
+                    numAnsStr += fizzBuzzDict.get(key);
+                }
+            }
+
+            if (numAnsStr.equals("")) {
+                // Not divisible by 3 or 5, add the number
+                numAnsStr += Integer.toString(num);
+            }
+
+            // Append the current answer str to the ans list
+            ans.add(numAnsStr);
+        }
+
+        return ans;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(N).
+
+**Space Complexity:** O(1).
+
+### Solution 4 : Simple if-else:
+
+#### Implementation
+```java
+class Solution {
+    public List<String> fizzBuzz(int n) {
+        List<String> ans = new ArrayList<>();
+        
+        for (int i = 1; i <= n; i++) {
+            if (i % 15 == 0) ans.add("FizzBuzz");
+            else if (i % 3 == 0) ans.add("Fizz");
+            else if (i % 5 == 0) ans.add("Buzz");
+            else ans.add(String.valueOf(i));
+                
+        }
+                         
+        return ans;                 
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity:** O(n).
+
+**Space Complexity:** O(n).
+
+### Solution 5 : Simple Java solution, faster than 100%, less memory than 100%
+
+#### Implementation
+```java
+class Solution {
+    public List<String> fizzBuzz(int n) {
+        List<String> answer = new ArrayList<>();
+        for (int i= 1; i <= n; i++) {
+            String current = "";
+            if (i % 3 == 0) {
+                current = "Fizz";
+            }
+            if (i % 5 == 0) {
+                current += "Buzz";
+            }
+            if (current.length() == 0) {
+                current = String.valueOf(i);
+            }
+            answer.add(current);
+        }
+        return answer;
+    }
+}
+```
 
 ---
 
@@ -2819,26 +3055,283 @@ The same number of operations is done, regardless of the size of the input. Ther
 
 **Space complexity :** O(1).
 
+---
+
+## Valid Mountain Array
+
+Given an array of integers `arr`, return true if and only if it is a valid mountain array.
+
+Recall that `arr` is a mountain array if and only if:
+
+* `arr.length >= 3`
+
+* There exists some `i` with `0 < i < arr.length - 1 `such that:
+
+* `arr[0] < arr[1] < ... < arr[i - 1] < arr[i]`
+
+* `arr[i] > arr[i + 1] > ... > arr[arr.length - 1]`
+
+ <img src="images/integer/ValidMountainsEx.png" width="600" height="300" />
 
 
+**Example 1:**
+```log
+Input: arr = [2,1]
+Output: false
+```
+**Example 2:**
+```log
+Input: arr = [3,5,5]
+Output: false
+```
+**Example 3:**
+```log
+Input: arr = [0,3,2,1]
+Output: true
+```
 
+**Constraints:**
 
+* `1 <= arr.length <= 104`
 
+* `0 <= arr[i] <= 104`
 
+### Solution 1 : One Pass
 
+**Intuition**
 
+If we walk along the mountain from left to right, we have to move strictly up, then strictly down.
 
+**Algorithm**
 
+Let's walk up from left to right until we can't: that has to be the peak. We should ensure the peak is not the first or last element. Then, we walk down. If we reach the end, the array is valid, otherwise its not.
 
+#### Implementation
+```java
+class Solution {
+    public boolean validMountainArray(int[] A) {
+        int N = A.length;
+        int i = 0;
 
+        // walk up
+        while (i+1 < N && A[i] < A[i+1])
+            i++;
 
+        // peak can't be first or last
+        if (i == 0 || i == N-1)
+            return false;
 
+        // walk down
+        while (i+1 < N && A[i] > A[i+1])
+            i++;
 
+        return i == N-1;
+    }
+}
+```
 
+#### Complexity Analysis
 
+**Time Complexity:** O(N), where N is the length of A.
 
+**Space Complexity:** O(1).
 
+---
 
+## Armstrong Number
+
+Given an integer `n`, return `true` if and only if it is an **Armstrong number**.
+
+The `k`-digit number `n` is an Armstrong number if and only if the `kth` power of each digit sums to `n`.
+
+**Example 1:**
+```log
+Input: n = 153
+Output: true
+Explanation: 153 is a 3-digit number, and 153 = 13 + 53 + 33.
+```
+
+**Example 2:**
+```log
+Input: n = 123
+Output: false
+Explanation: 123 is a 3-digit number, and 123 != 13 + 23 + 33 = 36.
+```
+
+**Constraints:**
+
+`1 <= n <= 108`
+
+### Solution 1 : Calculate k by Converting to String
+
+**Intuition**
+
+Per the definition of an Armstrong number, once we have the value of `k` all we need to do is add the **k'th** power of each digit and compare the final result to the original number. A simple way to calculate the length of an integer (number of digits in `n`) is by converting the integer to a string and then getting the length of the string.
+
+**Algorithm**
+
+* Get the number of digits in `n` by converting it to a string and getting the length. Pass these values into the function created below.
+
+* Let's create a function `getSumOfKthPowerOfDigits()` that takes in the parameters `n` and `k` and returns the sum of taking the **k'th** power of each digit. The function works as explained further.
+
+* Create a variable result which will store the final result of the operations to be applied on `n`.
+
+* Get the `last_digit` of `n` by using the formula `n % 10`.
+
+* Add `last_digit` raised to the power of `k` to the result.
+
+* Remove the `last_digit` of `n` by using the formula `n /= 10`.
+
+* Repeat steps 1 - 4 until `n != 0`.
+
+* Return `true` if `result` equals the original number `n`.
+
+#### Implementation
+```java
+class Solution {
+    public int getSumOfKthPowerOfDigits(int n, int k) {
+        // `result` stores the result of sum of k'th power of each digit.
+       int result = 0;
+
+       // Run until n is not 0
+       while (n != 0) {
+           // Modulo 10 gives us the last digit
+           // Add digit ^ k to the result
+           result += Math.pow(n % 10, k);
+
+           // Remove the last digit.
+           n /= 10;
+       }
+       return result;
+    }
+    public boolean isArmstrong(int n) {
+        // Get length of the number by conveting to string.
+        int length = String.valueOf(n).length();
+
+        // Return true if Sum of k'th power of digits equals original number.
+        return getSumOfKthPowerOfDigits(n, length) == n;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(M), where M is the number of digits in integer n. Since we need to iterate through all digits in n.
+
+**Space complexity :** O(1).
+
+### Solution 2 : Calculate k by Using Log
+
+**Algorithm**
+
+* Get the number of digits in n by calculating floor (log_{10} n) + 1 and adding 1.
+
+* Call `getSumOfKthPowerOfDigits() `(as defined in Approach 1) with `n` and length as `k`.
+
+* Return `true` if `result` of this function equals the original number `n`.
+
+#### Implementation
+```java
+class Solution {
+    public int getSumOfKthPowerOfDigits(int n, int k) {
+        // `result` stores the result of sum of k'th power of each digit.
+       int result = 0;
+
+       // Run until n is not 0
+       while (n != 0) {
+           // Modulo 10 gives us the last digit
+           // Add digit ^ k to the result
+           result += Math.pow(n % 10, k);
+
+           // Remove the last digit.
+           n /= 10;
+       }
+       return result;
+    }
+    public boolean isArmstrong(int n) {
+        // Get length of the number by getting floor of log10 and adding 1.
+        int length = (int) Math.log10(n) + 1;
+
+        // Return true if Sum of k'th power of digits equals original number.
+        return getSumOfKthPowerOfDigits(n, length) == n;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(M), where M is the number of digits in integer n. Since we need to iterate through all digits in n.
+
+**Space complexity :** O(1).
+
+### Solution 3 : Calculate k Without Built-in Methods
+
+**Intuition**
+
+In the previous solutions, we used built-in methods to get the number of digits in `n`. Now let's try to get this value manually. We can use the idea from the previous solutions of dividing `n` by `10` to remove the last digit. All we need to do is keep on dividing `n` by `10` and increasing a length counter until `n` is `0`. This will give us the exact number of digits in `n`.
+
+**Algorithm**
+
+* Store `n` in a temporary variable `tempN`; we'll use this to find the length of `n`.
+
+* Initialize the `length` counter to `0`.
+
+* Remove the last digit of `tempN` by dividing tempN by `10`.
+
+* Increment the `length` counter.
+
+* Repeat steps 3 and 4 while `tempN != 0`.
+
+* `length` should now contain the number of digits in `n`.
+
+* Call `getSumOfKthPowerOfDigits()` with `n` and length as `k`.
+
+* Return `true` if the `result` of this function equals the original number `n`.
+
+#### Implementation
+```java
+class Solution {
+    public int getSumOfKthPowerOfDigits(int n, int k) {
+        // `result` stores the result of sum of k'th power of each digit.
+       int result = 0;
+
+       // Run until n is not 0
+       while(n != 0) {
+           // Modulo 10 gives us the last digit
+           // Add digit ^ k to the result
+           result += Math.pow(n % 10, k);
+
+           // Remove the last digit.
+           n /= 10;
+       }
+       return result;
+    }
+    public boolean isArmstrong(int n) {
+        // Initilize length counter to 0.
+        int length = 0;
+
+        // Get the number of digits in integer `n`.
+        int tempN = n;
+
+        // Get the length of the integer `n`
+        while (tempN != 0) {
+            length++;
+            tempN /= 10;
+        }
+
+        // Return true if Sum of k'th power of digits equals original number.
+        return getSumOfKthPowerOfDigits(n, length) == n;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(M), where M is the number of digits in integer `n`. Since we need to iterate through all digits in `n`.
+
+**Space complexity :** O(1).
+
+---
 
 
 

@@ -49,7 +49,13 @@ export class RepoService {
 
 The above service uses Http service as a dependency.
 
+### Angular Service vs Interceptor
 
+* In Angular, a **service** is a `class` that is used to **encapsulate business logic, share data, and handle cross-component communication**. `Services` are typically used to handle tasks that are not directly related to the view, such as interacting with a backend API, handling browser storage, or logging events. `Services` are typically stateless and are injected into components or other services using Angular's dependency injection system.
+
+* An **interceptor**, on the other hand, is a `class` that is used to **intercept and modify HTTP requests and responses**. `Interceptors` are typically used to add headers, handle authentication, or handle errors. An `interceptor` is typically used to modify the request before it is sent and also handle the response after it is received.
+
+* In summary, `services` are a way to encapsulate and share business logic, data and cross-component communication, whereas `interceptors` are used to intercept and modify HTTP requests and responses, and are typically used to add headers, handle authentication, or handle errors. Both `services` and `interceptors` are used in Angular to separate concerns and make the code more maintainable.
 
 
 

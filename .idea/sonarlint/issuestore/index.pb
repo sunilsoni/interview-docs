@@ -104,3 +104,13 @@ J
 docs/miscellaneous/http.md,b/f/bf9a98df73080c8a7d299bfa51af20ce953cb743
 H
 docs/algorithms/queue.md,0/8/0858fcad5aeba51c7ac2e3acdce84df6912d9c3b
+I
+docs/algorithms/string.md,a/c/ac6768fd34f9d6447e00f673b336a0c3192cd131
+V
+&docs/algorithms/dynamic-programming.md,a/2/a21391f3c3f284771010826798b24faddbaddd21
+L
+docs/algorithms/intergers.md,1/0/10eb7d7188f1cbc875263bdbb0e23d90f766d836
+Q
+!docs/algorithms/data-structure.md,1/1/11dc0031e207270142fbe0a210e7f3d9628feeeb
+N
+docs/algorithms/linked-list.md,7/0/70516a2103d45e3a7280cf61d048453c5d327688

@@ -1075,3 +1075,311 @@ export class DepartmentDetailsComponent implements OnInit {
     <figcaption>&nbsp;&nbsp;&nbsp; Image - Output - Optional Route Parameter Show Selected Department highlighted</figcaption>
   </figure>
 </p>
+
+---
+
+## Angular Router Tutorial
+
+The Angular Router is a powerful module that is used to handle navigation in an Angular application. It allows you to define different routes for different components, and display the appropriate component based on the current URL.
+
+Here is an example of how to set up routing in an Angular application:
+
+1. First, you need to import the `RouterModule` and `Routes` from the `@angular/router` package in your` app.module.ts` file:
+
+```log
+import { RouterModule, Routes } from '@angular/router';
+```
+2. Next, define an array of `Routes` that will be used to configure the router. Each route should have a `path` and a `component` property:
+
+```log
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+];
+
+```
+3. In the `@NgModule` decorator, add the `RouterModule.forRoot(routes)` method in the imports array, this will configure the router with the routes you defined:
+```log
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+ 
+```
+4. In your app's template, add a `<router-outlet>` element where the router should insert the component for the current route:
+```log
+ <router-outlet></router-outlet>
+```
+
+5. Finally, to navigate to different routes, use the `routerLink` directive on an anchor tag, you can use the `routerLink` directive to create links to different routes.
+```log
+<a routerLink="/home">Home</a>
+<a routerLink="/about">About</a>
+<a routerLink="/contact">Contact</a>
+ ```
+
+* You can also use the `router.navigate()` method in your component's code to navigate to different routes programmatically.
+
+* You can also pass parameters to the routes, like `{path: 'product/:id', component: ProductComponent}` and then use the ActivatedRoute to access those parameters.
+
+* This is just a basic example of how to set up routing in an Angular application. The Angular Router provides many more advanced features, such as child routes, guard, and resolver.
+
+### Setup of Angular Routing Tutorial
+
+**Step 1:** Install The Angular Project.
+
+Install Angular CLI globally on your system by typing the following command.
+`npm install -g @angular/cli`
+
+Now, create one project called ngRouter.
+`ng new ngRouter`
+
+**Step 2:** Make three components for the application.
+
+* Create one directory inside `src >> app` folder called components.
+
+* Next, make three components by typing the following command.
+```log
+ng g c home
+ng g c about
+ng g c dashboard
+```
+
+* It creates a separate folder inside `src >> app` directory, we need to move all these three folders inside components folder for better project structure.
+
+So, our **app.module.ts** file looks like this.
+
+```log
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+@NgModule({
+declarations: [
+AppComponent,
+HomeComponent,
+AboutComponent,
+DashboardComponent
+],
+imports: [
+BrowserModule, RouterModule
+],
+providers: [],
+bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+**Step 3:** Routing and Navigation.
+
+The **Angular Router** enables navigation from one view to the next as users perform application tasks.
+
+First, we need to import the routing modules inside our **app.module.ts** file.
+```log
+// app.module.ts
+
+import { RouterModule } from '@angular/router';
+
+imports: [
+BrowserModule, RouterModule
+],
+```
+
+**Configuration**
+
+When you have created the components, it’s by default path is different and now we have moved the components, so now its path is different. So, first, we need to change that path in **app.module.ts** file.
+
+```log
+// app.module.ts
+
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+```
+
+Okay, now we need to configure the routes. So make one file inside app directory called **routerConfig.ts** file.
+
+Write the following code in it.
+```log
+// routerConfig.ts
+
+import { Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+
+const appRoutes: Routes = [
+{ path: 'home',
+component: HomeComponent
+},
+{
+path: 'about',
+component: AboutComponent
+},
+{ path: 'dashboard',
+component: DashboardComponent
+}
+];
+export default appRoutes;
+```
+
+We have defined one array and inside that array, we have registered the different routes with their components. Finally, we have exported it.
+
+Now, import this object inside **app.module.ts** and register the module.
+```log
+// app.module.ts
+
+import appRoutes from './routerConfig';
+
+imports: [
+BrowserModule,
+RouterModule.forRoot(appRoutes)
+],
+```
+
+**Step 4:** Define the Router outlet.
+
+In the **app.component.html** file, write the following code.
+```log
+<!-- app.component.html  -->
+
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!!
+  </h1>
+  <nav>
+    <a routerLink="home" routerLinkActive="active">Home</a>
+    <a routerLink="about">About</a>
+    <a routerLink="dashboard">Dashboard</a>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
+```
+
+Now, we have already changed the title inside **app.component.ts** file.
+```log
+// app.component.ts
+
+title = 'Angular Router Tutorial';
+```
+
+Start the app by the following command.
+```log
+ng serve --open
+```
+
+After webpack compiles successfully, we can see the following page at the localhost
+
+#### Code 
+
+1. **app.module.ts**
+
+```log
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+import { AppComponent } from './app.component';
+
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+
+import { appRoutes } from './routerConfig';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    AboutComponent,
+    DashboardComponent
+  ],
+  imports: [
+    BrowserModule, RouterModule.forRoot(appRoutes)
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+2. **app.component.ts**
+```log
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Angular Router Tutorial';
+} 
+```
+
+3. **app.component.html**
+```log
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!!
+  </h1>
+  <nav>
+    <a routerLink="home" routerLinkActive="active">Home</a>
+    <a routerLink="about">About</a>
+    <a routerLink="dashboard">Dashboard</a>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
+ 
+```
+
+4. **routerConfig.ts**
+```log
+// routerConfig.ts
+
+import { Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+
+export const appRoutes: Routes = [
+  { path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
+  },
+  { path: 'dashboard',
+    component: DashboardComponent
+  }
+]; 
+```
+
+5. **about.component.html**
+```log
+<p>
+  about works!
+</p> 
+```
+
+6. **home.component.html**
+```log
+<p>
+  home works!
+</p>
+```
+
+7. **dashboard.component.html**
+```log
+<p>
+  dashboard works!
+</p>
+```

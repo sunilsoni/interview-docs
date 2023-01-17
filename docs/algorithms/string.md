@@ -339,21 +339,35 @@ Note that s may contain leading or trailing spaces or multiple spaces between tw
 
 
 **Example 1:**
+```log
+ Input: s = "the sky is blue"
+ Output: "blue is sky the"
+```
 
-- Input: s = "the sky is blue"
-- Output: "blue is sky the"
 
 **Example 2:**
-
+```log
 Input: s = "  hello world  "
 Output: "world hello"
 Explanation: Your reversed string should not contain leading or trailing spaces.
 
-**Example 3:**
+```
 
+**Example 3:**
+```log
 Input: s = "a good   example"
 Output: "example good a"
 Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+```
+
+**Constraints:**
+
+* `1 <= s.length <= 104`
+
+* `s` contains English letters (upper-case and lower-case), digits, and spaces ` `.
+
+* There is at least one word in `s`.
+
 
 ###  Solution 1
 
@@ -415,18 +429,140 @@ Two-pointers solution no trim( ), no split( ), no StringBuilder
 }
 ```
 
-####  Runtime
+### Solution 2 : Built-in Split + Reverse
 
 
-####  Memory
+####  Implementation
 
+```java
+class Solution {
+  public String reverseWords(String s) {
+    // remove leading spaces
+    s = s.trim();
+    // split by multiple spaces
+    List<String> wordList = Arrays.asList(s.split("\\s+"));
+    Collections.reverse(wordList);
+    return String.join(" ", wordList);
+  }
+}
+```
 
 ####  Complexity Analysis
 
-**Time Complexity**:
+**Time Complexity**: O(N), where N is a number of characters in the input string.
 
-**Space Complexity**:
+**Space Complexity**: O(N), to store the result of split by spaces.
 
+### Solution 3 : Reverse the Whole String and Then Reverse Each Word
+
+#### Implementation
+```java
+class Solution {
+  public StringBuilder trimSpaces(String s) {
+    int left = 0, right = s.length() - 1;
+    // remove leading spaces
+    while (left <= right && s.charAt(left) == ' ') ++left;
+
+    // remove trailing spaces
+    while (left <= right && s.charAt(right) == ' ') --right;
+
+    // reduce multiple spaces to single one
+    StringBuilder sb = new StringBuilder();
+    while (left <= right) {
+      char c = s.charAt(left);
+
+      if (c != ' ') sb.append(c);
+      else if (sb.charAt(sb.length() - 1) != ' ') sb.append(c);
+
+      ++left;
+    }
+    return sb;
+  }
+
+  public void reverse(StringBuilder sb, int left, int right) {
+    while (left < right) {
+      char tmp = sb.charAt(left);
+      sb.setCharAt(left++, sb.charAt(right));
+      sb.setCharAt(right--, tmp);
+    }
+  }
+
+  public void reverseEachWord(StringBuilder sb) {
+    int n = sb.length();
+    int start = 0, end = 0;
+
+    while (start < n) {
+      // go to the end of the word
+      while (end < n && sb.charAt(end) != ' ') ++end;
+      // reverse the word
+      reverse(sb, start, end - 1);
+      // move to the next word
+      start = end + 1;
+      ++end;
+    }
+  }
+
+  public String reverseWords(String s) {
+    // converst string to string builder 
+    // and trim spaces at the same time
+    StringBuilder sb = trimSpaces(s);
+
+    // reverse the whole string
+    reverse(sb, 0, sb.length() - 1);
+
+    // reverse each word
+    reverseEachWord(sb);
+
+    return sb.toString();
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(N).
+
+**Space complexity:** O(N).
+
+### Solution 4 : Deque of Words
+
+#### Implementation
+```java
+class Solution {
+  public String reverseWords(String s) {
+    int left = 0, right = s.length() - 1;
+    // remove leading spaces
+    while (left <= right && s.charAt(left) == ' ') ++left;
+
+    // remove trailing spaces
+    while (left <= right && s.charAt(right) == ' ') --right;
+
+    Deque<String> d = new ArrayDeque();
+    StringBuilder word = new StringBuilder();
+    // push word by word in front of deque
+    while (left <= right) {
+      char c = s.charAt(left);
+
+      if ((word.length() != 0) && (c == ' ')) {
+        d.offerFirst(word.toString());
+        word.setLength(0);
+      } else if (c != ' ') {
+        word.append(c);
+      }
+      ++left;
+    }
+    d.offerFirst(word.toString());
+
+    return String.join(" ", d);
+  }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity:** O(N).
+
+**Space complexity:** O(N).
 
 ---
 
@@ -4410,34 +4546,769 @@ class Solution {
 
 #### Implementation 2 : 400ms
 ```java
-    public void reverseString(char[] s) {
-        String str = "";                   //Allocate extra space
-        
-        for(int i=s.length-1; i>=0; i--)   /*Add to extra space from rear to front */
-            str += s[i];
-        
-        for(int i=0; i<s.length; i++)      /*Set reversed 'str' into char array 's' */
-            s[i] = str.charAt(i);
-    }
+  public class Solution {
+  public void reverseString(char[] s) {
+    String str = "";                   //Allocate extra space
+
+    for(int i=s.length-1; i>=0; i--)   /*Add to extra space from rear to front */
+      str += s[i];
+
+    for(int i=0; i<s.length; i++)      /*Set reversed 'str' into char array 's' */
+      s[i] = str.charAt(i);
+  }  
+}
+
 ```
 ---
 
+## String To Integer
+
+**Problem Statement**
+
+Implement `atoi` which converts a string to an integer.
+
+The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
+
+The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
+
+If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+
+If no valid conversion could be performed, a zero value is returned.
+
+**Note:**
+
+Only the space character `’ ’` is considered a `whitespace` character. Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: `[−231, 231 − 1]`. If the numerical value is out of the range of representable values, `INTMAX (231 − 1)` or `INTMIN (−231)` is returned.
+
+**Constraints**
+
+* `0 <= s.length <= 200`
+
+* `s` consists of English letters (lower-case and upper-case), digits, `’ ’`, `’+’`, `’-’` and `’.‘`.
 
 
+**Example 1:**
+```log
+Input: str = "42"
+Output: 42
+```
+
+**Example 2:**
+```log
+Input: str = "   -42"
+Output: -42
+Explanation: The first non-whitespace character is '-', which is the minus sign. Then take as many numerical digits as possible, which gets 42.
+```
+
+**Example 3:**
+```log
+Input: str = "4193 with words"
+Output: 4193
+Explanation: Conversion stops at digit '3' as the next character is not a numerical digit.
+```
+
+**Example 4:**
+```log
+Input: str = "words and 987"
+Output: 0
+Explanation: The first non-whitespace character is 'w', which is not a numerical digit or a +/- sign. Therefore no valid conversion could be performed.
+```
+
+**Example 5:**
+```log
+Input: str = "-91283472332"
+Output: -2147483648
+Explanation: The number "-91283472332" is out of the range of a 32-bit signed integer. Therefore INT_MIN (−2^31) is returned.
+
+```
+
+### Solution 1 :
+
+From the problem statement and examples, it is clear that we only want to convert those strings which starts either from `<whitespace>`, `-` , `+` or numbers` 0,1,2,3,4,5,6,7,8,9` and we also don’t care about the non-number characters after the number characters.
+
+#### Approach
+
+This is a very straightforward problem which can be easily solved with the following steps -
+
+* Check if the string is null or empty string. If it is, return `0`.
+
+* Remove all the leading `whitespaces` from the given string (if any).
+
+* If the string has `-` or `+` character at the start, we will keep it stored in a boolean flag.
+
+* Loop for each character in the remaining string if and only if they are from the set `[0,1,2,3,4,5,6,7,8,9]`.
+
+* Store the result after each iteration in a variable number.
+
+* Check if the resultant number is less than `-231` or more than `231 - 1` and return the result accordingly.
+
+* Else return the calculated number as result.
 
 
+#### Implementation
+```java
+public class StringToInteger {
+
+    private static int myAtoi(String str) {
+        // Base condition
+        if (str == null || str.length() < 1) {
+            return 0;
+        }
+        // MAX and MIN values for integers
+        final int INT_MAX = 2147483647;
+        final int INT_MIN = -2147483648;
+        // Trimmed string
+        str = str.replaceAll("^\\s+", "");
+        // Counter
+        int i = 0;
+        // Flag to indicate if the number is negative
+        boolean isNegative = str.startsWith("-");
+        // Flag to indicate if the number is positive
+        boolean isPositive = str.startsWith("+");
+        if (isNegative) {
+            i++;
+        } else if (isPositive) {
+            i++;
+        }
+        // This will store the converted number
+        double number = 0;
+        // Loop for each numeric character in the string iff numeric characters are leading
+        // characters in the string
+        while (i < str.length() && str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+            number = number * 10 + (str.charAt(i) - '0');
+            i++;
+        }
+        // Give back the sign to the converted number
+        number = isNegative ? -number : number;
+        if (number < INT_MIN) {
+            return INT_MIN;
+        }
+        if (number > INT_MAX) {
+            return INT_MAX;
+        }
+        return (int) number;
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time Complexity :** Since we are going through the entire number digit by digit, the time complexity should be O(log10n). The reason behind log10 is because we are dealing with integers which are base 10.
+
+**Space Complexity :**  We are not using any data structure for interim operations, therefore, the space complexity is O(1).
+
+### Solution 2 : 
+
+#### Implementation
+```java
+public class Solution {
+  public int myAtoi(String str) {
+    str = str.trim();
+    if (str.isEmpty())
+      return 0;
+    int sign = 1; int i = 0;
+    if (str.charAt(0) == '-' || str.charAt(0) == '+'){
+      sign = (str.charAt(0) == '-')? -1 : 1;
+      if (str.length() < 2 || !Character.isDigit(str.charAt(1))) {
+        return 0;
+      }
+      i++;
+    }
+    int n = 0;
+    while (i < str.length()) {
+      if (Character.isDigit(str.charAt(i))) {
+        int d = str.charAt(i) - '0';
+        if (n > (Integer.MAX_VALUE - d) / 10) { //Detect the integer overflow.
+          n = (sign == -1)? Integer.MIN_VALUE : Integer.MAX_VALUE;
+          return n;
+        }
+        n = n*10 + d;
+      } else {
+        break;
+      }
+      i++;
+    }
+    return sign * n;
+  }
+}
+```
+
+### Solution 3 : StringBuilder
+
+#### Implementation
+```java
+class Solution {
+    public int myAtoi(String str) {
+        StringBuilder s = new StringBuilder();
+        
+        for (Character c : str.toCharArray()) {
+            if (s.length() == 0 && c == ' ') { 
+                // Ignore white space before numbers or word
+                continue;
+            } else if ((c == '-' || c == '+') && s.length() == 0) { 
+                // Append only one sign
+                s.append(c);
+            } else if (c != ' ' && Character.isDigit(c)) { 
+                // Append only valid numbers
+                s.append(c);
+            } else { 
+                // If space or letter is encountered break out of loop
+                break;
+            }
+            
+        } 
+    
+        return convertString(s.toString());    
+    }
+
+    public int convertString(String s) {
+       int result = 0;
+        
+        // If string is empty or only contains a sign, skip
+       if (!s.isEmpty() && !s.equals("-") && !s.equals("+")) {
+            try {
+                // Will throw an error if string is large or smaller than possible max/min integer values
+                 result = Integer.parseInt(s);
+            }
+            catch(Exception e) {
+                if (s.charAt(0) == '-'){
+                    result = Integer.MIN_VALUE;
+                } else {
+                    result = Integer.MAX_VALUE;   
+                }
+            }
+         }
+        
+        return result;
+    }
+}
+```
+---
+
+## Remove Duplicate Letters
+
+Given a string `s`, remove duplicate letters so that every letter appears once and only once. You must make sure your result is **the smallest in lexicographical order** among all possible results.
+
+**Example 1:**
+```log
+Input: s = "bcabc"
+Output: "abc"
+```
+
+**Example 2:**
+```log
+Input: s = "cbacdcbc"
+Output: "acdb"
+```
+
+**Constraints:**
+
+* `1 <= s.length <= 104`
+
+* `s` consists of `lowercase English` letters.
 
 
+### Solution 1 : Greedy - Solving Letter by Letter
+
+**Algorithm**
+
+We use idea number one from the intuition. In each iteration, we determine leftmost letter in our solution. This will be **the smallest character such that its suffix contains at least one copy of every character in the string**. We determine the rest of our answer by recursively calling the function on the suffix we generate from the original string (leftmost letter is removed).
+
+#### Implementation
+```java
+public class Solution {
+    public String removeDuplicateLetters(String s) {
+        // find pos - the index of the leftmost letter in our solution
+        // we create a counter and end the iteration once the suffix doesn't have each unique character
+        // pos will be the index of the smallest character we encounter before the iteration ends
+        int[] cnt = new int[26];
+        int pos = 0;
+        for (int i = 0; i < s.length(); i++) cnt[s.charAt(i) - 'a']++;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) < s.charAt(pos)) pos = i;
+            if (--cnt[s.charAt(i) - 'a'] == 0) break;
+        }
+        // our answer is the leftmost letter plus the recursive call on the remainder of the string
+        // note that we have to get rid of further occurrences of s[pos] to ensure that there are no duplicates
+        return s.length() == 0 ? "" : s.charAt(pos) + removeDuplicateLetters(s.substring(pos + 1).replaceAll("" + s.charAt(pos), ""));
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(N). Each recursive call will take O(N). The number of recursive calls is bounded by a constant (26 letters in the alphabet), so we have `O(N)∗C=O(N)`.
+
+**Space complexity :** O(N). Each time we slice the string we're creating a new one (strings are immutable). The number of slices is bound by a constant, so we have `O(N)∗C=O(N)`.
+
+### Solution 2 : Greedy - Solving with Stack
+
+#### Implementation
+```java
+class Solution {
+    public String removeDuplicateLetters(String s) {
+
+        Stack<Character> stack = new Stack<>();
+
+        // this lets us keep track of what's in our solution in O(1) time
+        HashSet<Character> seen = new HashSet<>();
+
+        // this will let us know if there are any more instances of s[i] left in s
+        HashMap<Character, Integer> last_occurrence = new HashMap<>();
+        for(int i = 0; i < s.length(); i++) last_occurrence.put(s.charAt(i), i);
+
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            // we can only try to add c if it's not already in our solution
+            // this is to maintain only one of each character
+            if (!seen.contains(c)){
+                // if the last letter in our solution:
+                //     1. exists
+                //     2. is greater than c so removing it will make the string smaller
+                //     3. it's not the last occurrence
+                // we remove it from the solution to keep the solution optimal
+                while(!stack.isEmpty() && c < stack.peek() && last_occurrence.get(stack.peek()) > i){
+                    seen.remove(stack.pop());
+                }
+                seen.add(c);
+                stack.push(c);
+            }
+        }
+    StringBuilder sb = new StringBuilder(stack.size());
+    for (Character c : stack) sb.append(c.charValue());
+    return sb.toString();
+    }
+}
+```
+
+#### Complexity Analysis
+
+**Time complexity :** O(N).
+
+**Space complexity :** O(1).
+
+---
+
+## Search Suggestions System
+
+You are given an array of strings `products` and a string `searchWord`.
+
+Design a system that suggests at most three product names from `products` after each character of `searchWord` is typed. Suggested products should have common prefix with `searchWord`. If there are more than three products with a common prefix return the three lexicographically minimums products.
+
+Return a *list of lists of the suggested products after each character of searchWord is typed*.
+
+**Example 1:**
+```log
+Input: products = ["mobile","mouse","moneypot","monitor","mousepad"], searchWord = "mouse"
+Output: [["mobile","moneypot","monitor"],["mobile","moneypot","monitor"],["mouse","mousepad"],["mouse","mousepad"],["mouse","mousepad"]]
+Explanation: products sorted lexicographically = ["mobile","moneypot","monitor","mouse","mousepad"].
+After typing m and mo all products match and we show user ["mobile","moneypot","monitor"].
+After typing mou, mous and mouse the system suggests ["mouse","mousepad"].
+```
+
+**Example2:**
+```log
+Input: products = ["havana"], searchWord = "havana"
+Output: [["havana"],["havana"],["havana"],["havana"],["havana"],["havana"]]
+Explanation: The only word "havana" will be always suggested while typing the search word.
+```
+
+**Constraints:**
+
+* `1 <= products.length <= 1000`
+
+* `1 <= products[i].length <= 3000`
+
+* `1 <= sum(products[i].length) <= 2 * 104`
+
+* All the strings of `products` are unique.
+
+* `products[i]` consists of lowercase English letters.
+
+* `1 <= searchWord.length <= 1000`
+
+* `searchWord` consists of lowercase English letters.
+
+### Solution 1 : Binary Search
+
+**Intuition**
+
+Since the question asks for the result in a sorted order, let's start with sorting `products`. An advantage that comes with sorting is `Binary Search`, we can binary search for the prefix. Once we locate the first match of prefix, all we need to do is to add the next 3 words into the result (if there are any), since we sorted the words beforehand.
+
+**Algorithm**
+
+* Sort the input `products`.
+
+* Iterate each character of the `searchWord` adding it to the `prefix` to search for.
+
+* After adding the current character to the `prefix` binary search for the `prefix` in the input.
+
+* Add next 3 strings from the current binary search `start` index till the `prefix` remains same.
+
+* Another optimization that can be done is reducing the binary search space to current `start` index (This is due to the fact that adding more characters to the prefix will make the next search result's index be at least > current search's index).
+
+#### Implementation
+```java
+class Solution {
+    // Equivalent code for lower_bound in Java
+    int lower_bound(String[] products, int start, String word) {
+        int i = start, j = products.length, mid;
+        while (i < j) {
+            mid = (i + j) / 2;
+            if (products[mid].compareTo(word) >= 0)
+                j = mid;
+            else
+                i = mid + 1;
+        }
+        return i;
+    }
+public
+    List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        Arrays.sort(products);
+        List<List<String>> result = new ArrayList<>();
+        int start = 0, bsStart = 0, n = products.length;
+        String prefix = new String();
+        for (char c : searchWord.toCharArray()) {
+            prefix += c;
+
+            // Get the starting index of word starting with `prefix`.
+            start = lower_bound(products, bsStart, prefix);
+
+            // Add empty vector to result.
+            result.add(new ArrayList<>());
+
+            // Add the words with the same prefix to the result.
+            // Loop runs until `i` reaches the end of input or 3 times or till the
+            // prefix is same for `products[i]` Whichever comes first.
+            for (int i = start; i < Math.min(start + 3, n); i++) {
+                if (products[i].length() < prefix.length() || !products[i].substring(0, prefix.length()).equals(prefix))
+                    break;
+                result.get(result.size() - 1).add(products[i]);
+            }
+
+            // Reduce the size of elements to binary search on since we know
+            bsStart = Math.abs(start);
+        }
+        return result;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time complexity :** O(nlog(n))+O(mlog(n)). Where n is the length of products and m is the length of the search word. Here we treat string comparison in sorting as O(1). O(nlog(n)) comes from the sorting and O(mlog(n)) comes from running binary search on products m times.
+
+   * In Java there is an additional complexity of O(m^2) due to Strings being immutable, here m is the length of `searchWord`.
+
+**Space complexity :** Varies between O(1)`O(1)O(1)` and O(n) where n is the length of products, as it depends on the implementation used for sorting. We ignore the space required for output as it does not affect the algorithm's space complexity.
+
+### Solution 2 :   Trie + DFS
+
+**Algorithm**
+
+   * Create a Trie from the given `products` input.
+   
+   * Iterate each character of the `searchWord` adding it to the `prefix` to search for.
+   
+   * After adding the current character to the `prefix` traverse the trie pointer to the node representing `prefix`.
+   
+   * Now traverse the tree from curr pointer in a preorder fashion and record whenever we encounter a complete word.
+   
+   * Limit the result to 3 and return dfs once reached this limit.
+   
+   * Add the words to the final result.
 
 
+#### Implementation
+```java
+// Custom class Trie with function to get 3 words starting with given prefix
+class Trie {
+
+    // Node definition of a trie
+    class Node {
+        boolean isWord = false;
+        List<Node> children = Arrays.asList(new Node[26]);
+    };
+    Node Root, curr;
+    List<String> resultBuffer;
+
+    // Runs a DFS on trie starting with given prefix and adds all the words in the resultBuffer, limiting result size to 3
+    void dfsWithPrefix(Node curr, String word) {
+        if (resultBuffer.size() == 3)
+            return;
+        if (curr.isWord)
+            resultBuffer.add(word);
+
+        // Run DFS on all possible paths.
+        for (char c = 'a'; c <= 'z'; c++)
+            if (curr.children.get(c - 'a') != null)
+                dfsWithPrefix(curr.children.get(c - 'a'), word + c);
+    }
+    Trie() {
+        Root = new Node();
+    }
+
+    // Inserts the string in trie.
+    void insert(String s) {
+
+        // Points curr to the root of trie.
+        curr = Root;
+        for (char c : s.toCharArray()) {
+            if (curr.children.get(c - 'a') == null)
+                curr.children.set(c - 'a', new Node());
+            curr = curr.children.get(c - 'a');
+        }
+
+        // Mark this node as a completed word.
+        curr.isWord = true;
+    }
+    List<String> getWordsStartingWith(String prefix) {
+        curr = Root;
+        resultBuffer = new ArrayList<String>();
+        // Move curr to the end of prefix in its trie representation.
+        for (char c : prefix.toCharArray()) {
+            if (curr.children.get(c - 'a') == null)
+                return resultBuffer;
+            curr = curr.children.get(c - 'a');
+        }
+        dfsWithPrefix(curr, prefix);
+        return resultBuffer;
+    }
+};
+class Solution {
+    List<List<String>> suggestedProducts(String[] products,
+                                         String searchWord) {
+        Trie trie = new Trie();
+        List<List<String>> result = new ArrayList<>();
+        // Add all words to trie.
+        for (String w : products)
+            trie.insert(w);
+        String prefix = new String();
+        for (char c : searchWord.toCharArray()) {
+            prefix += c;
+            result.add(trie.getWordsStartingWith(prefix));
+        }
+        return result;
+    }
+};
+```
 
 
+#### Complexity Analysis
+
+**Time complexity :** O(M) to build the trie where M is total number of characters in products For each prefix we find its representative node in O(len(prefix)) and dfs to find at most 3 words which is an O(1) operation. Thus the overall complexity is dominated by the time required to build the trie.
+
+  * In Java there is an additional complexity of O(m^2) due to Strings being immutable, here m is the length of `searchWord`.
+  
+**Space complexity :** O(26n)=O. Here n is the number of nodes in the trie. 26 is the alphabet size. Space required for output is O(m) where m is the length of the search word.
+
+---
+
+## Decode Ways
+
+A message containing letters from `A-Z` can be **encoded** into numbers using the following mapping:
+
+```log
+'A' -> "1"
+'B' -> "2"
+...
+'Z' -> "26"
+```
+
+To **decode** an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, "11106" can be mapped into:
+
+* `AAJF` with the grouping `(1 1 10 6)`
+
+* `KJF` with the grouping `(11 10 6)`
+
+* Note that the grouping `(1 11 06)` is invalid because `06` cannot be mapped into 'F' since `6` is different from ``06``.
+
+Given a string `s` containing only digits, return *the number of ways to decode it*.
+
+The test cases are generated so that the answer fits in a **32-bit** integer.
+
+**Example 1:**
+```log
+Input: s = "12"
+Output: 2
+Explanation: "12" could be decoded as "AB" (1 2) or "L" (12).
+
+```
+
+**Example 2:**
+```log
+Input: s = "226"
+Output: 3
+Explanation: "226" could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
+```
+
+**Example 3:**
+```log
+Input: s = "06"
+Output: 0
+Explanation: "06" cannot be mapped to "F" because of the leading zero ("6" is different from "06").
+```
+
+**Constraints:**
+
+* `1 <= s.length <= 100`
+
+* `s` contains only digits and may contain leading zero(s).
+
+### Solution 1 : Recursive Approach with Memoization
+
+**Algorithm**
+
+* Enter recursion with the given string i.e. start with index 0.
+
+* For the terminating case of the recursion we check for the end of the string. If we have reached the end of the string we return `1`.
+
+* Every time we enter recursion it's for a substring of the original string. For any recursion if the first character is `0` then terminate that path by returning `0`. Thus this path won't contribute to the number of ways.
+
+* Memoization helps to reduce the complexity which would otherwise be exponential. We check the dictionary `memo` to see if the result for the given substring already exists.
+
+* If the result is already in `memo` we return the result. Otherwise the number of ways for the given string is determined by making a recursive call to the function with `index + 1` for next substring string and `index + 2` after checking for valid 2-digit decode. The result is also stored in `memo` with key as current index, for saving for future overlapping subproblems.
+
+#### Implementation
+```java
+class Solution {
+
+    Map<Integer, Integer> memo = new HashMap<>();
+
+    public int numDecodings(String s) {
+        return recursiveWithMemo(0, s);
+    }
+    
+    private int recursiveWithMemo(int index, String str) {
+        // Have we already seen this substring?
+        if (memo.containsKey(index)) {
+            return memo.get(index);
+        }
+        
+        // If you reach the end of the string
+        // Return 1 for success.
+        if (index == str.length()) {
+            return 1;
+        }
+
+        // If the string starts with a zero, it can't be decoded
+        if (str.charAt(index) == '0') {
+            return 0;
+        }
+
+        if (index == str.length() - 1) {
+            return 1;
+        }
 
 
+        int ans = recursiveWithMemo(index + 1, str);
+        if (Integer.parseInt(str.substring(index, index + 2)) <= 26) {
+             ans += recursiveWithMemo(index + 2, str);
+         }
 
+        // Save for memoization
+        memo.put(index, ans);
 
+        return ans;
+    }
+}
+```
 
+#### Complexity Analysis
 
+**Time Complexity:** O(N), where N is length of the string. Memoization helps in pruning the recursion tree and hence decoding for an index only once. Thus this solution is linear time complexity.
+
+**Space Complexity:** O(N). The dictionary used for memoization would take the space equal to the length of the string. There would be an entry for each index value. The recursion stack would also be equal to the length of the string.
+
+### Solution 2 : Iterative Approach
+
+**Algorithm**
+
+* If the string s is empty or null we return the result as `0`.
+
+* Initialize dp array. `dp[0] = 1` to provide the baton to be passed.
+
+* If the first character of the string is zero then no decode is possible hence initialize `dp[1]` to `0`, otherwise the first character is valid to pass on the baton, `dp[1] = 1`.
+
+* Iterate the dp array starting at index 2. The index i of dp is the i-th character of the string s, that is character at index `i-1` of `s`.
+
+* We check if valid single digit decode is possible. This just means the character at index `s[i-1]` is non-zero. Since we do not have a decoding for zero. If the valid single digit decoding is possible then we add dp[i-1] to dp[i]. Since all the ways up to (i-1)-th character now lead up to i-th character too.
+
+* We check if valid two digit decode is possible. This means the substring `s[i-2]s[i-1]` is between `10` to `26`. If the valid two digit decoding is possible then we add `dp[i-2]` to `dp[i]`.
+
+* Once we reach the end of the `dp` array we would have the number of ways of decoding string `s`.
+
+#### Implementation
+```java
+class Solution {
+
+    public int numDecodings(String s) {
+        // DP array to store the subproblem results
+        int[] dp = new int[s.length() + 1];
+        dp[0] = 1;
+        
+        // Ways to decode a string of size 1 is 1. Unless the string is '0'.
+        // '0' doesn't have a single digit decode.
+        dp[1] = s.charAt(0) == '0' ? 0 : 1;
+
+        for(int i = 2; i < dp.length; i++) {
+            // Check if successful single digit decode is possible.
+            if (s.charAt(i - 1) != '0') {
+               dp[i] = dp[i - 1];  
+            }
+            
+            // Check if successful two digit decode is possible.
+            int twoDigit = Integer.valueOf(s.substring(i - 2, i));
+            if (twoDigit >= 10 && twoDigit <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        
+        return dp[s.length()];
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(N), where N is length of the string. We iterate the length of dp array which is` N+1`.
+
+**Space Complexity:** O(N). The length of the DP array.
+
+### Solution 3 : Iterative, Constant Space
+
+#### Implementation
+```java
+class Solution {
+    public int numDecodings(String s) {  
+        if (s.charAt(0) == '0') {
+            return 0;
+        }
+
+        int n = s.length();
+        int twoBack = 1;
+        int oneBack = 1;
+        for (int i = 1; i < n; i++) {
+            int current = 0;
+            if (s.charAt(i) != '0') {
+                current = oneBack;
+            }
+            int twoDigit = Integer.parseInt(s.substring(i - 1, i + 1));
+            if (twoDigit >= 10 && twoDigit <= 26) {
+                current += twoBack;
+            }
+           
+            twoBack = oneBack;
+            oneBack = current;
+        }
+        return oneBack;
+    }
+}
+```
+#### Complexity Analysis
+
+**Time Complexity:** O(N), where N is length of the string. We're essentially doing the same work as what we were in Solution 2, except this time we're throwing away calculation results when we no longer need them.
+
+**Space Complexity:** O(1). Instead of a dp array, we're simply using two variables.
+
+---
 
 
 
