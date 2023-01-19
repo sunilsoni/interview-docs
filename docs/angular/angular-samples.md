@@ -4,7 +4,7 @@ title: Code Samples
 parent: Angular
 resource: true
 desc: "Angular Code interview questions and answers."
-categories: [Code]
+categories: [Code Samples]
 ---
 
 # Code Samples
