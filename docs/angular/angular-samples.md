@@ -7,7 +7,7 @@ desc: "Angular Code interview questions and answers."
 categories: [Code]
 ---
 
-# Angular Code Samples
+# Code Samples
 {: .no_toc }
 
 <details open markdown="block">
