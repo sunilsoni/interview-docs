@@ -75,5 +75,127 @@ In addition to these components, Spring Batch also provides a JobRepository, whi
 Spring Batch also provides a number of built-in components, such as readers, processors, and writers for handling common data formats and tasks, as well as an extensible API for building custom components.
 
 
+###  Example of how to use Spring Batch
+
+Here's an example of how to use Spring Batch with Spring Boot to read data from a CSV file, process it, and then write it to a database:
+
+1.  First, create a Spring Boot application with the Spring Batch and Spring Data dependencies.
+
+2. Create a batch configuration class that sets up the batch job and the necessary steps.  
+
+
+
+```java
+@Configuration
+public class BatchConfig {
+    @Autowired
+    private JobBuilderFactory jobBuilderFactory;
+
+    @Autowired
+    private StepBuilderFactory stepBuilderFactory;
+
+    @Bean
+    public Job readCSVFileJob() {
+        return jobBuilderFactory
+                .get("readCSVFileJob")
+                .start(step1())
+                .build();
+    }
+
+    @Bean
+    public Step step1() {
+        return stepBuilderFactory
+                .get("step1")
+                .<Person, Person>chunk(5)
+                .reader(reader())
+                .processor(processor())
+                .writer(writer())
+                .build();
+    }
+
+    @Bean
+    public FlatFileItemReader<Person> reader() {
+        FlatFileItemReader<Person> reader = new FlatFileItemReader<>();
+        reader.setResource(new ClassPathResource("people.csv"));
+        reader.setLineMapper(new DefaultLineMapper<Person>() {{
+            setLineTokenizer(new DelimitedLineTokenizer() {{
+                setNames(new String[] { "firstName", "lastName" });
+            }});
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
+                setTargetType(Person.class);
+            }});
+        }});
+        return reader;
+    }
+
+    @Bean
+    public PersonItemProcessor processor() {
+        return new PersonItemProcessor();
+    }
+
+    @Bean
+    public JdbcBatchItemWriter<Person> writer() {
+        JdbcBatchItemWriter<Person> writer = new JdbcBatchItemWriter<>();
+        writer.setDataSource(dataSource);
+        writer.setSql("INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)");
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
+        return writer;
+    }
+}
+
+
+```
+
+3. Create a class that represents the data you're reading from the CSV file and a class that handles the processing of the data.
+
+```java
+public class Person {
+    private String firstName;
+    private String lastName;
+    // getters and setters
+}
+
+public class PersonItemProcessor implements ItemProcessor<Person, Person> {
+    @Override
+    public Person process(final Person person) throws Exception {
+        final String firstName = person.getFirstName().toUpperCase();
+        final String lastName = person.getLastName().toUpperCase();
+ 
+        final Person transformedPerson = new Person(firstName, lastName);
+        return transformedPerson;
+    }
+}
+
+
+```
+
+4. Finally, run the job by creating a `CommandLineRunner` that calls the `jobLauncher.run()` method and passing in the job name as a parameter.
+
+
+```java
+
+@SpringBootApplication
+public class Application implements CommandLineRunner {
+    @Autowired
+    JobLauncher jobLauncher;
+    @Autowired
+    Job job;
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+    @Override
+    public void run(String... args) throws Exception {
+        JobExecution execution = jobLauncher.run(job, new JobParameters());
+        System.out.println("Job Exit Status : "+ execution.getStatus());
+    }
+}
+
+
+```
+
+This is a basic example of how Spring Batch and Spring Boot can be used to perform batch processing. I
+
+
+
 
 

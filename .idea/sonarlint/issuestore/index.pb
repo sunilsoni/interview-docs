@@ -77,8 +77,6 @@ $docs/miscellaneous/good-practices.md,c/6/c6da723436b1829ce20b45982c978bbe0f7f6
 K
 docs/miscellaneous/owasp.md,9/8/987469032e7cd4aeaa999de41e93e35b07501f1e
 K
-docs/spring/spring-batch.md,5/5/55f5949ab4a96fea13b92a4a836fd2eb9ce34aa0
-K
 docs/spring/swagger-docs.md,d/6/d64399927feabbd851eed1ebf5e86fc1214ec665
 E
 docs/devops/docker.md,3/5/35e217f1df9e019f153f02996d68ce9b9079c46e
