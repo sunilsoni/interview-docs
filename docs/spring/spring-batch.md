@@ -131,7 +131,7 @@ public class BatchConfig {
         JdbcBatchItemWriter<Person> writer = new JdbcBatchItemWriter<>();
         writer.setDataSource(dataSource);
         writer.setSql("INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)");
-        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider());
         return writer;
     }
 
