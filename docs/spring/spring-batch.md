@@ -112,7 +112,7 @@ public class BatchConfig {
     public Step step1() {
         return stepBuilderFactory
                 .get("step1")
-                .<Person, Person>chunk(5)
+                //.<Person, Person>chunk(5)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
