@@ -136,21 +136,7 @@ public class BatchConfig {
     }
 
 
-    @Bean
-    public FlatFileItemReader<Person> reader() {
-        FlatFileItemReader<Person> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource("people.csv"));
-        reader.setLineMapper(new DefaultLineMapper<Person>() {{
-            .setLineTokenizer(new DelimitedLineTokenizer() {{
-                setNames(new String[] { 'firstName', 'lastName' });
-            }});
-            .setFieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
-                setTargetType(Person.class);
-            }});
-        }});
-        
-        return reader;
-    }
+
 }   
 ```
 
