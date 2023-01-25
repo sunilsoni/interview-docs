@@ -26,7 +26,7 @@ categories: [Samples]
 
 Angular 12 that makes a GET request to a Spring Boot RESTful API endpoint:
 
-### Creates a new Angular project with the given name.
+### Creates a new Angular project to call the backed API
 
 ```typescript
 import { Injectable } from '@angular/core';
