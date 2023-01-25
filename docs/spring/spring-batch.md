@@ -131,7 +131,7 @@ public class BatchConfig {
         JdbcBatchItemWriter<Person> writer = new JdbcBatchItemWriter<>();
         writer.setDataSource(dataSource);
         writer.setSql("INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)");
-        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider());
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
         return writer;
     }
 
@@ -141,12 +141,12 @@ public class BatchConfig {
         FlatFileItemReader<Person> reader = new FlatFileItemReader<>();
         reader.setResource(new ClassPathResource("people.csv"));
         reader.setLineMapper(new DefaultLineMapper<Person>() {{
-           /* setLineTokenizer(new DelimitedLineTokenizer() {{
-                setNames(new String[] { "firstName", "lastName" });
+            setLineTokenizer(new DelimitedLineTokenizer() {{
+                setNames(new String[] { 'firstName', 'lastName' });
             }});
             setFieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
                 setTargetType(Person.class);
-            }});*/
+            }});
         }});
         
         return reader;
