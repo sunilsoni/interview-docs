@@ -73,3 +73,7 @@ The architecture of Spring Batch consists of three main components:
 In addition to these components, Spring Batch also provides a JobRepository, which is responsible for maintaining the state of the job and its execution status, and a JobLauncher, which is responsible for starting and stopping the job.
 
 Spring Batch also provides a number of built-in components, such as readers, processors, and writers for handling common data formats and tasks, as well as an extensible API for building custom components.
+
+
+
+
