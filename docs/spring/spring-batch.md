@@ -112,27 +112,14 @@ public class BatchConfig {
     public Step step1() {
         return stepBuilderFactory
                 .get("step1")
-                //.<Person, Person>chunk(5)
+                .<Person, Person>chunk(5)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
                 .build();
     }
 
-    @Bean
-    public FlatFileItemReader<Person> reader() {
-        FlatFileItemReader<Person> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource("people.csv"));
-        reader.setLineMapper(new DefaultLineMapper<Person>() {{
-            setLineTokenizer(new DelimitedLineTokenizer() {{
-                setNames(new String[] { "firstName", "lastName" });
-            }});
-            setFieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
-                setTargetType(Person.class);
-            }});
-        }});
-        return reader;
-    }
+
 
     @Bean
     public PersonItemProcessor processor() {
@@ -147,8 +134,24 @@ public class BatchConfig {
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
         return writer;
     }
-}
 
+
+    @Bean
+    public FlatFileItemReader<Person> reader() {
+        FlatFileItemReader<Person> reader = new FlatFileItemReader<>();
+        reader.setResource(new ClassPathResource("people.csv"));
+        reader.setLineMapper(new DefaultLineMapper<Person>() {{
+           /* setLineTokenizer(new DelimitedLineTokenizer() {{
+                setNames(new String[] { "firstName", "lastName" });
+            }});
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
+                setTargetType(Person.class);
+            }});*/
+        }});
+        
+        return reader;
+    }
+}   
 ```
 
 3. Create a class that represents the data you're reading from the CSV file and a class that handles the processing of the data.
