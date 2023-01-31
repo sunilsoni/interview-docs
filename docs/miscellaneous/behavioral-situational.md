@@ -37,5 +37,18 @@ categories: [Behavioral & Situational]
 13. Tell me about a situation where you had to solve a difficult problem.
 
 
+###  what are you looking for in your next software development job ? 
+
+In my next software development job, I am looking for opportunities to work on challenging and innovative projects, 
+use the latest technologies, 
+collaborate with a talented and diverse team, 
+continuously learn and grow my skills, and 
+make a positive impact in the organization and the world.
+
+
+
+
+
+
 ## For more information
 [200+ Job Interview Questions List](https://theinterviewguys.com/job-interview-questions/)
