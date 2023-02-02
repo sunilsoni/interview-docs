@@ -112,6 +112,15 @@ ngOnDestroy() {
 
 ``` 
 
+This hook is called just before Angular destroys the component. You can use it to perform any necessary cleanup operations.
+
+```typescript
+ngOnDestroy() {
+    this.subscription.unsubscribe();
+}
+
+
+``` 
 
 
 ###  Ans2
