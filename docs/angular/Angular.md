@@ -23,6 +23,50 @@ categories: [Angular]
 ---
 
 
+---
+
+## Steps you follow to increase application performance in angular.
+
+- Use lazy loading: Lazy loading helps to reduce the size of the initial bundle and increases the performance of your application by loading only the necessary components and modules on demand.
+
+- Use production mode: Running your application in production mode helps to improve performance by disabling development checks and setting various environment variables to production-ready values.
+
+- Use AOT (Ahead-of-Time) Compilation: AOT compilation compiles the Angular components and templates at build time instead of runtime, reducing the startup time of your application.
+
+- Use Change Detection Strategy: Change detection is the process of checking for changes in the Angular components. By using OnPush change detection strategy, you can limit the number of change detection checks and improve the performance of your application.
+
+- Use modern JavaScript features: Use modern JavaScript features such as async/await, destructuring, and spread operators to write cleaner, more performant code.
+
+- Use optimization tools: Use optimization tools such as ngcc, Angular CLI's production builds, and Ahead-of-Time (AOT) compilation to reduce the size of the bundle, improve the startup time, and improve overall performance.
+
+- Minimize the number of DOM manipulations: Minimizing the number of DOM manipulations will help reduce the time it takes for the browser to render the changes and improve the performance of your application.
+
+- Use caching: Use caching techniques such as in-memory caching and HTTP caching to reduce the amount of data that needs to be transferred over the network and improve the performance of your application.
+
+- Use server-side rendering: Server-side rendering allows the browser to display the initial view of your application faster, improving the time-to-first-paint and overall user experience.
+
+- Use Angular animations wisely: Angular animations can add visual appeal to your application, but can also have a negative impact on performance if not used wisely. Minimize the number of animations and optimize them for performance by using transform and opacity instead of width and height, for example.
+
+- Monitor performance regularly: Regularly monitor your application's performance using tools such as the Chrome DevTools performance panel and the Angular Augury tool to identify and resolve performance bottlenecks.
+
+- Follow best practices for Angular development: Adhering to best practices for Angular development, such as using observables instead of promises, keeping components simple, and avoiding excessive use of nested components, can help improve the overall performance of your application.
+
+- Use efficient data structures: Using efficient data structures, such as HashMaps, Tries, and Binary Search Trees, can help improve the performance of your application by reducing the time it takes to search and manipulate data.
+
+- Minimize the number of HTTP requests: Minimizing the number of HTTP requests can improve the performance of your application by reducing the amount of data that needs to be transferred over the network. Consider using batch requests or caching to minimize the number of HTTP requests.
+
+- Use efficient algorithms: Use efficient algorithms to solve problems in your application, such as using binary search instead of linear search, or using a breadth-first search instead of a depth-first search.
+
+- Use memoization: Memoization is a technique that caches the results of function calls so that they can be reused in the future, reducing the number of redundant computations and improving performance.
+
+- Use a content delivery network (CDN): Using a CDN can help improve the performance of your application by caching static assets, such as images and scripts, on multiple servers around the world, reducing the latency for users accessing your application from different locations.
+
+- Use efficient data binding: Efficient data binding can help improve the performance of your application by reducing the number of bindings and avoiding unnecessary updates to the DOM. Consider using one-way data binding or using a Pure pipe to reduce the number of bindings.
+
+- Minimize the use of third-party libraries: While third-party libraries can provide additional functionality, they can also have a negative impact on performance if they are not optimized or used excessively. Minimize the use of third-party libraries and consider alternative solutions, such as writing your own code, to improve performance.
+
+- Regularly update Angular: Regularly updating Angular can help improve performance by taking advantage of the latest features and optimizations, as well as fixing any known performance issues. Stay up-to-date with the latest version of Angular and its related libraries to ensure optimal performance.
+
 
 ---
 
