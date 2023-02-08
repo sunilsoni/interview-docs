@@ -33,9 +33,13 @@ In short, Spring AOP provides a flexible way to add behavior to your application
 
 Aspect oriented Programming is programming paradigm which is analogous to object oriented programming. Key unit of object oriented programming is class, similarly key unit for AOP is Aspect. Aspect enable modularisation of concerns such as transaction management, it cut across multiple classes and types. It also refers as a crosscutting concerns.
 
+---
+
 ## Why AOP?
 It provides pluggable way to apply concern before, after or around business logic.
 Lets understand with the help of logging. You have put logging in different classes but for some reasons, if you want to remove logging now, you have to make changes in all classes but you can easily solve this by using aspect. If you want to remove logging, you just need to unplug that aspect.
+
+---
 
 ## AOP concepts
 
@@ -64,6 +68,9 @@ When you use Spring AOP, you define aspects that encapsulate the behavior you wa
 - **AOP proxy** : Spring will create JDK dynamic proxy to create proxy class around target object with advice invocations.
 - **Weaving** : The process of creating proxy objects from target object may be termed as weaving.
 
+---
+
+
 ## Types of Advices 
 Advice is action taken by aspect at particular joint point.
 - **Before Advice**: it executes before a join point.
@@ -72,5 +79,145 @@ Advice is action taken by aspect at particular joint point.
 - **After Advice**: it executes after a join point regardless of outcome.
 - **Around Advice**: It executes before and after a join point.
 
-## Reference Links
-- [Spring AOP tutorial-java2blog.com](https://java2blog.com/spring-aop-tutorial/)
+
+---
+
+
+## Spring AOP Examples 
+
+
+
+### Logging 
+
+Here is an example of an aspect that implements logging using Spring AOP:
+
+```java
+@Aspect
+@Component
+public class LoggingAspect {
+
+    @Before("execution(* com.example.demo.service.*.*(..))")
+    public void logBefore(JoinPoint joinPoint) {
+        Logger logger = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());
+        logger.info("Entering method: {}", joinPoint.getSignature().toShortString());
+    }
+
+    @After("execution(* com.example.demo.service.*.*(..))")
+    public void logAfter(JoinPoint joinPoint) {
+        Logger logger = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());
+        logger.info("Exiting method: {}", joinPoint.getSignature().toShortString());
+    }
+}
+
+
+```
+
+This aspect uses the @Before and @After annotations to define advice that should be executed before and after methods in the com.example.demo.service package. The advice uses the SLF4J logger to log messages indicating when methods are entered and exited.
+
+```java
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+  @Before("execution(* com.example.demo.service.*.*(..))")
+  public void logBefore(JoinPoint joinPoint) {
+    Logger logger = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());
+    logger.info("Entering method: {} with arguments: {}", 
+                joinPoint.getSignature().toShortString(), 
+                Arrays.toString(joinPoint.getArgs()));
+  }
+
+  @After("execution(* com.example.demo.service.*.*(..))")
+  public void logAfter(JoinPoint joinPoint) {
+    Logger logger = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());
+    logger.info("Exiting method: {} with result: {}", 
+                joinPoint.getSignature().toShortString(), 
+                joinPoint.getSignature().toShortString());
+  }
+}
+
+```
+
+This aspect uses the @Before and @After annotations to define advice that should be executed before and after methods in the com.example.demo.service package. The advice logs messages indicating when methods are entered and exited, along with their arguments and results.
+
+
+
+### Transactions 
+
+Here is an example of an aspect that implements transaction management using Spring AOP:
+
+
+
+```java
+@Aspect
+@Component
+@Transactional
+public class TransactionAspect {
+
+    @Around("execution(* com.example.demo.service.*.*(..))")
+    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        try {
+            return joinPoint.proceed();
+        } catch (Exception ex) {
+            // rollback the transaction here
+            throw ex;
+        }
+    }
+}
+
+
+```
+
+This aspect uses the @Around annotation to define advice that should be executed around methods in the com.example.demo.service package. The advice uses the ProceedingJoinPoint to proceed with the original method call and manage the transaction by rolling it back in case of an exception. The @Transactional annotation is used to enable transaction management for the aspect.
+
+Note that in order to use transactions in your application, you will also need to configure a transaction manager, such as JPA, Hibernate, or JDBC, and enable transaction management in your Spring Boot configuration.
+
+
+
+### Exception handling 
+
+
+```java
+@Aspect
+@Component
+public class ExceptionHandlingAspect {
+
+  @AfterThrowing(pointcut = "execution(* com.example.demo.service.*.*(..))", throwing = "ex")
+  public void handleException(JoinPoint joinPoint, Exception ex) {
+    Logger logger = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());
+    logger.error("Exception in method: {} with message: {}", 
+                 joinPoint.getSignature().toShortString(), 
+                 ex.getMessage());
+  }
+}
+
+```
+
+This aspect uses the @AfterThrowing annotation to define advice that should be executed after a method in the com.example.demo.service package throws an exception. The advice logs an error message indicating the method that threw the exception and the exception message.
+
+### Performance monitoring example:
+
+
+```java
+@Aspect
+@Component
+public class PerformanceMonitoringAspect {
+
+  @Around("execution(* com.example.demo.service.*.*(..))")
+  public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+    long startTime = System.currentTimeMillis();
+    Object result = joinPoint.proceed();
+    long elapsedTime = System.currentTimeMillis() - startTime;
+    Logger logger = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());
+    logger.info("Method: {} took {} ms to execute", 
+                joinPoint.getSignature().toShortString(), 
+                elapsedTime);
+    return result;
+  }
+}
+
+```
+
+This aspect uses the @Around annotation to define advice that should be executed around methods in the com.example.demo.service package.
+
