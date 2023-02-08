@@ -73,9 +73,63 @@ String is immutable for below reasons:
 
 ## equals and hashcode contract
 
+The hashCode() and equals() methods are two important methods that you can override in your Java classes. These methods are used to determine the equality of objects, and they are used in various APIs and libraries throughout the Java ecosystem, such as hash-based collections like HashMap, HashSet, and Hashtable.
 
-The equals and hashcode contract says:
-> If two objects are equals according to equals() method, then their hashcode must be same but reverse is not true i.e. if two objects have same hashcode then they may/may not be equals.
+Here is an in-depth explanation of these methods:
+
+### hashCode(): 
+
+The hashCode() method is used to generate a unique integer that represents an object. It is typically used by hash-based collections to index objects and quickly determine if two objects are equal. The basic contract of the hashCode() method is as follows:
+
+- If two objects are equal according to the equals(Object) method, then calling hashCode() on each of the two objects must produce the same integer result.
+- If two objects are unequal according to the equals(Object) method, it is not required that calling hashCode() on each of the two objects produces distinct integer results.
+
+To implement the hashCode() method, you should use a formula that combines the hash codes of all the fields of the object that are used in the equals() method. A common approach is to use the Objects.hash() utility method to generate the hash code:
+
+
+```java
+@Override
+public int hashCode() {
+  return Objects.hash(field1, field2, ...);
+}
+
+```
+
+
+### equals():
+
+The equals() method is used to determine if two objects are equal. It compares the objects based on the values of their fields. The basic contract of the equals() method is as follows:
+
+**It is reflexive**: for any non-null reference value x, x.equals(x) should return true.
+**It is symmetric**: for any non-null reference values x and y, x.equals(y) should return true if and only if y.equals(x) returns true.
+**It is transitive**: for any non-null reference values x, y, and z, if x.equals(y) returns true and y.equals(z) returns true, then x.equals(z) should return true.
+**It is consistent**: for any non-null reference values x and y, multiple invocations of x.equals(y) consistently return true or consistently return false, provided no information used in equals comparisons on the objects is modified.
+
+For any non-null reference value x, x.equals(null) should return false.
+
+To implement the equals() method, you should compare the fields of the object to the fields of the argument, and return true if they are all equal:
+
+
+```java
+@Override
+public boolean equals(Object o) {
+  if (this == o) return true;
+  if (o == null || getClass() != o.getClass()) return false;
+  MyClass that = (MyClass) o;
+  return Objects.equals(field1, that.field1) &&
+         Objects.equals(field2, that.field2) &&
+         ...;
+}
+
+```
+
+
+It is important to note that the hashCode() and equals() methods are closely related and should be overridden together. If you override one, you should override the other. In most cases, if you override the equals() method, you should also override the hashCode() method to ensure that objects that are equal according to the equals() method have the same hash code.
+
+Additionally, it is recommended to follow the conventions outlined in the Java API documentation and in the book "Effective Java" by Joshua Bloch when implementing these methods. This will ensure that your code works well with the standard Java libraries and APIs.
+
+In summary, the hashCode() and equals() methods are important tools for determining the equality of objects in Java. They are used by many libraries and APIs, and should be implemented with care to ensure that they work as expected and follow established conventions.
+
 
 
 ---
