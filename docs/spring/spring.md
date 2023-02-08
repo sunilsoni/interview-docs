@@ -1070,15 +1070,19 @@ we also have  other settings
 - **noRollbackFor** — arrays of exception class objects that must not cause a rollback of the transaction
 - **noRollbackForClassName** — arrays of exception class names that must not cause a rollback of the transaction
 
-## Reference Links
 
-- [Spring Framework](https://spring.io/projects/spring-framework#overview)
-- [Using Spring Boot for OAuth2 and JWT REST Protection](https://www.toptal.com/spring/spring-boot-oauth2-jwt-rest-protection)
-- [Spring Boot Security + JWT (JSON Web Token) Authentication Example](https://www.techgeeknext.com/spring/spring-boot-security-token-authentication-jwt)
-- [Spring Boot Security using OAuth2 with JWT](https://www.pixeltrice.com/spring-boot-security-using-oauth2-with-jwt/)
-- [What is the difference between PUT, POST and PATCH? [closed]](https://stackoverflow.com/questions/31089221/what-is-the-difference-between-put-post-and-patch#:~:text=POST%20is%20always%20for%20creating,always%20for%20update%20a%20resource)
-- [Spring Transactional Management](https://dzone.com/articles/bountyspring-transactional-management)
-- [Spring – @Autowired](https://javabydeveloper.com/tutorial-on-spring-autowired/)
-- [Core Spring Framework Annotations](https://medium.com/javarevisited/core-spring-framework-annotations-300493ba85da)
-- [Spring Component Scanning](https://www.baeldung.com/spring-component-scanning)
-- [Classpath Scanning using @ComponentScan and Filters](https://jstobigdata.com/spring/classpath-scanning-using-componentscan-and-filters/)
+
+---
+
+## Misc Questions
+
+### What happens if we use  service annotation on a repository class  in spring boot ?
+
+If you annotate a repository class with the `@Service` annotation in Spring Boot, it will still be treated as a repository class. However, by convention, it is more common to use the `@Repository` annotation for DAO (Data Access Object) classes in Spring, as this provides a more clear indication of the class's purpose.
+
+Annotating a repository class with @Service could lead to confusion and make it harder for other developers to understand the purpose of the class. Additionally, in a large codebase with many different types of classes, having clear, well-defined annotations can help with organization and maintainability.
+
+That being said, if you annotate a repository class with `@Service`, it will still work as expected, since both `@Service` and `@Repository` are simply specializations of the `@Component` annotation, which tells Spring to include the class in component scanning and create a bean for it.
+
+
+
