@@ -1250,6 +1250,51 @@ We can also create our own custom class loader by extending the ClassLoader clas
 
 ## Garbage Collector
 
+
+In Java, garbage collection is the process by which the Java Virtual Machine (JVM) automatically frees up memory that is no longer needed by the program. The goal of garbage collection is to reclaim memory occupied by objects that are no longer accessible by the program and make that memory available for reuse.
+
+The Java garbage collector works by maintaining a record of all objects that are currently accessible by the program. These objects are referred to as "live" objects. The garbage collector periodically scans the heap, which is the portion of memory where objects are stored, to identify objects that are no longer accessible by the program. These objects are referred to as "dead" objects.
+
+Once dead objects are identified, the garbage collector reclaims the memory occupied by these objects and makes it available for reuse. This process is called "garbage collection." The garbage collector runs as a low-priority thread, so it doesn't interfere with the normal execution of the program.
+
+The Java garbage collector uses several algorithms to optimize the process of garbage collection. One common algorithm is called "mark and sweep." In this algorithm, the garbage collector starts by marking all of the objects that are accessible by the program. It then sweeps the heap, freeing up memory occupied by all objects that are not marked.
+
+Another common algorithm is called "generational garbage collection." In this algorithm, the heap is divided into two or more generations, with each generation being a different age group of objects. The garbage collector is more likely to reclaim the memory occupied by objects in the older generations because they are more likely to be dead objects.
+
+The exact algorithms used by the Java garbage collector and the way they are implemented can vary depending on the specific JVM implementation. However, the general principles of garbage collection in Java remain the same across all implementations.
+
+###  Types of Garbage Collection
+
+In Java, there are several types of garbage collection that are commonly used:
+
+####  Serial Garbage Collector: 
+
+This is the simplest form of garbage collection and is suitable for small to medium-sized applications. It uses a single thread to reclaim memory and is optimized for single-threaded environments.
+
+####  Parallel Garbage Collector: 
+
+This is a multi-threaded garbage collector that runs multiple threads in parallel to reclaim memory. It is more efficient than the serial garbage collector and is used in multi-threaded environments.
+
+####  CMS (Concurrent Mark Sweep) Garbage Collector: 
+
+This is a low-pause, concurrent garbage collector that runs concurrently with the application threads. It is designed to minimize the amount of time that the application is paused for garbage collection.
+
+####  G1 (Garbage First) Garbage Collector: 
+
+This is a low-pause, concurrent garbage collector that is designed for large-scale applications. It divides the heap into smaller regions and reclaims memory from one region at a time, which helps to reduce the amount of time that the application is paused for garbage collection.
+
+####  ZGC (Z Garbage Collector): 
+
+This is a new, low-latency garbage collector that is designed for very large-scale applications. It is designed to reclaim memory with minimal pauses and is optimized for large heaps.
+
+These are some of the most commonly used garbage collection algorithms in Java. The specific algorithm used by the JVM can be configured by setting command line options when starting the JVM. The appropriate garbage collector to use depends on the specific requirements of the application and the environment in which it runs.
+
+
+
+
+
+
+
 The Garbage Collector has only two things to do:
 
 - Find garbage - unused objects. (An object is considered unused if none of the entities in the code currently executing contains references to it, or the chain of links that could connect the object with some application entity is broken);
