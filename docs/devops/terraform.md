@@ -123,15 +123,15 @@ Here are some of the most commonly used Terraform CLI commands:
 
 - terraform show: Displays a detailed summary of the current state of your infrastructure.
 
-- terraform refresh: Updates the state file of your Terraform-managed resources to match the current state of your infrastructure.
+- `terraform refresh`: Updates the state file of your Terraform-managed resources to match the current state of your infrastructure.
 
-- terraform state list: Lists all resources currently tracked in the Terraform state file.
+- `terraform state list`: Lists all resources currently tracked in the Terraform state file.
 
-- terraform state mv: Moves a resource in the Terraform state file from one address to another.
+- `terraform state mv`: Moves a resource in the Terraform state file from one address to another.
 
-- terraform import: Imports an existing resource into the Terraform state file.
+- `terraform import`: Imports an existing resource into the Terraform state file.
 
-- terraform version: Displays the current version of Terraform.
+- `terraform version`: Displays the current version of Terraform.
 
 
 
