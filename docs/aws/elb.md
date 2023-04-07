@@ -115,7 +115,14 @@ AWS Auto Scaling lets you build scaling plans that automate how groups of differ
 
 ![Screen Shot 2020-06-19 at 5 19 02 PM](https://user-images.githubusercontent.com/13093517/85180270-0093c200-b251-11ea-97e3-ed9a80ee5d65.png)
 
-## Auto Scaling Cooldown Period
+### Auto Scaling Cooldown Period
 - The cooldown period is a configurable setting for your Auto Scaling Group that helps to ensure that it doesn't launch or terminate additional instances before the previous scaling activity takes effect.
 - After the Auto Scaling Group scales using a policy, it waits for the cooldown period to complete before resuming further scaling activities if needed.
 - The default waiting period is 300 seconds, but this can be modified.
+
+
+
+
+
+
+
