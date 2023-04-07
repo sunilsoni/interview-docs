@@ -73,5 +73,20 @@ API Gateway provides a number of features that make it easy to manage APIs. Thes
 `API deployment and scaling`: API Gateway makes it easy to deploy APIs to multiple stages (e.g., development, testing, production), and provides automatic scaling to handle changes in API traffic.
 
 
+### Configure API using AWS API Gateway with AWS Lambda as a backend
+
+- Create a Lambda function: First, create a Lambda function that will act as the backend for your API. You can do this using the AWS Management Console or the AWS CLI. For example, you could create a function that retrieves data from a database or performs some other business logic.
+
+- Create an API Gateway: Next, create an API Gateway using the AWS Management Console or the AWS CLI. You'll need to define a REST API and configure its resources and methods. For example, you could define a GET method on the "/users" resource that retrieves a list of users from your Lambda function.
+
+- Set up integration between API Gateway and Lambda: Once you've created your API Gateway, you need to set up integration between API Gateway and your Lambda function. You can do this using the AWS Management Console or the AWS CLI. For example, you could set up a Lambda Proxy integration that maps incoming requests to your Lambda function and returns the function's output to the client.
+
+- Add security to your API: To secure your API, you can use API Gateway's built-in support for OAuth 2.0 and JSON Web Tokens (JWTs), or you can integrate with AWS Identity and Access Management (IAM) to control access to your API.
+
+- Deploy your API: Once you've configured your API, you can deploy it to a specific stage (e.g., development, testing, production). You can do this using the AWS Management Console or the AWS CLI.
+
+- Test your API: Finally, test your API to make sure it's working as expected. You can do this using a tool like Postman or by sending requests directly from your client application.
+
+
 
 
