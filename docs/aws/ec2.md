@@ -41,7 +41,7 @@ EC2 spins up resizable server instances that can scale up and down quickly. An i
 - You can launch different types of instances from a single AMI. An instance type essentially determines the hardware of the host computer used for your instance. Each instance type offers different compute and memory capabilities. You should select an instance type based on the amount of memory and computing power that you need for the application or software that you plan to run on top of the instance.
 - You can launch multiple instances of an AMI, as shown in the following figure:
 
-<img src="images/EC2%20Key%20Details.png" width="900"/>
+<img src="images/EC2%20Key%20Details.png" width="700"/>
 
 
 - You have the option of using dedicated tenancy with your instance. This means that within an AWS data center, you have exclusive access to physical hardware. Naturally, this option incurs a high cost, but it makes sense if you work with technology that has a strict licensing policy.
