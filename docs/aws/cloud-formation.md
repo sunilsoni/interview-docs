@@ -1,7 +1,7 @@
 ---
 layout: default
 title: CloudFormation
-parent: Amazon Web Services (AWS)
+parent: AWS
 resource: true
 desc: "AWS CloudFormation interview questions and answers."
 categories: [AWS CloudFormation]

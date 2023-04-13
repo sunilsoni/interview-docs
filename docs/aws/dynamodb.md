@@ -1,7 +1,7 @@
 ---
 layout: default
 title: DynamoDB
-parent: Amazon Web Services (AWS)
+parent: AWS
 resource: true
 desc: " AWS DynamoDB interview questions and answers."
 categories: [AWS DynamoDB]

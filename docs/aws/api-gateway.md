@@ -1,7 +1,7 @@
 ---
 layout: default
 title: API Gateway
-parent: Amazon Web Services (AWS)
+parent: AWS
 resource: true
 desc: " AWS API Gateway interview questions and answers."
 categories: [API Gateway]

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Lambda
-parent: Amazon Web Services (AWS)
+parent: AWS
 resource: true
 desc: "AWS Lambda interview questions and answers."
 categories: [AWS Lambda]

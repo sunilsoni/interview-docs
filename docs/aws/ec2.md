@@ -1,7 +1,7 @@
 ---
 layout: default
 title: EC2
-parent: Amazon Web Services (AWS)
+parent: AWS
 resource: true
 desc: "AWS - Elastic Compute Cloud (EC2) interview questions and answers."
 categories: [AWS - Elastic Compute Cloud (EC2)]

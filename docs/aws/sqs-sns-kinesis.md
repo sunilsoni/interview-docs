@@ -1,7 +1,7 @@
 ---
 layout: default
 title: SQS SNS Kinesis
-parent: Amazon Web Services (AWS)
+parent: AWS
 resource: true
 desc: " SQS SNS Kinesis interview questions and answers."
 categories: [SQS SNS Kinesis]
