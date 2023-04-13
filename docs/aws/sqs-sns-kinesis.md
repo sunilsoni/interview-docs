@@ -22,8 +22,6 @@ categories: [SQS SNS Kinesis]
 
 ---
 
-
-
 ## Simple Queuing Service (SQS)
 
 ### SQS Simplified:
