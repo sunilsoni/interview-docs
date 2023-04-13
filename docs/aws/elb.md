@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Elastic Load Balancers
+title: ELB
 parent: Amazon Web Services (AWS)
 resource: true
 desc: " Simple Storage Service (S3) interview questions and answers."

@@ -1,5 +1,5 @@
 ---
-title: Amazon Web Services (AWS)
+title: AWS
 has_children: true
 nav_order: 2
 permalink: docs/aws

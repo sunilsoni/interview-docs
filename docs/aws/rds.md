@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Relational Database Service (RDS)
+title: RDS
 parent: Amazon Web Services (AWS)
 resource: true
 desc: " AWS DynamoDB interview questions and answers."
