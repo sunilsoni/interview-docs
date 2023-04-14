@@ -73,6 +73,13 @@ All APIs of Node.js library are aynchronous that is non-blocking. It essentially
 
 Yes! Node uses a single threaded model with event looping.
 
+### Callback
+
+Callback is an asynchronous equivalent for a function. A callback function is called at the completion of a given task. Node makes heavy use of callbacks. All APIs of Node are written is such a way that they supports callbacks.
+
+For example, a function to read a file may start reading file and return the control to execution environment immediately so that next instruction can be executed. Once file I/O is complete, it will call the callback function while passing the callback function, the content of the file as parameter. So there is no blocking or wait for File I/O.
+
+This makes Node.js highly scalable, as it can process high number of request without waiting for any function to return result.
 
 ### Callback Hell
 
@@ -80,7 +87,7 @@ The asynchronous function requires callbacks as a return parameter. When multipl
 
 ---
 
-# Event Listeners
+## Event Listeners
 
 Event Listeners are similar to call back functions but are associated with some event. For example when a server listens to http request on a given port a event will be generated and to specify http server has received and will invoke corresponding event listener. Basically, Event listener's are also call backs for a corresponding event.
 
@@ -88,7 +95,7 @@ Node.js has built in event's and built in event listeners. Node.js also provides
 
 ---
 
-# If Node.js is single threaded then how it handles concurrency? 
+## If Node.js is single threaded then how it handles concurrency? 
 
 Node provides a single thread to programmers so that code can be written easily and without bottleneck. Node internally uses multiple POSIX threads for various I/O operations such as File, DNS, Network calls etc.
 
@@ -96,10 +103,40 @@ When Node gets I/O request it creates or uses a thread to perform that I/O opera
 
 This is how Node manages concurrency
 
+---
+
+## Event Loop
+
+Node.js is a single threaded application but it support concurrency via concept of event and callbacks. As every API of Node js are asynchronous and being a single thread, it uses async function calls to maintain the concurrency. Node uses observer pattern. Node thread keeps an event loop and whenever any task get completed, it fires the corresponding event which signals the event listener function to get executed.
+
+The event loop is what allows Node.js to perform non-blocking I/O operations — despite the fact that JavaScript is single-threaded — by offloading operations to the system kernel whenever possible.
+
+<img src="nodejs/images/Event Loop.png" width="800"/>
 
 
 
+Every I/O requires a callback - once they are done they are pushed onto the event loop for execution. Since most modern kernels are multi-threaded, they can handle multiple operations executing in the background. When one of these operations completes, the kernel tells Node.js so that the appropriate callback may be added to the poll queue to eventually be executed.
 
+---
+
+## Event Emmitter
+
+All objects that emit events are members of EventEmitter class. These objects expose an eventEmitter.on() function that allows one or more functions to be attached to named events emitted by the object.
+
+When the EventEmitter object emits an event, all of the functions attached to that specific event are called synchronously.
+
+```javascript
+const EventEmitter = require('events');
+
+class MyEmitter extends EventEmitter {}
+
+const myEmitter = new MyEmitter();
+myEmitter.on('event', () => {
+    console.log('an event occurred!');
+});
+myEmitter.emit('event');
+
+```
 
 
 
