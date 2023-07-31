@@ -904,10 +904,3 @@ approach is very convenient in any enterprise grade application.
 
 
 ---
-
-##  For more information
-
-1. [Top 50 Microservices Interview Questions You Must Prepare In 2020](https://www.edureka.co/blog/interview-questions/microservices-interview-questions/)
-2. [Top 25 Microservices Interview Questions and Answers](https://www.guru99.com/microservices-interview-questions.html)
-3. [Microservices Tutorial](https://www.javatpoint.com/microservices)
-4. [Microservices Inter-Service Communication](https://www.dineshonjava.com/microservices-inter-service-communication/)
