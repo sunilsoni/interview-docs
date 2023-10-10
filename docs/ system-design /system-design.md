@@ -3,7 +3,7 @@ title: System Design
 has_children: true
 nav_order: 2
 resource: true
-desc: "System Design interview questions and answers."
+desc: "System Design interview questions and answers with focus on real-world problems and solutions."
 categories: [System Design]
 ---
 
@@ -21,94 +21,76 @@ categories: [System Design]
 
 ---
 
+## Introduction
+
+System design is a significant part of the software engineering interview process, particularly for mid-level and senior roles. Mastering the art of system design requires a solid understanding of the fundamental principles, a keen eye for identifying problems, and a systematic approach to creating solutions. This page serves as a comprehensive resource for system design interview preparation.
+
+---
+
 ## [System Design Interview Tips](https://github.com/checkcheckzz/system-design-interview)
+
+An essential guide providing tips for system design interviews. It covers aspects like scalability, performance, and system components.
 
 ---
 
 ## [System Design Interview Questions](https://github.com/sid24rane/System-Design-Interview-Questions)
 
----
-
-## [System Design Interview Tips](https://github.com/checkcheckzz/system-design-interview)
+A collection of common system design questions that are often asked in interviews.
 
 ---
 
 ## [The System Design Primer](https://github.com/donnemartin/system-design-primer)
 
+A resource offering a wide range of information on system design principles, including scaling, databases, and system components.
+
 ---
 
-## [Preparation for Lateral Hiring](https://medium.com%2F@medium.com/@varungarg6781/preparation-for-lateral-hiring-1d19aac437ef)
+## [Preparation for Lateral Hiring](https://medium.com/@varungarg6781/preparation-for-lateral-hiring-1d19aac437ef)
+
+Insights into preparing for system design interviews, especially for lateral hiring positions.
 
 ---
 
 ## [System Design Cheatsheet](https://gist.github.com/vasanthk/485d1c25737e8e72759f)
 
+A quick reference guide for key system design concepts and terminologies.
 
 ---
 
+## Real-World System Design Challenges
 
-## Facebook
+### Facebook
 
-- https://leetcode.com/discuss/interview-question/1002218/Facebook-or-Google-or-Top-System-Design-Interview-Questions-(Part-1)
-- https://leetcode.com/discuss/interview-question/1042229/Facebook-or-Google-or-Top-System-Design-Interview-Questions-(Part-2)
-- https://leetcode.com/discuss/interview-question/719253/Design-Facebook-%3A-System-Design-Interview
-- https://leetcode.com/discuss/interview-question/124657/Facebook-or-System-Design-or-A-web-crawler-that-will-crawl-Wikipedia
+- [Designing Facebook's News Feed](https://leetcode.com/discuss/interview-question/719253/Design-Facebook-%3A-System-Design-Interview)
+- [Web Crawler System Design](https://leetcode.com/discuss/interview-question/124657/Facebook-or-System-Design-or-A-web-crawler-that-will-crawl-Wikipedia)
 
----
+### Google
 
+- [Designing a Video Sharing Platform like YouTube](https://leetcode.com/discuss/interview-question/system-design/733520/Design-YouTube-Very-detailed-design-with-diagrams)
+- [Designing a Translation Service like Google Translate](https://leetcode.com/discuss/interview-question/system-design/318811/Google-or-System-design-or-Design-a-translation-service-like-Google-Translate)
 
-## Google
+### Amazon
 
-- https://leetcode.com/discuss/interview-question/system-design/496042/Design-video-sharing-platform-like-Youtube
-- https://leetcode.com/discuss/interview-question/system-design/733520/Design-YouTube-Very-detailed-design-with-diagrams
-- https://leetcode.com/discuss/interview-question/system-design/318811/Google-or-System-design-or-Design-a-translation-service-like-Google-Translate
-- https://leetcode.com/discuss/interview-question/system-design/692383/Google-or-Onsite-or-Design-a-organization-pharmacy-shop-with-managers
+- [Unique Address Capture System](https://leetcode.com/discuss/interview-question/341980/Amazon-or-System-Design-or-System-to-capture-unique-addresses-in-the-entire-world)
+- [Amazon's "Customers who bought this item also bought" Recommendation System](https://leetcode.com/discuss/interview-question/system-design/124557/Amazon's-"Customers-who-bought-this-item-also-bought"-recommendation-system)
 
+### Uber
 
----
+- [Designing a Location Sharing Android Application](https://leetcode.com/discuss/interview-question/124673/Design-a-Location-Sharing-Android-Application)
+- [Designing Uber Backend](https://leetcode.com/discuss/interview-question/124542/Design-Uber-Backend)
 
+### Microsoft
 
-## Amazon
-
-- https://leetcode.com/discuss/interview-question/341980/Amazon-or-System-Design-or-System-to-capture-unique-addresses-in-the-entire-world
-- https://leetcode.com/discuss/interview-question/system-design/124557/Amazon's-"Customers-who-bought-this-item-also-bought"-recommendation-system
-- https://leetcode.com/discuss/interview-question/system-design/344524/Amazon-or-Design-a-JobTask-Scheduler
-- https://leetcode.com/discuss/interview-question/373887/Amazon-or-System-Design-or-A-configuration-management-system
-
+- [Designing a Distributed Counter](https://leetcode.com/discuss/interview-question/system-design/685310/Microsoft-virtual-or-Design-distributed-counter)
+- [Designing a System to Store Millions of Subscribers' List](https://leetcode.com/discuss/interview-question/system-design/680047/How-will-you-store-millions-of-subscribers-list-(assume-it-as-email-id))
 
 ---
 
+## Additional Resources
 
-## Uber
-
-- https://leetcode.com/discuss/interview-question/124673/Design-a-Location-Sharing-Android-Application
-- https://leetcode.com/discuss/interview-question/124542/Design-Uber-Backend
-- https://leetcode.com/discuss/interview-question/system-design/124558/Uber-or-Rate-Limiter
-
+- [Distributed Systems Introduction](https://leetcode.com/discuss/general-discussion/1105898/System-Design%3A-Introduction-to-Distributed-Systems-or-Designing-a-highly-available-system)
+- [Machine Learning System Design](https://leetcode.com/discuss/interview-question/system-design/566057/Machine-Learning-System-Design-%3A-A-framework-for-the-interview-day)
+- [System Design for Mobile App Developers](https://leetcode.com/discuss/interview-question/system-design/691010/System-Design-for-Mobile-App-Developers)
 
 ---
-
-
-## Microsoft
-- https://leetcode.com/discuss/interview-question/system-design/685310/Microsoft-virtual-or-Design-distributed-counter
-- https://leetcode.com/discuss/interview-question/system-design/680047/How-will-you-store-millions-of-subscribers-list-(assume-it-as-email-id)
-- https://leetcode.com/discuss/interview-question/system-design/598634/Microsoft-or-Onsite-or-System-Design-or-SDE-2
-
----
-
-
-## Others
-
-- https://leetcode.com/discuss/general-discussion/1105898/System-Design%3A-Introduction-to-Distributed-Systems-or-Designing-a-highly-available-system
-- https://leetcode.com/discuss/general-discussion/1114279/System-Design%3A-Introduction-to-Distributed-Systems-Pt.-2-or-Design-Highly-available-System
-- https://leetcode.com/discuss/general-discussion/1082786/System-Design%3A-Designing-a-distributed-Job-Scheduler-or-Many-interesting-concepts-to-learn
-- https://leetcode.com/discuss/general-discussion/1035779/System-Design-Reading-Resources
-- https://leetcode.com/discuss/general-discussion/901324/My-System-Design-Interview-Checklist-A-Gateway-to-FAANGs
-- https://leetcode.com/discuss/interview-question/124658/Design-URL-Shortening-service-like-TinyURL
-- https://leetcode.com/discuss/interview-question/1061256/Tips-on-System-design-from-a-20%2B-YOE-Engineer
-- https://leetcode.com/discuss/interview-question/system-design/566057/Machine-Learning-System-Design-%3A-A-framework-for-the-interview-day
-- https://leetcode.com/discuss/interview-question/system-design/547669/Algorithm-you-should-know-before-system-design
-- https://leetcode.com/discuss/interview-question/system-design/691010/System-Design-for-Mobile-App-Developers
-
-
 
