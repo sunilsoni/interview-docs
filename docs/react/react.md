@@ -269,10 +269,10 @@ createPortal allow us to render a component into a DOM node that resides outside
 
 
 
-## # 2. REACT SETUP
+## React Setup
 
 
-### Q. Set up a react project with create react app
+###  Set up a react project with create react app
 
 Create React App is an officially supported way to create single-page React applications. It offers a modern build setup with no configuration. This tool is wrapping all of the required dependencies like **Webpack**, **Babel** for React project itself.
 
