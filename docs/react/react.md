@@ -502,7 +502,7 @@ Below are the list of some of the features provided by create react app.
 
 
 
-### Q. eject in create react app
+###  eject in create react app
 
 The `create-react-app` commands generate **React App** with an excellent configuration and helps you build your React app with the best practices in mind to optimize it. However, running the `eject` script will remove the single build dependency from your project. That means it will copy the configuration files and the transitive dependencies (e.g. `Webpack`, `Babel`, etc.) as dependencies in the `package.json` file. If you do that, you\'ll have to ensure that the dependencies are installed before building your project.
 
@@ -968,7 +968,7 @@ export default function App() {
 
 
 
-## Q. How would you prevent a component from rendering?
+ ###  How would you prevent a component from rendering?
 
 React **shouldComponentUpdate()** is a performance optimization method, and it tells React to avoid re-rendering a component, even if state or prop values may have changed. This method only used when a component will stay static or pure.
 
@@ -1021,7 +1021,7 @@ export default class App extends React.Component {
 
 
 
-## Q. When would you use StrictMode component in React?
+ ###  When would you use StrictMode component 
 
 The **StrictMode** is a tool for highlighting potential problems in an application. Like `Fragment`, `StrictMode` does not render any visible UI. It activates additional checks and warnings for its descendants.
 
@@ -1063,7 +1063,7 @@ React StrictMode, in order to be efficient and avoid potential problems by any s
 
 
 
-## Q. Why to avoid using setState() after a component has been unmounted?
+ ###  Why to avoid using setState() after a component has been unmounted?
 
 Calling `setState()` after a component has unmounted will emit a warning. The "setState warning" exists to help you catch bugs, because calling `setState()` on an unmounted component is an indication that your app/component has somehow failed to clean up properly.
 
@@ -1284,11 +1284,11 @@ In this example, the `<Menu>` establishes some shared implicit state. The `<Menu
 
 
 
-## # 4.1. FUNCTIONAL COMPONENTS
+ ### FUNCTIONAL COMPONENTS
 
 <br/>
 
-## Q. What are functional components in react?
+####  What are functional components 
 
 A React functional component is a simple JavaScript function that accepts **props** and returns a React element. It also referred as **stateless** components as it simply accept data and display them in some form.
 
@@ -1311,11 +1311,11 @@ ReactDOM.render(
 
 
 
-## # 4.2. CLASS COMPONENTS
+ ###    CLASS COMPONENTS
 
 <br/>
 
-## Q. What are class components in react?
+#### What are class components 
 
 The class component, a stateful/container component, is a regular ES6 class that extends the component class of the React library. It is called a stateful component because it controls how the state changes and the implementation of the component logic. Aside from that, they have access to all the different phases of a React lifecycle method.
 
@@ -1338,7 +1338,7 @@ ReactDOM.render(
 
 
 
-### the recommended ordering of methods in class component
+#### the recommended ordering of methods in class component
 
 * static methods
 * constructor()
@@ -1357,7 +1357,7 @@ ReactDOM.render(
 
 
 
-### create a dynamic table
+####create a dynamic table
 
 ```js
 /**
@@ -1413,7 +1413,7 @@ class Table extends React.Component {
 
 
 
-### prevent component from rendering
+####prevent component from rendering
 
 You can prevent component from rendering by returning `null` based on specific condition. This way it can conditionally render component.
 
@@ -1468,7 +1468,7 @@ ReactDOM.render(
 
 
 
-## Q. How do you set a timer to update every second?
+##  How do you set a timer to update every second?
 
 Using `setInterval()` inside React components allows us to execute a function or some code at specific intervals. A function or block of code that is bound to an interval executes until it is stopped. To stop an interval, we can use the `clearInterval()` method.
 
@@ -1508,7 +1508,7 @@ class Clock extends React.Component {
 
 
 
-## Q. Differentiate between stateful and stateless components?
+##  Differentiate between stateful and stateless components?
 
 Stateful and stateless components have many different names. They are also known as:
 
@@ -1546,7 +1546,7 @@ function welcome(props) {
 
 
 
-### the purpose of using super constructor with props argument
+####the purpose of using super constructor with props argument
 
 The `super()` keyword is used to call the parent constructor. `super(props)` would pass `props` to the parent constructor.
 
@@ -1573,7 +1573,7 @@ Here, `super(props)` would call the `React.Component` constructor passing in pro
 
 
 
-### the difference between Element, Component and Component instance 
+####the difference between Element, Component and Component instance 
 
 **1. React Elements:**
 
@@ -1624,7 +1624,7 @@ ReactDOM.render(element, document.getElementById('root'));
 
 
 
-## Q. What does shouldComponentUpdate do and why is it important?
+##  What does shouldComponentUpdate do and why is it important?
 
 The `shouldComponentUpdate()` method allows Component to exit the Update life cycle if there is no reason to apply a new render. React does not deeply compare `props` by default. When `props` or `state` is updated React assumes we need to re-render the content.
 
@@ -1644,7 +1644,7 @@ The `shouldComponentUpdate()` method is the first real life cycle optimization m
 
 
 
-### the purpose of render() function
+####the purpose of render() function
 
 The React class components uses render() function. It is used to update the UI.
 
@@ -1680,7 +1680,7 @@ root.render(<App />);
 
 <br/>
 
-## Q. What are the different phases of React component lifecycle?
+##  What are the different phases of React component lifecycle?
 
 React provides several methods that notify us when certain stage of this process occurs. These methods are called the component lifecycle methods and they are invoked in a predictable order. The lifecycle of the component is divided into four phases.
 
@@ -1836,7 +1836,7 @@ When `useEffect()` is used to get data from server.
 
 
 
-## Q. Why is a component constructor called only once?
+###  Why is a component constructor called only once?
 
 React\'s **reconciliation algorithm** assumes that without any information to the contrary, if a custom component appears in the same place on subsequent renders, it\'s the same component as before, so reuses the previous instance rather than creating a new one.
 
@@ -1949,7 +1949,7 @@ export default App
 ```
 
 
-## Q. Is it good to use setState() in componentWillMount() method?
+###  Is it good to use setState() in componentWillMount() method?
 
 Avoid async initialization in `componentWillMount()`.
 
@@ -2003,11 +2003,11 @@ const ComponentExample => () => {
 ```
 
 
-## # 4.3. PURE COMPONENTS
+### PURE COMPONENTS
 
 <br/>
 
-## Q. What are Pure Components in React?
+#### What are Pure Components 
 
 **Pure Components** in React are the components which do not re-renders when the value of state and props has been updated with the same values. Pure Components restricts the re-rendering ensuring the higher performance of the Component.
 
@@ -2079,7 +2079,7 @@ class Message extends React.Component {
 ```
 
 
-## Q. What are the problems of using render props with PureComponent?
+###  What are the problems of using render props with PureComponent?
 
 If you create a function inside a **render** method, it negates the purpose of pure component. Because the shallow prop comparison will always return **false** for new props, and each **render** in this case will generate a new value for the render prop. You can solve this issue by defining the render function as instance method.
 
@@ -2111,7 +2111,7 @@ class MouseTracker extends React.Component {
 
 
 
-## Q. When to use PureComponent over Component?
+##  When to use PureComponent over Component?
 
 * We want to avoid re-rendering cycles of component when its props and state are not changed
 * The state and props of component are immutable
@@ -2124,11 +2124,11 @@ On the other hand, we should not use `PureComponent()` as a base component if:
 
 
 
-## # 4.4. HIGHER ORDER COMPONENTS
+### # 4.4. HIGHER ORDER COMPONENTS
 
 <br/>
 
-## Q. What are Higher Order Components in React.js?
+####  What are Higher Order Components in React.js?
 
 A **Higher-Order Component(HOC)** is a function that takes a component and returns a new component. It is the advanced technique in React.js for reusing a component logic.
 
@@ -2180,7 +2180,7 @@ App = Hoc(App);
 
 
 
-## Q. What are the benefits of using HOC?
+###  What are the benefits of using HOC?
 
 **Benefits:**
 
@@ -2198,7 +2198,7 @@ App = Hoc(App);
 
 
 
-## Q. What are Higher Order Component factory implementations?
+###  What are Higher Order Component factory implementations?
 
 Creating a higher order component basically involves manipulating WrappedComponent which can be done in two ways:
 
@@ -2253,7 +2253,7 @@ Inheritance Inversion can be used in:
 
 
 
-## Q. Explain Inheritance Inversion (iiHOC) in react?
+###  Explain Inheritance Inversion (iiHOC) 
 
 Inheritance Inversion gives the HOC access to the WrappedComponent instance via this, which means we can use the `state`, `props`, component lifecycle and even the `render` method.
 
@@ -2397,7 +2397,7 @@ function getDisplayName(WrappedComponent) {
 
  
 
-### set up lazy loading components
+#### set up lazy loading components
 
 **1. REACT.LAZY():**
 
