@@ -211,7 +211,7 @@ root.render(<App />);
 
 
 
-## Q. What is ReactDOM?
+### What is ReactDOM?
 
 ReactDOM is a package that provides DOM specific methods that can be used at the top level of a web app to enable an efficient way of managing DOM elements of the web page.
 
