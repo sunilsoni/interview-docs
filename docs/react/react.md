@@ -162,7 +162,7 @@ React uses two virtual DOMs to render the user interface. One of them is used to
 
 
 <p align="center">
-  <img src="assets/shadow-dom.png" alt="DOM" width="600px" />
+  <img src="react/assets/shadow-dom.png" alt="DOM" width="600px" />
 </p>
 
 **1. Document Object Model:**
