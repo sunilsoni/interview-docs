@@ -182,6 +182,92 @@ Shadow DOM is mostly about encapsulation of the implementation. A single custom 
 The virtual DOM creates an additional DOM. The shadow DOM simply hides implementation details and provides isolated scope for web components.
 
 
+### ReactDOM and React
+
+
+The ReactDOM module exposes DOM-specific methods, while React has the core tools intended to be shared by React on different platforms (e.g. React Native).
+
+**React** package contains: `React.createElement()`, `React.createClass()`, `React.Component()`, `React.PropTypes()`, `React.Children()`
+
+**ReactDOM** package contains: `ReactDOM.render()`, `ReactDOM.unmountComponentAtNode()`, `ReactDOM.findDOMNode()`, and react-dom/server that including: `ReactDOMServer.renderToString()` and `ReactDOMServer.renderToStaticMarkup()`.
+
+**Example:**
+
+```js
+/**
+ * React vs ReactDOM
+ */
+import { createRoot } from "react-dom/client";
+
+export default function App() {
+  return <h1>Hello React</h1>;
+}
+
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
+
+root.render(<App />);
+```
+
+
+
+## Q. What is ReactDOM?
+
+ReactDOM is a package that provides DOM specific methods that can be used at the top level of a web app to enable an efficient way of managing DOM elements of the web page.
+
+ReactDOM provides the developers with an API containing the following methods
+
+* render()
+* findDOMNode()
+* unmountComponentAtNode()
+* hydrate()
+* createPortal()
+
+**1. render():**
+
+```js
+ReactDOM.render(element, container, callback)
+```
+
+Render a React element into the DOM in the supplied container and return a reference to the component (or returns null for stateless components). If the React element was previously rendered into container, this will perform an update on it and only mutate the DOM as necessary to reflect the latest React element. If the optional callback is provided, it will be executed after the component is rendered or updated.
+
+
+**2. hydrate():**
+
+```js
+ReactDOM.hydrate(element, container, callback)
+```
+
+This method is equivalent to the `render()` method but is implemented while using server-side rendering. This function attempts to attach event listeners to the existing markup and returns a reference to the component or null if a stateless component was rendered.
+
+
+**3. unmountComponentAtNode():**
+
+```js
+ReactDOM.unmountComponentAtNode(container)
+```
+
+This function is used to unmount or remove the React Component that was rendered to a particular container. It returns true if a component was unmounted and false if there was no component to unmount.
+
+
+**4. findDOMNode():**
+
+```js
+ReactDOM.findDOMNode(component)
+```
+
+If this component has been mounted into the DOM, this returns the corresponding native browser DOM element. This method is useful for reading values out of the DOM, such as form field values and performing DOM measurements.
+
+
+**5. createPortal():**
+
+```js
+ReactDOM.createPortal(child, container)
+```
+
+createPortal allow us to render a component into a DOM node that resides outside the current DOM hierarchy of the parent component.
+
+
 
 ## # 2. REACT SETUP
 
