@@ -6,7 +6,7 @@ nav_order: 2
 resource: true
 desc: "UI Design interview questions and answers."
 categories: [UI Design]
-permalink: docs/ui-design
+permalink: docs/ui
 ---
 
 # UI Design

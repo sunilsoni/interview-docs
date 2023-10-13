@@ -1,7 +1,7 @@
 ---
 layout: default
 title: VueJs
-parent: ui-design
+parent: ui
 resource: true
 desc: "VueJs interview questions and answers."
 categories: [VueJs]

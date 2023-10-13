@@ -1,6 +1,6 @@
 ---
 title: Angular
-parent: ui-design
+parent: ui
 has_children: true
 nav_order: 3
 permalink: docs/ui-desing/angular
