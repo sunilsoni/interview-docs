@@ -1,7 +1,7 @@
 ---
 title: Angular
 has_children: true
-nav_order: 2
+nav_order: 3
 permalink: docs/ui-desing/angular
 resource: true
 desc: "Angular interview questions and answers."
