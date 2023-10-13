@@ -2,6 +2,7 @@
 layout: default
 title: React
 parent: UI Design
+has_children: true
 resource: true
 desc: "React interview questions and answers."
 categories: [React]
@@ -707,7 +708,7 @@ In React, a **Stateful Component** is a component that holds some state. A **Sta
 **1. Stateless Component:**
 
 ```js
-import React from 'docs/ui/react'
+import React from 'docs/ui/react/react'
 
 const ExampleComponent = (props) => {
   return <h1>Stateless Component - {props.message}</h1>;
@@ -730,7 +731,7 @@ The above example shows a stateless component named ExampleComponent which is in
 **2. Stateful Component:**
 
 ```js
-import React, {useState} from 'docs/ui/react'
+import React, {useState} from 'docs/ui/react/react'
 
 const ExampleComponent = (props) => {
   const [email, setEmail] = useState(props.defaultEmail)
@@ -813,7 +814,7 @@ class UsersContainer extends React.Component {
 
 ```js
 // Importing combination
-import React, {Component} from 'docs/ui/react';
+import React, {Component} from 'docs/ui/react/react';
 import ReactDOM from 'react-dom';
 
 // Wrapping components with braces if no default exports
@@ -950,7 +951,7 @@ Inline conditionals in attribute props
 /**
  * Conditionally add attributes
  */
-import React from "docs/ui/react";
+import React from "docs/ui/react/react";
 
 export default function App() {
   const [mood] = React.useState("happy");
@@ -1032,7 +1033,7 @@ Strict mode checks are run in development mode only; they do not impact the prod
 /**
  * StrictMode
  */
-import {StrictMode} from "docs/ui/react";
+import {StrictMode} from "docs/ui/react/react";
 import MyComponent from "./MyComponent";
 
 export default function App() {
@@ -1074,7 +1075,7 @@ Specifically, calling `setState()` in an unmounted component means that your app
 /**
  * setState() in unmounted component
  */
-import React, {Component} from "docs/ui/react";
+import React, {Component} from "docs/ui/react/react";
 import axios from "axios";
 
 export default class App extends Component {
@@ -1136,7 +1137,7 @@ The app component contains the state for both the component. The selected player
 /**
  * Lifting State Up
  */
-import React from "docs/ui/react";
+import React from "docs/ui/react/react";
 import PlayerContent from "./PlayerContent";
 import PlayerDetails from "./PlayerDetails";
 
@@ -1182,7 +1183,7 @@ export default class App extends React.Component {
 /**
  * PlayerContent
  */
-import React, {Component} from "docs/ui/react";
+import React, {Component} from "docs/ui/react/react";
 
 export default class PlayerContent extends Component {
   render() {
@@ -1204,7 +1205,7 @@ export default class PlayerContent extends Component {
 /**
  * PlayerDetails
  */
-import React, {Component} from "docs/ui/react";
+import React, {Component} from "docs/ui/react/react";
 
 export default class PlayerDetails extends Component {
   render() {
@@ -1599,7 +1600,7 @@ A React Component can contain state and has access to the React Lifecycle method
 /**
  * React Component Instances
  */
-import React from 'docs/ui/react'
+import React from 'docs/ui/react/react'
 import ReactDOM from 'react-dom'
 
 class MyComponent extends React.Component {
@@ -1662,7 +1663,7 @@ The React class components uses render() function. It is used to update the UI.
  *
  * React v18.0.0
  */
-import React from "docs/ui/react";
+import React from "docs/ui/react/react";
 import {createRoot} from "react-dom/client";
 
 class App extends React.Component {
@@ -1798,7 +1799,7 @@ The `useLayoutEffect()` was designed to have the same timing as componentDidMoun
 /**
  * componentDidMount() in Class Component
  */
-import React, {Component} from "docs/ui/react";
+import React, {Component} from "docs/ui/react/react";
 
 export default class SampleComponent extends Component {
   componentDidMount() {
@@ -1817,7 +1818,7 @@ export default class SampleComponent extends Component {
 /**
  * useEffect() in Functional Component
  */
-import React, {useEffect} from "docs/ui/react";
+import React, {useEffect} from "docs/ui/react/react";
 
 const SampleComponent = () => {
   useEffect(() => {
@@ -1868,7 +1869,7 @@ The `componentDidMount()` is executed after the first render only on the client 
 **Example:**
 
 ```js
-import React, {Component} from 'docs/ui/react'
+import React, {Component} from 'docs/ui/react/react'
 
 class App extends Component {
 
@@ -1911,7 +1912,7 @@ The `componentWillMount()` method is executed before rendering, on both the serv
 **Example:**
 
 ```js
-import React, {Component} from 'docs/ui/react'
+import React, {Component} from 'docs/ui/react/react'
 
 class App extends Component {
 
@@ -1982,7 +1983,7 @@ The **useEffect()** can be used to manage API calls, as well as implementing **c
 If we pass an empty array as the second argument, it tells useEffect to fire on component load. This is the only time it will fire.
 
 ```js
-import React, {useEffect} from 'docs/ui/react';
+import React, {useEffect} from 'docs/ui/react/react';
 
 const ComponentExample
 =>
@@ -1996,7 +1997,7 @@ const ComponentExample
 If you add a return function inside the useEffect() function, it is triggered when a component unmounts from the DOM.
 
 ```js
-import React, {useEffect} from 'docs/ui/react';
+import React, {useEffect} from 'docs/ui/react/react';
 
 const ComponentExample
 =>
@@ -2031,7 +2032,7 @@ const ComponentExample
 /**
  * React Pure Component
  */
-import React from "docs/ui/react";
+import React from "docs/ui/react/react";
 
 export default class App extends React.PureComponent {
   constructor() {
@@ -2149,7 +2150,7 @@ Higher-Order Components are not part of the React API. They are the pattern that
 /**
  * Higher Order Component
  */
-import React, {Component} from "docs/ui/react";
+import React, {Component} from "docs/ui/react/react";
 
 export default function Hoc(HocComponent) {
   return class extends Component {
@@ -2168,7 +2169,7 @@ export default function Hoc(HocComponent) {
 /**
  * App.js
  */
-import React, {Component} from "docs/ui/react";
+import React, {Component} from "docs/ui/react/react";
 import Hoc from "./HOC";
 
 export default class App extends Component {
@@ -2428,7 +2429,7 @@ const MyComponent = React.lazy(() => import('./MyComponent'));
 /**
  * Suspense
  */
-import React, {Suspense} from 'docs/ui/react';
+import React, {Suspense} from 'docs/ui/react/react';
 
 const MyComponent = React.lazy(() => import('./MyComponent'));
 
@@ -2449,7 +2450,7 @@ const App = () => {
 /**
  * React Lazy Loading Routes
  */
-import React, {Suspense, lazy} from "docs/ui/react";
+import React, {Suspense, lazy} from "docs/ui/react/react";
 import {Switch, BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 const Home = lazy(() => import("./Home"));

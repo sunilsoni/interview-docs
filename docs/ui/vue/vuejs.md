@@ -2,6 +2,7 @@
 layout: default
 title: Vuejs
 parent: UI Design
+has_children: true
 resource: true
 desc: "Vuejs interview questions and answers."
 categories: [Vuejs]
