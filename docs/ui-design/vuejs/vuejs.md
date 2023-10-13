@@ -7,7 +7,7 @@ desc: "VueJs interview questions and answers."
 categories: [VueJs]
 ---
 
-# React
+# VueJs
 {: .no_toc }
 
 <details open markdown="block">

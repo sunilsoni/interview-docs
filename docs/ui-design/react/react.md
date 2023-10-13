@@ -1,6 +1,7 @@
 ---
 layout: default
 title: React
+parent: ui-design
 nav_order: 2
 permalink: docs/ui-desing/react
 resource: true
