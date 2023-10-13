@@ -3,6 +3,8 @@ title: Angular
 parent: UI Design
 has_children: true
 resource: true
+nav_order: 3
+permalink: docs/ui/angular
 desc: "Angular interview questions and answers."
 categories: [Angular]
 ---
