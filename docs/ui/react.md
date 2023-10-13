@@ -1,9 +1,7 @@
 ---
 layout: default
 title: React
-parent: ui
-nav_order: 2
-permalink: docs/ui-desing/react
+parent: UI Design
 resource: true
 desc: "React interview questions and answers."
 categories: [React]
@@ -707,19 +705,20 @@ In React, a **Stateful Component** is a component that holds some state. A **Sta
 
 
 **1. Stateless Component:**
+
 ```js
-import React from 'react'
+import React from 'docs/ui/react'
 
 const ExampleComponent = (props) => {
-    return <h1>Stateless Component - {props.message}</h1>;
+  return <h1>Stateless Component - {props.message}</h1>;
 };
 
 const App = () => {
   const message = 'React Interview Questions'
   return (
-    <div>
-      <ExampleComponent message={message} />
-    </div>
+          <div>
+            <ExampleComponent message={message}/>
+          </div>
   );
 };
 
@@ -731,7 +730,7 @@ The above example shows a stateless component named ExampleComponent which is in
 **2. Stateful Component:**
 
 ```js
-import React, { useState } from 'react'
+import React, {useState} from 'docs/ui/react'
 
 const ExampleComponent = (props) => {
   const [email, setEmail] = useState(props.defaultEmail)
@@ -741,7 +740,7 @@ const ExampleComponent = (props) => {
   }
 
   return (
-    <input type="text" value={email} onChange={changeEmailHandler} />
+          <input type="text" value={email} onChange={changeEmailHandler}/>
   );
 }
 
@@ -749,9 +748,9 @@ const ExampleComponent = (props) => {
 const App = () => {
   const defaultEmail = "suniti.mukhopadhyay@gmail.com"
   return (
-    <div>
-      <ExampleComponent defaultEmail={defaultEmail} />
-    </div>
+          <div>
+            <ExampleComponent defaultEmail={defaultEmail}/>
+          </div>
   );
 };
 
@@ -814,23 +813,22 @@ class UsersContainer extends React.Component {
 
 ```js
 // Importing combination
-import React, { Component } from 'react';
+import React, {Component} from 'docs/ui/react';
 import ReactDOM from 'react-dom';
 
 // Wrapping components with braces if no default exports
-import { Button }  from './Button';
+import {Button} from './Button';
 
 // Default exports ( recommended )
-import  Button  from './Button';
- 
+import Button from './Button';
+
 class DangerButton extends Component {
-    render()
-    {
-        return <Button color="red" />;
-    }
+  render() {
+    return <Button color="red"/>;
+  }
 }
 
-export default DangerButton; 
+export default DangerButton;
 // or export DangerButton;
 ```
 
@@ -952,7 +950,7 @@ Inline conditionals in attribute props
 /**
  * Conditionally add attributes
  */
-import React from "react";
+import React from "docs/ui/react";
 
 export default function App() {
   const [mood] = React.useState("happy");
@@ -960,9 +958,9 @@ export default function App() {
   const greet = () => alert("Hi there! :)");
 
   return (
-    <button onClick={greet} disabled={"happy" === mood ? false : true}>
-      Say Hi
-    </button>
+          <button onClick={greet} disabled={"happy" === mood ? false : true}>
+            Say Hi
+          </button>
   );
 }
 ```
@@ -1034,14 +1032,14 @@ Strict mode checks are run in development mode only; they do not impact the prod
 /**
  * StrictMode
  */
-import { StrictMode } from "react";
+import {StrictMode} from "docs/ui/react";
 import MyComponent from "./MyComponent";
 
 export default function App() {
   return (
-    <StrictMode>
-      <MyComponent />
-    </StrictMode>
+          <StrictMode>
+            <MyComponent/>
+          </StrictMode>
   );
 }
 ```
@@ -1076,7 +1074,7 @@ Specifically, calling `setState()` in an unmounted component means that your app
 /**
  * setState() in unmounted component
  */
-import React, { Component } from "react";
+import React, {Component} from "docs/ui/react";
 import axios from "axios";
 
 export default class App extends Component {
@@ -1094,14 +1092,14 @@ export default class App extends Component {
     this._isMounted = true;
 
     axios
-      .get("https://hn.algolia.com/api/v1/search?query=react")
-      .then((result) => {
-        if (this._isMounted) {
-          this.setState({
-            news: result.data.hits
-          });
-        }
-      });
+            .get("https://hn.algolia.com/api/v1/search?query=react")
+            .then((result) => {
+              if (this._isMounted) {
+                this.setState({
+                  news: result.data.hits
+                });
+              }
+            });
   }
 
   componentWillUnmount() {
@@ -1110,11 +1108,11 @@ export default class App extends Component {
 
   render() {
     return (
-      <ul>
-        {this.state.news.map((topic) => (
-          <li key={topic.objectID}>{topic.title}</li>
-        ))}
-      </ul>
+            <ul>
+              {this.state.news.map((topic) => (
+                      <li key={topic.objectID}>{topic.title}</li>
+              ))}
+            </ul>
     );
   }
 }
@@ -1138,16 +1136,17 @@ The app component contains the state for both the component. The selected player
 /**
  * Lifting State Up
  */
-import React from "react";
+import React from "docs/ui/react";
 import PlayerContent from "./PlayerContent";
 import PlayerDetails from "./PlayerDetails";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedPlayer: [0, 0], playerName: "" };
+    this.state = {selectedPlayer: [0, 0], playerName: ""};
     this.updateSelectedPlayer = this.updateSelectedPlayer.bind(this);
   }
+
   updateSelectedPlayer(id, name) {
     const arr = [0, 0, 0, 0];
     arr[id] = 1;
@@ -1156,23 +1155,24 @@ export default class App extends React.Component {
       selectedPlayer: arr
     });
   }
+
   render() {
     return (
-      <div>
-        <PlayerContent
-          active={this.state.selectedPlayer[0]}
-          clickHandler={this.updateSelectedPlayer}
-          id={0}
-          name="Player 1"
-        />
-        <PlayerContent
-          active={this.state.selectedPlayer[1]}
-          clickHandler={this.updateSelectedPlayer}
-          id={1}
-          name="Player 2"
-        />
-        <PlayerDetails name={this.state.playerName} />
-      </div>
+            <div>
+              <PlayerContent
+                      active={this.state.selectedPlayer[0]}
+                      clickHandler={this.updateSelectedPlayer}
+                      id={0}
+                      name="Player 1"
+              />
+              <PlayerContent
+                      active={this.state.selectedPlayer[1]}
+                      clickHandler={this.updateSelectedPlayer}
+                      id={1}
+                      name="Player 2"
+              />
+              <PlayerDetails name={this.state.playerName}/>
+            </div>
     );
   }
 }
@@ -1182,19 +1182,19 @@ export default class App extends React.Component {
 /**
  * PlayerContent
  */
-import React, { Component } from "react";
+import React, {Component} from "docs/ui/react";
 
 export default class PlayerContent extends Component {
   render() {
     return (
-      <button
-        onClick={() => {
-          this.props.clickHandler(this.props.id, this.props.name);
-        }}
-        style={{ color: this.props.active ? "red" : "blue" }}
-      >
-        {this.props.name}
-      </button>
+            <button
+                    onClick={() => {
+                      this.props.clickHandler(this.props.id, this.props.name);
+                    }}
+                    style={{color: this.props.active ? "red" : "blue"}}
+            >
+              {this.props.name}
+            </button>
     );
   }
 }
@@ -1204,7 +1204,7 @@ export default class PlayerContent extends Component {
 /**
  * PlayerDetails
  */
-import React, { Component } from "react";
+import React, {Component} from "docs/ui/react";
 
 export default class PlayerDetails extends Component {
   render() {
@@ -1599,7 +1599,7 @@ A React Component can contain state and has access to the React Lifecycle method
 /**
  * React Component Instances
  */
-import React from 'react'
+import React from 'docs/ui/react'
 import ReactDOM from 'react-dom'
 
 class MyComponent extends React.Component {
@@ -1659,11 +1659,11 @@ The React class components uses render() function. It is used to update the UI.
 ```js
 /**
  * render() function
- * 
+ *
  * React v18.0.0
  */
-import React from "react";
-import { createRoot } from "react-dom/client";
+import React from "docs/ui/react";
+import {createRoot} from "react-dom/client";
 
 class App extends React.Component {
   render() {
@@ -1673,7 +1673,7 @@ class App extends React.Component {
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-root.render(<App />);
+root.render(<App/>);
 ```
 
 
@@ -1798,12 +1798,13 @@ The `useLayoutEffect()` was designed to have the same timing as componentDidMoun
 /**
  * componentDidMount() in Class Component
  */
-import React, { Component } from "react";
+import React, {Component} from "docs/ui/react";
 
 export default class SampleComponent extends Component {
   componentDidMount() {
     // code to run on component mount
   }
+
   render() {
     return <>componentDidMount Example</>;
   }
@@ -1816,7 +1817,7 @@ export default class SampleComponent extends Component {
 /**
  * useEffect() in Functional Component
  */
-import React, { useEffect } from "react";
+import React, {useEffect} from "docs/ui/react";
 
 const SampleComponent = () => {
   useEffect(() => {
@@ -1867,7 +1868,7 @@ The `componentDidMount()` is executed after the first render only on the client 
 **Example:**
 
 ```js
-import React, { Component } from 'react'
+import React, {Component} from 'docs/ui/react'
 
 class App extends Component {
 
@@ -1878,7 +1879,7 @@ class App extends Component {
     }
   }
 
-  getData(){
+  getData() {
     setTimeout(() => {
       console.log('Our data is fetched')
       this.setState({
@@ -1893,9 +1894,9 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.data}
-      </div>
+            <div>
+              {this.state.data}
+            </div>
     )
   }
 }
@@ -1910,7 +1911,7 @@ The `componentWillMount()` method is executed before rendering, on both the serv
 **Example:**
 
 ```js
-import React, { Component } from 'react'
+import React, {Component} from 'docs/ui/react'
 
 class App extends Component {
 
@@ -1920,6 +1921,7 @@ class App extends Component {
       data: 'Alex Belfort'
     }
   }
+
   componentWillMount() {
     console.log('First this called')
   }
@@ -1939,9 +1941,9 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.data}
-      </div>
+            <div>
+              {this.state.data}
+            </div>
     )
   }
 }
@@ -1980,26 +1982,30 @@ The **useEffect()** can be used to manage API calls, as well as implementing **c
 If we pass an empty array as the second argument, it tells useEffect to fire on component load. This is the only time it will fire.
 
 ```js
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'docs/ui/react';
 
-const ComponentExample => () => {
-   useEffect( () => {
-      // Anything in here is fired on component mount.
-   }, []);
+const ComponentExample
+=>
+() => {
+  useEffect(() => {
+    // Anything in here is fired on component mount.
+  }, []);
 }
 ```
 
 If you add a return function inside the useEffect() function, it is triggered when a component unmounts from the DOM.
 
 ```js
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'docs/ui/react';
 
-const ComponentExample => () => {
-    useEffect(() => {
-        return () => {
-            // Anything in here is fired on component unmount.
-        }
-    }, [])
+const ComponentExample
+=>
+() => {
+  useEffect(() => {
+    return () => {
+      // Anything in here is fired on component unmount.
+    }
+  }, [])
 }
 ```
 
@@ -2025,7 +2031,7 @@ const ComponentExample => () => {
 /**
  * React Pure Component
  */
-import React from "react";
+import React from "docs/ui/react";
 
 export default class App extends React.PureComponent {
   constructor() {
@@ -2143,15 +2149,15 @@ Higher-Order Components are not part of the React API. They are the pattern that
 /**
  * Higher Order Component
  */
-import React, { Component } from "react";
+import React, {Component} from "docs/ui/react";
 
 export default function Hoc(HocComponent) {
   return class extends Component {
     render() {
       return (
-        <div>
-          <HocComponent></HocComponent>
-        </div>
+              <div>
+                <HocComponent></HocComponent>
+              </div>
       );
     }
   };
@@ -2162,7 +2168,7 @@ export default function Hoc(HocComponent) {
 /**
  * App.js
  */
-import React, { Component } from "react";
+import React, {Component} from "docs/ui/react";
 import Hoc from "./HOC";
 
 export default class App extends Component {
@@ -2422,17 +2428,17 @@ const MyComponent = React.lazy(() => import('./MyComponent'));
 /**
  * Suspense
  */
-import React, { Suspense } from 'react';
+import React, {Suspense} from 'docs/ui/react';
 
 const MyComponent = React.lazy(() => import('./MyComponent'));
 
 const App = () => {
   return (
-    <div>
-      <Suspense fallback={<div>Loading ... </div>}>
-        <MyComponent />
-      </Suspense>
-    </div>
+          <div>
+            <Suspense fallback={<div>Loading ...</div>}>
+              <MyComponent/>
+            </Suspense>
+          </div>
   );
 }
 ```
@@ -2443,8 +2449,8 @@ const App = () => {
 /**
  * React Lazy Loading Routes
  */
-import React, { Suspense, lazy } from "react";
-import { Switch, BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, {Suspense, lazy} from "docs/ui/react";
+import {Switch, BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 const Home = lazy(() => import("./Home"));
 const ContactUs = lazy(() => import("./ContactUs"));
@@ -2452,21 +2458,27 @@ const HelpPage = lazy(() => import("./Help"));
 
 export default function App() {
   return (
-      <Router>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/contact-us">ContactUs</Link></li>
-          <li><Link to="/help">HelpPage</Link></li>
-        </ul>
-        <hr />
-        <Suspense fallback={<h1>Loading...</h1>}>
-          <Switch>
-            <Route exact component={Home} path="/" />
-            <Route component={ContactUs} path="/contact-us" />
-            <Route component={HelpPage} path="/help" />
-          </Switch>
-        </Suspense>
-      </Router>
+          <Router>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/contact-us">ContactUs</Link>
+              </li>
+              <li>
+                <Link to="/help">HelpPage</Link>
+              </li>
+            </ul>
+            <hr/>
+            <Suspense fallback={<h1>Loading...</h1>}>
+              <Switch>
+                <Route exact component={Home} path="/"/>
+                <Route component={ContactUs} path="/contact-us"/>
+                <Route component={HelpPage} path="/help"/>
+              </Switch>
+            </Suspense>
+          </Router>
   );
 }
 ```
