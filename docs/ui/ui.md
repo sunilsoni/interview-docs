@@ -1,12 +1,5 @@
 ---
-layout: default
 title: UI Design
-has_children: true
-nav_order: 2
-resource: true
-desc: "UI Design interview questions and answers."
-categories: [UI Design]
-permalink: docs/ui
 ---
 
 # UI Design

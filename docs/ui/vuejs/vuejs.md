@@ -1,11 +1,6 @@
 ---
-layout: default
 title: VueJs
 parent: ui
-resource: true
-desc: "VueJs interview questions and answers."
-categories: [VueJs]
-permalink: docs/ui/vuejs
 ---
 
 # VueJs
