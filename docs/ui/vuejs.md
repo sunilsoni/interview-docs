@@ -1,9 +1,13 @@
 ---
-title: VueJs
-parent: ui
+layout: default
+title: Vuejs
+parent: UI Design
+resource: true
+desc: "Vuejs interview questions and answers."
+categories: [Vuejs]
 ---
 
-# VueJs
+# Vuejs
 {: .no_toc }
 
 <details open markdown="block">
