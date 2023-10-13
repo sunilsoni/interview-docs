@@ -1,11 +1,10 @@
 ---
 layout: default
 title: VueJs
-nav_order: 2
-permalink: docs/ui-desing/vuejs
+parent: ui-design
 resource: true
-desc: "React interview questions and answers."
-categories: [React]
+desc: "VueJs interview questions and answers."
+categories: [VueJs]
 ---
 
 # React
