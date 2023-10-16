@@ -35,7 +35,7 @@ When a program accepts input from an external source (e.g., user input, file, ne
 
 A simple illustration in Java could be using user input in a script execution scenario without proper validation. In such a case, an attacker could inject malicious code that would be executed as part of the application, leading to potentially severe security breaches.
 
-### Example:
+### Example
 
 Consider the following simplistic Java example that accepts user input and executes it as a script:
 
@@ -93,7 +93,7 @@ Command injection is a type of security vulnerability that allows an attacker to
 
 The crux of command injection lies in the insecure handling of user input, especially when constructing system commands. If an application takes user input and includes it in a system command without properly validating or sanitizing the input, it opens up a door for attackers to manipulate the command, injecting malicious instructions.
 
-#### Example:
+#### Example
 
 Consider this simplistic Java example that takes user input to construct a system command for pinging an IP address:
 
@@ -157,7 +157,7 @@ Connection String Injection is a type of vulnerability that arises when an appli
 
 A connection string contains information about how to connect to a database, including the database server's location, database name, and credentials. When constructing this string, if user input is used without proper validation or sanitization, it could lead to a Connection String Injection vulnerability.
 
-#### Example:
+#### Example
 
 Consider the following simplistic Java example that constructs a connection string using user input:
 
@@ -228,7 +228,7 @@ LDAP (Lightweight Directory Access Protocol) Injection is a type of attack in wh
 
 LDAP is a protocol used to access and manage directory information services over a network. It is used in various services like email systems, centralized authentication servers, and more. An LDAP Injection attack can occur when user input is not properly sanitized and is used to construct and execute LDAP queries directly.
 
-#### Example:
+#### Example
 
 Consider the following simplistic Java example that constructs an LDAP query using user input:
 
@@ -301,7 +301,7 @@ Reflected Cross-Site Scripting (XSS) is a type of web vulnerability that occurs 
 
 Reflected XSS, also known as non-persistent XSS, occurs when malicious script injected by an attacker is reflected off the web server, such as in an error message, search result, or any other response that includes some or all of the input sent to the server as part of the request.
 
-#### Example:
+#### Example
 
 Consider a simple Java servlet example that reads a parameter from the HTTP request and reflects it back in the HTTP response:
 
@@ -369,7 +369,7 @@ Resource Injection is a type of vulnerability that occurs when an application ex
 
 In Java, resource injection can happen when user input is used to create or access resources without proper validation. The risk is amplified when user input is used to construct references to critical system resources or configuration settings.
 
-#### Example:
+#### Example
 
 Consider the following simplistic Java example that constructs a file path using user input:
 
@@ -436,7 +436,7 @@ SQL Injection is a well-known security vulnerability that arises when an applica
 
 SQL Injection occurs when an attacker can influence the structure of an SQL query by injecting malicious SQL code through the application's input fields. This vulnerability typically arises due to the concatenation of unsanitized user input with SQL code.
 
-#### Example:
+#### Example
 
 Consider the following simplistic Java example that constructs an SQL query using user input:
 
@@ -513,7 +513,7 @@ Second Order SQL Injection, a more sophisticated form of SQL Injection, occurs w
 
 Unlike a classic SQL Injection where the injection point is immediate, in Second Order SQL Injection, the malicious data initially gets safely stored in the database. However, it gets exploited later when it's used in other parts of the application without being sanitized.
 
-#### Example:
+#### Example
 
 Consider the following simplistic Java example, where user input is first stored in the database and later used to construct an SQL query:
 
@@ -595,7 +595,7 @@ Stored Cross-Site Scripting (XSS) is a severe security vulnerability that occurs
 
 Stored XSS, also known as persistent XSS, occurs when an attacker injects a malicious script into a website's form, and the website stores the injected script. Later, other users who visit the page will have the malicious script executed in their browsers as the application serves the stored data.
 
-#### Example:
+#### Example
 
 Consider the following simplistic Java example that demonstrates a Stored XSS vulnerability:
 
@@ -678,7 +678,7 @@ XPath Injection is a type of attack in which the attacker can manipulate the que
 
 XPath (XML Path Language) is a language for navigating through an XML document and selecting nodes by specifying a path expression. However, if user input is used to construct XPath queries without validation, it could lead to XPath Injection.
 
-#### Example:
+#### Example
 
 Consider the following simplistic Java example that demonstrates an XPath Injection vulnerability:
 
@@ -763,7 +763,7 @@ XML External Entity (XXE) attack is a type of vulnerability that exploits the XM
 
 XML documents can define entities, which are placeholders for strings or URI/URLs. When the XML parser encounters an entity, it replaces it with its corresponding value. External entities can reference external URIs or local files, which can be abused by attackers to read sensitive files on the server or make network requests to internal systems.
 
-#### Example:
+#### Example
 
 Consider the following simplistic Java example that demonstrates an XXE vulnerability:
 
@@ -901,7 +901,7 @@ Deserialization Vulnerability is a type of security flaw that occurs when an app
 
 When an application takes a serialized object (a byte stream) and converts it back into an object through the process of deserialization, it can potentially execute malicious code if the serialized data is tampered with. The deserialization process in Java can initiate the execution of code, as the read object triggers the class constructors and static blocks of the involved classes.
 
-#### Example:
+#### Example
 
 Below is a simplistic Java example that demonstrates a Deserialization Vulnerability:
 
