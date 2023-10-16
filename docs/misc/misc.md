@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Miscellaneous
+title: Misc
 has_children: true
 nav_order: 2
 permalink: docs/miscellaneous

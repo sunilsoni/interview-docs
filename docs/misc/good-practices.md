@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Good Practices
-parent: Miscellaneous
+parent: Misc
 resource: true
 desc: " Good Practices interview questions and answers."
 categories: [Good Practices]

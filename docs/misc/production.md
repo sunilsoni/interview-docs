@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Production
-parent: Miscellaneous
+parent: Misc
 resource: true
 desc: "Production interview questions and answers."
 categories: [Production]

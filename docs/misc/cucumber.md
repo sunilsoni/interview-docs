@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Cucumber
-parent: Miscellaneous
+parent: Misc
 categories: [Cucumber]
 resource: true
 desc: "Cucumber interview questions and answers."

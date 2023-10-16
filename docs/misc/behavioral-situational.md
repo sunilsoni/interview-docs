@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Behavioral & Situational
-parent: Miscellaneous
+parent: Misc
 resource: true
 desc: "Behavioral & Situational interview questions and answers."
 categories: [Behavioral & Situational]

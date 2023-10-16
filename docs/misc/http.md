@@ -1,7 +1,7 @@
 ---
 layout: default
 title: HTTP methods
-parent: Miscellaneous
+parent: Misc
 resource: true
 desc: "HTTP methods overview interview questions and answers."
 categories: [HTTP methods overview]

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Git
-parent: Miscellaneous
+parent: Misc
 resource: true
 desc: "HTTP methods overview interview questions and answers."
 categories: [Git]
