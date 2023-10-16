@@ -3,6 +3,8 @@ layout: default
 title: Component
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/component/
 desc: "Angular Component interview questions and answers."
 categories: [Angular Component]
 ---

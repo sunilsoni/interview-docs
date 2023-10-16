@@ -3,6 +3,8 @@ layout: default
 title: Data Binding
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/binding/
 desc: "Angular Data Binding interview questions and answers."
 categories: [Angular Data Binding]
 ---

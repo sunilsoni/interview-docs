@@ -3,6 +3,8 @@ layout: default
 title: Versioning and releases
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/versioning/
 desc: "Angular Versioning and releases interview questions and answers."
 categories: [Angular Versioning and releases]
 ---

@@ -3,6 +3,8 @@ layout: default
 title: Services
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/services/
 desc: "Angular Services interview questions and answers."
 categories: [Angular Services]
 ---

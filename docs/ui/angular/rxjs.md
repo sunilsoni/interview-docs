@@ -3,6 +3,8 @@ layout: default
 title: RxJS
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/rx/
 desc: " RxJS interview questions and answers."
 categories: [RxJS]
 ---

@@ -3,6 +3,8 @@ layout: default
 title: Code Samples
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/samples/
 desc: "Angular Code interview questions and answers."
 categories: [Samples]
 ---

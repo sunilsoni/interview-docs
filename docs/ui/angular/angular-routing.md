@@ -3,6 +3,8 @@ layout: default
 title: Routing and Navigation
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/routing/
 desc: "Angular Routing and Navigation interview questions and answers."
 categories: [Angular Routing and Navigation]
 ---

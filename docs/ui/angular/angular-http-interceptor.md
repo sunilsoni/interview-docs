@@ -3,6 +3,8 @@ layout: default
 title: Angular http Interceptor
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/interceptor/
 desc: "Angular http Interceptor interview questions and answers."
 categories: [Angular http Interceptor]
 ---

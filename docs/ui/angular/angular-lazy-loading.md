@@ -3,6 +3,8 @@ layout: default
 title: Lazy Loading
 parent: Angular
 resource: true
+grand_parent: UI Design
+permalink: /docs/ui/angular/lazy/
 desc: "Angular Lazy Loading interview questions and answers."
 categories: [Angular Lazy Loading]
 ---
