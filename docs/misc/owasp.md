@@ -219,9 +219,142 @@ Connection string injection is a serious security risk that can have severe cons
 
 ---
 
+## LDAP Injection
+
+
+LDAP (Lightweight Directory Access Protocol) Injection is a type of attack in which the attacker exploits poorly sanitized input fields used within the application to construct LDAP statements. This vulnerability can lead to a variety of problems including bypassing login fields, divulging sensitive information, or in some cases even modifying or destroying information within the LDAP tree.
+
+### Understanding LDAP Injection
+
+LDAP is a protocol used to access and manage directory information services over a network. It is used in various services like email systems, centralized authentication servers, and more. An LDAP Injection attack can occur when user input is not properly sanitized and is used to construct and execute LDAP queries directly.
+
+#### Example:
+
+Consider the following simplistic Java example that constructs an LDAP query using user input:
+
+```java
+import javax.naming.*;
+import javax.naming.directory.*;
+
+public class LDAPInjectionExample {
+    public static void main(String[] args) {
+        String userInput = args[0];  // Assume user input is 'username*)(uid=*))(|(uid=*'
+        String filter = "(uid=" + userInput + ")";
+        try {
+            DirContext ctx = new InitialDirContext();
+            NamingEnumeration<?> enumeration = ctx.search("ou=people,dc=example,dc=com", filter, null);
+            while (enumeration.hasMore()) {
+                SearchResult result = (SearchResult) enumeration.next();
+                System.out.println(result.getName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+In the code above, if the user provides input like `username*)(uid=*))(|(uid=*`, the resulting filter will be `(uid=username*)(uid=*))(|(uid=*)`, which is a malformed LDAP filter. This can potentially return all user entries in the directory, exposing sensitive information.
+
+### Mitigating LDAP Injection
+
+Preventing LDAP injection requires a combination of input validation, the use of safe APIs, and a secure configuration.
+
+#### Input Validation and Sanitization:
+- Validate input to ensure it conforms to expected formats.
+- Sanitize input by escaping special characters that are significant in LDAP queries.
+
+#### Use Prepared Statements:
+- Utilize prepared statements or parameterized methods to ensure user input does not interfere with the structure of the LDAP query.
+
+#### Avoid Directly Using User Input:
+- Avoid constructing LDAP queries directly with user input whenever possible.
+
+#### Least Privilege Principle:
+- Ensure that LDAP accounts used by your application have the least amount of privilege necessary to perform their tasks, reducing the potential damage in case of an LDAP injection attack.
+
+#### Secure Configuration:
+- Configure your LDAP server securely to minimize the risk of LDAP injection and other vulnerabilities.
+- Implement proper error handling to prevent the leakage of sensitive information.
+
+#### Regular Security Audits and Code Reviews:
+- Conduct regular security audits and code reviews to identify and fix potential LDAP injection vulnerabilities.
+
+#### Education:
+- Educate developers about the risks associated with LDAP injection and how to prevent them.
+
+By adhering to these best practices, developers can significantly reduce the risk of LDAP injection vulnerabilities in their Java applications, contributing to a more secure and reliable application environment.
+
+LDAP injection is a severe security risk, and understanding how it works and how to prevent it is crucial for developing secure Java applications. This document provides a foundational understanding of LDAP injection, an illustrative example, and various preventative measures to mitigate this type of vulnerability.
+
+
 
 
 ---
+
+## Reflected XSS
+
+
+
+
+---
+
+
+## Resource Injection
+
+
+
+
+---
+
+## SQL Injection
+
+
+
+
+---
+
+## Second Order SQL Injection
+
+
+
+
+---
+
+## Stored XSS
+
+
+
+
+---
+
+## XPath Injection
+
+
+
+
+
+---
+
+
+## XML External Entity (XXE) Attacks
+
+
+
+
+
+---
+
+## JUnit Vulnerability
+
+
+
+
+
+---
+
+## Arbitrary File Writes and Directory Traversal
+
 
 
 
