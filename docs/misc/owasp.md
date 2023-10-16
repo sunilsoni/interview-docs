@@ -22,6 +22,75 @@ categories: [Common Java Vulnerabilities]
  
 ---
 
+## Code Injection
+
+Certainly! Below is an in-depth explanation of Code Injections in Markdown format, as requested:
+
+
+### Code Injections
+
+Code injection is a prevalent form of attack where an adversary can execute malicious code in a system by taking advantage of the insecure coding practices followed by developers. In Java, this vulnerability primarily manifests when user inputs are not properly sanitized or validated before being used in the program. This allows an attacker to manipulate the code behavior to their advantage.
+
+### Understanding Code Injection
+
+To better understand how code injection works, it's essential to grasp the fundamental idea behind it. When a program accepts input from an external source (e.g., user input, file, network), and this input is not properly validated, it could contain malicious code or commands. If this input is then used within the program in a way that gets executed, it can lead to code injection.
+
+A simple illustration in Java could be using user input in a script execution scenario without proper validation. In such a case, an attacker could inject malicious code that would be executed as part of the application, leading to potentially severe security breaches.
+
+### Example:
+
+Consider the following simplistic Java example that accepts user input and executes it as a script:
+
+
+```java
+import javax.script.*;
+
+public class CodeInjectionExample {
+    public static void main(String[] args) throws ScriptException {
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("JavaScript");
+        String userInput = args[0];
+        engine.eval(userInput);  // Unsafe
+    }
+}
+```
+
+In the code above, we are using the `javax.script` package to create a `ScriptEngineManager` and then a `ScriptEngine` for JavaScript. We then accept user input from the command line arguments and pass it directly to the `engine.eval()` method, which executes the input as a script. If an attacker provides malicious JavaScript code as input, it would be executed, leading to a code injection vulnerability.
+
+### Mitigating Code Injection
+
+Preventing code injection involves a multi-step approach that includes input validation, the use of safe APIs, and adhering to the principle of least privilege.
+
+#### Input Validation and Sanitization:
+Ensure that all input is validated and sanitized before it's used in your code. Validation means checking that the input meets certain criteria (e.g., a date is in the correct format), while sanitization involves cleaning or transforming the input to remove any potentially harmful content.
+
+#### Use Safe APIs:
+Whenever possible, use safe APIs that either do not allow for code execution or provide built-in protections against injection attacks.
+
+#### Principle of Least Privilege:
+Run your code with the least amount of privilege necessary to perform its tasks. This way, even if an attacker manages to inject code, the damage they can do is limited.
+
+#### Parameterized Statements:
+For database access, use parameterized statements or prepared statements, which ensure that user input is always treated as data and not executable code.
+
+#### Escape Special Characters:
+Ensure that special characters in user input that could be used to facilitate code injection are escaped.
+
+#### Security Headers and Policies:
+Implement security headers and policies like Content Security Policy (CSP) to mitigate the risk of code injection.
+
+#### Regular Code Reviews and Security Testing:
+Regular code reviews and security testing can help identify and fix code injection vulnerabilities before they can be exploited.
+
+By following these best practices and being mindful of the potential risks associated with user input, developers can significantly mitigate the risk of code injection vulnerabilities in their Java applications.
+
+
+ 
+
+
+
+
+
 ## Injection Flaws 
 Injection flaws, particularly SQL injection, are common in Java EE applications. Injection occurs when user-supplied data is sent to an interpreter as part of a command or query. The attacker’s hostile data tricks the interpreter into  executing unintended commands or changing data.
 
