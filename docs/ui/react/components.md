@@ -160,9 +160,6 @@ export default DangerButton;
 
 By using default you express that\'s going to be member in that module which would be imported if no specific member name is provided. You could also express you want to import the specific member called DangerButton by doing so: `import { DangerButton } from './comp/danger-button';` in this case, no default is needed
 
-<div align="right">
-    <b><a href="#table-of-contents">↥ back to top</a></b>
-</div>
 
 ### declarative and imperative
 
@@ -228,9 +225,7 @@ function Message() {
 ReactDOM.render(<Message />, document.getElementById('app'));
 ```
 
-<div align="right">
-    <b><a href="#table-of-contents">↥ back to top</a></b>
-</div>
+
 
 ###  conditionally render components
 
