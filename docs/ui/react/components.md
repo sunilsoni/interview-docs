@@ -964,9 +964,7 @@ shouldComponentUpdate(nextProps, nextState) {
 
 The `shouldComponentUpdate()` method is the first real life cycle optimization method that we can leverage in React. It checks the current props and state, compares it to the next props and state and then returns true if they are different, or false if they are the same. This method is not called for the initial render or when `forceUpdate()` is used.
 
-<div align="right">
-    <b><a href="#table-of-contents">↥ back to top</a></b>
-</div>
+ 
 
 ### Purpose of render() function
 
@@ -1102,9 +1100,7 @@ class AnimalTable extends React.Component<Props, never> {
 
 Here, `shouldComponentUpdate()` will return false if the props its receiving are equal to the props it already has. And because the AnimalTable is receiving just a List of string IDs, a change in the adoption status won\'t cause AnimalTable to receive a different set of IDs.
 
-<div align="right">
-    <b><a href="#table-of-contents">↥ back to top</a></b>
-</div>
+ 
 
 #### useEffect() vs componentDidMount()
 
@@ -1157,9 +1153,7 @@ When `useEffect()` is used to get data from server.
 * When it is not present, the callback will always be fired after every render.
 * When it is an empty list, the callback will only be fired once, similar to componentDidMount.
 
-<div align="right">
-    <b><a href="#table-of-contents">↥ back to top</a></b>
-</div>
+ 
 
 #### component constructor called only once?
 
@@ -1454,7 +1448,7 @@ On the other hand, we should not use `PureComponent()` as a base component if:
 A **Higher-Order Component(HOC)** is a function that takes a component and returns a new component. It is the advanced technique in React.js for reusing a component logic.
 
 <p align="center">
-  <img src="assets/Higher-Order-Components.jpg" alt="Higher Order Components" width="300px" />
+  <img src="ui/react/assets/Higher-Order-Components.jpg" alt="Higher Order Components" width="300px" />
 </p>
 
 Higher-Order Components are not part of the React API. They are the pattern that emerges from React\'s compositional nature. The component transforms props into UI, and a higher-order component converts a component into another component. The examples of HOCs are Redux\'s connect and Relay\'s createContainer.
