@@ -1332,6 +1332,121 @@ const ComponentExample => () => {
 
 ## Pure Components
 
+**Pure Components** in React are the components which do not re-renders when the value of state and props has been updated with the same values. Pure Components restricts the re-rendering ensuring the higher performance of the Component.
+
+**Features of React Pure Components:**
+
+* Prevents re-rendering of Component if props or state is the same
+* Takes care of `shouldComponentUpdate()` implicitly
+* `State()` and `Props` are Shallow Compared
+* Pure Components are more performant in certain cases
+
+**Example:**
+
+```js
+/**
+ * React Pure Component
+ */
+import React from "react";
+
+export default class App extends React.PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      userArray: [1, 2, 3, 4, 5]
+    };
+    // Here we are creating the new Array Object during setState using "Spread" Operator
+    setInterval(() => {
+      this.setState({
+        userArray: [...this.state.userArray, 6]
+      });
+    }, 1000);
+  }
+
+  render() {
+    return <b>Array Length is: {this.state.userArray.length}</b>;
+  }
+}
+```
+
+ 
+
+###  Pure Component vs Component
+
+PureComponent is exactly the same as Component except that it handles the `shouldComponentUpdate()` method. The major difference between React.PureComponent and React.Component is PureComponent does a shallow comparison on state change. It means that when comparing scalar values it compares their values, but when comparing objects it compares only references. It helps to improve the performance of the app.
+
+A component rerenders every time its parent rerenders, regardless of whether the component\'s props and state have changed.
+On the other hand, a pure component will not rerender if its parent rerenders, unless the pure component\'s `props` (or `state`) have changed.
+
+**When to use React.PureComponent:**
+
+* State/Props should be an immutable object
+* State/Props should not have a hierarchy
+* We should call forceUpdate when data changes
+
+**Example:**
+
+```js
+// Regular class component
+class App extends React.Component {
+  render() {
+    return <h1>Component Example !</h1>
+  }
+}
+
+// React Pure class component
+class Message extends React.Component {
+  render() {
+    return <h1>PureComponent Example !</h1>
+  }
+}
+```
+ 
+
+### Problems of using render props with PureComponent
+
+If you create a function inside a **render** method, it negates the purpose of pure component. Because the shallow prop comparison will always return **false** for new props, and each **render** in this case will generate a new value for the render prop. You can solve this issue by defining the render function as instance method.
+
+**Example:**
+
+```js
+class Mouse extends React.PureComponent {
+  // Mouse Component...
+}
+
+class MouseTracker extends React.Component {
+  // Defined as an instance method, `this.renderTheCat` always
+  // refers to *same* function when we use it in render
+  renderTheCat(mouse) {
+    return <Cat mouse={mouse} />;
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Move the mouse around!</h1>
+        {/* define the render function as instance method */}
+        <Mouse render={this.renderTheCat} /> 
+      </div>
+    );
+  }
+}
+```
+ 
+
+###  When to use PureComponent over Component
+
+* We want to avoid re-rendering cycles of component when its props and state are not changed
+* The state and props of component are immutable
+* We do not plan to implement own `shouldComponentUpdate()` lifecycle method.
+
+On the other hand, we should not use `PureComponent()` as a base component if:
+
+* props or state are not immutable
+* Plan to implement own `shouldComponentUpdate()` lifecycle method.
+ 
+
+
 ---
 
 ## Higher Order Components
