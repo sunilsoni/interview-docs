@@ -125,7 +125,3 @@ Spring has provided a separate module for securing the application. Spring Secur
 
 
 
-
-## Reference Links
-- [Spring AOP tutorial-java2blog.com](https://java2blog.com/spring-aop-tutorial/)
-- [Spring Security Interview Questions](https://www.interviewbit.com/spring-security-interview-questions/)

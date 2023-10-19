@@ -64,7 +64,6 @@ Routing.
 
 ##  Let's create below Angular Single Page Application (SPA) with Routing and Navigation feature:
 
-<img src="images/1.1-spa-single-page-app-home.png">
 
 <p>
   <figure>
