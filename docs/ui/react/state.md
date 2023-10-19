@@ -3,7 +3,6 @@ layout: default
 title: React State
 parent: React
 grand_parent: UI Design
-permalink: /docs/ui/react/state/
 ---
 
 
