@@ -288,20 +288,20 @@ The *Virtual DOM* works in three simple steps.
 
 1. Whenever any underlying data changes, the entire UI is re-rendered in Virtual DOM representation.
 
-<img src="react/images/vdom1.png" width="700"/>
+<img src="images/vdom1.png" width="700"/>
 
 2. Then the difference between the previous DOM representation and the new one is calculated.
 
-<img src="react/images/vdom2.png" width="700"/>
+<img src="images/vdom2.png" width="700"/>
 
 3. Once the calculations are done, the real DOM will be updated with only the things that have actually changed.
 
-<img src="react/images/vdom3.png" width="500"/>
+<img src="images/vdom3.png" width="500"/>
 
 
 > As stated by the react team, virtual DOM is a concept where a virtual representation of the real DOM is kept inside the memory and is synced with the real DOM by a library such as ReactDOM.
 
-<img src="react/images/vdom4.png" width="500"/>
+<img src="images/vdom4.png" width="500"/>
 
 
 ### Why was virtual DOM introduced?
@@ -312,7 +312,7 @@ For example, consider a list that is being rendered inside the DOM. If one of th
 
 To address the problem of inefficient updating, the react team introduced the concept of virtual DOM.
 
-<img src="react/images/vdom5.png" width="500"/>
+<img src="images/vdom5.png" width="500"/>
 
 For every DOM object, there is a corresponding virtual DOM object(copy), which has the same properties. The main difference between the real DOM object and the virtual DOM object is that any changes in the virtual DOM object will not reflect on the screen directly. Consider a virtual DOM object as a blueprint of the real DOM object. Whenever a JSX element gets rendered, every virtual DOM object gets updated.
 

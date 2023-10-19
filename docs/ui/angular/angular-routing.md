@@ -65,6 +65,8 @@ Routing.
 
 ##  Let's create below Angular Single Page Application (SPA) with Routing and Navigation feature:
 
+<img src="images/1.1-spa-single-page-app-home.png">
+
 <p>
   <figure>
     &nbsp;&nbsp;&nbsp; <img src="images/1.1-spa-single-page-app-home.png" alt="Image - Output - Angular Single Page Application (SPA) with Routing and Navigation - Home View" title="Image - Output - Angular Single Page Application (SPA) with Routing and Navigation - Home View" width="1000" border="2" />
