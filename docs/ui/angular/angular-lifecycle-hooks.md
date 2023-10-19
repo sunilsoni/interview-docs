@@ -4,7 +4,6 @@ title: Lifecycle Hooks
 parent: Angular
 resource: true
 grand_parent: UI Design
-permalink: /docs/ui/angular/lifecycle/
 desc: "Angular Lifecycle Hooks interview questions and answers."
 categories: [Angular Lifecycle Hooks]
 ---

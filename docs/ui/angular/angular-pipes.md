@@ -4,7 +4,6 @@ title: Pipes
 parent: Angular
 resource: true
 grand_parent: UI Design
-permalink: /docs/ui/angular/pipes/
 desc: "Angular Pipes interview questions and answers."
 categories: [Angular Pipes]
 ---

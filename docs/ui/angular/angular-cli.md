@@ -5,7 +5,6 @@ parent: Angular
 resource: true
 nav_order: 6
 grand_parent: UI Design
-permalink: /docs/ui/angular/cli/
 desc: "Angular CLI (Command Line Interface) interview questions and answers."
 categories: [Angular Pipes]
 ---

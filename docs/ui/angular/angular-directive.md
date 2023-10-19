@@ -4,7 +4,6 @@ title: Directive
 parent: Angular
 resource: true
 grand_parent: UI Design
-permalink: /docs/ui/angular/directive/
 desc: "Angular Directive interview questions and answers."
 categories: [Angular Directive]
 ---
